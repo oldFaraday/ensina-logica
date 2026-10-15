@@ -1,0 +1,24 @@
+{
+  "name": "ensina-logica",
+  "version": "1.0.0",
+  "description": "Plataforma gamificada para estudar Ciência da Computação com conteúdo verificável",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test": "node scripts/test-core.mjs",
+    "download-libs": "node scripts/download-libs.mjs",
+    "dev": "npx serve .",
+    "build": "echo 'No build step required - vanilla ES modules'"
+  },
+  "keywords": [
+    "education",
+    "computer-science",
+    "gamification",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

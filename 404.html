@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecionando...</title>
+  <script>
+    // GitHub Pages SPA fallback: redirect to hash route
+    var path = window.location.pathname;
+    var basePath = '/ensina-logica/';
+    if (path.startsWith(basePath)) {
+      path = path.slice(basePath.length);
+    }
+    window.location.href = basePath + '#/' + path;
+  </script>
+</head>
+<body>
+  <p>Redirecionando para a aplicação... <a href="/ensina-logica/#/">Clique aqui se não redirecionar automaticamente</a></p>
+</body>
+</html>

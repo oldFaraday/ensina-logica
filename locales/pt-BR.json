@@ -1,0 +1,221 @@
+{
+  "app": {
+    "name": "Ensina Lógica",
+    "tagline": "Estude Ciência da Computação com conteúdo verificável"
+  },
+  "welcome": {
+    "title": "Bem-vindo ao Ensina Lógica",
+    "subtitle": "Uma plataforma gamificada para estudar o conteúdo de uma graduação em Ciência da Computação",
+    "disclaimer": "Isso não substitui uma graduação. Conteúdo derivado de fontes abertas, traduzido/adaptado com IA, pode conter erros.",
+    "chooseGoal": "Escolha sua meta diária de XP:",
+    "goals": {
+      "10": "10 XP/dia (Leve)",
+      "20": "20 XP/dia (Moderado)",
+      "30": "30 XP/dia (Intenso)",
+      "50": "50 XP/dia (Hardcore)"
+    },
+    "startButton": "Começar"
+  },
+  "dashboard": {
+    "greeting": "Bom estudo!",
+    "dailyGoal": "Meta diária",
+    "xpProgress": "Progresso de XP",
+    "level": "Nível",
+    "streak": "Streak",
+    "days": "dias",
+    "freezes": "Congelamentos",
+    "freezesRemaining": "Disponíveis esta semana",
+    "todaysReviews": "Revisões de hoje",
+    "noReviews": "Nenhuma revisão agendada para hoje",
+    "currentSemester": "Semestre atual",
+    "continueButton": "Continuar",
+    "startButton": "Começar semestre"
+  },
+  "semester": {
+    "title": "Semestre",
+    "disciplines": "Disciplinas",
+    "comingSoon": "Em breve",
+    "notAvailable": "Não disponível no MVP"
+  },
+  "discipline": {
+    "modules": "Módulos",
+    "progress": "Progresso",
+    "locked": "Bloqueado",
+    "complete": "Concluído",
+    "inProgress": "Em andamento"
+  },
+  "module": {
+    "lessons": "Lições",
+    "mastered": "Dominado",
+    "locked": "Bloqueado — conclua o módulo anterior",
+    "startLesson": "Iniciar lição",
+    "continueLesson": "Continuar lição",
+    "reviewLesson": "Revisar"
+  },
+  "lesson": {
+    "theorySummary": "Resumo teórico",
+    "readInLibrary": "Ler na biblioteca",
+    "exercises": "Exercícios",
+    "exerciseTypes": {
+      "multipleChoice": "Múltipla escolha",
+      "trueFalse": "Verdadeiro ou Falso",
+      "orderSteps": "Ordenar passos",
+      "codeCompletion": "Completar código",
+      "flashcards": "Flashcards"
+    },
+    "submit": "Responder",
+    "next": "Próximo",
+    "tryAgain": "Tentar novamente",
+    "practiceMore": "Praticar mais",
+    "correct": "Correto!",
+    "incorrect": "Incorreto",
+    "explanation": "Explicação",
+    "xpEarned": "+{xp} XP",
+    "firstTryBonus": " (bônus primeira vez: +5 XP)",
+    "streakBonus": " (bônus streak: +{bonus} XP)",
+    "retryPenalty": " (tentativa: 50% XP)"
+  },
+  "theory": {
+    "tableOfContents": "Sumário",
+    "markRead": "Marcar como lida",
+    "markedRead": "Lida",
+    "annotations": "Anotações",
+    "annotationPlaceholder": "Suas anotações sobre esta seção...",
+    "saveAnnotation": "Salvar",
+    "search": "Buscar na biblioteca",
+    "searchPlaceholder": "Digite para buscar...",
+    "noResults": "Nenhum resultado encontrado",
+    "attribution": "Fonte",
+    "viewOriginal": "Ver original",
+    "hideOriginal": "Ocultar original",
+    "practiceThis": "Praticar este trecho",
+    "verificationStatus": {
+      "unverified": "Não verificado",
+      "verified": "Conferido com a fonte"
+    },
+    "license": "Licença",
+    "source": "Fonte",
+    "authors": "Autores",
+    "url": "URL",
+    "chapter": "Capítulo",
+    "section": "Seção",
+    "accessDate": "Acessado em",
+    "derivationType": {
+      "original": "Original",
+      "translated": "Traduzido",
+      "adapted": "Adaptado",
+      "summarized": "Resumido"
+    }
+  },
+  "gamification": {
+    "xp": "XP",
+    "level": "Nível",
+    "nextLevel": "Próximo nível",
+    "streak": "Streak",
+    "streakFreeze": "Congelamento de streak",
+    "achievements": "Conquistas",
+    "achievementUnlocked": "Conquista desbloqueada!",
+    "dailyGoalReached": "Meta diária atingida!",
+    "reviewDue": "Revisão agendada",
+    "srsIntervals": {
+      "1": "1 dia",
+      "3": "3 dias",
+      "7": "7 dias",
+      "21": "21 dias"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "dailyGoal": "Meta diária de XP",
+    "theme": "Tema",
+    "themeOptions": {
+      "auto": "Automático (sistema)",
+      "light": "Claro",
+      "dark": "Escuro"
+    },
+    "exportProgress": "Exportar progresso",
+    "importProgress": "Importar progresso",
+    "resetProgress": "Resetar progresso",
+    "resetConfirm": "Tem certeza? Isso apagará todo seu progresso (XP, streak, lições, anotações), mas manterá suas preferências.",
+    "exportSuccess": "Progresso exportado com sucesso!",
+    "importSuccess": "Progresso importado com sucesso!",
+    "importError": "Erro ao importar: arquivo inválido ou versão incompatível",
+    "resetSuccess": "Progresso resetado com sucesso!"
+  },
+  "achievements": {
+    "title": "Conquistas",
+    "locked": "Bloqueada",
+    "unlocked": "Desbloqueada",
+    "criteria": "Critério",
+    "list": {
+      "first-lesson": {
+        "name": "Primeira Lição",
+        "description": "Complete sua primeira lição"
+      },
+      "streak-3": {
+        "name": "Em Chamas",
+        "description": "Mantenha um streak de 3 dias"
+      },
+      "streak-7": {
+        "name": "Semana Perfeita",
+        "description": "Mantenha um streak de 7 dias"
+      },
+      "module-1": {
+        "name": "Módulo 1 Concluído",
+        "description": "Conclua todas as lições do primeiro módulo"
+      },
+      "exercises-100": {
+        "name": "Centena",
+        "description": "Responda 100 exercícios corretamente"
+      },
+      "first-note": {
+        "name": "Anotador",
+        "description": "Faça sua primeira anotação na biblioteca"
+      },
+      "exported-progress": {
+        "name": "Backup Feito",
+        "description": "Exporte seu progresso pela primeira vez"
+      }
+    }
+  },
+  "feedback": {
+    "correct": {
+      "icon": "✅",
+      "text": "Correto!",
+      "aria": "Resposta correta"
+    },
+    "incorrect": {
+      "icon": "❌",
+      "text": "Incorreto",
+      "aria": "Resposta incorreta"
+    },
+    "xpGain": "Ganhou {xp} XP",
+    "streakUpdate": "Streak de {days} dias!",
+    "achievementUnlocked": "Conquista desbloqueada: {name}",
+    "dailyGoalReached": "Meta diária atingida! Parabéns!"
+  },
+  "actions": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "retry": "Tentar novamente",
+    "continue": "Continuar"
+  },
+  "errors": {
+    "loadFailed": "Falha ao carregar. Tente recarregar a página.",
+    "saveFailed": "Falha ao salvar. Verifique o armazenamento do navegador.",
+    "notFound": "Não encontrado",
+    "generic": "Ocorreu um erro inesperado"
+  },
+  "a11y": {
+    "skipToMain": "Pular para o conteúdo principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "loading": "Carregando...",
+    "liveRegion": "Anúncios"
+  }
+}
