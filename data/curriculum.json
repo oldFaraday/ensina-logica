@@ -1,0 +1,236 @@
+{
+  "version": "1.0.0",
+  "semesters": [
+    {
+      "id": "sem1",
+      "number": 1,
+      "title": "1º Semestre",
+      "disciplines": [
+        {
+          "id": "algorithms",
+          "title": "Algoritmos e Lógica de Programação",
+          "modules": [
+            {
+              "id": "m01",
+              "title": "Introdução a Algoritmos",
+              "lessons": ["l01", "l02", "l03"]
+            },
+            {
+              "id": "m02",
+              "title": "Variáveis e Tipos",
+              "lessons": ["l04", "l05", "l06"]
+            },
+            {
+              "id": "m03",
+              "title": "Controle de Fluxo",
+              "lessons": ["l07", "l08", "l09", "l10"]
+            }
+          ]
+        },
+        {
+          "id": "discrete-math",
+          "title": "Matemática Discreta / Lógica",
+          "modules": [
+            {
+              "id": "m01",
+              "title": "Lógica Proposicional",
+              "lessons": ["l01", "l02", "l03"]
+            },
+            {
+              "id": "m02",
+              "title": "Lógica de Predicados",
+              "lessons": ["l04", "l05"]
+            },
+            {
+              "id": "m03",
+              "title": "Provas e Indução",
+              "lessons": ["l06", "l07", "l08"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem2",
+      "number": 2,
+      "title": "2º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "data-structures-1",
+          "title": "Estruturas de Dados I",
+          "modules": [
+            { "id": "m01", "title": "Arrays e Listas Encadeadas", "lessons": [] },
+            { "id": "m02", "title": "Pilhas e Filas", "lessons": [] },
+            { "id": "m03", "title": "Árvores Binárias", "lessons": [] }
+          ]
+        },
+        {
+          "id": "computer-architecture",
+          "title": "Arquitetura de Computadores",
+          "modules": [
+            { "id": "m01", "title": "Representação de Dados", "lessons": [] },
+            { "id": "m02", "title": "Organização de Memória", "lessons": [] },
+            { "id": "m03", "title": "CPU e Conjunto de Instruções", "lessons": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem3",
+      "number": 3,
+      "title": "3º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "data-structures-2",
+          "title": "Estruturas de Dados II",
+          "modules": [
+            { "id": "m01", "title": "Árvores Balanceadas", "lessons": [] },
+            { "id": "m02", "title": "Tabelas Hash", "lessons": [] },
+            { "id": "m03", "title": "Grafos", "lessons": [] }
+          ]
+        },
+        {
+          "id": "operating-systems",
+          "title": "Sistemas Operacionais",
+          "modules": [
+            { "id": "m01", "title": "Processos e Threads", "lessons": [] },
+            { "id": "m02", "title": "Escalonamento e Sincronização", "lessons": [] },
+            { "id": "m03", "title": "Memória Virtual e Arquivos", "lessons": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem4",
+      "number": 4,
+      "title": "4º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "algorithms-analysis",
+          "title": "Projeto e Análise de Algoritmos",
+          "modules": [
+            { "id": "m01", "title": "Dividir para Conquistar", "lessons": [] },
+            { "id": "m02", "title": "Programação Dinâmica", "lessons": [] },
+            { "id": "m03", "title": "Algoritmos Gulosos", "lessons": [] }
+          ]
+        },
+        {
+          "id": "databases",
+          "title": "Bancos de Dados",
+          "modules": [
+            { "id": "m01", "title": "Modelo Relacional e SQL", "lessons": [] },
+            { "id": "m02", "title": "Normalização e Design", "lessons": [] },
+            { "id": "m03", "title": "Transações e Concorrência", "lessons": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem5",
+      "number": 5,
+      "title": "5º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "computer-networks",
+          "title": "Redes de Computadores",
+          "modules": [
+            { "id": "m01", "title": "Camada Física e Enlace", "lessons": [] },
+            { "id": "m02", "title": "Camada de Rede e Transporte", "lessons": [] },
+            { "id": "m03", "title": "Camada de Aplicação", "lessons": [] }
+          ]
+        },
+        {
+          "id": "software-engineering",
+          "title": "Engenharia de Software",
+          "modules": [
+            { "id": "m01", "title": "Processos e Requisitos", "lessons": [] },
+            { "id": "m02", "title": "Design e Padrões", "lessons": [] },
+            { "id": "m03", "title": "Testes e Qualidade", "lessons": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem6",
+      "number": 6,
+      "title": "6º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "compilers",
+          "title": "Compiladores",
+          "modules": [
+            { "id": "m01", "title": "Análise Léxica e Sintática", "lessons": [] },
+            { "id": "m02", "title": "Análise Semântica", "lessons": [] },
+            { "id": "m03", "title": "Geração de Código", "lessons": [] }
+          ]
+        },
+        {
+          "id": "distributed-systems",
+          "title": "Sistemas Distribuídos",
+          "modules": [
+            { "id": "m01", "title": "Comunicação e RPC", "lessons": [] },
+            { "id": "m02", "title": "Consistência e Consenso", "lessons": [] },
+            { "id": "m03", "title": "Tolerância a Falhas", "lessons": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem7",
+      "number": 7,
+      "title": "7º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "ai-ml",
+          "title": "Inteligência Artificial e Machine Learning",
+          "modules": [
+            { "id": "m01", "title": "Busca e Raciocínio", "lessons": [] },
+            { "id": "m02", "title": "Aprendizado Supervisionado", "lessons": [] },
+            { "id": "m03", "title": "Aprendizado Não Supervisionado", "lessons": [] }
+          ]
+        },
+        {
+          "id": "security",
+          "title": "Segurança da Informação",
+          "modules": [
+            { "id": "m01", "title": "Criptografia Básica", "lessons": [] },
+            { "id": "m02", "title": "Autenticação e Acesso", "lessons": [] },
+            { "id": "m03", "title": "Segurança de Redes", "lessons": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sem8",
+      "number": 8,
+      "title": "8º Semestre",
+      "status": "coming-soon",
+      "disciplines": [
+        {
+          "id": "capstone",
+          "title": "Trabalho de Conclusão / Projeto Integrador",
+          "modules": [
+            { "id": "m01", "title": "Planejamento e Proposta", "lessons": [] },
+            { "id": "m02", "title": "Desenvolvimento", "lessons": [] },
+            { "id": "m03", "title": "Apresentação e Defesa", "lessons": [] }
+          ]
+        },
+        {
+          "id": "electives",
+          "title": "Eletivas Avançadas",
+          "modules": [
+            { "id": "m01", "title": "Computação Quântica", "lessons": [] },
+            { "id": "m02", "title": "Bioinformática", "lessons": [] },
+            { "id": "m03", "title": "Computação Gráfica", "lessons": [] }
+          ]
+        }
+      ]
+    }
+  ]
+}

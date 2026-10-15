@@ -1,0 +1,79 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run validation script
+        run: npm run validate
+
+      - name: Run core tests
+        run: npm test
+
+      - name: Check for required files
+        run: |
+          REQUIRED_FILES=(
+            "README.md"
+            "LICENSE"
+            "CONTENT_LICENSE.md"
+            "ATTRIBUTIONS.md"
+            "CONTRIBUTING.md"
+            "CODE_OF_CONDUCT.md"
+            "SECURITY.md"
+            "CHANGELOG.md"
+            ".gitignore"
+            ".editorconfig"
+            ".nojekyll"
+            "404.html"
+            "favicon.svg"
+            "package.json"
+            "index.html"
+            "src/app.js"
+            "src/router.js"
+            "src/i18n.js"
+            "src/store/ProgressStore.js"
+            "src/store/schema-version.js"
+            "src/gamification/xp.js"
+            "src/gamification/streak.js"
+            "src/gamification/achievements.js"
+            "src/gamification/srs.js"
+            "src/curriculum/loader.js"
+            "src/curriculum/unlock.js"
+            "src/curriculum/progress.js"
+            "src/ui/theme.js"
+            "src/ui/toasts.js"
+            "src/ui/modals.js"
+            "src/ui/a11y.js"
+            "data/curriculum.json"
+            "data/theory/_schema.json"
+            "data/exercises/_schema.json"
+            "scripts/validate.mjs"
+            "scripts/test-core.mjs"
+            "scripts/download-libs.mjs"
+          )
+
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "❌ Arquivo obrigatório ausente: $file"
+              exit 1
+            fi
+          done
+          echo "✅ Todos os arquivos obrigatórios presentes"

@@ -21,15 +21,15 @@ ensina-logica/
 ├── lib/highlightjs/            # (vazio - aguardando download)
 ├── locales/pt-BR.json          # ✅ Completo - todas as strings da interface
 ├── data/
-│   ├── curriculum.json         # (pendente)
-│   ├── theory/sem1/algorithms/ # (vazio)
-│   ├── theory/sem1/discrete-math/ # (vazio)
-│   ├── theory/_schema.json     # (pendente)
-│   ├── exercises/sem1/algorithms/ # (vazio)
-│   ├── exercises/sem1/discrete-math/ # (vazio)
-│   └── exercises/_schema.json  # (pendente)
+│   ├── curriculum.json         # ✅ Completo - mapa 8 semestres
+│   ├── theory/sem1/algorithms/ # (vazio - aguardando conteúdo)
+│   ├── theory/sem1/discrete-math/ # (vazio - aguardando conteúdo)
+│   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas
+│   ├── exercises/sem1/algorithms/ # (vazio - aguardando conteúdo)
+│   ├── exercises/sem1/discrete-math/ # (vazio - aguardando conteúdo)
+│   └── exercises/_schema.json  # ✅ Completo - JSON Schema exercícios
 ├── src/
-│   ├── app.js                  # (pendente)
+│   ├── app.js                  # ✅ Completo - entry point, boot, router, store, theme
 │   ├── router.js               # ✅ Completo - hash router com params/hooks
 │   ├── i18n.js                 # ✅ Completo - loader + t(key, params)
 │   ├── store/
@@ -40,13 +40,22 @@ ensina-logica/
 │   │   ├── streak.js           # ✅ Completo - streak + freeze semanal
 │   │   ├── achievements.js     # ✅ Completo - 18 badges com critérios
 │   │   └── srs.js              # ✅ Completo - intervalos 1/3/7/21
-│   ├── curriculum/             # (pendente: loader, unlock, progress)
+│   ├── curriculum/
+│   │   ├── loader.js           # ✅ Completo - carrega curriculum/theory/exercises
+│   │   ├── unlock.js           # ✅ Completo - lógica de desbloqueio linear/livre
+│   │   └── progress.js         # ✅ Completo - marca lição/módulo, calcula %
 │   ├── theory/                 # (pendente: renderer, sidebar, annotations, search)
 │   ├── lesson/                 # (pendente: renderer, 5 exercise types, feedback)
 │   └── ui/
 │       ├── theme.css           # ✅ Completo - light/dark, a11y, reduced-motion, toasts, modals
-│       └── (pendente: theme.js, toasts.js, modals.js, a11y.js)
-├── scripts/                    # (pendente: validate.mjs, test-core.mjs, download-libs.mjs)
+│       ├── theme.js            # ✅ Completo - theme toggle + prefers-color-scheme
+│       ├── toasts.js           # ✅ Completo - notificações não-intrusivas
+│       ├── modals.js           # ✅ Completo - modais acessíveis (ARIA)
+│       └── a11y.js             # ✅ Completo - skip links, live regions, reduced-motion
+├── scripts/
+│   ├── validate.mjs            # ✅ Completo - validação CI (curriculum, theory, exercises, licenses)
+│   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS, unlock, progress)
+│   └── download-libs.mjs       # ✅ Completo - baixa KaTeX/highlight.js para lib/
 ├── index.html                  # ✅ Completo - shell com header, main, footer, skip links
 ├── 404.html                    # ✅ Completo - SPA redirect para GitHub Pages
 ├── .nojekyll                   # ✅ Criado
@@ -64,50 +73,35 @@ ensina-logica/
 └── CHANGELOG.md                # ✅ Iniciado (unreleased)
 ```
 
-### Código Implementado (Fases 1-2 parcial)
+### Código Implementado (Fases 1-2 COMPLETO)
 - **Fase 1 (Setup)**: Estrutura, package.json, .gitignore, .editorconfig, .nojekyll, 404.html, index.html, favicon, README, licenças, atribuições, contributing, code of conduct, security, changelog, locales/pt-BR.json ✅
-- **Fase 2 (Foundational - código core)**: router.js, i18n.js, ProgressStore.js, schema-version.js, xp.js, streak.js, achievements.js, srs.js, theme.css ✅
+- **Fase 2 (Foundational)**: router.js, i18n.js, ProgressStore.js, schema-version.js, xp.js, streak.js, achievements.js, srs.js, theme.css, app.js, curriculum/loader.js, unlock.js, progress.js, data/curriculum.json, data/theory/_schema.json, data/exercises/_schema.json, scripts/validate.mjs, scripts/test-core.mjs, scripts/download-libs.mjs, .github/workflows/validate.yml, .github/workflows/deploy-pages.yml, src/ui/theme.js, toasts.js, modals.js, a11y.js ✅
 
 ---
 
 ## ⏳ O que está pendente
 
-### Fase 2 (Foundational - restante)
-- [ ] `src/app.js` — entry point: boot, router init, store init, theme init
-- [ ] `src/curriculum/loader.js` — carrega curriculum.json + theory + exercises
-- [ ] `src/curriculum/unlock.js` — lógica de desbloqueio
-- [ ] `src/curriculum/progress.js` — marca lição/módulo completo
-- [ ] `data/curriculum.json` — mapa completo 8 semestres
-- [ ] `data/theory/_schema.json` — JSON Schema unidades teóricas
-- [ ] `data/exercises/_schema.json` — JSON Schema exercícios
-- [ ] `scripts/validate.mjs` — validação CI completa
-- [ ] `scripts/test-core.mjs` — testes puros (XP, streak, SRS, unlock, store)
-- [ ] `scripts/download-libs.mjs` — baixa KaTeX/highlight.js para lib/
-- [ ] `.github/workflows/validate.yml` — CI validation
-- [ ] `.github/workflows/deploy-pages.yml` — CI deploy
-
 ### Fase 3: US1 - Onboarding & Semester View
-- [ ] `src/ui/theme.js`, `toasts.js`, `modals.js`, `a11y.js`
-- [ ] Views: dashboard (#/), semester (#/semester/:semId)
-- [ ] Wire navigation, persist daily_goal
+- [ ] Views: dashboard (#/), semester (#/semester/:semId) — **parcial: app.js tem renderDashboard/renderSemesterView placeholders**
+- [ ] Wire navigation, persist daily_goal — **parcial: app.js tem navegação básica**
 
 ### Fase 4: US2 - Discipline & Module Navigation
-- [ ] Views: discipline, module com lock icons
-- [ ] Unlock logic implementado
+- [ ] Views: discipline, module com lock icons — **parcial: app.js tem renderDisciplineView/renderModuleView placeholders**
+- [ ] Unlock logic implementado ✅ (src/curriculum/unlock.js)
 
 ### Fase 5: US3 - Lesson & Exercises (Core MVP)
 - [ ] `src/lesson/renderer.js` + 5 exercise types + feedback.js
-- [ ] View: lesson (#/lesson/:lessonId)
-- [ ] XP calculation, SRS scheduling, persist attempts
+- [ ] View: lesson (#/lesson/:lessonId) — **parcial: app.js tem renderLessonView placeholder**
+- [ ] XP calculation, SRS scheduling, persist attempts ✅ (módulos gamification prontos)
 
 ### Fase 6: US4 - Theory Library (Core MVP)
 - [ ] `src/theory/renderer.js` (KaTeX, highlight.js, atribuição, ver original)
 - [ ] `src/theory/sidebar.js`, `annotations.js`, `search.js`
-- [ ] Views: theory (#/theory/:id), library index (#/library)
+- [ ] Views: theory (#/theory/:id), library index (#/library) — **parcial: app.js tem placeholders**
 
 ### Fase 7: US5 - Gamification Dashboard & Settings
-- [ ] Dashboard enhanced: XP bar, level, streak, achievements gallery
-- [ ] Settings: daily goal, theme, export/import/reset progress
+- [ ] Dashboard enhanced: XP bar, level, streak, achievements gallery — **parcial: app.js tem dashboard UI**
+- [ ] Settings: daily goal, theme, export/import/reset progress — **parcial: app.js tem renderSettingsView**
 - [ ] Confetti (CSS, respects reduced-motion)
 
 ### Fase 8: US6 - 1º Semestre Conteúdo (Data only)
@@ -131,14 +125,11 @@ ensina-logica/
 
 ## 🎯 Próxima Etapa
 
-**Continuar Fase 2 (Foundational)** — criar os arquivos restantes de infraestrutura core:
-1. `src/app.js` (entry point)
-2. `src/curriculum/loader.js`, `unlock.js`, `progress.js`
-3. `data/curriculum.json` (mapa completo)
-4. `data/theory/_schema.json`, `data/exercises/_schema.json`
-5. `scripts/download-libs.mjs` (baixar KaTeX 0.16.9 e highlight.js 11.9.0)
-6. `scripts/validate.mjs` e `scripts/test-core.mjs`
-7. GitHub Actions workflows
+**Iniciar Fase 3 (US1 - Onboarding & Semester View)** — completar as views do dashboard e semestre:
+1. Finalizar `renderDashboard` em `src/app.js` (já tem base)
+2. Finalizar `renderSemesterView` em `src/app.js` (já tem base)
+3. Implementar navegação completa e persistência de `daily_goal`
+4. Testar fluxo: boas-vindas → meta diária → semestre → disciplina
 
 ---
 

@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ensina-logica.github.io/schemas/theory-unit.json",
+  "title": "Theory Unit",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "discipline",
+    "module",
+    "source",
+    "license",
+    "derivation_type",
+    "language",
+    "verification_status",
+    "linked_lessons",
+    "linked_exercises"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^th-sem[1-8]-[a-z-]+-[a-z0-9-]+$",
+      "description": "Unique identifier: th-sem{num}-{discipline}-{module}-{slug}"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120
+    },
+    "discipline": {
+      "type": "string",
+      "enum": [
+        "algorithms",
+        "discrete-math",
+        "data-structures-1",
+        "computer-architecture",
+        "data-structures-2",
+        "operating-systems",
+        "algorithms-analysis",
+        "databases",
+        "computer-networks",
+        "software-engineering",
+        "compilers",
+        "distributed-systems",
+        "ai-ml",
+        "security",
+        "capstone",
+        "electives"
+      ]
+    },
+    "module": {
+      "type": "string",
+      "pattern": "^m[0-9]{2}$"
+    },
+    "source": {
+      "type": "object",
+      "required": ["title", "authors", "url", "chapter", "section", "access_date", "edition", "license_url", "license_confirmed_at"],
+      "properties": {
+        "title": { "type": "string" },
+        "authors": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "chapter": { "type": "string" },
+        "section": { "type": "string" },
+        "access_date": { "type": "string", "format": "date" },
+        "edition": { "type": "string" },
+        "license_url": { "type": "string", "format": "uri" },
+        "license_confirmed_at": { "type": "string", "format": "date" }
+      }
+    },
+    "license": {
+      "type": "string",
+      "enum": [
+        "CC0-1.0",
+        "CC-BY-3.0",
+        "CC-BY-4.0",
+        "CC-BY-SA-3.0",
+        "CC-BY-SA-4.0"
+      ],
+      "description": "SPDX license identifier - only permissive licenses allowed for derivation"
+    },
+    "derivation_type": {
+      "type": "string",
+      "enum": ["original", "translated", "adapted", "summarized"]
+    },
+    "language": {
+      "type": "string",
+      "enum": ["pt-BR"]
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["unverified", "verified_with_source"]
+    },
+    "linked_lessons": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^l[0-9]{2}$" }
+    },
+    "linked_exercises": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^ex-sem[1-8]-[a-z-]+-[a-z0-9-]+$" }
+    },
+    "original_excerpt": {
+      "type": "string",
+      "description": "Original text excerpt when license permits (CC BY/CC BY-SA)"
+    }
+  },
+  "additionalProperties": false
+}
