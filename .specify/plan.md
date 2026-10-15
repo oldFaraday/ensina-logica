@@ -445,39 +445,39 @@ jobs:
 
 ---
 
-## 9. Fontes Aprovadas para o 1º Semestre (CONFIRMADAS)
+## 9. Fontes Aprovadas para o 1º Semestre (CONFIRMADAS — 2026-10-15)
 
 > **Regra do Specify §9:** "Antes de usar qualquer fonte no 1º semestre, o Plan deve apresentar a lista de fontes candidatas com a licença confirmada na página de cada uma, para aprovação do usuário."
 >
-> **Confirmado pelo usuário em 2026-10-15.** Cada entrada abaixo inclui: edição exata, licença confirmada na página oficial, URL da licença, data de conferência.
+> **Confirmado pelo usuário.** Cada entrada abaixo inclui: edição exata, licença confirmada na **página do próprio livro** (URL onde a licença aparece), data de conferência, e restrições de uso.
 
-### ✅ Aprovadas para Derivação (cópia, tradução, adaptação permitidas)
+### ✅ Aprovadas para Derivação (cópia, tradução, adaptação permitidas — com ressalvas)
 
-| # | Fonte | Disciplina/Cobertura | Edição/Versão | Licença Confirmada | URL da Licença | Data Conferência |
-|---|-------|----------------------|---------------|-------------------|----------------|------------------|
-| 1 | **Mathematics for Computer Science** (Lehman, Leighton, Meyer) | Matemática Discreta: lógica, provas, indução, grafos, probabilidade, teoria dos números | Edição Spring 2018 (MIT 6.042) — **somente esta edição**; PDF em `courses.csail.mit.edu/6.042/spring18/mcs.pdf` | **CC BY-SA 3.0** | https://creativecommons.org/licenses/by-sa/3.0/ | 2026-10-15 |
-| 8 | **Discrete Mathematics: An Open Introduction** (Oscar Levin) | Matemática Discreta: lógica, conjuntos, funções, contagem, grafos, provas | **3ª edição** (2019) — **não usar 4ª edição (NC)**; site: `discrete.openmathbooks.org` | **CC BY-SA 4.0** | https://creativecommons.org/licenses/by-sa/4.0/ | 2026-10-15 |
-| 10 | **Programming Fundamentals: A Modular Structured Approach** (Busbee & Braunschweig, 2ª ed.) | Algoritmos e Lógica: variáveis, controle, funções, pseudocode, flowcharts, exemplos em Python/JS/Java/C++ | **2ª edição** (2018), Rebus/Pressbooks — linguagem neutra, foco em lógica modular | **CC BY-SA 4.0** | https://creativecommons.org/licenses/by-sa/4.0/ | 2026-10-15 |
-| 11 | **Computer Science 20 — Saskatchewan** (Dan Schellenberg) | Algoritmos e Lógica: Python interativo (variáveis, condicionais, loops, funções, strings, listas, tartaruga, micro:bit) | Versão online `cs20.ca` / GitHub `schellenberg/computerscience20` — **CC BY-SA 4.0** confirmado no repo | **CC BY-SA 4.0** | https://creativecommons.org/licenses/by-sa/4.0/ | 2026-10-15 |
-| 12 | **An Open Guide to Data Structures and Algorithms** (Bible & Moser, 2023) | Algoritmos: complexidade, recursão, ordenação, busca, listas ligadas, pilhas, filas, hash, árvores, grafos, DP | **1ª edição** (2023), PALNI Press — `pressbooks.palni.org/anopenguidetodatastructuresandalgorithms/` | **CC BY 4.0** | https://creativecommons.org/licenses/by/4.0/ | 2026-10-15 |
-| 13 | **Algorithms and Data Structures With Applications to Graphics and Geometry** (Nievergelt & Hinrichs, 2011) | Algoritmos e estruturas de dados: arrays, listas, árvores, grafos, geometria computacional | Global Text Project, 2011 — `ecampusontario.ca` / PDF direto | **CC BY 3.0** | https://creativecommons.org/licenses/by/3.0/ | 2026-10-15 |
+| # | Fonte | Disciplina/Cobertura | Edição/Versão | Licença Confirmada | URL da Licença (página do livro) | Data Conferência | Restrições |
+|---|-------|----------------------|---------------|-------------------|----------------------------------|------------------|------------|
+| 1 | **Mathematics for Computer Science** (Lehman, Leighton, Meyer) | Matemática Discreta: lógica, provas, indução, grafos, probabilidade, teoria dos números | Edição Spring 2018 (MIT 6.042) — **somente esta edição**; PDF em `courses.csail.mit.edu/6.042/spring18/mcs.pdf` | **CC BY-SA 3.0** | https://courses.csail.mit.edu/6.042/spring18/mcs.pdf (front matter do PDF) | 2026-10-15 | Usar só esta edição; OCW 2015 e LibreTexts são NC |
+| 8 | **Discrete Mathematics: An Open Introduction** (Oscar Levin) | Matemática Discreta: lógica, conjuntos, funções, contagem, grafos, provas | **3ª edição** (2019) — **não usar 4ª edição (NC)**; site: `discrete.openmathbooks.org` | **CC BY-SA 4.0** | https://discrete.openmathbooks.org/ (rodapé "License") | 2026-10-15 | 3ª ed. apenas |
+| 10 | **Programming Fundamentals: A Modular Structured Approach** (Busbee & Braunschweig, 2ª ed.) | Algoritmos e Lógica: variáveis, controle, funções, pseudocode, flowcharts, exemplos em Python/JS/Java/C++ | **2ª edição** (2018), Rebus/Pressbooks — linguagem neutra, foco em lógica modular | **CC BY-SA 4.0** | https://press.rebus.community/programmingfundamentals/front-matter/preface/ (seção "The Creative Commons (CC) Attribution-ShareAlike license applies...") | 2026-10-15 | **Conferir licença por capítulo/imagem** — a licença vale "exceto onde indicado" |
+| 12 | **An Open Guide to Data Structures and Algorithms** (Bible & Moser, 2023) | Algoritmos: **somente capítulo de Big-O e complexidade** no MVP; restante (recursão, ordenação, busca, listas, pilhas, filas, hash, árvores, grafos, DP) reservado para 2º semestre | **1ª edição** (2023), PALNI Press — `pressbooks.palni.org/anopenguidetodatastructuresandalgorithms/` | **CC BY 4.0** | https://pressbooks.palni.org/anopenguidetodatastructuresandalgorithms/ (rodapé "License") | 2026-10-15 | MVP: só capítulo Big-O/complexidade; demais → 2º sem |
 
 ### ⚠️ Só Link Recomendado (licença não permissiva para derivação)
 
 | # | Fonte | Motivo | Uso Permitido |
 |---|-------|--------|---------------|
-| 4 | **OpenStax Introduction to Python Programming** | Página oficial declara **CC BY-NC-SA 4.0** (não CC BY 4.0) — https://openstax.org/books/introduction-python-programming/pages/preface | Apenas link "Leitura recomendada" |
-| 5 | **How to Think Like a Computer Scientist** (Runestone) | Licença **GNU FDL** (não CC BY-SA) — não compatível com nossa política de derivação | Apenas link "Leitura recomendada" |
+| 4 | **OpenStax Introduction to Python Programming** | Página oficial declara **CC BY-NC-SA 4.0** — https://openstax.org/books/introduction-python-programming/pages/preface | Apenas link "Leitura recomendada"; **não usar o texto como entrada para a IA** |
+| 5 | **How to Think Like a Computer Scientist** (Runestone) | Licença **GNU FDL** (não CC BY-SA) | Apenas link "Leitura recomendada" |
 | 6 | **MIT 6.0001** (OCW) | **CC BY-NC-SA 4.0** | Apenas link "Leitura recomendada" |
 | 7 | **CS50** (Harvard) | Licença custom, não permissiva | Apenas link "Leitura recomendada" |
 | 9 | **Book of Proof** (Hammack) | **CC BY-ND 4.0** (sem derivações) | Apenas link "Leitura recomendada" |
+| 11 | **Computer Science 20 — Saskatchewan** (Dan Schellenberg) | Licença CC BY-SA 4.0 declarada no repo, mas **nível introdutório (ensino médio/1º ano)**; só usar se você me mostrar a **página do próprio livro** com a versão exata da licença e o nível justificar | Apenas link "Leitura recomendada" por enquanto |
 
-### 📅 Fora do MVP (semestres posteriores, licenças permissivas confirmadas)
+### 📅 Fora do MVP (semestres posteriores, licenças a confirmar na página original)
 
-| # | Fonte | Semestre Alvo | Licença | Observação |
-|---|-------|---------------|---------|------------|
-| 2 | **Open Data Structures** (Pat Morin) | 2º sem (Estruturas de Dados I) | **CC BY 2.5 Canadá** (site `opendatastructures.org`) | Confirmar edição exata antes de usar |
-| 3 | **Algorithms** (Jeff Erickson) | 4º sem (Projeto e Análise de Algoritmos) | **CC BY 4.0** — **somente livro 2019 (PDF `Algorithms-JeffE.pdf`)**; notas de aula do site são **CC BY-NC-SA 4.0** | Separar livro das notas |
+| # | Fonte | Semestre Alvo | Licença (a confirmar na página do livro) | Observação |
+|---|-------|---------------|------------------------------------------|------------|
+| 2 | **Open Data Structures** (Pat Morin) | 2º sem (Estruturas de Dados I) | **CC BY 2.5 Canadá** — confirmar em `opendatastructures.org` | Confirmar edição exata antes de usar |
+| 3 | **Algorithms** (Jeff Erickson) | 4º sem (Projeto e Análise de Algoritmos) | **CC BY 4.0** — **somente livro 2019 (PDF `Algorithms-JeffE.pdf`)**; notas de aula do site são **CC BY-NC-SA 4.0** | Separar livro das notas; confirmar na página do livro |
+| 13 | **Algorithms and Data Structures With Applications to Graphics and Geometry** (Nievergelt & Hinrichs, 2011) | Fora do MVP (gráficos/geometria computacional) | **CC BY 3.0** — **confirmar na página original** (Global Text Project / `ecampusontario.ca`), pois uma fonte cita BY-SA | Registrar como CC BY 3.0 após confirmação |
 
 ---
 
