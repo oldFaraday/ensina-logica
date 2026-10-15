@@ -6,36 +6,51 @@
   "welcome": {
     "title": "Bem-vindo ao Ensina Lógica",
     "subtitle": "Uma plataforma gamificada para estudar o conteúdo de uma graduação em Ciência da Computação",
-    "disclaimer": "Isso não substitui uma graduação. Conteúdo derivado de fontes abertas, traduzido/adaptado com IA, pode conter erros.",
-    "chooseGoal": "Escolha sua meta diária de XP:",
+    "scope_notice": "Isso não substitui uma graduação. Conteúdo derivado de fontes abertas, traduzido/adaptado com IA, pode conter erros.",
+    "description": "Escolha sua meta diária de XP para começar:",
+    "choose_goal": "Meta diária",
     "goals": {
       "10": "10 XP/dia (Leve)",
       "20": "20 XP/dia (Moderado)",
       "30": "30 XP/dia (Intenso)",
       "50": "50 XP/dia (Hardcore)"
     },
-    "startButton": "Começar"
+    "start": "Começar"
   },
   "dashboard": {
-    "greeting": "Bom estudo!",
-    "dailyGoal": "Meta diária",
-    "xpProgress": "Progresso de XP",
+    "title": "Painel",
+    "welcome": "Bom estudo!",
+    "daily_goal": "Meta diária",
+    "total_xp": "XP Total",
     "level": "Nível",
     "streak": "Streak",
     "days": "dias",
-    "freezes": "Congelamentos",
-    "freezesRemaining": "Disponíveis esta semana",
-    "todaysReviews": "Revisões de hoje",
-    "noReviews": "Nenhuma revisão agendada para hoje",
-    "currentSemester": "Semestre atual",
-    "continueButton": "Continuar",
-    "startButton": "Começar semestre"
+    "freezes_remaining": "Congelamentos restantes",
+    "reviews_due": "Revisões pendentes",
+    "level_progress": "Progresso do nível",
+    "todays_reviews": "Revisões de hoje",
+    "start_reviews": "Iniciar revisões",
+    "review_interval": "Intervalo: {days} dias",
+    "review_now": "Revisar agora",
+    "current_semester": "Semestre atual",
+    "sem1_description": "Algoritmos e Lógica + Matemática Discreta",
+    "coming_soon": "Em breve",
+    "continue": "Continuar"
   },
   "semester": {
     "title": "Semestre",
     "disciplines": "Disciplinas",
     "comingSoon": "Em breve",
     "notAvailable": "Não disponível no MVP"
+  },
+  "common": {
+    "modules": "Módulos",
+    "enter": "Entrar",
+    "back": "Voltar",
+    "locked": "Bloqueado",
+    "completed": "Concluído",
+    "pending": "Pendente",
+    "start": "Iniciar"
   },
   "discipline": {
     "modules": "Módulos",
@@ -53,6 +68,9 @@
     "reviewLesson": "Revisar"
   },
   "lesson": {
+    "title": "Lição",
+    "coming_soon": "Esta lição será implementada na Fase 3 (US3)",
+    "implemented_in_us3": "Aguardando implementação dos exercícios e renderizador",
     "theorySummary": "Resumo teórico",
     "readInLibrary": "Ler na biblioteca",
     "exercises": "Exercícios",
@@ -76,6 +94,9 @@
     "retryPenalty": " (tentativa: 50% XP)"
   },
   "theory": {
+    "title": "Biblioteca",
+    "coming_soon": "A biblioteca será implementada na Fase 4 (US4)",
+    "implemented_in_us4": "Aguardando implementação do renderizador, sidebar, anotações e busca",
     "tableOfContents": "Sumário",
     "markRead": "Marcar como lida",
     "markedRead": "Lida",
@@ -107,6 +128,11 @@
       "summarized": "Resumido"
     }
   },
+  "library": {
+    "title": "Biblioteca Teórica",
+    "coming_soon": "O índice da biblioteca será implementado na Fase 4 (US4)",
+    "implemented_in_us4": "Aguardando implementação da busca full-text e índice geral"
+  },
   "gamification": {
     "xp": "XP",
     "level": "Nível",
@@ -126,26 +152,26 @@
   },
   "settings": {
     "title": "Configurações",
-    "dailyGoal": "Meta diária de XP",
+    "daily_goal": "Meta diária de XP",
     "theme": "Tema",
-    "themeOptions": {
-      "auto": "Automático (sistema)",
-      "light": "Claro",
-      "dark": "Escuro"
-    },
-    "exportProgress": "Exportar progresso",
-    "importProgress": "Importar progresso",
-    "resetProgress": "Resetar progresso",
-    "resetConfirm": "Tem certeza? Isso apagará todo seu progresso (XP, streak, lições, anotações), mas manterá suas preferências.",
-    "exportSuccess": "Progresso exportado com sucesso!",
-    "importSuccess": "Progresso importado com sucesso!",
-    "importError": "Erro ao importar: arquivo inválido ou versão incompatível",
-    "resetSuccess": "Progresso resetado com sucesso!"
+    "light": "Claro",
+    "dark": "Escuro",
+    "auto": "Automático (sistema)",
+    "export": "Exportar progresso",
+    "import": "Importar progresso",
+    "reset": "Resetar progresso",
+    "goal_updated": "Meta diária atualizada para {goal} XP",
+    "exported": "Progresso exportado com sucesso!",
+    "imported": "Progresso importado com sucesso!",
+    "import_failed": "Erro ao importar: arquivo inválido ou versão incompatível",
+    "reset_confirm": "Tem certeza? Isso apagará todo seu progresso (XP, streak, lições, anotações), mas manterá suas preferências.",
+    "reset_done": "Progresso resetado com sucesso!"
   },
   "achievements": {
     "title": "Conquistas",
     "locked": "Bloqueada",
     "unlocked": "Desbloqueada",
+    "unlocked_toast": "Conquista desbloqueada!",
     "criteria": "Critério",
     "list": {
       "first-lesson": {
@@ -206,6 +232,7 @@
     "continue": "Continuar"
   },
   "errors": {
+    "init_failed": "Falha ao inicializar o aplicativo. Tente recarregar a página.",
     "loadFailed": "Falha ao carregar. Tente recarregar a página.",
     "saveFailed": "Falha ao salvar. Verifique o armazenamento do navegador.",
     "notFound": "Não encontrado",

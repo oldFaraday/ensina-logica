@@ -73,17 +73,29 @@ ensina-logica/
 └── CHANGELOG.md                # ✅ Iniciado (unreleased)
 ```
 
-### Código Implementado (Fases 1-2 COMPLETO)
+### Código Implementado (Fases 1-3 COMPLETO)
 - **Fase 1 (Setup)**: Estrutura, package.json, .gitignore, .editorconfig, .nojekyll, 404.html, index.html, favicon, README, licenças, atribuições, contributing, code of conduct, security, changelog, locales/pt-BR.json ✅
 - **Fase 2 (Foundational)**: router.js, i18n.js, ProgressStore.js, schema-version.js, xp.js, streak.js, achievements.js, srs.js, theme.css, app.js, curriculum/loader.js, unlock.js, progress.js, data/curriculum.json, data/theory/_schema.json, data/exercises/_schema.json, scripts/validate.mjs, scripts/test-core.mjs, scripts/download-libs.mjs, .github/workflows/validate.yml, .github/workflows/deploy-pages.yml, src/ui/theme.js, toasts.js, modals.js, a11y.js ✅
+- **Fase 3 (US1 - Onboarding & Semester View)**: renderDashboard, renderSemesterView, showWelcomeModal, bindDashboardEvents, updateDailyGoalUI, setDailyGoal, navegação completa, persistência daily_goal, locales completos, CSS completo para dashboard ✅
 
 ---
 
 ## ⏳ O que está pendente
 
-### Fase 3: US1 - Onboarding & Semester View
-- [ ] Views: dashboard (#/), semester (#/semester/:semId) — **parcial: app.js tem renderDashboard/renderSemesterView placeholders**
-- [ ] Wire navigation, persist daily_goal — **parcial: app.js tem navegação básica**
+### Fase 3: US1 - Onboarding & Semester View ✅ COMPLETO
+- [x] Views: dashboard (#/), semester (#/semester/:semId) — **completo: app.js tem renderDashboard/renderSemesterView funcionais**
+- [x] Wire navigation, persist daily_goal — **completo: navegação hash + persistência no localStorage**
+- [x] Boas-vindas modal com meta diária (10/20/30/50 XP)
+- [x] Dashboard com stats: XP total, nível, streak, freezes, revisões
+- [x] Barra de progresso de nível e meta diária
+- [x] Cards de revisão do dia (SRS)
+- [x] Semestre 1 com disciplinas, semestres 2-8 "Em breve"
+- [x] Locales completos para todas as chaves usadas
+- [x] CSS completo para dashboard, semester, discipline, module, settings, achievements
+
+### Fase 4: US2 - Discipline & Module Navigation
+- [ ] Views: discipline, module com lock icons — **parcial: app.js tem renderDisciplineView/renderModuleView placeholders**
+- [ ] Unlock logic implementado ✅ (src/curriculum/unlock.js)
 
 ### Fase 4: US2 - Discipline & Module Navigation
 - [ ] Views: discipline, module com lock icons — **parcial: app.js tem renderDisciplineView/renderModuleView placeholders**
@@ -125,11 +137,11 @@ ensina-logica/
 
 ## 🎯 Próxima Etapa
 
-**Iniciar Fase 3 (US1 - Onboarding & Semester View)** — completar as views do dashboard e semestre:
-1. Finalizar `renderDashboard` em `src/app.js` (já tem base)
-2. Finalizar `renderSemesterView` em `src/app.js` (já tem base)
-3. Implementar navegação completa e persistência de `daily_goal`
-4. Testar fluxo: boas-vindas → meta diária → semestre → disciplina
+**Iniciar Fase 4 (US2 - Discipline & Module Navigation)** — completar views de disciplina e módulo:
+1. Finalizar `renderDisciplineView` em `src/app.js` (já tem base funcional)
+2. Finalizar `renderModuleView` em `src/app.js` (já tem base funcional)
+3. Testar navegação: semestre → disciplina → módulo → lição
+4. Verificar ícones de lock/unlock e barras de progresso por módulo
 
 ---
 
