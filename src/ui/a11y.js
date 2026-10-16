@@ -16,15 +16,21 @@ export function initA11y() {
  * Configura links de "pular para o conteúdo"
  */
 function setupSkipLinks() {
-  const skipLink = document.createElement('a');
-  skipLink.href = '#main-content';
-  skipLink.className = 'skip-link';
-  skipLink.textContent = 'Pular para o conteúdo principal';
-  document.body.prepend(skipLink);
-
   const main = document.querySelector('main');
+
+  // Only create a skip link if the shell (index.html) does not already
+  // provide one. Avoids duplicated links and dangling #anchors.
+  if (!document.querySelector('a.skip-link')) {
+    const skipLink = document.createElement('a');
+    skipLink.href = main && main.id ? `#${main.id}` : '#main';
+    skipLink.className = 'skip-link';
+    skipLink.textContent = 'Pular para o conteúdo principal';
+    document.body.prepend(skipLink);
+  }
+
+  // Keep the shell's id intact so other modules can find <main> reliably.
   if (main) {
-    main.id = 'main-content';
+    if (!main.id) main.id = 'main';
     main.tabIndex = -1;
   }
 }

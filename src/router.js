@@ -179,7 +179,9 @@ export function startRouter() {
  */
 export function createViewHandler(renderFn) {
   return async (params, query) => {
-    const main = document.getElementById('main');
+    // Look up <main> robustly: the a11y module may change its id,
+    // so never depend on a single hardcoded id.
+    const main = document.getElementById('main') || document.querySelector('main');
     if (!main) return;
 
     // Show loading state

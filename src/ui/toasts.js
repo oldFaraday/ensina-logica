@@ -12,6 +12,14 @@ const TOAST_DURATION = 3500;
 export function initToasts() {
   if (container) return;
 
+  // Reuse the container already declared in the shell (index.html) to
+  // avoid duplicate nodes with the same id.
+  const existing = document.getElementById('toast-container');
+  if (existing) {
+    container = existing;
+    return;
+  }
+
   container = document.createElement('div');
   container.id = 'toast-container';
   container.className = 'toast-container';

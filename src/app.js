@@ -16,6 +16,7 @@ import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
 import { scheduleReview, getDueReviews } from './gamification/srs.js';
+import { getModuleUnlockStatus, getModuleProgress, isLessonCompleted, isModuleUnlocked } from './curriculum/unlock.js';
 
 // Estado global da aplicação
 const AppState = {
