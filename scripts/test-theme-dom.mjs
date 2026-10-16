@@ -37,6 +37,32 @@ function cssRule(selector) {
   return CSS.slice(open + 1, close);
 }
 
+/**
+ * Especificidade (id, classe/atributo/pseudo-classe, elemento) — suficiente
+ * para os seletores simples usados aqui.
+ */
+function specificity(selector) {
+  const s = selector.replace(/:not\(([^)]*)\)/g, ' $1 ');
+  const ids = (s.match(/#[\w-]+/g) || []).length;
+  const attrs = (s.match(/\[[^\]]*\]/g) || []).length;
+  const pseudos = (s.match(/:{1,2}[\w-]+/g) || []).length;
+  const classes = (s.match(/\.[\w-]+/g) || []).length + attrs + pseudos;
+  const stripped = s
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/:{1,2}[\w-]+/g, ' ')
+    .replace(/\.[\w-]+/g, ' ')
+    .replace(/#[\w-]+/g, ' ');
+  const els = (stripped.match(/[A-Za-z][\w-]*/g) || []).length;
+  return [ids, classes, els];
+}
+
+function compareSpecificity(a, b) {
+  for (let i = 0; i < 3; i++) {
+    if (a[i] !== b[i]) return a[i] - b[i];
+  }
+  return 0;
+}
+
 // ============================================================
 // Worker: simula UM carregamento da página
 // ============================================================
@@ -166,16 +192,25 @@ function runOrchestrator() {
 
   try {
     // Guarda de CSS: sol no claro / lua no escuro
-    assert.ok(/display:\s*none/.test(cssRule('.icon-moon') || ''), '.icon-moon base deve ter display: none');
     assert.ok(
-      /display:\s*block/.test(cssRule('html[data-theme="dark"] .icon-moon') || ''),
-      'html[data-theme="dark"] .icon-moon deve ter display: block'
+      /display:\s*none/.test(cssRule('.icon-btn .icon-moon') || ''),
+      '.icon-btn .icon-moon base deve ter display: none (lua escondida no claro)'
     );
     assert.ok(
-      /display:\s*none/.test(cssRule('html[data-theme="dark"] .icon-sun') || ''),
-      'html[data-theme="dark"] .icon-sun deve ter display: none'
+      /display:\s*block/.test(cssRule('html[data-theme="dark"] .icon-btn .icon-moon') || ''),
+      'html[data-theme="dark"] .icon-btn .icon-moon deve ter display: block'
     );
-    console.log('  ✅ CSS: sol no claro, lua no escuro');
+    assert.ok(
+      /display:\s*none/.test(cssRule('html[data-theme="dark"] .icon-btn .icon-sun') || ''),
+      'html[data-theme="dark"] .icon-btn .icon-sun deve ter display: none'
+    );
+    // Regressão: a regra que esconde a lua no claro precisa vencer
+    // `.icon-btn svg { display: block }`, senão os dois ícones aparecem no claro.
+    assert.ok(
+      compareSpecificity(specificity('.icon-btn .icon-moon'), specificity('.icon-btn svg')) > 0,
+      'A regra .icon-btn .icon-moon precisa ter especificidade maior que .icon-btn svg'
+    );
+    console.log('  ✅ CSS: sol no claro, lua no escuro (especificidade OK)');
 
     // 1. Estado limpo -> padrão "auto" (resolve para claro), botão existe
     let r = runWorker(stateFile, 'inspect');

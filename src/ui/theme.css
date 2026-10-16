@@ -323,25 +323,26 @@ code, pre, kbd, samp {
   display: block;
 }
 
-/* Botão de tema: sol no claro, lua no escuro */
-.icon-moon {
+/* Botão de tema: sol no claro, lua no escuro.
+   As regras usam `.icon-btn` para vencer `.icon-btn svg { display: block }`. */
+.icon-btn .icon-moon {
   display: none;
 }
 
-html[data-theme="dark"] .icon-sun {
+html[data-theme="dark"] .icon-btn .icon-sun {
   display: none;
 }
 
-html[data-theme="dark"] .icon-moon {
+html[data-theme="dark"] .icon-btn .icon-moon {
   display: block;
 }
 
 /* Fallback pré-JS (antes do data-theme) para não mostrar os dois ícones */
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) .icon-sun {
+  html:not([data-theme="light"]) .icon-btn .icon-sun {
     display: none;
   }
-  html:not([data-theme="light"]) .icon-moon {
+  html:not([data-theme="light"]) .icon-btn .icon-moon {
     display: block;
   }
 }
