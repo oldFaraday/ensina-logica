@@ -196,6 +196,9 @@ html[data-theme="dark"] {
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  /* Rede de segurança contra rolagem horizontal (T127). A causa é tratada nos
+     blocos de teoria/biblioteca; isto NÃO deve mascarar conteúdo largo. */
+  overflow-x: clip;
 }
 
 body {
@@ -1012,6 +1015,7 @@ label {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-hard-sm);
   text-align: center;
+  margin-bottom: 10px;
 }
 
 /* Próxima ação em destaque forte */
@@ -1597,6 +1601,29 @@ label {
     min-width: 0;
     max-width: none;
   }
+
+  /* T127: teoria/biblioteca no celular */
+  .theory-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Paddings menores para ganhar largura útil (sem sair dos tokens) */
+  .theory-section {
+    padding: var(--space-3);
+  }
+
+  .theory-attribution {
+    padding: var(--space-3);
+  }
+
+  .theory-section-head h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .library-search-input,
+  .library-discipline-filter {
+    width: 100%;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -2101,6 +2128,7 @@ label {
 
 .library-search-input {
   width: 100%;
+  box-sizing: border-box;
   font-family: var(--font-mono);
   font-size: var(--font-size-base);
   padding: var(--space-3);
@@ -2138,6 +2166,8 @@ label {
 }
 
 .library-discipline-filter {
+  width: 100%;
+  box-sizing: border-box;
   font-family: var(--font-mono);
   font-size: var(--font-size-base);
   padding: var(--space-3);
@@ -2179,9 +2209,84 @@ label {
     align-items: start;
   }
 
+  /* O DOM coloca o conteúdo primeiro (leitura/teclado) e o índice depois.
+     No desktop, o índice volta para a coluna da esquerda — sem trocar a ordem
+     de tabulação no mobile. */
+  .theory-main {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .theory-sidebar-host {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .theory-sidebar {
     position: sticky;
     top: var(--space-4);
   }
 }
+
+/* -----------------------------------------------------------------------------
+   26. Responsividade móvel da Biblioteca Teórica (T127)
+   Causa-raiz: `.theory-layout` (grid) não limitava os filhos, então conteúdo
+   largo (KaTeX display, <pre>, <table>) inflava a coluna e estourava o viewport.
+   -------------------------------------------------------------------------- */
+
+/* 1. Impede o "blowout" do grid */
+.theory-layout,
+.theory-layout > * {
+  min-width: 0;
+}
+
+.theory-main,
+.theory-sidebar-host,
+.theory-unit,
+.theory-section {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* 2. Código e fórmulas rolam DENTRO do próprio bloco */
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+pre code {
+  white-space: pre;
+}
+
+.katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* 3. Mídia e tabelas nunca estouram a coluna */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.theory-section-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* 4. Quebra de texto longo/URL */
+main,
+.theory-section-body,
+.theory-attribution dd,
+.lesson-summary-text,
+.library-item {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 

@@ -443,3 +443,11 @@ Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constit
 Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constitution (`.specify/constitution.md`; a cópia em `.specify/memory/constitution.md` é template vazio → governança ignorada com segurança). **Append-only:** nenhuma tarefa existente foi alterada, renumerada ou removida.
 
 - [x] T126 [Convergence] Expor a entrada "Biblioteca" no menu/cabeçalho global apontando para `#/library` (hoje o índice só é alcançável voltando de uma unidade teórica) per spec §4 / AC-05 (missing) — HIGH ✅ (ícone no header + `library.nav`; coberto em `scripts/test-e2e-dom.mjs`)
+
+---
+
+## Phase 16: Correções pós-QA manual (2026-10-16)
+
+**Purpose**: Correções pontuais encontradas no QA manual da Parte 3 (responsividade) e ajustes de gamificação/SRS aprovados. **Append-only**: a partir de T127.
+
+- [x] T127 [fix][ui] Responsividade móvel da Biblioteca Teórica (`#/theory/:id` e `#/library`, ~375px): (a) impedir o "blowout" do grid (`.theory-layout` e filhos com `min-width:0`; `.theory-main`/`.theory-sidebar-host`/`.theory-unit`/`.theory-section` com `min-width:0; max-width:100%`); (b) `pre`/`pre code` e `.katex-display` rolam no próprio bloco (`overflow-x:auto`, `max-width:100%`); (c) `img/svg/video/canvas` e tabelas limitados; (d) `overflow-wrap`/`word-break` nos contêineres de texto; (e) campos de busca/filtro com `width:100%`; (f) `@media (max-width:767px)` com coluna única, paddings menores e índice lateral **depois** do conteúdo (DOM reordenado; desktop mantém o índice à esquerda via `grid-column`); (g) rede de segurança `html { overflow-x: clip; }`. CSS usando **apenas tokens** de `DESIGN.md`. Teste estático `scripts/test-responsive.mjs` (em `npm test`) — commit `fix(ui): responsividade móvel da biblioteca` ✅

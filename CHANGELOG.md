@@ -18,6 +18,9 @@ e este projeto adere a [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md
 - Favicon SVG
 
+### Corrigido
+- **T127 — Responsividade móvel da Biblioteca Teórica** (`fix(ui)`): em `#/theory/:id` e `#/library`, blocos largos (fórmulas KaTeX em bloco, `<pre>`, `<table>`, imagens) não estouram mais o viewport no celular. `src/ui/theme.css`: `min-width:0` no grid `.theory-layout` e seus filhos (+ `max-width:100%` em `.theory-main`/`.theory-sidebar-host`/`.theory-unit`/`.theory-section`); `pre`/`pre code` e `.katex-display` rolam dentro do próprio bloco; mídia/tabelas limitadas; `overflow-wrap`/`word-break` nos contêineres de texto; campos da biblioteca com `width:100%`; coluna única e índice lateral **depois** do conteúdo no celular (DOM reordenado, desktop inalterado); rede de segurança `html { overflow-x: clip; }`. Novo teste estático `scripts/test-responsive.mjs` em `npm test`.
+
 ### Planejado (MVP)
 - Phase 1: Setup completo
 - Phase 2: Foundational (router, store, curriculum loader, validação, testes, CI/CD)

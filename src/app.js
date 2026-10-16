@@ -870,8 +870,8 @@ async function renderTheoryView(params, query, main) {
         <h1>${escapeHtml(unit.title)}</h1>
       </header>
       <div class="theory-layout">
-        <div class="theory-sidebar-host"></div>
         <div class="theory-main"></div>
+        <div class="theory-sidebar-host"></div>
       </div>
     </section>
   `;
