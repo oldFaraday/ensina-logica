@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ensina Lógica — Pré-visualização de temas escuros (A/B/C)</title>
+<style>
+  /* =====================================================================
+     Página de apoio (fora do app). NÃO faz parte do produto e não é
+     referenciada por ele. Serve só para escolher a paleta escura.
+     ===================================================================== */
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+
+  body {
+    background: #0d0e12;
+    color: #e7e7ee;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    padding: 24px;
+  }
+
+  .page-head { max-width: 1400px; margin: 0 auto 24px; }
+  .page-head h1 { font-size: 1.6rem; margin: 0 0 6px; letter-spacing: .02em; }
+  .page-head p { margin: 0; color: #a9a9b8; max-width: 70ch; line-height: 1.5; }
+  .page-head .tag {
+    display: inline-block; margin-top: 12px; padding: 4px 10px;
+    border: 2px solid #ffd400; color: #ffd400; border-radius: 2px;
+    font-family: ui-monospace, Consolas, monospace; font-size: .75rem;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+
+  /* ---------------------------------------------------------------------
+     Cada painel define os SEUS tokens. Os componentes abaixo só usam var().
+     É exatamente o modelo do theme.css (tokens -> componentes).
+     --------------------------------------------------------------------- */
+
+  .panel { border: 2px solid #000; }
+
+  .panel.a {
+    --color-bg: #1C2027;
+    --color-surface: #262B34;
+    --color-surface-2: #333A47;
+    --color-ink: #F2F4F8;
+    --color-ink-muted: #AEB8C7;
+    --color-border: #F4E9D0;
+    --color-primary: #7FB2FF;
+    --color-primary-hover: #A8C8FF;
+    --color-primary-ink: #0B0E14;
+    --color-primary-soft: #24324E;
+    --color-accent: #FF7AC2;
+    --color-accent-ink: #16121A;
+    --color-cta: #FFD400;
+    --color-cta-ink: #17130A;
+    --color-success: #5EE29A;
+    --color-success-soft: #123A28;
+    --color-danger: #FF8A8A;
+    --color-warning: #FFC24B;
+    --color-focus: #FF7AC2;
+    --color-shadow: #FFD400;
+  }
+
+  .panel.b {
+    --color-bg: #1E1A2E;
+    --color-surface: #2A2440;
+    --color-surface-2: #38304F;
+    --color-ink: #F3F0FA;
+    --color-ink-muted: #B6AFCC;
+    --color-border: #F2DFC0;
+    --color-primary: #9C8BFF;
+    --color-primary-hover: #B9ACFF;
+    --color-primary-ink: #120E1E;
+    --color-primary-soft: #322A52;
+    --color-accent: #FF6FB5;
+    --color-accent-ink: #1A1020;
+    --color-cta: #FFD400;
+    --color-cta-ink: #1A1305;
+    --color-success: #5FE3A0;
+    --color-success-soft: #143A2C;
+    --color-danger: #FF8FA3;
+    --color-warning: #FFC65C;
+    --color-focus: #7FE3FF;
+    --color-shadow: #FF6FB5;
+  }
+
+  .panel.c {
+    --color-bg: #201D19;
+    --color-surface: #2B2721;
+    --color-surface-2: #3A352D;
+    --color-ink: #F4F0E9;
+    --color-ink-muted: #C0B7A8;
+    --color-border: #EADFC6;
+    --color-primary: #66D9CE;
+    --color-primary-hover: #8FE6DE;
+    --color-primary-ink: #0E1A19;
+    --color-primary-soft: #163A37;
+    --color-accent: #FF8A5B;
+    --color-accent-ink: #1E120A;
+    --color-cta: #FFD400;
+    --color-cta-ink: #1A1405;
+    --color-success: #6FE0A0;
+    --color-success-soft: #173A28;
+    --color-danger: #FF8F7A;
+    --color-warning: #FFCB61;
+    --color-focus: #7FDFFF;
+    --color-shadow: #14110D;
+  }
+
+  /* Cabeçalho do painel */
+  .panel-head {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border-bottom: 4px solid var(--color-border);
+    padding: 14px 16px;
+  }
+  .panel-head .letter {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+  .panel-head h2 { margin: 2px 0 6px; font-size: 1.15rem; }
+  .panel-head .notes { font-size: .78rem; color: var(--color-ink-muted); line-height: 1.45; }
+  .swatches { display: flex; gap: 6px; margin-top: 10px; }
+  .swatch {
+    width: 22px; height: 22px; border: 2px solid var(--color-border);
+    display: inline-block;
+  }
+
+  /* Tela do painel (o "app" em miniatura) */
+  .canvas {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    padding: 16px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .label {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin: 0 0 6px;
+  }
+
+  /* Cartões */
+  .card {
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
+    box-shadow: 4px 4px 0 0 var(--color-shadow);
+    border-radius: 2px;
+    padding: 12px;
+  }
+
+  /* Cartão de XP */
+  .stat-card { display: flex; align-items: center; gap: 12px; }
+  .stat-icon {
+    width: 40px; height: 40px; display: grid; place-items: center;
+    font-size: 1.2rem; border: 3px solid var(--color-border);
+    background: var(--color-surface-2); border-radius: 2px;
+  }
+  .stat-value { font-size: 1.6rem; font-weight: 800; font-family: ui-monospace, Consolas, monospace; line-height: 1; }
+  .stat-label {
+    display: block; margin-top: 4px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* Botões */
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 10px 16px;
+    border: 3px solid var(--color-border); border-radius: 2px;
+    font-weight: 800; font-size: .9rem; cursor: pointer;
+    box-shadow: 3px 3px 0 0 var(--color-shadow);
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--color-primary); color: var(--color-primary-ink); }
+  .btn-cta { background: var(--color-cta); color: var(--color-cta-ink); }
+  .btn:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+
+  /* Barra de progresso */
+  .progress {
+    position: relative; height: 28px;
+    background: var(--color-surface-2);
+    border: 2px solid var(--color-border); border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress > .fill { height: 100%; width: 45%; background: var(--color-primary); }
+  .progress .pill {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: var(--color-surface); color: var(--color-ink);
+    border: 2px solid var(--color-border); border-radius: 2px;
+    padding: 0 8px; line-height: 1.4;
+    font-family: ui-monospace, Consolas, monospace; font-size: .7rem; font-weight: 800;
+    white-space: nowrap;
+  }
+
+  /* Módulos */
+  .module { display: grid; gap: 8px; }
+  .module-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .module h3 { margin: 0; font-size: .98rem; }
+  .module p { margin: 0; color: var(--color-ink-muted); font-size: .78rem; }
+  .module.locked { opacity: .72; }
+  .module.locked .locked-tag {
+    font-family: ui-monospace, Consolas, monospace; font-size: .68rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--color-ink-muted); display: inline-flex; gap: 6px; align-items: center;
+  }
+  .module .done { color: var(--color-success); font-weight: 800; font-size: .8rem; }
+
+  /* Etiquetas */
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; border: 2px solid var(--color-border); border-radius: 2px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+  }
+  .badge-soon { background: var(--color-surface-2); color: var(--color-ink); border-style: dashed; }
+  .badge-soft { background: var(--color-primary-soft); color: var(--color-primary); }
+  .badge-accent { background: var(--color-accent); color: var(--color-accent-ink); }
+
+  /* Amostras de texto */
+  .ink { color: var(--color-ink); font-weight: 800; }
+  .muted { color: var(--color-ink-muted); font-size: .82rem; }
+</style>
+</head>
+<body>
+
+  <div class="page-head">
+    <h1>Pré-visualização — três paletas de tema escuro</h1>
+    <p>
+      Mesmos componentes nas três opções. Todas mantêm o botão amarelo
+      <strong>“Continuar”</strong> e passam em WCAG AA (ver <code>DESIGN.md</code>).
+      Ao clicar num botão, o anel de foco aparece (aperte <kbd>Tab</kbd> para
+      navegar). Me diga qual: <strong>A</strong>, <strong>B</strong> ou
+      <strong>C</strong>.
+    </p>
+    <span class="tag">Escolha: A · B · C</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- ================= OPÇÃO A ================= -->
+    <section class="panel a">
+      <header class="panel-head">
+        <div class="letter">Opção A</div>
+        <h2>Meia-noite azul</h2>
+        <div class="notes">
+          Azul-acinzentado frio. Sombra dura <strong>amarela</strong>, foco rosa.
+          O mais próximo do tema atual, porém mais suave.
+        </div>
+        <div class="swatches">
+          <span class="swatch" style="background:#1C2027"></span>
+          <span class="swatch" style="background:#262B34"></span>
+          <span class="swatch" style="background:#333A47"></span>
+          <span class="swatch" style="background:#F4E9D0"></span>
+          <span class="swatch" style="background:#7FB2FF"></span>
+          <span class="swatch" style="background:#FFD400"></span>
+          <span class="swatch" style="background:#FF7AC2"></span>
+        </div>
+      </header>
+      <div class="canvas">
+
+        <div>
+          <p class="label">Cartão de XP</p>
+          <div class="card stat-card">
+            <span class="stat-icon" aria-hidden="true">⭐</span>
+            <div>
+              <span class="stat-value">1.240</span>
+              <span class="stat-label">XP total</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Botões</p>
+          <div class="row">
+            <button class="btn btn-primary">Entrar</button>
+            <button class="btn btn-cta">Continuar →</button>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Barra de progresso</p>
+          <div class="progress" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="20">
+            <div class="fill"></div>
+            <span class="pill">9/20 XP</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Módulo liberado</p>
+          <div class="card module">
+            <div class="module-top">
+              <h3>Variáveis e Tipos</h3>
+              <span class="done">✅ Concluído</span>
+            </div>
+            <p>3 lições · 120 XP</p>
+            <div class="row"><button class="btn btn-primary">Iniciar</button></div>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Módulo bloqueado</p>
+          <div class="card module locked">
+            <div class="module-top">
+              <h3>Controle de Fluxo</h3>
+              <span class="locked-tag">🔒 Bloqueado</span>
+            </div>
+            <p>Conclui o módulo anterior para liberar.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Etiquetas</p>
+          <div class="badges">
+            <span class="badge badge-soon">🔒 Em breve</span>
+            <span class="badge badge-soft">Novo</span>
+            <span class="badge badge-accent">Destaque</span>
+          </div>
+          <p class="muted" style="margin-top:10px">Texto secundário (ink-muted) para leitura confortável.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= OPÇÃO B ================= -->
+    <section class="panel b">
+      <header class="panel-head">
+        <div class="letter">Opção B</div>
+        <h2>Ameixa</h2>
+        <div class="notes">
+          Roxo escuro. Sombra dura <strong>rosa</strong>, foco ciano. A mais
+          “autoral”; primária lilás.
+        </div>
+        <div class="swatches">
+          <span class="swatch" style="background:#1E1A2E"></span>
+          <span class="swatch" style="background:#2A2440"></span>
+          <span class="swatch" style="background:#38304F"></span>
+          <span class="swatch" style="background:#F2DFC0"></span>
+          <span class="swatch" style="background:#9C8BFF"></span>
+          <span class="swatch" style="background:#FFD400"></span>
+          <span class="swatch" style="background:#FF6FB5"></span>
+        </div>
+      </header>
+      <div class="canvas">
+
+        <div>
+          <p class="label">Cartão de XP</p>
+          <div class="card stat-card">
+            <span class="stat-icon" aria-hidden="true">⭐</span>
+            <div>
+              <span class="stat-value">1.240</span>
+              <span class="stat-label">XP total</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Botões</p>
+          <div class="row">
+            <button class="btn btn-primary">Entrar</button>
+            <button class="btn btn-cta">Continuar →</button>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Barra de progresso</p>
+          <div class="progress" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="20">
+            <div class="fill"></div>
+            <span class="pill">9/20 XP</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Módulo liberado</p>
+          <div class="card module">
+            <div class="module-top">
+              <h3>Variáveis e Tipos</h3>
+              <span class="done">✅ Concluído</span>
+            </div>
+            <p>3 lições · 120 XP</p>
+            <div class="row"><button class="btn btn-primary">Iniciar</button></div>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Módulo bloqueado</p>
+          <div class="card module locked">
+            <div class="module-top">
+              <h3>Controle de Fluxo</h3>
+              <span class="locked-tag">🔒 Bloqueado</span>
+            </div>
+            <p>Conclui o módulo anterior para liberar.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Etiquetas</p>
+          <div class="badges">
+            <span class="badge badge-soon">🔒 Em breve</span>
+            <span class="badge badge-soft">Novo</span>
+            <span class="badge badge-accent">Destaque</span>
+          </div>
+          <p class="muted" style="margin-top:10px">Texto secundário (ink-muted) para leitura confortável.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= OPÇÃO C ================= -->
+    <section class="panel c">
+      <header class="panel-head">
+        <div class="letter">Opção C</div>
+        <h2>Grafite quente</h2>
+        <div class="notes">
+          Carvão quente e neutro. Sombra dura <strong>escura</strong> (discreta),
+          primária turquesa, foco ciano.
+        </div>
+        <div class="swatches">
+          <span class="swatch" style="background:#201D19"></span>
+          <span class="swatch" style="background:#2B2721"></span>
+          <span class="swatch" style="background:#3A352D"></span>
+          <span class="swatch" style="background:#EADFC6"></span>
+          <span class="swatch" style="background:#66D9CE"></span>
+          <span class="swatch" style="background:#FFD400"></span>
+          <span class="swatch" style="background:#FF8A5B"></span>
+        </div>
+      </header>
+      <div class="canvas">
+
+        <div>
+          <p class="label">Cartão de XP</p>
+          <div class="card stat-card">
+            <span class="stat-icon" aria-hidden="true">⭐</span>
+            <div>
+              <span class="stat-value">1.240</span>
+              <span class="stat-label">XP total</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Botões</p>
+          <div class="row">
+            <button class="btn btn-primary">Entrar</button>
+            <button class="btn btn-cta">Continuar →</button>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Barra de progresso</p>
+          <div class="progress" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="20">
+            <div class="fill"></div>
+            <span class="pill">9/20 XP</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Módulo liberado</p>
+          <div class="card module">
+            <div class="module-top">
+              <h3>Variáveis e Tipos</h3>
+              <span class="done">✅ Concluído</span>
+            </div>
+            <p>3 lições · 120 XP</p>
+            <div class="row"><button class="btn btn-primary">Iniciar</button></div>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Módulo bloqueado</p>
+          <div class="card module locked">
+            <div class="module-top">
+              <h3>Controle de Fluxo</h3>
+              <span class="locked-tag">🔒 Bloqueado</span>
+            </div>
+            <p>Conclui o módulo anterior para liberar.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="label">Etiquetas</p>
+          <div class="badges">
+            <span class="badge badge-soon">🔒 Em breve</span>
+            <span class="badge badge-soft">Novo</span>
+            <span class="badge badge-accent">Destaque</span>
+          </div>
+          <p class="muted" style="margin-top:10px">Texto secundário (ink-muted) para leitura confortável.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
