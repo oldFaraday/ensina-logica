@@ -35,3 +35,6 @@ coverage/
 # Specify
 .specify/memory/
 .specify/feature.json
+
+# Local clone of github/spec-kit (tooling, not part of the site)
+spec-kit/
