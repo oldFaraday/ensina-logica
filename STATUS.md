@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação); inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa»); inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -115,6 +115,16 @@ ensina-logica/
 - **"Duas linhas brancas duplicadas" no topo** → o cabeçalho tinha `border-bottom` **e** a `.xp-bar` tinha `border-top`, gerando duas linhas. Correção: removido o `border-top` da `.xp-bar` (a barra ficou com 28px e o *chip* "Nível 1 — 0/1000 XP" centralizado verticalmente à direita).
 - **Deep-link/refresh voltava para o painel** → o `Router` registrava um listener de `load` e processava o hash **antes** de `setupRoutes()` (o boot é assíncrono), com a tabela de rotas vazia → caía no 404 e redirecionava para `#/`. Correção: guarda `started` no `Router` (listeners só agem após `startRouter()`). `#/settings` e `#/semester/sem1` agora abrem a própria tela no carregamento direto.
 - **Teste de interação** (`scripts/test-interaction-dom.mjs`, em `npm test`): cliques reais (`click()`) em "Continuar" → "Entrar" (disciplina) → "Entrar" (módulo), verificando a rota **e** o `<h1>` da tela; deep-link em `#/settings` e `#/semester/sem1`; e guarda de CSS (`pointer-events`) para o overlay.
+
+### Revisão do tema escuro — Opção B «Ameixa» (2026-10-16) — T119
+- **Motivo**: o tema escuro anterior (fundo `#101014` quase preto + bordas/sombras brancas) ficou **agressivo e feio**.
+- **Processo**: `DESIGN.md` §2.3 lista **três** propostas com todos os tokens em hex e a razão de contraste de cada par (texto ≥ 4.5 / UI ≥ 3.0), e `design-preview.html` (arquivo solto, **fora do app e sem link nele**) mostra as três lado a lado. A **Opção B «Ameixa»** foi escolhida.
+- **Aplicado**: `src/ui/theme.css` (nos **dois** blocos escuros — `html[data-theme="dark"]` e o fallback `@media`) — fundo roxo escuro `#1E1A2E`, superfícies `#2A2440`/`#38304F`, bordas em creme `#F2DFC0`, **sombra dura rosa** `#FF6FB5`, foco ciano `#7FE3FF`; primária lilás `#9C8BFF`; **CTA amarela `#FFD400` mantida**. Tema **claro inalterado**.
+- **`index.html`**: `theme-color` agora segue o tema do sistema (`#FBF7EC` no claro, `#1E1A2E` no escuro) via `<meta media="(prefers-color-scheme: …)">`.
+- **Verificado**: `npm test` verde (contraste 76 ok/0 falhas; os blocos escuros continuam idênticos) e inspeção no navegador em claro e escuro (painel, semestre, modal de boas-vindas).
+
+### 🐞 Bug conhecido (pré-existente, fora do escopo desta tarefa)
+- **Preferência de tema não persiste no reload**: o boot lê o tema de `AppState.progress.preferences.theme` (`src/app.js`), mas o handler dos botões de tema em Configurações chama apenas `toggleTheme(theme)` (`src/ui/theme.js`, que grava na chave `ensina-logica-theme`) **sem** `progressStore.update({ preferences: { theme } })`. Resultado: escolher claro/escuro/automático volta para "automático" após recarregar. Sugerido corrigir numa tarefa de tema dedicada.
 
 ---
 

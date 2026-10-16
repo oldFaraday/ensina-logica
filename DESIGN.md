@@ -61,36 +61,40 @@ sombra, raio ou alvo de toque — tudo vem de `var(--token)`. O teste
 | `--color-shadow` | `#141414` | Cor da sombra dura |
 | `--color-overlay` | `rgba(20,20,20,0.6)` | Fundo de modal |
 
-### 2.2 Tema escuro — fundo quase preto, bordas e sombras claras
+### 2.2 Tema escuro — Opção B «Ameixa» (aplicada)
+
+Fundo **roxo escuro**, superfícies um tom mais claras, bordas em **creme levemente quente**
+(não branco puro) e sombra dura **rosa** (`--color-shadow` = `--color-accent`). Escolhida entre
+três propostas (ver §2.3) por ser a mais autoral e ainda assim confortável.
 
 | Token | Valor | Uso |
 |-------|-------|-----|
-| `--color-bg` | `#101014` | Fundo da página |
-| `--color-surface` | `#1B1B22` | Cartões, campos, chips |
-| `--color-surface-2` | `#26262F` | Superfície alternativa |
-| `--color-ink` | `#F5F5F7` | Texto principal |
-| `--color-ink-muted` | `#B9B9C4` | Texto secundário |
-| `--color-border` | `#EDEDF2` | Bordas claras |
-| `--color-primary` | `#8FB0FF` | Ação primária |
-| `--color-primary-hover` | `#B4C9FF` | Hover da primária |
-| `--color-primary-ink` | `#0B0B0F` | Texto sobre a primária |
-| `--color-primary-soft` | `#1E2A4A` | Fundo suave da primária |
-| `--color-accent` | `#FF7AC2` | Destaque |
-| `--color-accent-ink` | `#0B0B0F` | Texto sobre o destaque |
-| `--color-cta` | `#FFD400` | CTA / próximo passo |
-| `--color-cta-ink` | `#0B0B0F` | Texto sobre a CTA |
-| `--color-success` | `#5EE29A` | Sucesso |
-| `--color-success-ink` | `#0B0B0F` | Texto sobre sucesso |
-| `--color-success-soft` | `#123A26` | Fundo suave de sucesso |
-| `--color-danger` | `#FF8A8A` | Erro/perigo |
-| `--color-danger-ink` | `#0B0B0F` | Texto sobre perigo |
-| `--color-danger-soft` | `#44171B` | Fundo suave de perigo |
-| `--color-warning` | `#FFC24B` | Aviso |
-| `--color-warning-ink` | `#0B0B0F` | Texto sobre aviso |
-| `--color-warning-soft` | `#3D2A08` | Fundo suave de aviso |
-| `--color-focus` | `#FFD400` | Anel de foco (amarelo, ≠ borda) |
-| `--color-shadow` | `#F5F5F7` | Cor da sombra dura (clara) |
-| `--color-overlay` | `rgba(0,0,0,0.7)` | Fundo de modal |
+| `--color-bg` | `#1E1A2E` | Fundo da página (roxo escuro) |
+| `--color-surface` | `#2A2440` | Cartões, campos, chips |
+| `--color-surface-2` | `#38304F` | Superfície alternativa |
+| `--color-ink` | `#F3F0FA` | Texto principal |
+| `--color-ink-muted` | `#B6AFCC` | Texto secundário |
+| `--color-border` | `#F2DFC0` | Bordas (creme levemente quente) |
+| `--color-primary` | `#9C8BFF` | Ação primária (lilás) |
+| `--color-primary-hover` | `#B9ACFF` | Hover da primária |
+| `--color-primary-ink` | `#120E1E` | Texto sobre a primária |
+| `--color-primary-soft` | `#322A52` | Fundo suave da primária |
+| `--color-accent` | `#FF6FB5` | Destaque (rosa) |
+| `--color-accent-ink` | `#1A1020` | Texto sobre o destaque |
+| `--color-cta` | `#FFD400` | CTA / próximo passo (amarelo — mantido) |
+| `--color-cta-ink` | `#1A1305` | Texto sobre a CTA |
+| `--color-success` | `#5FE3A0` | Sucesso |
+| `--color-success-ink` | `#120E1E` | Texto sobre sucesso |
+| `--color-success-soft` | `#143A2C` | Fundo suave de sucesso |
+| `--color-danger` | `#FF8FA3` | Erro/perigo |
+| `--color-danger-ink` | `#120E1E` | Texto sobre perigo |
+| `--color-danger-soft` | `#471A2C` | Fundo suave de perigo |
+| `--color-warning` | `#FFC65C` | Aviso |
+| `--color-warning-ink` | `#120E1E` | Texto sobre aviso |
+| `--color-warning-soft` | `#41290E` | Fundo suave de aviso |
+| `--color-focus` | `#7FE3FF` | Anel de foco (ciano, ≠ borda e ≠ CTA) |
+| `--color-shadow` | `#FF6FB5` | Cor da sombra dura (rosa — destaque) |
+| `--color-overlay` | `rgba(12,9,22,0.72)` | Fundo de modal |
 
 > Os tokens de cor do tema escuro aparecem **duas vezes** no CSS: sob
 > `html[data-theme="dark"]` e no fallback `@media (prefers-color-scheme: dark)`
@@ -99,9 +103,10 @@ sombra, raio ou alvo de toque — tudo vem de `var(--token)`. O teste
 
 ### 2.3 Propostas de paleta escura (revisão — ainda não aplicadas)
 
-O tema escuro acima (fundo `#101014` quase preto + bordas/sombras brancas `#EDEDF2`/`#F5F5F7`)
-foi considerado **agressivo e feio**. As três propostas abaixo substituem **apenas os tokens do
-tema escuro**; o tema claro permanece intacto.
+O tema escuro anterior (fundo `#101014` quase preto + bordas/sombras brancas `#EDEDF2`/`#F5F5F7`)
+foi considerado **agressivo e feio**. As três propostas abaixo foram feitas para substituí-lo;
+a **Opção B «Ameixa» foi a escolhida e já está aplicada** em §2.2 e em `src/ui/theme.css`
+(o tema claro permanece intacto). As opções A e C ficam registradas como alternativas.
 
 **Diretrizes seguidas**
 - Fundo **cinza-azulado ou roxo escuro** — nunca preto puro.

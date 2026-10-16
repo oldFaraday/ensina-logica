@@ -13,7 +13,7 @@ description: "Task list template for feature implementation"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
-**Status snapshot (2026-10-16)**: Fases 1–4 concluídas + Fundamentos visuais (T113–T114) + correções fora do fluxo (T101–T108, T115–T118). Próxima fase: **Fase 5 (US3 — Lições/Exercícios)**. Ver seção "Progresso real do projeto" no fim.
+**Status snapshot (2026-10-16)**: Fases 1–4 concluídas + Fundamentos visuais (T113–T114) + correções fora do fluxo (T101–T108, T115–T118) + tema escuro Opção B (T119). Próxima fase: **Fase 5 (US3 — Lições/Exercícios)**. Ver seção "Progresso real do projeto" no fim.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -271,6 +271,7 @@ description: "Task list template for feature implementation"
 - [x] T116 [fix] Layout do topo: `.daily-goal-bar` com `width: 100%` (antes colapsava a ~6px por margens automáticas + conteúdo absoluto, virando uma "barra vertical") e `.xp-bar` sem `border-top` (que duplicava a linha do cabeçalho)
 - [x] T117 [fix] Router: guarda `started` — o router não lê mais o hash antes de `setupRoutes()`/`startRouter()`. Deep-link/refresh em `#/settings` ou `#/semester/sem1` agora abre a própria tela (antes o evento `load` rodava com a tabela de rotas vazia, caía no 404 e redirecionava para `#/`)
 - [x] T118 [test] Teste de interação (jsdom) com cliques reais: "Continuar" → semestre → "Entrar" (disciplina) → "Entrar" (módulo), deep-link e guarda de `pointer-events` do overlay; incluído em `npm test`
+- [x] T119 [design] Tema escuro refeito para a **Opção B «Ameixa»** (roxo escuro, superfícies mais claras, bordas em creme quente, sombra dura **rosa**, foco ciano; CTA amarela mantida) — escolhida entre 3 propostas em `DESIGN.md` §2.3 e `design-preview.html` (arquivo solto, sem link no app); aplicada nos dois blocos escuros de `src/ui/theme.css`; `index.html` com `theme-color` por `prefers-color-scheme`; contraste AA mantido
 
 ---
 

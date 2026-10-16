@@ -91,68 +91,70 @@
 }
 
 /* -----------------------------------------------------------------------------
-   2. Tokens de cor — TEMA ESCURO (fundo quase preto, bordas/sombras claras)
+   2. Tokens de cor — TEMA ESCURO — Opção B «Ameixa»
+      Fundo roxo escuro, superfícies um tom mais claras, bordas em creme
+      levemente quente, sombra dura ROSA (#FF6FB5) e foco ciano.
    ATENÇÃO: este bloco e o fallback de @media abaixo devem ser IDÊNTICOS.
    O teste scripts/test-contrast.mjs verifica isso.
    -------------------------------------------------------------------------- */
 html[data-theme="dark"] {
-  --color-bg: #101014;
-  --color-surface: #1B1B22;
-  --color-surface-2: #26262F;
-  --color-ink: #F5F5F7;
-  --color-ink-muted: #B9B9C4;
-  --color-border: #EDEDF2;
-  --color-primary: #8FB0FF;
-  --color-primary-hover: #B4C9FF;
-  --color-primary-ink: #0B0B0F;
-  --color-primary-soft: #1E2A4A;
-  --color-accent: #FF7AC2;
-  --color-accent-ink: #0B0B0F;
+  --color-bg: #1E1A2E;
+  --color-surface: #2A2440;
+  --color-surface-2: #38304F;
+  --color-ink: #F3F0FA;
+  --color-ink-muted: #B6AFCC;
+  --color-border: #F2DFC0;
+  --color-primary: #9C8BFF;
+  --color-primary-hover: #B9ACFF;
+  --color-primary-ink: #120E1E;
+  --color-primary-soft: #322A52;
+  --color-accent: #FF6FB5;
+  --color-accent-ink: #1A1020;
   --color-cta: #FFD400;
-  --color-cta-ink: #0B0B0F;
-  --color-success: #5EE29A;
-  --color-success-ink: #0B0B0F;
-  --color-success-soft: #123A26;
-  --color-danger: #FF8A8A;
-  --color-danger-ink: #0B0B0F;
-  --color-danger-soft: #44171B;
-  --color-warning: #FFC24B;
-  --color-warning-ink: #0B0B0F;
-  --color-warning-soft: #3D2A08;
-  --color-focus: #FFD400;
-  --color-shadow: #F5F5F7;
-  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-cta-ink: #1A1305;
+  --color-success: #5FE3A0;
+  --color-success-ink: #120E1E;
+  --color-success-soft: #143A2C;
+  --color-danger: #FF8FA3;
+  --color-danger-ink: #120E1E;
+  --color-danger-soft: #471A2C;
+  --color-warning: #FFC65C;
+  --color-warning-ink: #120E1E;
+  --color-warning-soft: #41290E;
+  --color-focus: #7FE3FF;
+  --color-shadow: #FF6FB5;
+  --color-overlay: rgba(12, 9, 22, 0.72);
 }
 
 /* Fallback antes do JS aplicar data-theme (evita flash). Deve espelhar o bloco acima. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg: #101014;
-    --color-surface: #1B1B22;
-    --color-surface-2: #26262F;
-    --color-ink: #F5F5F7;
-    --color-ink-muted: #B9B9C4;
-    --color-border: #EDEDF2;
-    --color-primary: #8FB0FF;
-    --color-primary-hover: #B4C9FF;
-    --color-primary-ink: #0B0B0F;
-    --color-primary-soft: #1E2A4A;
-    --color-accent: #FF7AC2;
-    --color-accent-ink: #0B0B0F;
+    --color-bg: #1E1A2E;
+    --color-surface: #2A2440;
+    --color-surface-2: #38304F;
+    --color-ink: #F3F0FA;
+    --color-ink-muted: #B6AFCC;
+    --color-border: #F2DFC0;
+    --color-primary: #9C8BFF;
+    --color-primary-hover: #B9ACFF;
+    --color-primary-ink: #120E1E;
+    --color-primary-soft: #322A52;
+    --color-accent: #FF6FB5;
+    --color-accent-ink: #1A1020;
     --color-cta: #FFD400;
-    --color-cta-ink: #0B0B0F;
-    --color-success: #5EE29A;
-    --color-success-ink: #0B0B0F;
-    --color-success-soft: #123A26;
-    --color-danger: #FF8A8A;
-    --color-danger-ink: #0B0B0F;
-    --color-danger-soft: #44171B;
-    --color-warning: #FFC24B;
-    --color-warning-ink: #0B0B0F;
-    --color-warning-soft: #3D2A08;
-    --color-focus: #FFD400;
-    --color-shadow: #F5F5F7;
-    --color-overlay: rgba(0, 0, 0, 0.7);
+    --color-cta-ink: #1A1305;
+    --color-success: #5FE3A0;
+    --color-success-ink: #120E1E;
+    --color-success-soft: #143A2C;
+    --color-danger: #FF8FA3;
+    --color-danger-ink: #120E1E;
+    --color-danger-soft: #471A2C;
+    --color-warning: #FFC65C;
+    --color-warning-ink: #120E1E;
+    --color-warning-soft: #41290E;
+    --color-focus: #7FE3FF;
+    --color-shadow: #FF6FB5;
+    --color-overlay: rgba(12, 9, 22, 0.72);
   }
 }
 
