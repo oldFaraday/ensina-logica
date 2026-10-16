@@ -47,6 +47,7 @@ export async function initApp() {
     initToasts();
     initModals();
     initA11y();
+    applyHeaderLabels();
 
     // 6. Carrega currículo
     AppState.curriculum = await loadCurriculum();
@@ -361,6 +362,56 @@ function getTodayXP(progress) {
 }
 
 /**
+ * Retorna o título de uma lição a partir do currículo.
+ * Faz fallback para um rótulo localizado — nunca devolve uma chave crua de i18n.
+ * @param {Object} mod - Módulo do currículo (com lessonTitles opcional)
+ * @param {string} lessonId - ID da lição (ex: l01)
+ * @param {number} index - Índice da lição dentro do módulo
+ * @returns {string}
+ */
+function getLessonTitle(mod, lessonId, index = 0) {
+  const fromCurriculum = mod?.lessonTitles?.[lessonId];
+  if (fromCurriculum) return fromCurriculum;
+  return t('lesson.numbered', { number: index + 1 });
+}
+
+/**
+ * Localiza uma lição no currículo (semestre, disciplina, módulo e índice)
+ * @param {string} lessonId - ID da lição
+ * @returns {Object|null}
+ */
+function findLessonContext(lessonId) {
+  for (const sem of AppState.curriculum?.semesters || []) {
+    for (const disc of sem.disciplines || []) {
+      for (const mod of disc.modules || []) {
+        const index = mod.lessons.indexOf(lessonId);
+        if (index !== -1) return { sem, disc, mod, index };
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Aplica rótulos acessíveis (aria-label + tooltip) traduzidos nos ícones do cabeçalho
+ */
+function applyHeaderLabels() {
+  const targets = [
+    ['#theme-toggle', 'a11y.toggleTheme'],
+    ['a[href="#/settings"]', 'settings.title'],
+    ['a[href="#/achievements"]', 'achievements.title'],
+  ];
+
+  for (const [selector, key] of targets) {
+    const el = document.querySelector(selector);
+    if (!el) continue;
+    const label = t(key);
+    el.setAttribute('aria-label', label);
+    el.setAttribute('title', label);
+  }
+}
+
+/**
  * Renderiza visão do semestre
  */
 async function renderSemesterView(params, query, main) {
@@ -449,7 +500,7 @@ async function renderModuleView(params, query, main) {
         <h1>${mod.title}</h1>
       </header>
       <ul class="lesson-list">
-        ${mod.lessons.map(lessonId => {
+        ${mod.lessons.map((lessonId, idx) => {
           const completed = isLessonCompleted(AppState.progress, lessonId);
           const unlocked = isModuleUnlocked(AppState.curriculum, AppState.progress, semId, discId, modId);
           return `
@@ -457,7 +508,7 @@ async function renderModuleView(params, query, main) {
               <span class="lesson-status" aria-label="${completed ? t('common.completed') : t('common.pending')}">
                 ${completed ? '✅' : '○'}
               </span>
-              <span class="lesson-title">${t(`lesson.${lessonId}.title`, { defaultValue: `Lição ${lessonId}` })}</span>
+              <span class="lesson-title">${getLessonTitle(mod, lessonId, idx)}</span>
               ${unlocked && !completed ? `<button class="btn btn-primary btn-sm" data-nav="/lesson/${lessonId}">${t('common.start')}</button>` : ''}
               ${!unlocked ? `<span class="locked-label">${t('common.locked')}</span>` : ''}
             </li>
@@ -475,11 +526,16 @@ async function renderModuleView(params, query, main) {
  */
 async function renderLessonView(params, query, main) {
   const { lessonId } = params;
+  const lessonCtx = findLessonContext(lessonId);
+  const lessonTitle = lessonCtx
+    ? getLessonTitle(lessonCtx.mod, lessonId, lessonCtx.index)
+    : t('lesson.title');
+
   main.innerHTML = `
     <section class="lesson-view" aria-label="${t('lesson.title')}">
       <header class="view-header">
         <button class="btn btn-back" data-nav="/">${t('common.back')}</button>
-        <h1>${t(`lesson.${lessonId}.title`, { defaultValue: `Lição ${lessonId}` })}</h1>
+        <h1>${lessonTitle}</h1>
       </header>
       <div class="lesson-content">
         <p class="placeholder">${t('lesson.coming_soon')}</p>

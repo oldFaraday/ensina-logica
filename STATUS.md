@@ -1,6 +1,6 @@
 # Status do Projeto — Ensina Lógica
 
-**Última atualização**: 2026-10-15
+**Última atualização**: 2026-10-16
 
 ---
 
@@ -79,6 +79,12 @@ ensina-logica/
 - **Fase 3 (US1 - Onboarding & Semester View)**: renderDashboard, renderSemesterView, showWelcomeModal, bindDashboardEvents, updateDailyGoalUI, setDailyGoal, navegação completa, persistência daily_goal, locales completos, CSS completo para dashboard ✅
 - **Fase 4 (US2 - Discipline & Module Navigation)**: renderDisciplineView, renderModuleView, navegação semestre→disciplina→módulo, lock icons, progress bars, lições com status ✅
 
+### Correções e Testes (2026-10-16)
+- **Bugfix rota inicial**: a área `<main>` ficava vazia porque `initA11y()` renomeava o id (`main` → `main-content`) antes de o router buscar por `getElementById('main')`. Router agora localiza `<main>` de forma robusta; a11y não renomeia mais o elemento nem duplica o skip link; toasts reutilizam o `#toast-container` do shell. Teste: `scripts/test-dom.mjs` (jsdom).
+- **Chaves de tradução cruas corrigidas**: títulos de lições agora vêm do currículo (`data/curriculum.json` → `lessonTitles` por módulo) e há fallback localizado (`lesson.numbered`). Adicionadas chaves faltantes: `settings.data`, `a11y.toggleTheme`, `common.difficulty.*`, `lesson.numbered`. `t()` passa a respeitar `defaultValue`. Teste: `scripts/test-i18n-dom.mjs` (jsdom) percorre 9 rotas e falha se algum texto/atributo casar com o padrão de chave i18n crua.
+- **Ícones do cabeçalho**: `aria-label` + `title` (tooltip) aplicados via i18n (`applyHeaderLabels()`), cobrindo tema, configurações e conquistas.
+- `npm test` agora inclui os testes de DOM e i18n (jsdom é devDependency).
+
 ---
 
 ## ⏳ O que está pendente
@@ -93,6 +99,7 @@ ensina-logica/
 - [x] Semestre 1 com disciplinas, semestres 2-8 "Em breve"
 - [x] Locales completos para todas as chaves usadas
 - [x] CSS completo para dashboard, semester, discipline, module, settings, achievements
+- [ ] ⚠️ **Bug conhecido (boas-vindas)**: o modal `showWelcomeModal` (escolha da meta diária 10/20/30/50) está implementado, mas **não aparece nem em primeira visita** — `updateStreakOnBoot()` grava `stats.last_activity_date` (initApp passo 7) antes das checagens de "primeira visita" (passo 11 e `renderDashboard`). Limpar o `localStorage` não reabre o modal. Correção pendente: checar primeira visita antes de gravar o streak, ou usar flag de onboarding dedicada.
 
 ### Fase 4: US2 - Discipline & Module Navigation ✅ COMPLETO
 - [x] Views: discipline, module com lock icons — **completo: app.js tem renderDisciplineView/renderModuleView funcionais**

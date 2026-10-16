@@ -44,6 +44,10 @@ export function t(key, params = {}) {
     if (value && typeof value === 'object' && k in value) {
       value = value[k];
     } else {
+      // Fallback explícito: evita vazar a chave crua na interface
+      if (Object.prototype.hasOwnProperty.call(params, 'defaultValue')) {
+        return params.defaultValue;
+      }
       console.warn(`[i18n] Missing translation key: ${key}`);
       return key;
     }

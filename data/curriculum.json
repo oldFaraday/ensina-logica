@@ -13,17 +13,33 @@
             {
               "id": "m01",
               "title": "Introdução a Algoritmos",
-              "lessons": ["l01", "l02", "l03"]
+              "lessons": ["l01", "l02", "l03"],
+              "lessonTitles": {
+                "l01": "O que é um algoritmo",
+                "l02": "Pseudocódigo e fluxogramas",
+                "l03": "Estruturas de controle básicas"
+              }
             },
             {
               "id": "m02",
               "title": "Variáveis e Tipos",
-              "lessons": ["l04", "l05", "l06"]
+              "lessons": ["l04", "l05", "l06"],
+              "lessonTitles": {
+                "l04": "Variáveis e constantes",
+                "l05": "Tipos primitivos de dados",
+                "l06": "Expressões e operadores"
+              }
             },
             {
               "id": "m03",
               "title": "Controle de Fluxo",
-              "lessons": ["l07", "l08", "l09", "l10"]
+              "lessons": ["l07", "l08", "l09", "l10"],
+              "lessonTitles": {
+                "l07": "Condicionais (se/senão)",
+                "l08": "Laços de repetição",
+                "l09": "Laços aninhados e controle",
+                "l10": "Funções e procedimentos"
+              }
             }
           ]
         },
@@ -34,17 +50,31 @@
             {
               "id": "m01",
               "title": "Lógica Proposicional",
-              "lessons": ["l01", "l02", "l03"]
+              "lessons": ["l01", "l02", "l03"],
+              "lessonTitles": {
+                "l01": "Proposições e conectivos",
+                "l02": "Tabelas-verdade",
+                "l03": "Equivalências lógicas"
+              }
             },
             {
               "id": "m02",
               "title": "Lógica de Predicados",
-              "lessons": ["l04", "l05"]
+              "lessons": ["l04", "l05"],
+              "lessonTitles": {
+                "l04": "Quantificadores",
+                "l05": "Variáveis e escopo"
+              }
             },
             {
               "id": "m03",
               "title": "Provas e Indução",
-              "lessons": ["l06", "l07", "l08"]
+              "lessons": ["l06", "l07", "l08"],
+              "lessonTitles": {
+                "l06": "Métodos de prova",
+                "l07": "Indução matemática",
+                "l08": "Indução forte e recursão"
+              }
             }
           ]
         }

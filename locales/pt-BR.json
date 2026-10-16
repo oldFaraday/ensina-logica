@@ -50,7 +50,12 @@
     "locked": "Bloqueado",
     "completed": "Concluído",
     "pending": "Pendente",
-    "start": "Iniciar"
+    "start": "Iniciar",
+    "difficulty": {
+      "easy": "Fácil",
+      "medium": "Médio",
+      "hard": "Difícil"
+    }
   },
   "discipline": {
     "modules": "Módulos",
@@ -69,6 +74,7 @@
   },
   "lesson": {
     "title": "Lição",
+    "numbered": "Lição {number}",
     "coming_soon": "Esta lição será implementada na Fase 3 (US3)",
     "implemented_in_us3": "Aguardando implementação dos exercícios e renderizador",
     "theorySummary": "Resumo teórico",
@@ -154,6 +160,7 @@
     "title": "Configurações",
     "daily_goal": "Meta diária de XP",
     "theme": "Tema",
+    "data": "Dados",
     "light": "Claro",
     "dark": "Escuro",
     "auto": "Automático (sistema)",
@@ -247,6 +254,7 @@
   },
   "a11y": {
     "skipToMain": "Pular para o conteúdo principal",
+    "toggleTheme": "Alternar tema",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
     "loading": "Carregando...",
