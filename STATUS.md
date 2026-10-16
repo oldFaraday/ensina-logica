@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa»); inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + **T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia)**; inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -35,12 +35,12 @@ ensina-logica/
 │   ├── i18n.js                 # ✅ Completo - loader + t(key, params)
 │   ├── store/
 │   │   ├── ProgressStore.js    # ✅ Completo - localStorage abstraction + schema migration
-│   │   └── schema-version.js   # ✅ Completo - migrações v0→v1→v2, validação
+│   │   └── schema-version.js   # ✅ Completo - migrações v0→v1→v2→v3, validação
 │   ├── gamification/
 │   │   ├── xp.js               # ✅ Completo - XP, níveis, progresso
 │   │   ├── streak.js           # ✅ Completo - streak + freeze semanal
 │   │   ├── achievements.js     # ✅ Completo - 18 badges com critérios
-│   │   └── srs.js              # ✅ Completo - intervalos 1/3/7/21
+│   │   └── srs.js              # ✅ Completo - intervalos 0/1/3/7/21 + fila de revisões (T129)
 │   ├── curriculum/
 │   │   ├── loader.js           # ✅ Completo - carrega curriculum/theory/exercises
 │   │   ├── unlock.js           # ✅ Completo - lógica de desbloqueio linear/livre
@@ -63,6 +63,7 @@ ensina-logica/
 │   ├── test-onboarding-dom.mjs # ✅ Completo - integração jsdom (fluxo de boas-vindas/meta)
 │   ├── test-contrast.mjs       # ✅ Completo - contraste WCAG AA dos design tokens (falha abaixo de AA)
 │   ├── test-interaction-dom.mjs # ✅ Completo - cliques reais (jsdom): Continuar → semestre → disciplina → módulo, deep-link, guarda do overlay
+│   ├── test-responsive.mjs    # ✅ Completo - responsividade móvel da Biblioteca Teórica (T127): contenção do grid, rolagem de pre/katex, coluna única
 │   └── download-libs.mjs       # ✅ Completo - baixa KaTeX/highlight.js para lib/
 ├── index.html                  # ✅ Completo - shell com header, main, footer, skip links
 ├── 404.html                    # ✅ Completo - SPA redirect para GitHub Pages
@@ -130,6 +131,11 @@ ensina-logica/
 - **Botão do cabeçalho**: o `#theme-toggle` não tinha handler algum; agora **alterna claro ↔ escuro** (com base no tema efetivo, garantindo mudança visível) e persiste. O modo "automático" segue disponível em Configurações. A ligação é idempotente (guarda `data-bound`), para não duplicar listeners se o boot rodar mais de uma vez. ✅
 - **Ícone de Configurações**: o `path` do SVG estava corrompido e não formava uma engrenagem; substituído por um **gear sólido** (preenchido), coerente com os ícones sólidos de lua e estrela. O botão de tema passou a mostrar **apenas o sol no claro / apenas a lua no escuro** (antes apareciam os dois juntos no claro): as regras foram escritas com `.icon-btn` para vencer a especificidade de `.icon-btn svg { display: block }` (o seletor antigo `.icon-moon` perdia a disputa). Fallback pré-JS via `prefers-color-scheme`. ✅
 - **Teste**: `scripts/test-theme-dom.mjs` (jsdom) simula **recarregamentos** reais (processos separados + localStorage em arquivo) e cobre: padrão "auto", persistência ao escolher "escuro" em Configurações, o botão do cabeçalho alternando o tema e a preferência sobrevivendo a dois reloads; incluído em `npm test`.
+
+### Correções pós-QA manual (2026-10-16) — Fase 16 (T127–T129)
+- **T127 — Responsividade móvel da Biblioteca Teórica** (`fix(ui)`, commit `2000f1c`): em `#/theory/:id` e `#/library` (~375px), blocos largos (fórmulas KaTeX em bloco, `<pre>`, tabelas, imagens) não estouram mais o viewport. `min-width:0` no grid `.theory-layout` e filhos (+ `max-width:100%` em `.theory-main`/`.theory-sidebar-host`/`.theory-unit`/`.theory-section`); `pre`/`pre code` e `.katex-display` rolam no próprio bloco; mídia/tabelas limitadas; `overflow-wrap`/`word-break` nos contêineres de texto; campos da biblioteca com `width:100%`; coluna única e índice lateral **depois** do conteúdo no celular (DOM reordenado; desktop mantém o índice à esquerda via `grid-column`); rede de segurança `html { overflow-x: clip; }`. CSS usando **apenas tokens** de `DESIGN.md`. Novo teste estático `scripts/test-responsive.mjs` (29 checagens) em `npm test`.
+- **T128 — Metas de XP 100/300/600/1000 + destaque HARDCODE** (`feat(gamification)`, commit `e55704e`): a escala antiga `[10,20,30,50]` era batida com uma única lição (~60–83 XP). Novas metas **100/300/600/1000**, default **300** ("Moderado") pré-selecionado na modal de boas-vindas e em Configurações. A opção **1000**, quando ativa, mostra 👿 ao lado do texto e a legenda **HARDCORE** abaixo (decorativos, `aria-hidden`; estado nunca só por cor). i18n: `welcome.goals` (Leve/Moderado/Intenso/Hardcore) e `welcome.hardcore`. **Não** altera a fórmula de XP nem a lógica de níveis (`src/gamification/xp.js` intacto).
+- **T129 — Revisões no mesmo dia** (`feat(srs)`, commit `6cd40fe`): errar um exercício passa a aparecer em **"Revisões pendentes"** no painel **no mesmo dia** (antes, só a revisão de lição ao concluir, no dia seguinte). `SRS_INTERVALS` passa a `[0,1,3,7,21]` (índice 0 = hoje). Nova fila `progress.review_queue` (uma entrada por `exercise_id`, upsert sem duplicar; conta `wrong_count`): acerto em revisão avança a escada, erro reinicia para hoje; acerto de exercício nunca errado não agenda nada. Concluir uma lição também agenda a revisão dela para hoje. O painel combina as duas filas (`getCombinedReviewItems`) e, sem pendências, mostra a próxima revisão futura (`dashboard.next_review_in`). Schema migrado para **v3** (adiciona `review_queue`, mantendo compatibilidade com progresso v2 importado). **Nunca** implementa vidas/bloqueio por erro. Testes: `scripts/test-core.mjs` (fila + migração v2→v3) e `scripts/test-e2e-dom.mjs` (errar → revisão no painel no mesmo dia).
 
 ---
 
@@ -212,22 +218,29 @@ ensina-logica/
 ### Fase 15: Convergence — ✅ COMPLETO (T126)
 - [x] T126 Entrada "Biblioteca" no menu/cabeçalho global → `#/library` (AC-05, faltava o acesso por menu); coberto pelo teste e2e
 
+### Fase 16: Correções pós-QA manual — ✅ COMPLETO (T127–T129)
+- [x] T127 Responsividade móvel da Biblioteca Teórica (`#/theory/:id` e `#/library`) — teste estático `scripts/test-responsive.mjs`
+- [x] T128 Metas de XP 100/300/600/1000 (default 300) com destaque **HARDCORE** na meta 1000 (modal + Configurações)
+- [x] T129 Revisões no mesmo dia: fila de erros (`review_queue`) + revisão de lição vencendo hoje; schema v3; **sem** vidas/bloqueio por erro
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–15 concluídas.
+**✅ Converged (2026-10-16).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–16 concluídas.
 
 **Converge — 2ª rodada:** avaliados os 13 critérios de aceitação (AC-01…AC-13) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 
-**Implement executado em 2026-10-16** — T121–T126 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca, entrada "Biblioteca" no menu) e também T093/T094/T095/T097. `npm test` verde (**13 suítes**) e `npm run validate` sem erros.
+**Implement executado em 2026-10-16** — T121–T126 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca, entrada "Biblioteca" no menu) e também T093/T094/T095/T097. `npm test` verde (**16 suítes**) e `npm run validate` sem erros.
+
+**Correções pós-QA (2026-10-16)** — T127–T129 concluídas (responsividade móvel da biblioteca, metas de XP 100/300/600/1000 com destaque HARDCODE, revisões no mesmo dia via fila de erros + revisão de lição). `npm test` verde (**16 suítes**, +1 com `scripts/test-responsive.mjs`) e `npm run validate` sem erros (schema **v3**).
 
 Restam apenas itens que exigem ambiente externo:
 1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).
 2. **T100 / QA manual (Fase 11)** — jornada real em navegador (a jornada automatizada está em `scripts/test-e2e-dom.mjs`).
 3. Ao publicar, atualizar `ATTRIBUTIONS.md`/CHANGELOG com a data do deploy.
 
-Verificação automatizada: `npm test` (13 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
+Verificação automatizada: `npm test` (16 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
 
 ---
 
