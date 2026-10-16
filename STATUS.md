@@ -10,23 +10,23 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — lista de 100 tarefas organizadas por 11 fases e 8 user stories
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo); inclui **snapshot do progresso real** (2026-10-16)
 
 ### Estrutura de Pastas Criada
 ```
 ensina-logica/
 ├── .github/workflows/          # deploy-pages.yml, validate.yml
 ├── .specify/                   # constitution, spec, plan, tasks
-├── lib/katex/                  # (vazio - aguardando download)
-├── lib/highlightjs/            # (vazio - aguardando download)
+├── lib/katex/                  # ✅ KaTeX 0.16.9 local (JS, CSS, fontes .woff2)
+├── lib/highlightjs/            # ✅ highlight.js 11.9.0 local (JS, temas)
 ├── locales/pt-BR.json          # ✅ Completo - todas as strings da interface
 ├── data/
 │   ├── curriculum.json         # ✅ Completo - mapa 8 semestres
-│   ├── theory/sem1/algorithms/ # (vazio - aguardando conteúdo)
-│   ├── theory/sem1/discrete-math/ # (vazio - aguardando conteúdo)
+│   ├── theory/sem1/algorithms/ # (0 arquivos - aguardando conteúdo)
+│   ├── theory/sem1/discrete-math/ # (0 arquivos - aguardando conteúdo)
 │   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas
-│   ├── exercises/sem1/algorithms/ # (vazio - aguardando conteúdo)
-│   ├── exercises/sem1/discrete-math/ # (vazio - aguardando conteúdo)
+│   ├── exercises/sem1/algorithms/ # (0 arquivos - aguardando conteúdo)
+│   ├── exercises/sem1/discrete-math/ # (0 arquivos - aguardando conteúdo)
 │   └── exercises/_schema.json  # ✅ Completo - JSON Schema exercícios
 ├── src/
 │   ├── app.js                  # ✅ Completo - entry point, boot, router, store, theme
@@ -45,7 +45,7 @@ ensina-logica/
 │   │   ├── unlock.js           # ✅ Completo - lógica de desbloqueio linear/livre
 │   │   └── progress.js         # ✅ Completo - marca lição/módulo, calcula %
 │   ├── theory/                 # (pendente: renderer, sidebar, annotations, search)
-│   ├── lesson/                 # (pendente: renderer, 5 exercise types, feedback)
+│   ├── lesson/                 # (parcial: feedback + 3/5 tipos; falta renderer, code-completion, flashcards)
 │   └── ui/
 │       ├── theme.css           # ✅ Completo - light/dark, a11y, reduced-motion, toasts, modals
 │       ├── theme.js            # ✅ Completo - theme toggle + prefers-color-scheme
@@ -55,6 +55,8 @@ ensina-logica/
 ├── scripts/
 │   ├── validate.mjs            # ✅ Completo - validação CI (curriculum, theory, exercises, licenses, schema)
 │   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS, unlock, progress, migração)
+│   ├── test-imports.mjs        # ✅ Completo - importa todos os módulos de src/ (falha em erro)
+│   ├── test-smoke.mjs          # ✅ Completo - smoke test do initApp (mock de DOM)
 │   ├── test-dom.mjs            # ✅ Completo - integração jsdom (rota inicial #/ renderiza)
 │   ├── test-i18n-dom.mjs       # ✅ Completo - integração jsdom (sem chaves de tradução cruas)
 │   ├── test-onboarding-dom.mjs # ✅ Completo - integração jsdom (fluxo de boas-vindas/meta)
@@ -73,6 +75,7 @@ ensina-logica/
 ├── CONTRIBUTING.md             # ✅ Completo
 ├── CODE_OF_CONDUCT.md          # ✅ Completo (Contributor Covenant 2.1)
 ├── SECURITY.md                 # ✅ Completo
+├── AUDIT.md                    # ✅ Auditoria read-only (API do ProgressStore, 2026-10-16)
 └── CHANGELOG.md                # ✅ Iniciado (unreleased)
 ```
 
@@ -113,20 +116,22 @@ ensina-logica/
 - [x] Lista de lições com status (concluída/pendente/bloqueada)
 - [x] Botão "Iniciar" para lições desbloqueadas
 
-### Fase 5: US3 - Lesson & Exercises (Core MVP)
-- [ ] `src/lesson/renderer.js` + 5 exercise types + feedback.js
+### Fase 5: US3 - Lesson & Exercises (Core MVP) — 🚧 PARCIAL
+- [x] `src/lesson/feedback.js` + 3 de 5 tipos de exercício (`multiple-choice`, `true-false`, `order-steps`)
+- [ ] `src/lesson/renderer.js` + tipos `code-completion` e `flashcards`
 - [ ] View: lesson (#/lesson/:lessonId) — **parcial: app.js tem renderLessonView placeholder**
-- [ ] XP calculation, SRS scheduling, persist attempts ✅ (módulos gamification prontos)
+- [ ] Ligar XP no fluxo, "Praticar mais", persistir tentativas, agendar SRS (módulos gamification já prontos)
 
-### Fase 6: US4 - Theory Library (Core MVP)
+### Fase 6: US4 - Theory Library (Core MVP) — 🚧 NÃO INICIADA
 - [ ] `src/theory/renderer.js` (KaTeX, highlight.js, atribuição, ver original)
 - [ ] `src/theory/sidebar.js`, `annotations.js`, `search.js`
 - [ ] Views: theory (#/theory/:id), library index (#/library) — **parcial: app.js tem placeholders**
 
-### Fase 7: US5 - Gamification Dashboard & Settings
-- [ ] Dashboard enhanced: XP bar, level, streak, achievements gallery — **parcial: app.js tem dashboard UI**
-- [ ] Settings: daily goal, theme, export/import/reset progress — **parcial: app.js tem renderSettingsView**
+### Fase 7: US5 - Gamification Dashboard & Settings — 🚧 PARCIAL
+- [x] Dashboard com XP bar, nível, streak + freeze, revisões do dia
+- [x] Conquistas (renderAchievementsView) e Settings (meta diária, tema, export/import/reset; reset mantém preferências)
 - [ ] Confetti (CSS, respects reduced-motion)
+- [ ] aria-live assertivo para conquista/streak/meta (`announce()` existe; falta ligar)
 
 ### Fase 8: US6 - 1º Semestre Conteúdo (Data only)
 - [ ] 6 theory units (3 algorithms + 3 discrete-math) com front-matter válido
@@ -134,35 +139,45 @@ ensina-logica/
 - [ ] ATTRIBUTIONS.md atualizado
 - [ ] validate.mjs passa
 
-### Fase 9: US7 - Acessibilidade & Privacidade
+### Fase 9: US7 - Acessibilidade & Privacidade — 🚧 PARCIAL
+- [x] Ícones do cabeçalho com aria-label/title; estado sempre ícone+texto+cor; `prefers-reduced-motion` no CSS
 - [ ] Auditoria completa: focus, tab order, skip links, contraste AA
-- [ ] Zero external requests verification
+- [ ] Zero external requests: remover `<link rel="preconnect" href="https://fonts.gstatic.com">` do index.html
 
-### Fase 10: US8 - Deploy & Repo Files
-- [ ] Validar workflows, 404.html redirect, todos arquivos Definition of Done
-- [ ] Publication checklist
+### Fase 10: US8 - Deploy & Repo Files — 🚧 PARCIAL
+- [x] Workflows validados (validate.yml + deploy-pages.yml) e arquivos Definition of Done presentes
+- [ ] Validar 404.html/redirect no Pages publicado
+- [x] Publication checklist (README.md)
 
 ### Fase 11: Polish
-- [ ] Documentation, cleanup, performance, edge case tests, security hardening
+- [x] Testes de edge cases de gamificação (streak/segunda, SRS cap, níveis XP) e suíte completa verde
+- [ ] Documentation, cleanup (remover `console.log`), performance, security hardening (CSP)
+- [ ] QA manual final (depende de US3/US4)
+
+### Fase 13: Verificação de Conteúdo (novas tarefas em tasks.md) — 🚧 PENDENTE
+- [ ] T109 Verificar acessibilidade da `source.url` no validate.mjs (HEAD)
+- [ ] T110 Validar links internos (lesson/theory) no validate.mjs
+- [ ] T111 Checar sincronização ATTRIBUTIONS.md ↔ fontes usadas
+- [ ] T112 Garantir que unidade `pendente`/`unverified` não entra na trilha (spec AC-13)
 
 ---
 
 ## 🎯 Próxima Etapa
 
-**Iniciar Fase 5 (US3 - Lesson & Exercises)** — implementar lições completas com exercícios:
+**Próxima fase: Fase 5 (US3 - Lesson & Exercises)** — concluir o núcleo do MVP. Já prontos: `feedback.js` e 3/5 tipos de exercício. Falta:
+
 1. Criar `src/lesson/renderer.js` — renderiza lição: resumo teórico + lista de exercícios
-2. Criar 5 tipos de exercícios em `src/lesson/exercise-types/`:
-   - `multiple-choice.js` — radio options, single correct, explanation
-   - `true-false.js` — two buttons, explanation
-   - `order-steps.js` — drag-and-drop ou up/down buttons, explanation
-   - `code-completion.js` — textarea com highlight.js, botão "Run", explanation
-   - `flashcards.js` — flip card, mark known/unknown, spaced repetition
-3. Criar `src/lesson/feedback.js` — feedback ícone+texto+cor (never color only), ARIA live
-4. Completar `renderLessonView` em `src/app.js` — carrega dados da lição, renderiza exercícios sequencialmente
-5. Implementar cálculo de XP na resposta correta (first try bonus, retry penalty, streak bonus)
-6. Implementar "Praticar mais" → abre exercícios extras da mesma unidade teórica (SRS queue)
-7. Persistir tentativas de exercício (correct/incorrect/tentativas/xp_earned) no ProgressStore
-8. Agendar revisão SRS ao concluir lição (intervalos 1→3→7→21 dias)
+2. Completar os tipos faltantes em `src/lesson/exercise-types/`:
+   - `code-completion.js` — textarea com highlight.js, botão "Run" (`node --check` para JS), explanation
+   - `flashcards.js` — flip card, marcar conhecido/desconhecido, revisão espaçada
+3. Completar `renderLessonView` em `src/app.js` — carrega dados da lição e renderiza exercícios sequencialmente
+4. Implementar XP na resposta correta (first try bonus, retry penalty, streak bonus) — lógica em `xp.js` já pronta
+5. Implementar "Praticar mais" → exercícios extras da mesma unidade teórica (fila SRS)
+6. Persistir tentativas de exercício (correct/incorrect/tentativas/xp_earned) no ProgressStore
+7. Agendar SRS ao concluir lição (intervalos 1→3→7→21 dias)
+8. Testes unitários dos 5 tipos de exercício + feedback (T042–T046)
+
+**Paralelizáveis**: Fase 6 (US4 — Biblioteca Teórica, do zero) e Fase 8 (US6 — conteúdo do 1º semestre), junto com as verificações de conteúdo T109–T112.
 
 ---
 

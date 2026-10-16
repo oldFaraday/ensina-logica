@@ -13,6 +13,8 @@ description: "Task list template for feature implementation"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
+**Status snapshot (2026-10-16)**: Fases 1–4 concluídas + correções fora do fluxo (T101–T108). Próxima fase: **Fase 5 (US3 — Lições/Exercícios)**. Ver seção "Progresso real do projeto" no fim.
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
@@ -32,14 +34,14 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project folder structure per plan.md (lib/, locales/, data/, src/, scripts/, .github/workflows/)
-- [ ] T002 Create package.json with Node scripts (validate, test, download-libs)
-- [ ] T003 [P] Create .gitignore, .editorconfig, .nojekyll, 404.html
-- [ ] T004 [P] Create favicon.svg and meta tags (Open Graph) in index.html shell
-- [ ] T005 Create index.html shell with header, main, footer, ES module scripts
-- [ ] T006 [P] Create locales/pt-BR.json with all UI strings (i18n ready)
-- [ ] T007 [P] Create README.md (pt-BR): what is, screenshots, how to run, publish to Pages, folder structure, how to add content, scope notice, licenses, contribute
-- [ ] T008 [P] Create LICENSE (MIT), CONTENT_LICENSE.md (CC BY-SA 4.0 + source precedence), ATTRIBUTIONS.md (sources + libs), CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, CHANGELOG.md
+- [x] T001 Create project folder structure per plan.md (lib/, locales/, data/, src/, scripts/, .github/workflows/)
+- [x] T002 Create package.json with Node scripts (validate, test, download-libs)
+- [x] T003 [P] Create .gitignore, .editorconfig, .nojekyll, 404.html
+- [x] T004 [P] Create favicon.svg and meta tags (Open Graph) in index.html shell
+- [x] T005 Create index.html shell with header, main, footer, ES module scripts
+- [x] T006 [P] Create locales/pt-BR.json with all UI strings (i18n ready)
+- [x] T007 [P] Create README.md (pt-BR): what is, screenshots, how to run, publish to Pages, folder structure, how to add content, scope notice, licenses, contribute
+- [x] T008 [P] Create LICENSE (MIT), CONTENT_LICENSE.md (CC BY-SA 4.0 + source precedence), ATTRIBUTIONS.md (sources + libs), CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, CHANGELOG.md
 
 ---
 
@@ -49,20 +51,20 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Download KaTeX 0.16.9 (JS, CSS, .woff2 fonts) to lib/katex/ via scripts/download-libs.mjs
-- [ ] T010 Download highlight.js 11.9.0 (JS, themes) to lib/highlightjs/ via scripts/download-libs.mjs
-- [ ] T011 Create src/i18n.js — load locale, `t(key, params)` helper
-- [ ] T012 Create src/router.js — hash-based router (`#/`) with route params
-- [ ] T013 Create src/store/ProgressStore.js — localStorage abstraction with schema_version migration
-- [ ] T014 Create src/store/schema-version.js — migration logic for progress schema
-- [ ] T015 Create src/app.js — entry point: boot, router init, store init, theme init
-- [ ] T016 Create data/curriculum.json — full 8-semester map (sem1 complete, sem2-8 "coming-soon")
-- [ ] T017 Create data/theory/_schema.json — JSON Schema for theory unit front-matter validation
-- [ ] T018 Create data/exercises/_schema.json — JSON Schema for exercise validation
-- [ ] T019 Create scripts/validate.mjs — CI validation: curriculum schema, theory units (license, source URL HEAD, verification_status), exercises (theory_unit_id exists, generated_by_ai, code-completion has test_command), internal links, licenses, ATTRIBUTIONS.md sync, progress schema_version
-- [ ] T020 Create scripts/test-core.mjs — pure logic tests: XP, streak, SRS, unlock, ProgressStore (save/load, export/import round-trip, migration)
-- [ ] T021 Create .github/workflows/validate.yml — runs validate + test on push/PR
-- [ ] T022 Create .github/workflows/deploy-pages.yml — deploy to GitHub Pages on push to main
+- [x] T009 Download KaTeX 0.16.9 (JS, CSS, .woff2 fonts) to lib/katex/ via scripts/download-libs.mjs
+- [x] T010 Download highlight.js 11.9.0 (JS, themes) to lib/highlightjs/ via scripts/download-libs.mjs
+- [x] T011 Create src/i18n.js — load locale, `t(key, params)` helper
+- [x] T012 Create src/router.js — hash-based router (`#/`) with route params
+- [x] T013 Create src/store/ProgressStore.js — localStorage abstraction with schema_version migration
+- [x] T014 Create src/store/schema-version.js — migration logic for progress schema
+- [x] T015 Create src/app.js — entry point: boot, router init, store init, theme init
+- [x] T016 Create data/curriculum.json — full 8-semester map (sem1 complete, sem2-8 "coming-soon")
+- [x] T017 Create data/theory/_schema.json — JSON Schema for theory unit front-matter validation
+- [x] T018 Create data/exercises/_schema.json — JSON Schema for exercise validation
+- [x] T019 Create scripts/validate.mjs — CI validation: curriculum schema, theory units (license, source URL HEAD, verification_status), exercises (theory_unit_id exists, generated_by_ai, code-completion has test_command), internal links, licenses, ATTRIBUTIONS.md sync, progress schema_version — ✅ parcial: falta HEAD da URL, links internos e sync ATTRIBUTIONS (ver T109–T111)
+- [x] T020 Create scripts/test-core.mjs — pure logic tests: XP, streak, SRS, unlock, ProgressStore (save/load, export/import round-trip, migration) — ✅ inclui migração v0→v1→v2
+- [x] T021 Create .github/workflows/validate.yml — runs validate + test on push/PR
+- [x] T022 Create .github/workflows/deploy-pages.yml — deploy to GitHub Pages on push to main
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -76,20 +78,20 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 1
 
-- [ ] T023 [US1] Create src/ui/theme.js — light/dark toggle, persists to localStorage, respects prefers-color-scheme
-- [ ] T024 [US1] Create src/ui/a11y.js — skip links, focus trap, live regions, visible focus styles
-- [ ] T025 [US1] Create src/ui/toasts.js — non-intrusive notifications (XP, streak, achievements)
-- [ ] T026 [US1] Create src/ui/modals.js — accessible modals (ARIA), used for welcome & settings
-- [ ] T027 [US1] Create src/curriculum/loader.js — loads curriculum.json + theory + exercises (async, cached)
-- [ ] T028 [US1] Create src/curriculum/unlock.js — linear within discipline, free across disciplines same semester
-- [ ] T029 [US1] Create src/curriculum/progress.js — mark lesson/module complete, calculate % semester
-- [ ] T030 [US1] Create src/gamification/xp.js — BASE_XP=10, first-time +5, retry 50%, streak bonus min(streak,10)*2, level = floor(sqrt(xp/1000))+1
-- [ ] T031 [US1] Create src/gamification/streak.js — daily streak, weekly freeze (1/week, auto-use, resets Monday)
-- [ ] T032 [US1] Create src/gamification/achievements.js — badges: first-lesson, streak-7, module-1, 100-exercises, first-note, exported-progress
-- [ ] T033 [US1] Create src/gamification/srs.js — intervals [1,3,7,21] days, schedule on lesson complete, due reviews filter
-- [ ] T034 [US1] Create view: dashboard (#/) — welcome, daily goal selector (10/20/30/50), streak, XP, level, today's reviews, semester card
-- [ ] T035 [US1] Create view: semester (#/semester/:semId) — discipline cards, sem2-8 show "Em breve" disabled
-- [ ] T036 [US1] Wire dashboard → semester navigation, persist daily_goal to preferences
+- [x] T023 [US1] Create src/ui/theme.js — light/dark toggle, persists to localStorage, respects prefers-color-scheme
+- [x] T024 [US1] Create src/ui/a11y.js — skip links, focus trap, live regions, visible focus styles
+- [x] T025 [US1] Create src/ui/toasts.js — non-intrusive notifications (XP, streak, achievements)
+- [x] T026 [US1] Create src/ui/modals.js — accessible modals (ARIA), used for welcome & settings
+- [x] T027 [US1] Create src/curriculum/loader.js — loads curriculum.json + theory + exercises (async, cached)
+- [x] T028 [US1] Create src/curriculum/unlock.js — linear within discipline, free across disciplines same semester
+- [x] T029 [US1] Create src/curriculum/progress.js — mark lesson/module complete, calculate % semester
+- [x] T030 [US1] Create src/gamification/xp.js — BASE_XP=10, first-time +5, retry 50%, streak bonus min(streak,10)*2, level = floor(sqrt(xp/1000))+1
+- [x] T031 [US1] Create src/gamification/streak.js — daily streak, weekly freeze (1/week, auto-use, resets Monday)
+- [x] T032 [US1] Create src/gamification/achievements.js — badges: first-lesson, streak-7, module-1, 100-exercises, first-note, exported-progress
+- [x] T033 [US1] Create src/gamification/srs.js — intervals [1,3,7,21] days, schedule on lesson complete, due reviews filter
+- [x] T034 [US1] Create view: dashboard (#/) — welcome, daily goal selector (10/20/30/50), streak, XP, level, today's reviews, semester card
+- [x] T035 [US1] Create view: semester (#/semester/:semId) — discipline cards, sem2-8 show "Em breve" disabled
+- [x] T036 [US1] Wire dashboard → semester navigation, persist daily_goal to preferences
 
 ---
 
@@ -101,11 +103,11 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 2
 
-- [ ] T037 [US2] Create view: discipline (#/semester/:semId/discipline/:discId) — module list with lock icons
-- [ ] T038 [US2] Create view: module (#/semester/:semId/discipline/:discId/module/:modId) — lesson list with completion status
-- [ ] T039 [US2] Implement unlock logic in unlock.js: module 0 always open, module N requires all lessons in module N-1 completed
-- [ ] T040 [US2] Show progress rings/bars per module and discipline
-- [ ] T041 [US2] Persist completed lessons to ProgressStore, update UI reactively
+- [x] T037 [US2] Create view: discipline (#/semester/:semId/discipline/:discId) — module list with lock icons
+- [x] T038 [US2] Create view: module (#/semester/:semId/discipline/:discId/module/:modId) — lesson list with completion status
+- [x] T039 [US2] Implement unlock logic in unlock.js: module 0 always open, module N requires all lessons in module N-1 completed
+- [x] T040 [US2] Show progress rings/bars per module and discipline
+- [x] T041 [US2] Persist completed lessons to ProgressStore, update UI reactively — ✅ funções prontas (progress.js + ProgressStore); wire no fluxo de lição depende de T054–T058
 
 ---
 
@@ -126,13 +128,13 @@ description: "Task list template for feature implementation"
 ### Implementation for User Story 3
 
 - [ ] T047 [US3] Create src/lesson/renderer.js — renders lesson: theory summary + exercise list
-- [ ] T048 [US3] Create src/lesson/exercise-types/multiple-choice.js — radio options, single correct, explanation
-- [ ] T049 [US3] Create src/lesson/exercise-types/true-false.js — two buttons, explanation
-- [ ] T050 [US3] Create src/lesson/exercise-types/order-steps.js — drag-and-drop or up/down buttons, explanation
+- [x] T048 [US3] Create src/lesson/exercise-types/multiple-choice.js — radio options, single correct, explanation
+- [x] T049 [US3] Create src/lesson/exercise-types/true-false.js — two buttons, explanation
+- [x] T050 [US3] Create src/lesson/exercise-types/order-steps.js — drag-and-drop or up/down buttons, explanation
 - [ ] T051 [US3] Create src/lesson/exercise-types/code-completion.js — textarea with highlight.js, "Run" button (node --check for JS), explanation
 - [ ] T052 [US3] Create src/lesson/exercise-types/flashcards.js — flip card, mark known/unknown, spaced repetition
-- [ ] T053 [US3] Create src/lesson/feedback.js — icon+text+color (never color only), ARIA live for XP/streak/achievement
-- [ ] T054 [US3] Create view: lesson (#/lesson/:lessonId) — loads lesson data, renders exercises sequentially
+- [x] T053 [US3] Create src/lesson/feedback.js — icon+text+color (never color only), ARIA live for XP/streak/achievement
+- [ ] T054 [US3] Create view: lesson (#/lesson/:lessonId) — loads lesson data, renders exercises sequentially (hoje: placeholder em app.js)
 - [ ] T055 [US3] Implement XP calculation on correct answer (first try bonus, retry penalty, streak bonus)
 - [ ] T056 [US3] Implement "Praticar mais" → opens extra exercises from same theory unit (SRS queue)
 - [ ] T057 [US3] Persist exercise attempts (correct/incorrect/tentatives/xp_earned) to ProgressStore
@@ -168,14 +170,14 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 5
 
-- [ ] T068 [US5] Enhance dashboard: XP progress bar to next level, level badge, streak counter with freeze icon
-- [ ] T069 [US5] Create view: achievements (#/achievements) — grid of badges, locked/unlocked state, criteria tooltip
-- [ ] T070 [US5] Create view: settings (#/settings) — daily goal picker, theme toggle, export/import/reset progress
-- [ ] T071 [US5] Implement export progress → downloads JSON with schema_version, timestamp
-- [ ] T072 [US5] Implement import progress → validates schema_version, migrates if needed, overwrites localStorage
-- [ ] T073 [US5] Implement reset progress → clears stats/completed/exercises/srs/achievements/annotations, keeps preferences
+- [x] T068 [US5] Enhance dashboard: XP progress bar to next level, level badge, streak counter with freeze icon
+- [x] T069 [US5] Create view: achievements (#/achievements) — grid of badges, locked/unlocked state, criteria tooltip
+- [x] T070 [US5] Create view: settings (#/settings) — daily goal picker, theme toggle, export/import/reset progress
+- [x] T071 [US5] Implement export progress → downloads JSON with schema_version, timestamp
+- [x] T072 [US5] Implement import progress → validates schema_version, migrates if needed, overwrites localStorage
+- [x] T073 [US5] Implement reset progress → clears stats/completed/exercises/srs/achievements/annotations, keeps preferences
 - [ ] T074 [US5] Confetti animation on daily goal reached (CSS only, respects prefers-reduced-motion)
-- [ ] T075 [US5] ARIA live regions for: XP gain, streak change, achievement unlock, daily goal reached
+- [ ] T075 [US5] ARIA live regions for: XP gain, streak change, achievement unlock, daily goal reached — ⚠️ parcial: `a11y.js` expõe `announce(polite|assertive)` e toasts são `aria-live="polite"`, mas os anúncios assertivos (conquista/streak/meta) ainda não foram ligados
 
 ---
 
@@ -206,10 +208,10 @@ description: "Task list template for feature implementation"
 
 - [ ] T082 [US7] Audit all interactive elements: focus styles, tab order, skip links at top of each view
 - [ ] T083 [US7] Verify contrast ratios (WCAG AA) for all text/background combinations in light/dark themes
-- [ ] T084 [US7] Ensure all state indicators use icon + text + color (never color only): ✅/❌, streak 🔥, XP ⭐
-- [ ] T085 [US7] Test prefers-reduced-motion: confetti disabled, transitions instant, no auto-playing animations
-- [ ] T086 [US7] Verify zero external requests: all libs local, no CDN, no analytics, no cookies
-- [ ] T087 [US7] Add aria-live="polite" for XP/toasts, aria-live="assertive" for achievements/streak milestones
+- [x] T084 [US7] Ensure all state indicators use icon + text + color (never color only): ✅/❌, streak 🔥, XP ⭐
+- [x] T085 [US7] Test prefers-reduced-motion: confetti disabled, transitions instant, no auto-playing animations — ✅ `theme.css` tem `@media (prefers-reduced-motion: reduce)` (faltará cobrir o confetti quando T074 existir)
+- [ ] T086 [US7] Verify zero external requests: all libs local, no CDN, no analytics, no cookies — ⚠️ ainda há `<link rel="preconnect" href="https://fonts.gstatic.com">` em index.html (remover)
+- [ ] T087 [US7] Add aria-live="polite" for XP/toasts, aria-live="assertive" for achievements/streak milestones — ⚠️ parcial (ver T075)
 
 ---
 
@@ -221,11 +223,11 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 8
 
-- [ ] T088 [US8] Verify .github/workflows/validate.yml runs npm run validate && npm test
-- [ ] T089 [US8] Verify .github/workflows/deploy-pages.yml uploads artifact and deploys
-- [ ] T090 [US8] Test 404.html redirect to #/ works on Pages (SPA fallback)
-- [ ] T091 [US8] Confirm all Definition of Done files exist: README.md, LICENSE, CONTENT_LICENSE.md, ATTRIBUTIONS.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, CHANGELOG.md, .gitignore, .editorconfig, .nojekyll, 404.html, favicon.svg, package.json
-- [ ] T092 [US8] Create publication checklist (pt-BR): create repo, push, enable Pages, verify URL
+- [x] T088 [US8] Verify .github/workflows/validate.yml runs npm run validate && npm test
+- [x] T089 [US8] Verify .github/workflows/deploy-pages.yml uploads artifact and deploys
+- [ ] T090 [US8] Test 404.html redirect to #/ works on Pages (SPA fallback) — 404.html existe; falta validar no site publicado
+- [x] T091 [US8] Confirm all Definition of Done files exist: README.md, LICENSE, CONTENT_LICENSE.md, ATTRIBUTIONS.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, CHANGELOG.md, .gitignore, .editorconfig, .nojekyll, 404.html, favicon.svg, package.json
+- [x] T092 [US8] Create publication checklist (pt-BR): create repo, push, enable Pages, verify URL — ✅ em README.md ("Checklist de publicação")
 
 ---
 
@@ -234,13 +236,39 @@ description: "Task list template for feature implementation"
 **Purpose**: Improvements that affect multiple user stories
 
 - [ ] T093 [P] Documentation updates: inline code comments, architecture decisions in docs/
-- [ ] T094 Code cleanup: remove console.log, consistent naming, remove dead code
+- [ ] T094 Code cleanup: remove console.log, consistent naming, remove dead code — ⚠️ ainda há `console.log('[App] Inicializado com sucesso')` em src/app.js
 - [ ] T095 Performance: lazy-load theory/exercise data, memoize search index, debounce search input
-- [ ] T096 [P] Additional unit tests for edge cases in gamification (streak freeze Monday reset, SRS interval cap, XP level boundaries)
+- [x] T096 [P] Additional unit tests for edge cases in gamification (streak freeze Monday reset, SRS interval cap, XP level boundaries) — ✅ coberto em scripts/test-core.mjs
 - [ ] T097 Security hardening: CSP meta tag, sanitize any user-generated content (annotations)
-- [ ] T098 Run full validation suite (scripts/validate.mjs) and fix any issues
-- [ ] T099 Run full test suite (scripts/test-core.mjs) and ensure 100% pure function coverage
-- [ ] T100 Final manual QA: complete user journey from welcome → lesson → theory → settings → export/import
+- [x] T098 Run full validation suite (scripts/validate.mjs) and fix any issues — ✅ passa (2 avisos esperados: sem conteúdo ainda)
+- [x] T099 Run full test suite (scripts/test-core.mjs) and ensure 100% pure function coverage — ✅ `npm test` verde (core + smoke + imports + dom + i18n + onboarding)
+- [ ] T100 Final manual QA: complete user journey from welcome → lesson → theory → settings → export/import — bloqueado por US3/US4 (lições e teoria)
+
+---
+
+## Phase 12: Correções e Endurecimento fora do fluxo (concluídas)
+
+**Purpose**: Correções feitas fora do fluxo original das user stories (boot, roteador, store, i18n, onboarding) e infra de testes. Referência de commits no git.
+
+- [x] T101 [fix] Rota inicial `#/` renderiza conteúdo: router localiza `<main>` de forma robusta; `a11y` não renomeia mais o elemento nem duplica o skip link; toasts reutilizam `#toast-container` — commit `2f183af`; teste `scripts/test-dom.mjs`
+- [x] T102 [fix] i18n: títulos de lições vêm do currículo (`data/curriculum.json` → `lessonTitles`), chaves faltantes adicionadas, `t()` respeita `defaultValue` (nunca vaza chave crua) — commit `9fee4da`; teste `scripts/test-i18n-dom.mjs`
+- [x] T103 [a11y] Ícones do cabeçalho com `aria-label` + `title` (tooltip) via i18n (`applyHeaderLabels()`): tema, configurações, conquistas
+- [x] T104 [store/schema] Migração de schema v0→v1→v2 com `preferences.onboarding_completed` (default `false`); dados antigos sem a flag → `false`
+- [x] T105 [onboarding] Modal de boas-vindas controlado por flag dedicada (não por `last_activity_date`); grava a meta + flag ao escolher; `reset` mantém, `clear` reabre — teste `scripts/test-onboarding-dom.mjs`
+- [x] T106 [infra] Testes em Node + jsdom (devDependency): `test-imports.mjs`, `test-smoke.mjs`, `test-dom.mjs`, `test-i18n-dom.mjs`, `test-onboarding-dom.mjs`; `npm test` ampliado
+- [x] T107 [store] Correções de API do ProgressStore (`save()` público), import/export e correções de rota/infinite loop — commits `8b8c154`, `657c566`, `d416024`
+- [x] T108 [ui] Novo favicon.svg e metas do shell atualizadas — commit `db8e078`
+
+---
+
+## Phase 13: Verificação de Conteúdo e Conformidade (novas tarefas)
+
+**Purpose**: Tarefas de verificação que faltavam para garantir as regras da Constitution §2 (apenas fontes aprovadas; fonte inacessível → `pendente`, nunca inventar) e do plan.md §7.
+
+- [ ] T109 [verify] Em scripts/validate.mjs, verificar acessibilidade de `source.url` (HEAD/rede) e sinalizar quando indisponível — hoje só imprime a URL
+- [ ] T110 [verify] Em scripts/validate.mjs, validar links internos (`#/lesson/x`, `#/theory/y`) contra o curriculum e os arquivos de dados existentes
+- [ ] T111 [verify] Em scripts/validate.mjs, checar sincronização ATTRIBUTIONS.md ↔ fontes efetivamente usadas nas unidades/exercícios
+- [ ] T112 [verify] Garantir a regra "pendente": unidade com `verification_status: unverified` (ou fonte não acessada) **não entra na trilha** (aparece só no mapa como "em construção") e nunca é preenchida de memória — loader/app + teste; cobre spec AC-13
 
 ---
 
@@ -260,6 +288,7 @@ description: "Task list template for feature implementation"
   - US7 (A11y/Privacy) can run in parallel throughout
   - US8 (Deploy) depends on all code complete
 - **Polish (Phase 11)**: Depends on all desired user stories being complete
+- **Phase 13 (Verificação de conteúdo)**: Pode rodar junto com US6 (Fase 8)
 
 ### User Story Dependencies
 
@@ -343,6 +372,29 @@ With multiple developers:
 
 ---
 
+## Progresso real do projeto (snapshot 2026-10-16)
+
+Comparação do tasks.md com o estado real do repositório.
+
+**(a) O que falta por fase**
+- **Fase 5 (US3 – Lições/Exercícios)**: `src/lesson/renderer.js`, tipos `code-completion` e `flashcards`, ligar a view `#/lesson/:id`, XP no fluxo, "Praticar mais", persistir tentativas e agendar SRS (T042–T047, T051–T052, T054–T058). Prontos: `multiple-choice`, `true-false`, `order-steps` e `feedback.js` (T048–T050, T053).
+- **Fase 6 (US4 – Biblioteca Teórica)**: nada implementado — `src/theory/*` e views `#/theory/:id` e `#/library` (T059–T067).
+- **Fase 7 (US5 – Gamificação/Settings)**: falta confetti (T074) e aria-live assertivo (T075); dashboard, conquistas, settings, export/import/reset já feitos (T068–T073).
+- **Fase 8 (US6 – Conteúdo sem1)**: 0 unidades teóricas e 0 exercícios (T076–T081).
+- **Fase 9 (US7 – A11y/Privacidade)**: falta auditoria formal (T082–T083), aria-live assertivo (T087) e remover o `preconnect` externo do `index.html` (T086).
+- **Fase 10 (US8 – Deploy)**: workflows e arquivos prontos; falta validar 404/redirect no Pages publicado (T090).
+- **Fase 11 (Polish)**: docs, remover `console.log`, performance, CSP e QA final (T093–T095, T097, T100).
+- **Fase 13 (novas)**: verificação de fonte/links/ATTRIBUTIONS e regra `pendente` (T109–T112).
+
+**(b) Próxima fase a executar**: **Fase 5 (US3 – Lições & Exercícios)**, núcleo do MVP. Em paralelo, são independentes: **Fase 6 (US4)** e **Fase 8 (US6)**.
+
+**(c) Tarefas de conteúdo teórico e de exercícios, e a regra das fontes**
+- **Teoria**: T076–T077 (unidades) e T059 (renderer). **Exercícios**: T078–T079 (dados) e T047–T058 (render/uso na lição).
+- A regra de **só usar fontes aprovadas** está explícita em T076/T077 ("from approved sources") e nos Notes (Content/License rules) + Constitution §2.
+- A regra de **marcar como `pendente` o que não puder ser acessado** (Constitution §2, spec AC-13) existia apenas como nota, **não como tarefa verificável** → **adicionadas T109–T112** (fonte acessível, links internos, sync ATTRIBUTIONS, `pendente`/`unverified` fora da trilha). As tarefas de conteúdo T076–T079 já existem e permanecem válidas.
+
+---
+
 ## Notes
 
 - [P] tasks = different files, no dependencies
@@ -352,6 +404,6 @@ With multiple developers:
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
-- **Content rule**: No theory text invented. If source not accessed → unit stays `pendente` (not in trail, only in map as "em construção")
+- **Content rule**: No theory text invented. If source not accessed → unit stays `pendente` (not in trail, only in map as "em construção") — ver também T112
 - **License rule**: Only CC0, CC BY, CC BY-SA sources allowed for derivation. NC/ND/all-rights-reserved → only "Leitura recomendada" link
 - **AI exercises**: Must link to theory unit, answer/explanation verified against source, marked "gerados por IA", code exercises tested before commit
