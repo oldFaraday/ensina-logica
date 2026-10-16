@@ -800,6 +800,14 @@ function showWelcomeModal() {
   const modal = document.getElementById('welcome-modal');
   let selectedGoal = 20;
 
+  // A classe `visible` aciona a transição de opacidade e habilita pointer-events.
+  // Sem ela o overlay ficava invisível (opacity 0) e, ainda assim, capturava
+  // todos os cliques da página.
+  modal.classList.add('visible');
+
+  // Meta padrão pré-selecionada (20 XP)
+  modal.querySelector('.goal-btn[data-goal="20"]')?.classList.add('active');
+
   modal.querySelectorAll('.goal-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       selectedGoal = parseInt(e.currentTarget.dataset.goal, 10);

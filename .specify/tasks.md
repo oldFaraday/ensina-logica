@@ -13,7 +13,7 @@ description: "Task list template for feature implementation"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
-**Status snapshot (2026-10-16)**: Fases 1–4 concluídas + correções fora do fluxo (T101–T108). Próxima fase: **Fase 5 (US3 — Lições/Exercícios)**. Ver seção "Progresso real do projeto" no fim.
+**Status snapshot (2026-10-16)**: Fases 1–4 concluídas + Fundamentos visuais (T113–T114) + correções fora do fluxo (T101–T108, T115–T118). Próxima fase: **Fase 5 (US3 — Lições/Exercícios)**. Ver seção "Progresso real do projeto" no fim.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -267,6 +267,10 @@ description: "Task list template for feature implementation"
 - [x] T106 [infra] Testes em Node + jsdom (devDependency): `test-imports.mjs`, `test-smoke.mjs`, `test-dom.mjs`, `test-i18n-dom.mjs`, `test-onboarding-dom.mjs`; `npm test` ampliado
 - [x] T107 [store] Correções de API do ProgressStore (`save()` público), import/export e correções de rota/infinite loop — commits `8b8c154`, `657c566`, `d416024`
 - [x] T108 [ui] Novo favicon.svg e metas do shell atualizadas — commit `db8e078`
+- [x] T115 [fix] Modal de boas-vindas bloqueava TODOS os cliques: o overlay invisível (`opacity: 0`) ainda capturava o ponteiro. Agora `.modal-overlay` só recebe cliques quando `.visible` (`pointer-events: none`/`auto`) e `showWelcomeModal()` adiciona `.visible`; meta padrão (20 XP) pré-selecionada — teste `scripts/test-interaction-dom.mjs`
+- [x] T116 [fix] Layout do topo: `.daily-goal-bar` com `width: 100%` (antes colapsava a ~6px por margens automáticas + conteúdo absoluto, virando uma "barra vertical") e `.xp-bar` sem `border-top` (que duplicava a linha do cabeçalho)
+- [x] T117 [fix] Router: guarda `started` — o router não lê mais o hash antes de `setupRoutes()`/`startRouter()`. Deep-link/refresh em `#/settings` ou `#/semester/sem1` agora abre a própria tela (antes o evento `load` rodava com a tabela de rotas vazia, caía no 404 e redirecionava para `#/`)
+- [x] T118 [test] Teste de interação (jsdom) com cliques reais: "Continuar" → semestre → "Entrar" (disciplina) → "Entrar" (módulo), deep-link e guarda de `pointer-events` do overlay; incluído em `npm test`
 
 ---
 
@@ -390,7 +394,7 @@ Comparação do tasks.md com o estado real do repositório.
 - **Fase 6 (US4 – Biblioteca Teórica)**: nada implementado — `src/theory/*` e views `#/theory/:id` e `#/library` (T059–T067).
 - **Fase 7 (US5 – Gamificação/Settings)**: falta confetti (T074) e aria-live assertivo (T075); dashboard, conquistas, settings, export/import/reset já feitos (T068–T073).
 - **Fase 8 (US6 – Conteúdo sem1)**: 0 unidades teóricas e 0 exercícios (T076–T081).
-- **Fase 9 (US7 – A11y/Privacidade)**: falta auditoria formal (T082–T083), aria-live assertivo (T087) e remover o `preconnect` externo do `index.html` (T086).
+- **Fase 9 (US7 – A11y/Privacidade)**: falta auditoria formal (T082–T083) e aria-live assertivo (T087). Concluído: contraste AA verificado por teste (T114) e remoção do `preconnect` externo do `index.html` (T086).
 - **Fase 10 (US8 – Deploy)**: workflows e arquivos prontos; falta validar 404/redirect no Pages publicado (T090).
 - **Fase 11 (Polish)**: docs, remover `console.log`, performance, CSP e QA final (T093–T095, T097, T100).
 - **Fase 13 (novas)**: verificação de fonte/links/ATTRIBUTIONS e regra `pendente` (T109–T112).

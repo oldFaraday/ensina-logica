@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5); inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação); inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -62,6 +62,7 @@ ensina-logica/
 │   ├── test-i18n-dom.mjs       # ✅ Completo - integração jsdom (sem chaves de tradução cruas)
 │   ├── test-onboarding-dom.mjs # ✅ Completo - integração jsdom (fluxo de boas-vindas/meta)
 │   ├── test-contrast.mjs       # ✅ Completo - contraste WCAG AA dos design tokens (falha abaixo de AA)
+│   ├── test-interaction-dom.mjs # ✅ Completo - cliques reais (jsdom): Continuar → semestre → disciplina → módulo, deep-link, guarda do overlay
 │   └── download-libs.mjs       # ✅ Completo - baixa KaTeX/highlight.js para lib/
 ├── index.html                  # ✅ Completo - shell com header, main, footer, skip links
 ├── 404.html                    # ✅ Completo - SPA redirect para GitHub Pages
@@ -108,8 +109,12 @@ ensina-logica/
 - **Zero requisições externas**: removido o `<link rel="preconnect" href="https://fonts.gstatic.com">` do `index.html`; decisão de **pilhas de fontes do sistema** (sem download/CDN) registrada em `DESIGN.md` e `ATTRIBUTIONS.md`.
 - **Teste de contraste WCAG AA**: `scripts/test-contrast.mjs` lê os tokens de `theme.css`, calcula o contraste dos pares semânticos (texto ≥ 4.5, UI/borda/foco ≥ 3.0) e **falha (exit 1) abaixo de AA**; também valida a estrutura dos tokens (bordas 2–4px, alvo de toque ≥ 44px, sombras sem desfoque) e a igualdade do fallback escuro. Incluído em `npm test`.
 
-### 🐞 Bug conhecido (fora do escopo desta tarefa)
-- **Deep-link/refresh em rota interna volta para `#/`**: abrir/recarregar diretamente uma URL como `#/settings` ou `#/semester/sem1` renderiza o painel e normaliza o hash para `#/`. A navegação **dentro** do app (mudança de hash após o boot) funciona normalmente. Não foi corrigido aqui por estar fora do escopo de design; sugerido tratar em tarefa de roteamento (router inicial lê o hash antes de `startRouter`/`setupRoutes`, caindo no *fallback* `#/`).
+### Correções do teste manual (2026-10-16) — T115–T118
+- **Nada era clicável** → causa: o **modal de boas-vindas** era um `.modal-overlay` **invisível** (`opacity: 0`) que **não tinha a classe `.visible`** e, ainda assim, capturava o ponteiro (opacidade não remove o *hit-testing* de `position: fixed`). Correção dupla: (1) `showWelcomeModal()` passa a adicionar `.visible`; (2) blindagem no CSS — `.modal-overlay` tem `pointer-events: none` e só `.modal-overlay.visible` tem `pointer-events: auto`, de modo que um overlay invisível nunca mais bloqueia a página. Meta padrão (20 XP) pré-selecionada. Teste: `scripts/test-interaction-dom.mjs`.
+- **"Barra vertical branca" abaixo de "Bom estudo!"** → a `.daily-goal-bar` colapsava a ~6px: `margin: 0 auto` **desliga o "stretch" do flex** e o conteúdo (fill a 0% + texto absoluto) não dava largura. Correção: `width: 100%` (com `max-width` e centralização mantidos) — agora renderiza 420×28.
+- **"Duas linhas brancas duplicadas" no topo** → o cabeçalho tinha `border-bottom` **e** a `.xp-bar` tinha `border-top`, gerando duas linhas. Correção: removido o `border-top` da `.xp-bar` (a barra ficou com 28px e o *chip* "Nível 1 — 0/1000 XP" centralizado verticalmente à direita).
+- **Deep-link/refresh voltava para o painel** → o `Router` registrava um listener de `load` e processava o hash **antes** de `setupRoutes()` (o boot é assíncrono), com a tabela de rotas vazia → caía no 404 e redirecionava para `#/`. Correção: guarda `started` no `Router` (listeners só agem após `startRouter()`). `#/settings` e `#/semester/sem1` agora abrem a própria tela no carregamento direto.
+- **Teste de interação** (`scripts/test-interaction-dom.mjs`, em `npm test`): cliques reais (`click()`) em "Continuar" → "Entrar" (disciplina) → "Entrar" (módulo), verificando a rota **e** o `<h1>` da tela; deep-link em `#/settings` e `#/semester/sem1`; e guarda de CSS (`pointer-events`) para o overlay.
 
 ---
 

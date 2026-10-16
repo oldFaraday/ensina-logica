@@ -10,13 +10,31 @@ class Router {
     this.currentParams = {};
     this.beforeHooks = [];
     this.afterHooks = [];
+    // O router só pode ler o hash DEPOIS que as rotas foram registradas
+    // (setupRoutes) e startRouter() foi chamado. Antes disso, o evento 'load'
+    // disparava com a tabela de rotas vazia e caía no 404, redirecionando um
+    // deep-link válido (ex.: #/settings) para #/.
+    this.started = false;
 
     // Handle hash changes
     if (typeof window !== 'undefined') {
-      window.addEventListener('hashchange', () => this.handleHashChange());
+      window.addEventListener('hashchange', () => {
+        if (this.started) this.handleHashChange();
+      });
       // Handle initial load
-      window.addEventListener('load', () => this.handleHashChange());
+      window.addEventListener('load', () => {
+        if (this.started) this.handleHashChange();
+      });
     }
+  }
+
+  /**
+   * Marca o router como iniciado e processa a rota atual.
+   * Deve ser chamado somente depois de registrar as rotas.
+   */
+  start() {
+    this.started = true;
+    return this.handleHashChange();
   }
 
   /**
@@ -169,7 +187,7 @@ export function navigate(path, replace = false) {
  * Start router listener
  */
 export function startRouter() {
-  router.handleHashChange();
+  router.start();
 }
 
 /**

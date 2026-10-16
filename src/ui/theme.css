@@ -323,9 +323,8 @@ code, pre, kbd, samp {
 
 /* XP bar do cabeçalho */
 .xp-bar {
-  height: 18px;
+  height: 28px;
   background: var(--color-surface-2);
-  border-top: var(--border-width-sm) solid var(--color-border);
   overflow: hidden;
   position: relative;
 }
@@ -340,9 +339,10 @@ code, pre, kbd, samp {
 .xp-text {
   position: absolute;
   top: 50%;
-  right: var(--space-2);
+  right: var(--space-4);
   transform: translateY(-50%);
-  padding: 1px var(--space-2);
+  padding: 0 var(--space-2);
+  line-height: 1.4;
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -680,11 +680,14 @@ label {
   padding: var(--space-4);
   z-index: 1000;
   opacity: 0;
+  /* Um overlay não-visível NUNCA deve capturar cliques (blindagem). */
+  pointer-events: none;
   transition: opacity var(--transition-normal);
 }
 
 .modal-overlay.visible {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .modal,
@@ -809,6 +812,9 @@ label {
   box-shadow: var(--shadow-hard-sm);
   overflow: hidden;
   position: relative;
+  /* width: 100% evita o colapso a 0 quando o conteúdo é absoluto/0%:
+     margens horizontais automáticas desligam o "stretch" do flex. */
+  width: 100%;
   max-width: 420px;
   margin: 0 auto;
 }
