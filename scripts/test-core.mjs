@@ -17,6 +17,7 @@ import { updateStreak, getStreakInfo, getMondayOfWeek } from '../src/gamificatio
 import { scheduleReview, getDueReviews, SRS_INTERVALS } from '../src/gamification/srs.js';
 import { isModuleUnlocked, getAvailableDisciplines, getDisciplineProgress, getModuleProgress } from '../src/curriculum/unlock.js';
 import { markLessonComplete, isModuleComplete, getSemesterProgress } from '../src/curriculum/progress.js';
+import { migrateProgress, createDefaultProgress, CURRENT_SCHEMA_VERSION } from '../src/store/schema-version.js';
 
 let passed = 0;
 let failed = 0;
@@ -278,6 +279,41 @@ function testProgress() {
 }
 
 // ============================================
+// Migration Tests
+// ============================================
+function testMigration() {
+  console.log('\n🧪 Testando migração de schema...');
+
+  // Padrão: onboarding_completed deve existir e ser false
+  const defaults = createDefaultProgress();
+  assertEqual(defaults.schema_version, CURRENT_SCHEMA_VERSION, 'Schema padrão na versão atual');
+  assertEqual(defaults.preferences.onboarding_completed, false, 'Padrão traz onboarding_completed = false');
+
+  // v1 sem a flag -> v-atual com a flag false
+  const v1 = createMockProgress(); // schema_version: 1, sem onboarding_completed
+  const migratedV1 = migrateProgress(v1);
+  assertEqual(migratedV1.schema_version, CURRENT_SCHEMA_VERSION, 'v1 migrado para a versão atual');
+  assertEqual(migratedV1.preferences.onboarding_completed, false, 'v1 sem flag -> onboarding_completed false');
+
+  // Legado (v0, sem schema_version) -> versão atual com a flag false
+  const v0 = createMockProgress();
+  delete v0.schema_version;
+  const migratedV0 = migrateProgress(v0);
+  assertEqual(migratedV0.schema_version, CURRENT_SCHEMA_VERSION, 'v0 (legado) migrado para a versão atual');
+  assertEqual(migratedV0.preferences.onboarding_completed, false, 'v0 ganha onboarding_completed false');
+
+  // Flag já existente é preservada
+  const withFlag = createMockProgress();
+  withFlag.preferences.onboarding_completed = true;
+  const migratedFlag = migrateProgress(withFlag);
+  assertEqual(migratedFlag.preferences.onboarding_completed, true, 'onboarding_completed = true preservado');
+
+  // Objeto inválido cai no padrão
+  const fallback = migrateProgress(null);
+  assertEqual(fallback.preferences.onboarding_completed, false, 'progresso inválido -> padrão com flag false');
+}
+
+// ============================================
 // Run all tests
 // ============================================
 function main() {
@@ -289,6 +325,7 @@ function main() {
   testSRS();
   testUnlock();
   testProgress();
+  testMigration();
 
   console.log(`\n📊 Resultado: ${passed} passou, ${failed} falhou`);
   if (failed > 0) {

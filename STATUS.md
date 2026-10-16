@@ -34,7 +34,7 @@ ensina-logica/
 │   ├── i18n.js                 # ✅ Completo - loader + t(key, params)
 │   ├── store/
 │   │   ├── ProgressStore.js    # ✅ Completo - localStorage abstraction + schema migration
-│   │   └── schema-version.js   # ✅ Completo - migrações v0→v1, validação
+│   │   └── schema-version.js   # ✅ Completo - migrações v0→v1→v2, validação
 │   ├── gamification/
 │   │   ├── xp.js               # ✅ Completo - XP, níveis, progresso
 │   │   ├── streak.js           # ✅ Completo - streak + freeze semanal
@@ -53,8 +53,11 @@ ensina-logica/
 │       ├── modals.js           # ✅ Completo - modais acessíveis (ARIA)
 │       └── a11y.js             # ✅ Completo - skip links, live regions, reduced-motion
 ├── scripts/
-│   ├── validate.mjs            # ✅ Completo - validação CI (curriculum, theory, exercises, licenses)
-│   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS, unlock, progress)
+│   ├── validate.mjs            # ✅ Completo - validação CI (curriculum, theory, exercises, licenses, schema)
+│   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS, unlock, progress, migração)
+│   ├── test-dom.mjs            # ✅ Completo - integração jsdom (rota inicial #/ renderiza)
+│   ├── test-i18n-dom.mjs       # ✅ Completo - integração jsdom (sem chaves de tradução cruas)
+│   ├── test-onboarding-dom.mjs # ✅ Completo - integração jsdom (fluxo de boas-vindas/meta)
 │   └── download-libs.mjs       # ✅ Completo - baixa KaTeX/highlight.js para lib/
 ├── index.html                  # ✅ Completo - shell com header, main, footer, skip links
 ├── 404.html                    # ✅ Completo - SPA redirect para GitHub Pages
@@ -83,7 +86,8 @@ ensina-logica/
 - **Bugfix rota inicial**: a área `<main>` ficava vazia porque `initA11y()` renomeava o id (`main` → `main-content`) antes de o router buscar por `getElementById('main')`. Router agora localiza `<main>` de forma robusta; a11y não renomeia mais o elemento nem duplica o skip link; toasts reutilizam o `#toast-container` do shell. Teste: `scripts/test-dom.mjs` (jsdom).
 - **Chaves de tradução cruas corrigidas**: títulos de lições agora vêm do currículo (`data/curriculum.json` → `lessonTitles` por módulo) e há fallback localizado (`lesson.numbered`). Adicionadas chaves faltantes: `settings.data`, `a11y.toggleTheme`, `common.difficulty.*`, `lesson.numbered`. `t()` passa a respeitar `defaultValue`. Teste: `scripts/test-i18n-dom.mjs` (jsdom) percorre 9 rotas e falha se algum texto/atributo casar com o padrão de chave i18n crua.
 - **Ícones do cabeçalho**: `aria-label` + `title` (tooltip) aplicados via i18n (`applyHeaderLabels()`), cobrindo tema, configurações e conquistas.
-- `npm test` agora inclui os testes de DOM e i18n (jsdom é devDependency).
+- **Onboarding / modal de boas-vindas**: passou a usar uma flag dedicada `preferences.onboarding_completed` (padrão `false`), em vez de depender de `stats.last_activity_date` (que o boot sobrescrevia). O modal aparece sempre que a flag é `false` e é gravada como `true` ao escolher a meta. Schema de progresso versionado em **v2** com migração (progresso antigo sem a flag é tratado como `false`). "Resetar progresso" mantém as preferências e a flag (não reabre o modal); limpar tudo (`clear`) reabre. Teste: `scripts/test-onboarding-dom.mjs` (jsdom, múltiplos "recarregamentos"). Migração coberta em `scripts/test-core.mjs`.
+- `npm test` agora inclui os testes de DOM, i18n e onboarding (jsdom é devDependency).
 
 ---
 
@@ -92,14 +96,14 @@ ensina-logica/
 ### Fase 3: US1 - Onboarding & Semester View ✅ COMPLETO
 - [x] Views: dashboard (#/), semester (#/semester/:semId) — **completo: app.js tem renderDashboard/renderSemesterView funcionais**
 - [x] Wire navigation, persist daily_goal — **completo: navegação hash + persistência no localStorage**
-- [x] Boas-vindas modal com meta diária (10/20/30/50 XP)
+- [x] Boas-vindas modal com meta diária (10/20/30/50 XP) — **corrigido: controlado por `preferences.onboarding_completed`**
 - [x] Dashboard com stats: XP total, nível, streak, freezes, revisões
 - [x] Barra de progresso de nível e meta diária
 - [x] Cards de revisão do dia (SRS)
 - [x] Semestre 1 com disciplinas, semestres 2-8 "Em breve"
 - [x] Locales completos para todas as chaves usadas
 - [x] CSS completo para dashboard, semester, discipline, module, settings, achievements
-- [ ] ⚠️ **Bug conhecido (boas-vindas)**: o modal `showWelcomeModal` (escolha da meta diária 10/20/30/50) está implementado, mas **não aparece nem em primeira visita** — `updateStreakOnBoot()` grava `stats.last_activity_date` (initApp passo 7) antes das checagens de "primeira visita" (passo 11 e `renderDashboard`). Limpar o `localStorage` não reabre o modal. Correção pendente: checar primeira visita antes de gravar o streak, ou usar flag de onboarding dedicada.
+- [x] Modal de boas-vindas controlado por flag dedicada (`preferences.onboarding_completed`, schema v2) — aparece na primeira visita / após `clear`, e não reaparece após escolher a meta ou após reset.
 
 ### Fase 4: US2 - Discipline & Module Navigation ✅ COMPLETO
 - [x] Views: discipline, module com lock icons — **completo: app.js tem renderDisciplineView/renderModuleView funcionais**

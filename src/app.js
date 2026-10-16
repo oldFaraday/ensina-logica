@@ -64,8 +64,9 @@ export async function initApp() {
     // 10. Inicia router (hash-based)
     startRouter();
 
-    // 11. Mostra boas-vindas se primeira visita
-    if (!AppState.progress.stats?.last_activity_date) {
+    // 11. Mostra boas-vindas enquanto o onboarding não foi concluído
+    //     (flag dedicada, independente de last_activity_date / streak)
+    if (!AppState.progress.preferences?.onboarding_completed) {
       showWelcomeModal();
     } else {
       // Atualiza meta diária na UI
@@ -139,17 +140,14 @@ function setupRoutes() {
  * Renderiza Dashboard (#/)
  */
 async function renderDashboard(params, query, main) {
-  const isFirstVisit = !AppState.progress.stats?.last_activity_date;
-
-  if (isFirstVisit) {
-    showWelcomeModal();
-    main.innerHTML = getDashboardHTML();
-    return;
-  }
-
   main.innerHTML = getDashboardHTML();
   bindDashboardEvents();
   updateDashboardStats();
+
+  // Mostra boas-vindas enquanto o onboarding não foi concluído
+  if (!AppState.progress.preferences?.onboarding_completed) {
+    showWelcomeModal();
+  }
 }
 
 /**
@@ -775,6 +773,9 @@ async function renderAchievementsView(params, query, main) {
  * Mostra modal de boas-vindas
  */
 function showWelcomeModal() {
+  // Evita abrir o modal duas vezes (boot + render da rota inicial)
+  if (document.getElementById('welcome-modal')) return;
+
   const modalHTML = `
     <div class="modal-overlay" id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
       <div class="modal-content">
@@ -808,9 +809,11 @@ function showWelcomeModal() {
   });
 
   modal.querySelector('#welcome-start').addEventListener('click', () => {
-    AppState.progress.preferences = AppState.progress.preferences || {};
-    AppState.progress.preferences.daily_xp_goal = selectedGoal;
-    progressStore.update({ preferences: { daily_xp_goal: selectedGoal } });
+    // Marca o onboarding como concluído e persiste a meta escolhida
+    progressStore.update({
+      preferences: { daily_xp_goal: selectedGoal, onboarding_completed: true }
+    });
+    AppState.progress = progressStore.get();
     AppState.dailyGoal = selectedGoal;
     modal.remove();
     updateDailyGoalUI();

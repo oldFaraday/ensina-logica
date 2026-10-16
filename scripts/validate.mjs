@@ -8,6 +8,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
 import { join, extname, basename, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { CURRENT_SCHEMA_VERSION } from '../src/store/schema-version.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = dirname(__dirname);
@@ -410,9 +411,9 @@ function validateProgressSchema() {
 
   // Simula progresso típico
   const sampleProgress = {
-    schema_version: 1,
+    schema_version: CURRENT_SCHEMA_VERSION,
     updated_at: new Date().toISOString(),
-    preferences: { daily_xp_goal: 20, theme: 'auto' },
+    preferences: { daily_xp_goal: 20, theme: 'auto', onboarding_completed: false },
     stats: { total_xp: 0, level: 1, current_streak: 0, freezes_remaining: 1, last_activity_date: null },
     completed: { lessons: [], theory_sections: [] },
     exercises: {},
@@ -421,10 +422,16 @@ function validateProgressSchema() {
     annotations: {}
   };
 
-  if (sampleProgress.schema_version !== 1) {
-    error(`schema_version esperado 1, encontrado ${sampleProgress.schema_version}`);
+  if (sampleProgress.schema_version !== CURRENT_SCHEMA_VERSION) {
+    error(`schema_version esperado ${CURRENT_SCHEMA_VERSION}, encontrado ${sampleProgress.schema_version}`);
   } else {
-    success('schema_version compatível (v1)');
+    success(`schema_version compatível (v${CURRENT_SCHEMA_VERSION})`);
+  }
+
+  if (typeof sampleProgress.preferences.onboarding_completed !== 'boolean') {
+    error('preferences.onboarding_completed ausente ou inválido');
+  } else {
+    success('preferences.onboarding_completed presente');
   }
 }
 

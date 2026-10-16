@@ -3,7 +3,7 @@
  * Handles migration of progress data between schema versions
  */
 
-export const CURRENT_SCHEMA_VERSION = 1;
+export const CURRENT_SCHEMA_VERSION = 2;
 
 /**
  * Migration functions by version
@@ -12,6 +12,14 @@ export const CURRENT_SCHEMA_VERSION = 1;
 const migrations = {
   // Version 1 is the base version, no migration needed
   1: (progress) => progress,
+  // Version 2 adds preferences.onboarding_completed (default false)
+  2: (progress) => {
+    progress.preferences = progress.preferences || {};
+    if (progress.preferences.onboarding_completed === undefined) {
+      progress.preferences.onboarding_completed = false;
+    }
+    return progress;
+  },
 };
 
 /**
@@ -27,17 +35,20 @@ export function migrateProgress(progress) {
   const version = progress.schema_version || 0;
 
   if (version === CURRENT_SCHEMA_VERSION) {
+    // Defensive: garante a flag mesmo em dados já na versão atual
+    progress.preferences = progress.preferences || {};
+    if (progress.preferences.onboarding_completed === undefined) {
+      progress.preferences.onboarding_completed = false;
+    }
     return progress;
   }
 
-  if (version === 0) {
-    // Legacy data without schema_version - assume v1 structure
-    return migrateToV1(progress);
-  }
+  // Base: legado (v0, sem schema_version) -> v1
+  let migrated = version === 0 ? migrateToV1(progress) : { ...progress };
+  const fromVersion = version === 0 ? 1 : version;
 
-  // Apply migrations sequentially
-  let migrated = { ...progress };
-  for (let v = version + 1; v <= CURRENT_SCHEMA_VERSION; v++) {
+  // Apply migrations sequentially up to the current version
+  for (let v = fromVersion + 1; v <= CURRENT_SCHEMA_VERSION; v++) {
     if (migrations[v]) {
       migrated = migrations[v](migrated);
     }
@@ -60,7 +71,8 @@ function migrateToV1(progress) {
     updated_at: new Date().toISOString(),
     preferences: {
       daily_xp_goal: progress.preferences?.daily_xp_goal || 20,
-      theme: progress.preferences?.theme || 'auto'
+      theme: progress.preferences?.theme || 'auto',
+      onboarding_completed: progress.preferences?.onboarding_completed ?? false
     },
     stats: {
       total_xp: progress.stats?.total_xp || 0,
@@ -93,7 +105,8 @@ export function createDefaultProgress() {
     updated_at: new Date().toISOString(),
     preferences: {
       daily_xp_goal: 20,
-      theme: 'auto'
+      theme: 'auto',
+      onboarding_completed: false
     },
     stats: {
       total_xp: 0,
