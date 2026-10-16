@@ -73,10 +73,11 @@ ensina-logica/
 └── CHANGELOG.md                # ✅ Iniciado (unreleased)
 ```
 
-### Código Implementado (Fases 1-3 COMPLETO)
+### Código Implementado (Fases 1-4 COMPLETO)
 - **Fase 1 (Setup)**: Estrutura, package.json, .gitignore, .editorconfig, .nojekyll, 404.html, index.html, favicon, README, licenças, atribuições, contributing, code of conduct, security, changelog, locales/pt-BR.json ✅
 - **Fase 2 (Foundational)**: router.js, i18n.js, ProgressStore.js, schema-version.js, xp.js, streak.js, achievements.js, srs.js, theme.css, app.js, curriculum/loader.js, unlock.js, progress.js, data/curriculum.json, data/theory/_schema.json, data/exercises/_schema.json, scripts/validate.mjs, scripts/test-core.mjs, scripts/download-libs.mjs, .github/workflows/validate.yml, .github/workflows/deploy-pages.yml, src/ui/theme.js, toasts.js, modals.js, a11y.js ✅
 - **Fase 3 (US1 - Onboarding & Semester View)**: renderDashboard, renderSemesterView, showWelcomeModal, bindDashboardEvents, updateDailyGoalUI, setDailyGoal, navegação completa, persistência daily_goal, locales completos, CSS completo para dashboard ✅
+- **Fase 4 (US2 - Discipline & Module Navigation)**: renderDisciplineView, renderModuleView, navegação semestre→disciplina→módulo, lock icons, progress bars, lições com status ✅
 
 ---
 
@@ -93,13 +94,13 @@ ensina-logica/
 - [x] Locales completos para todas as chaves usadas
 - [x] CSS completo para dashboard, semester, discipline, module, settings, achievements
 
-### Fase 4: US2 - Discipline & Module Navigation
-- [ ] Views: discipline, module com lock icons — **parcial: app.js tem renderDisciplineView/renderModuleView placeholders**
-- [ ] Unlock logic implementado ✅ (src/curriculum/unlock.js)
-
-### Fase 4: US2 - Discipline & Module Navigation
-- [ ] Views: discipline, module com lock icons — **parcial: app.js tem renderDisciplineView/renderModuleView placeholders**
-- [ ] Unlock logic implementado ✅ (src/curriculum/unlock.js)
+### Fase 4: US2 - Discipline & Module Navigation ✅ COMPLETO
+- [x] Views: discipline, module com lock icons — **completo: app.js tem renderDisciplineView/renderModuleView funcionais**
+- [x] Unlock logic implementado ✅ (src/curriculum/unlock.js)
+- [x] Navegação: semestre → disciplina → módulo → lição
+- [x] Ícones de lock/unlock e barras de progresso por módulo
+- [x] Lista de lições com status (concluída/pendente/bloqueada)
+- [x] Botão "Iniciar" para lições desbloqueadas
 
 ### Fase 5: US3 - Lesson & Exercises (Core MVP)
 - [ ] `src/lesson/renderer.js` + 5 exercise types + feedback.js
@@ -137,11 +138,20 @@ ensina-logica/
 
 ## 🎯 Próxima Etapa
 
-**Iniciar Fase 4 (US2 - Discipline & Module Navigation)** — completar views de disciplina e módulo:
-1. Finalizar `renderDisciplineView` em `src/app.js` (já tem base funcional)
-2. Finalizar `renderModuleView` em `src/app.js` (já tem base funcional)
-3. Testar navegação: semestre → disciplina → módulo → lição
-4. Verificar ícones de lock/unlock e barras de progresso por módulo
+**Iniciar Fase 5 (US3 - Lesson & Exercises)** — implementar lições completas com exercícios:
+1. Criar `src/lesson/renderer.js` — renderiza lição: resumo teórico + lista de exercícios
+2. Criar 5 tipos de exercícios em `src/lesson/exercise-types/`:
+   - `multiple-choice.js` — radio options, single correct, explanation
+   - `true-false.js` — two buttons, explanation
+   - `order-steps.js` — drag-and-drop ou up/down buttons, explanation
+   - `code-completion.js` — textarea com highlight.js, botão "Run", explanation
+   - `flashcards.js` — flip card, mark known/unknown, spaced repetition
+3. Criar `src/lesson/feedback.js` — feedback ícone+texto+cor (never color only), ARIA live
+4. Completar `renderLessonView` em `src/app.js` — carrega dados da lição, renderiza exercícios sequencialmente
+5. Implementar cálculo de XP na resposta correta (first try bonus, retry penalty, streak bonus)
+6. Implementar "Praticar mais" → abre exercícios extras da mesma unidade teórica (SRS queue)
+7. Persistir tentativas de exercício (correct/incorrect/tentativas/xp_earned) no ProgressStore
+8. Agendar revisão SRS ao concluir lição (intervalos 1→3→7→21 dias)
 
 ---
 
