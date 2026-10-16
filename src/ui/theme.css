@@ -1430,6 +1430,36 @@ label {
   font-family: var(--font-mono);
 }
 
+/* Opção de meta com legenda abaixo (T128). O wrapper reserva espaço para a
+   legenda não deslocar o layout, e o estado nunca é só cor (✓ + rótulo). */
+.goal-option {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+}
+
+.goal-emoji {
+  margin-right: var(--space-1);
+}
+
+.goal-caption {
+  visibility: hidden;
+  min-height: var(--space-5);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.goal-option.active .goal-caption,
+.goal-option:has(.goal-btn[data-goal="1000"].active) .goal-caption {
+  visibility: visible;
+}
+
 .data-actions {
   display: flex;
   flex-wrap: wrap;

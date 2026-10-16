@@ -486,7 +486,7 @@ function validateProgressSchema() {
   const sampleProgress = {
     schema_version: CURRENT_SCHEMA_VERSION,
     updated_at: new Date().toISOString(),
-    preferences: { daily_xp_goal: 20, theme: 'auto', onboarding_completed: false },
+    preferences: { daily_xp_goal: 300, theme: 'auto', onboarding_completed: false },
     stats: { total_xp: 0, level: 1, current_streak: 0, freezes_remaining: 1, last_activity_date: null },
     completed: { lessons: [], theory_sections: [] },
     exercises: {},

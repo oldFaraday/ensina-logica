@@ -118,12 +118,30 @@ async function runPage(stateFile, action, goal) {
   } else if (action === 'clear') {
     progressStore.clear();
     await wait(20);
+  } else if (action === 'select-hardcore') {
+    const btn = window.document.querySelector('#welcome-modal .goal-btn[data-goal="1000"]');
+    if (btn) btn.click();
+    await wait(20);
   }
+
+  const hardcodeBtn = window.document.querySelector('#welcome-modal .goal-btn[data-goal="1000"]');
+  const hardcodeOption = hardcodeBtn ? hardcodeBtn.closest('.goal-option') : null;
+  const defaultActiveBtn = window.document.querySelector('#welcome-modal .goal-option.active .goal-btn');
 
   const result = {
     modalVisible: !!window.document.getElementById('welcome-modal'),
     progress: progressStore.get(),
     storage,
+    goalValues: [...window.document.querySelectorAll('#welcome-modal .goal-btn')].map((b) => b.dataset.goal),
+    defaultGoalActive: defaultActiveBtn ? defaultActiveBtn.dataset.goal : null,
+    hardcore: hardcodeOption
+      ? {
+          wrapperActive: hardcodeOption.classList.contains('active'),
+          buttonActive: hardcodeBtn.classList.contains('active'),
+          caption: hardcodeOption.querySelector('.goal-caption')?.textContent || '',
+          emojiAriaHidden: hardcodeOption.querySelector('.goal-emoji')?.getAttribute('aria-hidden') || null,
+        }
+      : null,
   };
 
   writeFileSync(stateFile, JSON.stringify({ storage }), 'utf-8');
@@ -133,7 +151,7 @@ async function runPage(stateFile, action, goal) {
 // ============================================================
 // Orchestrator: executa o cenário em múltiplos "carregamentos"
 // ============================================================
-function runWorker(stateFile, action, goal = 20) {
+function runWorker(stateFile, action, goal = 300) {
   const out = execFileSync(
     process.execPath,
     [__filename, '--state', stateFile, '--action', action, '--goal', String(goal)],
@@ -155,29 +173,31 @@ function runOrchestrator() {
     // 1. Armazenamento limpo -> modal aparece
     let r = runWorker(stateFile, 'inspect');
     assert.equal(r.modalVisible, true, 'Modal deve aparecer com armazenamento limpo');
-    console.log('  ✅ Armazenamento limpo: modal aparece');
+    assert.deepEqual(r.goalValues, ['100', '300', '600', '1000'], `metas 100/300/600/1000 (${r.goalValues.join(', ')})`);
+    assert.equal(r.defaultGoalActive, '300', '300 XP pré-selecionado por padrão');
+    console.log('  ✅ Armazenamento limpo: modal aparece com metas novas (default 300)');
 
-    // 2. Escolher a meta (30 XP) -> grava meta + flag e fecha o modal
-    r = runWorker(stateFile, 'choose-goal', 30);
-    assert.equal(r.progress.preferences.daily_xp_goal, 30, 'Meta diária escolhida deve ser gravada');
+    // 2. Escolher a meta (300 XP) -> grava meta + flag e fecha o modal
+    r = runWorker(stateFile, 'choose-goal', 300);
+    assert.equal(r.progress.preferences.daily_xp_goal, 300, 'Meta diária escolhida deve ser gravada');
     assert.equal(r.progress.preferences.onboarding_completed, true, 'Flag de onboarding deve virar true');
     assert.equal(r.modalVisible, false, 'Modal deve fechar após escolher a meta');
 
     const stored = JSON.parse(r.storage['ensina-logica-progress'] || '{}');
-    assert.equal(stored.preferences.daily_xp_goal, 30, 'Meta diária deve estar persistida no localStorage');
+    assert.equal(stored.preferences.daily_xp_goal, 300, 'Meta diária deve estar persistida no localStorage');
     assert.equal(stored.preferences.onboarding_completed, true, 'Flag de onboarding deve estar persistida');
-    console.log('  ✅ Meta escolhida persistida (goal 30, onboarding_completed true)');
+    console.log('  ✅ Meta escolhida persistida (goal 300, onboarding_completed true)');
 
     // 3. Recarregar -> modal não reaparece
     r = runWorker(stateFile, 'inspect');
     assert.equal(r.modalVisible, false, 'Modal não deve reaparecer ao recarregar após concluir o onboarding');
-    assert.equal(r.progress.preferences.daily_xp_goal, 30, 'Meta diária mantida após recarregar');
+    assert.equal(r.progress.preferences.daily_xp_goal, 300, 'Meta diária mantida após recarregar');
     console.log('  ✅ Recarregamento não reabre o modal');
 
     // 4. Reset preserva preferências e flag
     r = runWorker(stateFile, 'reset');
     assert.equal(r.progress.preferences.onboarding_completed, true, 'Reset deve manter a flag de onboarding');
-    assert.equal(r.progress.preferences.daily_xp_goal, 30, 'Reset deve manter a meta diária');
+    assert.equal(r.progress.preferences.daily_xp_goal, 300, 'Reset deve manter a meta diária');
     console.log('  ✅ Reset preserva preferências e flag');
 
     // 5. Recarregar após reset -> modal não reaparece
@@ -194,6 +214,15 @@ function runOrchestrator() {
     r = runWorker(stateFile, 'inspect');
     assert.equal(r.modalVisible, true, 'Modal deve reabrir após limpar tudo');
     console.log('  ✅ Recarregamento após clear reabre o modal');
+
+    // 8. T128: selecionar 1000 mostra 👿 + legenda HARDCORE (decorativos)
+    r = runWorker(stateFile, 'select-hardcore');
+    assert.ok(r.hardcore, 'meta 1000 presente na modal de boas-vindas');
+    assert.equal(r.hardcore.wrapperActive, true, 'wrapper da meta 1000 fica ativo');
+    assert.equal(r.hardcore.buttonActive, true, 'botão da meta 1000 fica ativo');
+    assert.equal(r.hardcore.caption, 'HARDCORE', 'legenda HARDCORE exibida');
+    assert.equal(r.hardcore.emojiAriaHidden, 'true', 'emoji 👿 é decorativo (aria-hidden)');
+    console.log('  ✅ Meta 1000: 👿 + HARDCORE (modal)');
 
     console.log('✅ Teste de onboarding passou com sucesso!');
   } catch (error) {
@@ -213,7 +242,7 @@ const stateIndex = args.indexOf('--state');
 if (stateIndex !== -1) {
   const stateFile = args[stateIndex + 1];
   const action = args[args.indexOf('--action') + 1] || 'inspect';
-  const goal = Number(args[args.indexOf('--goal') + 1] || 20);
+  const goal = Number(args[args.indexOf('--goal') + 1] || 300);
   await runPage(stateFile, action, goal);
 } else {
   runOrchestrator();

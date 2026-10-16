@@ -32,8 +32,13 @@ const AppState = {
   curriculum: null,
   progress: null,
   currentView: null,
-  dailyGoal: 20
+  dailyGoal: 300
 };
+
+// Metas diárias de XP (T128). Uma lição rende ~60–83 XP, então a escala começa
+// em 100. Default aprovado: 300 ("Moderado").
+const DAILY_GOALS = [100, 300, 600, 1000];
+const DEFAULT_DAILY_GOAL = 300;
 
 /**
  * Inicializa a aplicação
@@ -81,7 +86,7 @@ export async function initApp() {
       showWelcomeModal();
     } else {
       // Atualiza meta diária na UI
-      AppState.dailyGoal = AppState.progress.preferences?.daily_xp_goal || 20;
+      AppState.dailyGoal = AppState.progress.preferences?.daily_xp_goal || DEFAULT_DAILY_GOAL;
       updateDailyGoalUI();
     }
 
@@ -160,7 +165,7 @@ function updateHeaderXpBar() {
  * e celebra com confete UMA vez por dia.
  */
 function checkDailyGoalReached() {
-  const goal = AppState.progress?.preferences?.daily_xp_goal || 20;
+  const goal = AppState.progress?.preferences?.daily_xp_goal || DEFAULT_DAILY_GOAL;
   const todayXP = getTodayXP(AppState.progress);
   if (todayXP < goal) return;
 
@@ -233,7 +238,7 @@ function getDashboardHTML() {
   const nextLevelXP = xpForLevel(level + 1) - xpForLevel(level);
   const streak = stats.current_streak || 0;
   const freezes = stats.freezes_remaining || 0;
-  const dailyGoal = progress.preferences?.daily_xp_goal || 20;
+  const dailyGoal = progress.preferences?.daily_xp_goal || DEFAULT_DAILY_GOAL;
   const todayXP = getTodayXP(progress);
   const dueReviews = getDueReviews(progress).length;
 
@@ -1057,6 +1062,66 @@ async function renderLibraryView(params, query, main) {
 }
 
 /**
+ * Rótulo traduzido de uma meta diária (inclui o nível: "300 XP/dia (Moderado)").
+ * O nome acessível do botão passa a incluir o nível (ex.: "Hardcore").
+ * @param {number} goal
+ * @returns {string}
+ */
+function getGoalLabel(goal) {
+  return t(`welcome.goals.${goal}`, { defaultValue: `${goal} XP` });
+}
+
+/**
+ * HTML de uma opção de meta. Na meta HARDCODE (1000) o emoji 👿 aparece ao lado
+ * do texto e a legenda "HARDCORE" abaixo (apenas quando selecionada). Ambos são
+ * decorativos (`aria-hidden`) — o estado nunca é só por cor, e o rótulo do botão
+ * já traz "Hardcore".
+ * @param {number} goal
+ * @param {number} activeGoal
+ * @returns {string}
+ */
+function renderGoalOption(goal, activeGoal) {
+  const active = goal === activeGoal;
+  const emoji = goal === 1000 ? '<span class="goal-emoji" aria-hidden="true">👿</span>' : '';
+  const caption = goal === 1000 ? t('welcome.hardcore') : '';
+  return `
+    <div class="goal-option ${active ? 'active' : ''}">
+      <button type="button" class="goal-btn ${active ? 'active' : ''}" data-goal="${goal}" aria-pressed="${active}">
+        ${emoji}${escapeHtml(getGoalLabel(goal))}
+      </button>
+      <span class="goal-caption" aria-hidden="true">${escapeHtml(caption)}</span>
+    </div>
+  `;
+}
+
+/**
+ * Liga a seleção das metas dentro de `root` (mantém `.active` no botão E no
+ * wrapper `.goal-option`, para o CSS mostrar a legenda HARDCORE).
+ * @param {HTMLElement} root
+ * @param {(goal:number)=>void} [onSelect]
+ */
+function bindGoalOptions(root, onSelect) {
+  root.querySelectorAll('.goal-option').forEach((option) => {
+    const btn = option.querySelector('.goal-btn');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      root.querySelectorAll('.goal-option').forEach((o) => {
+        const b = o.querySelector('.goal-btn');
+        o.classList.remove('active');
+        if (b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        }
+      });
+      option.classList.add('active');
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      if (onSelect) onSelect(parseInt(btn.dataset.goal, 10));
+    });
+  });
+}
+
+/**
  * Renderiza configurações
  */
 async function renderSettingsView(params, query, main) {
@@ -1071,11 +1136,7 @@ async function renderSettingsView(params, query, main) {
         <section class="setting-group">
           <h2>${t('settings.daily_goal')}</h2>
           <div class="goal-options">
-            ${[10, 20, 30, 50].map(goal => `
-              <button class="goal-btn ${prefs.daily_xp_goal === goal ? 'active' : ''}" data-goal="${goal}">
-                ${goal} XP
-              </button>
-            `).join('')}
+            ${DAILY_GOALS.map(goal => renderGoalOption(goal, prefs.daily_xp_goal || DEFAULT_DAILY_GOAL)).join('')}
           </div>
         </section>
         <section class="setting-group">
@@ -1107,14 +1168,7 @@ async function renderSettingsView(params, query, main) {
  */
 function bindSettingsEvents(main) {
   // Meta diária
-  main.querySelectorAll('.goal-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const goal = parseInt(e.currentTarget.dataset.goal, 10);
-      setDailyGoal(goal);
-      main.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-    });
-  });
+  bindGoalOptions(main, setDailyGoal);
 
   // Tema — aplica e persiste a preferência (sobrevive ao reload)
   main.querySelectorAll('.theme-btn').forEach(btn => {
@@ -1258,9 +1312,7 @@ function showWelcomeModal() {
         <fieldset>
           <legend>${t('welcome.choose_goal')}</legend>
           <div class="goal-options">
-            ${[10, 20, 30, 50].map(goal => `
-              <button class="goal-btn" data-goal="${goal}">${goal} XP</button>
-            `).join('')}
+            ${DAILY_GOALS.map(goal => renderGoalOption(goal, DEFAULT_DAILY_GOAL)).join('')}
           </div>
         </fieldset>
         <button class="btn btn-primary btn-lg" id="welcome-start">${t('welcome.start')}</button>
@@ -1271,23 +1323,15 @@ function showWelcomeModal() {
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
   const modal = document.getElementById('welcome-modal');
-  let selectedGoal = 20;
+  let selectedGoal = DEFAULT_DAILY_GOAL;
 
   // A classe `visible` aciona a transição de opacidade e habilita pointer-events.
   // Sem ela o overlay ficava invisível (opacity 0) e, ainda assim, capturava
   // todos os cliques da página.
   modal.classList.add('visible');
 
-  // Meta padrão pré-selecionada (20 XP)
-  modal.querySelector('.goal-btn[data-goal="20"]')?.classList.add('active');
-
-  modal.querySelectorAll('.goal-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      selectedGoal = parseInt(e.currentTarget.dataset.goal, 10);
-      modal.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-    });
-  });
+  // Meta padrão (300 XP) já vem pré-selecionada em renderGoalOption().
+  bindGoalOptions(modal, (goal) => { selectedGoal = goal; });
 
   modal.querySelector('#welcome-start').addEventListener('click', () => {
     // Marca o onboarding como concluído e persiste a meta escolhida

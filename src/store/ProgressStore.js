@@ -229,7 +229,7 @@ class ProgressStore {
    * @returns {Object} New progress
    */
   reset() {
-    const preferences = this._cache?.preferences || { daily_xp_goal: 20, theme: 'auto', onboarding_completed: false };
+    const preferences = this._cache?.preferences || { daily_xp_goal: 300, theme: 'auto', onboarding_completed: false };
     this._cache = createDefaultProgress();
     this._cache.preferences = preferences;
     this._saveAndNotify();

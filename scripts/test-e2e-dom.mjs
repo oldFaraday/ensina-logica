@@ -98,7 +98,7 @@ async function main() {
   };
 
   // ---- 1. Onboarding ----
-  click(doc.querySelector('#welcome-modal .goal-btn[data-goal="20"]'), 'meta 20 XP');
+  click(doc.querySelector('#welcome-modal .goal-btn[data-goal="300"]'), 'meta 300 XP');
   click(doc.getElementById('welcome-start'), '"Começar"');
   await wait(90);
   assert.equal(hash(), '#/semester/sem1', 'onboarding leva ao 1º semestre');
@@ -159,6 +159,26 @@ async function main() {
   window.EnsinaLogica.navigate('/settings');
   await wait(120);
   assert.ok(doc.querySelector('.settings-view'), 'tela de configurações renderizada');
+
+  // T128: metas 100/300/600/1000 com 300 pré-selecionado e destaque HARDCODE
+  const goalValues = [...doc.querySelectorAll('.settings-view .goal-btn')].map((b) => b.dataset.goal);
+  assert.deepEqual(goalValues, ['100', '300', '600', '1000'], `metas novas em Configurações (${goalValues.join(', ')})`);
+  assert.ok(
+    doc.querySelector('.settings-view .goal-option.active .goal-btn[data-goal="300"]'),
+    '300 pré-selecionado em Configurações'
+  );
+  const hardcodeBtn = doc.querySelector('.settings-view .goal-btn[data-goal="1000"]');
+  hardcodeBtn.click();
+  await wait(20);
+  const hardcodeOption = hardcodeBtn.closest('.goal-option');
+  assert.ok(hardcodeOption.classList.contains('active'), 'wrapper da meta 1000 fica ativo');
+  assert.equal(
+    hardcodeOption.querySelector('.goal-caption')?.textContent,
+    'HARDCORE',
+    'legenda HARDCORE na meta 1000'
+  );
+  assert.equal(progressStore.get().preferences.daily_xp_goal, 1000, 'meta 1000 persistida');
+  ok('configurações: metas 100/300/600/1000 + HARDCODE');
 
   click(doc.getElementById('export-progress'), 'exportar progresso');
   await wait(40);

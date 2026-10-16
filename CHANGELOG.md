@@ -21,6 +21,9 @@ e este projeto adere a [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ### Corrigido
 - **T127 — Responsividade móvel da Biblioteca Teórica** (`fix(ui)`): em `#/theory/:id` e `#/library`, blocos largos (fórmulas KaTeX em bloco, `<pre>`, `<table>`, imagens) não estouram mais o viewport no celular. `src/ui/theme.css`: `min-width:0` no grid `.theory-layout` e seus filhos (+ `max-width:100%` em `.theory-main`/`.theory-sidebar-host`/`.theory-unit`/`.theory-section`); `pre`/`pre code` e `.katex-display` rolam dentro do próprio bloco; mídia/tabelas limitadas; `overflow-wrap`/`word-break` nos contêineres de texto; campos da biblioteca com `width:100%`; coluna única e índice lateral **depois** do conteúdo no celular (DOM reordenado, desktop inalterado); rede de segurança `html { overflow-x: clip; }`. Novo teste estático `scripts/test-responsive.mjs` em `npm test`.
 
+### Alterado
+- **T128 — Metas de XP 100/300/600/1000 + destaque HARDCODE** (`feat(gamification)`): a escala antiga `[10,20,30,50]` era batida com uma única lição (~60–83 XP). Novas metas **100/300/600/1000**, default **300** ("Moderado") pré-selecionado na modal de boas-vindas e em Configurações. A opção **1000**, quando selecionada, mostra 👿 ao lado do texto e a legenda **HARDCORE** abaixo (decorativos, `aria-hidden`; estado nunca só por cor). i18n: `welcome.goals` atualizado e nova chave `welcome.hardcore`; o rótulo traduzido é exibido no botão (nome acessível inclui o nível). **Não** altera a fórmula de XP nem a lógica de níveis.
+
 ### Planejado (MVP)
 - Phase 1: Setup completo
 - Phase 2: Foundational (router, store, curriculum loader, validação, testes, CI/CD)

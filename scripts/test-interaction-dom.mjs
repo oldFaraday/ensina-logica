@@ -108,7 +108,7 @@ async function runPage(url, scenario) {
 
   if (scenario === 'click') {
     // 1. Conclui o onboarding clicando na meta e em "Começar".
-    click(doc.querySelector('#welcome-modal .goal-btn[data-goal="20"]'), 'meta 20 XP');
+    click(doc.querySelector('#welcome-modal .goal-btn[data-goal="300"]'), 'meta 300 XP');
     click(doc.getElementById('welcome-start'), '"Começar"');
     await wait(90);
     result.afterOnboardingHash = hash();

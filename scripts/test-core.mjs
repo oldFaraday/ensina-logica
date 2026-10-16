@@ -78,7 +78,7 @@ function createMockProgress(overrides = {}) {
   return {
     schema_version: 1,
     updated_at: new Date().toISOString(),
-    preferences: { daily_xp_goal: 20, theme: 'auto' },
+    preferences: { daily_xp_goal: 300, theme: 'auto' },
     stats: {
       total_xp: 0,
       level: 1,

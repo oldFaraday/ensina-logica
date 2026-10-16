@@ -10,11 +10,12 @@
     "description": "Escolha sua meta diária de XP para começar:",
     "choose_goal": "Meta diária",
     "goals": {
-      "10": "10 XP/dia (Leve)",
-      "20": "20 XP/dia (Moderado)",
-      "30": "30 XP/dia (Intenso)",
-      "50": "50 XP/dia (Hardcore)"
+      "100": "100 XP/dia (Leve)",
+      "300": "300 XP/dia (Moderado)",
+      "600": "600 XP/dia (Intenso)",
+      "1000": "1000 XP/dia (Hardcore)"
     },
+    "hardcore": "HARDCORE",
     "start": "Começar"
   },
   "dashboard": {

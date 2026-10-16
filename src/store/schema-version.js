@@ -70,7 +70,7 @@ function migrateToV1(progress) {
     schema_version: 1,
     updated_at: new Date().toISOString(),
     preferences: {
-      daily_xp_goal: progress.preferences?.daily_xp_goal || 20,
+      daily_xp_goal: progress.preferences?.daily_xp_goal || 300,
       theme: progress.preferences?.theme || 'auto',
       onboarding_completed: progress.preferences?.onboarding_completed ?? false
     },
@@ -104,7 +104,7 @@ export function createDefaultProgress() {
     schema_version: CURRENT_SCHEMA_VERSION,
     updated_at: new Date().toISOString(),
     preferences: {
-      daily_xp_goal: 20,
+      daily_xp_goal: 300,
       theme: 'auto',
       onboarding_completed: false
     },
