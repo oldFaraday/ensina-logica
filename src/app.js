@@ -10,12 +10,14 @@ import { migrateProgress } from './store/schema-version.js';
 import { initTheme, getTheme, toggleTheme } from './ui/theme.js';
 import { initToasts, showToast } from './ui/toasts.js';
 import { initModals } from './ui/modals.js';
-import { initA11y } from './ui/a11y.js';
-import { loadCurriculum } from './curriculum/loader.js';
+import { initA11y, announce } from './ui/a11y.js';
+import { loadCurriculum, loadTheoryUnit, loadExercisesForLesson, loadExercisesForTheoryUnit } from './curriculum/loader.js';
 import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
 import { scheduleReview, getDueReviews } from './gamification/srs.js';
+import { markLessonComplete } from './curriculum/progress.js';
+import { renderLesson } from './lesson/renderer.js';
 import { getModuleUnlockStatus, getModuleProgress, isLessonCompleted, isModuleUnlocked } from './curriculum/unlock.js';
 
 // Estado global da aplicação
@@ -52,6 +54,7 @@ export async function initApp() {
 
     // 6. Carrega currículo
     AppState.curriculum = await loadCurriculum();
+    updateHeaderXpBar();
 
     // 7. Atualiza streak na inicialização
     updateStreakOnBoot(AppState.progress);
@@ -101,9 +104,60 @@ function updateStreakOnBoot(progress) {
  * Verifica conquistas que devem ser desbloqueadas no boot
  */
 function checkPendingAchievements() {
-  const newAchievements = checkAchievements(AppState.progress, AppState.curriculum);
-  for (const achievement of newAchievements) {
-    showAchievementToast(achievement);
+  checkAndAnnounceAchievements({ curriculum: AppState.curriculum, exported: false, hour: new Date().getHours() });
+}
+
+/**
+ * Verifica, anuncia e persiste conquistas recém-desbloqueadas.
+ * @param {Object} [context] - Contexto extra (curriculum, perfectLesson, exported, hour)
+ * @returns {Array<string>} IDs recém-desbloqueados
+ */
+function checkAndAnnounceAchievements(context = {}) {
+  const newAchievements = checkAchievements(AppState.progress, context);
+  if (newAchievements.length === 0) return [];
+
+  AppState.progress.achievements = [...(AppState.progress.achievements || []), ...newAchievements];
+  progressStore.save();
+
+  for (const id of newAchievements) {
+    showAchievementToast(id);
+    const name = ACHIEVEMENTS[id]?.name || id;
+    announce(t('feedback.achievementUnlocked', { name }), 'assertive');
+  }
+  return newAchievements;
+}
+
+/**
+ * Atualiza a barra de XP do cabeçalho (índice.html: #xp-bar/#xp-fill/#xp-text)
+ */
+function updateHeaderXpBar() {
+  const stats = AppState.progress?.stats || {};
+  const totalXP = stats.total_xp || 0;
+  const level = levelFromXP(totalXP);
+  const currentXP = totalXP - xpForLevel(level);
+  const nextLevelXP = xpForLevel(level + 1) - xpForLevel(level);
+
+  const bar = document.getElementById('xp-bar');
+  const fill = document.getElementById('xp-fill');
+  const text = document.getElementById('xp-text');
+
+  if (fill) fill.style.width = `${nextLevelXP > 0 ? Math.min(100, (currentXP / nextLevelXP) * 100) : 0}%`;
+  if (text) text.textContent = `${t('dashboard.level')} ${level} — ${currentXP}/${nextLevelXP} XP`;
+  if (bar) {
+    bar.setAttribute('aria-valuenow', String(currentXP));
+    bar.setAttribute('aria-valuemax', String(nextLevelXP));
+  }
+}
+
+/**
+ * Verifica se a meta diária foi atingida e notifica (toast + anúncio assertive)
+ */
+function checkDailyGoalReached() {
+  const goal = AppState.progress?.preferences?.daily_xp_goal || 20;
+  const todayXP = getTodayXP(AppState.progress);
+  if (todayXP >= goal) {
+    showToast(t('feedback.dailyGoalReached'), 'success');
+    announce(t('feedback.dailyGoalReached'), 'assertive');
   }
 }
 
@@ -559,28 +613,214 @@ async function renderModuleView(params, query, main) {
 }
 
 /**
- * Renderiza visão da lição (placeholder - implementação completa em US3)
+ * Renderiza visão da lição (#/lesson/:lessonId)
+ * Resumo teórico + lista de exercícios sequencial, com XP, streak, SRS e persistência.
  */
 async function renderLessonView(params, query, main) {
   const { lessonId } = params;
   const lessonCtx = findLessonContext(lessonId);
-  const lessonTitle = lessonCtx
-    ? getLessonTitle(lessonCtx.mod, lessonId, lessonCtx.index)
-    : t('lesson.title');
+  if (!lessonCtx) return navigate('/');
+
+  const { sem, disc, mod, index } = lessonCtx;
+  const lessonTitle = getLessonTitle(mod, lessonId, index);
+  const theoryUnitId = mod.theory || null;
+
+  const [theoryUnit, rawExercises] = await Promise.all([
+    theoryUnitId ? loadTheoryUnit(theoryUnitId) : Promise.resolve(null),
+    loadExercisesForLesson(lessonId, disc.id, sem.number)
+  ]);
+
+  // T112 / Constitution §2: unidade `pendente`/`unverified` não entra na trilha.
+  const usableTheory = theoryUnit && theoryUnit.verification_status === 'verified_with_source'
+    ? theoryUnit
+    : null;
 
   main.innerHTML = `
-    <section class="lesson-view" aria-label="${t('lesson.title')}">
+    <section class="lesson-view" aria-label="${lessonTitle}">
       <header class="view-header">
-        <button class="btn btn-back" data-nav="/">${t('common.back')}</button>
+        <button class="btn btn-back" data-nav="/semester/${sem.id}/discipline/${disc.id}/module/${mod.id}">${t('common.back')}</button>
         <h1>${lessonTitle}</h1>
       </header>
-      <div class="lesson-content">
-        <p class="placeholder">${t('lesson.coming_soon')}</p>
-        <p class="placeholder">${t('lesson.implemented_in_us3')}</p>
-      </div>
+      <div class="lesson-host"></div>
     </section>
   `;
   bindNavigationEvents(main);
+
+  mountLesson(main.querySelector('.lesson-host'), {
+    lessonId,
+    lessonTitle,
+    theoryUnit: usableTheory,
+    exercises: Array.isArray(rawExercises) ? rawExercises : [],
+    sem,
+    disc,
+    mod,
+    isPractice: false
+  });
+}
+
+/**
+ * Monta (ou remonta, para "Praticar mais") a lição dentro do host.
+ * @param {HTMLElement} host
+ * @param {Object} ctx
+ */
+function mountLesson(host, ctx) {
+  const { lessonId, lessonTitle, theoryUnit, exercises, sem, disc, mod, isPractice } = ctx;
+
+  const preparedExercises = exercises.map((ex) => ({
+    ...ex,
+    _previouslyAnswered: Boolean(AppState.progress.exercises?.[ex.id])
+  }));
+
+  const theoryMeta = theoryUnit ? {
+    title: theoryUnit.source?.title,
+    authors: theoryUnit.source?.authors,
+    chapter: theoryUnit.source?.chapter,
+    section: theoryUnit.source?.section,
+    license: theoryUnit.license,
+    verification_status: theoryUnit.verification_status
+  } : null;
+
+  const lessonEl = renderLesson({
+    id: lessonId,
+    title: lessonTitle,
+    theoryUnitId: theoryUnit?.id || null,
+    summary: theoryUnit ? getTheorySummaryHTML(theoryUnit) : '',
+    theoryMeta,
+    exercises: preparedExercises
+  }, {
+    calculateXP: (exercise, isCorrect) => {
+      if (!isCorrect) return 0;
+      // Qualquer tentativa após a primeira recebe XP reduzido (retry penalty).
+      const previous = AppState.progress.exercises?.[exercise.id];
+      const isFirstAttempt = !previous;
+      const isRetry = Boolean(previous);
+      const streak = AppState.progress.stats?.current_streak || 0;
+      return calculateXP({ isFirstAttempt, isRetry, streak, baseXp: exercise.xp_base });
+    },
+    getStreak: () => AppState.progress.stats?.current_streak || 0,
+    onAnswer: (result) => handleExerciseAnswer(result),
+    onComplete: () => handleLessonComplete(lessonId, sem, disc, mod, preparedExercises),
+    onPracticeMore: () => handlePracticeMore(host, ctx),
+    onReadTheory: theoryUnit ? (id) => navigate(`/theory/${id}`) : null
+  });
+
+  host.innerHTML = '';
+  host.appendChild(lessonEl);
+
+  if (isPractice) {
+    const notice = document.createElement('p');
+    notice.className = 'lesson-practice-notice';
+    notice.textContent = t('lesson.practiceMode');
+    host.prepend(notice);
+  }
+}
+
+/**
+ * Persiste a resposta de um exercício e atualiza gamificação.
+ * @param {Object} result - Resultado vindo do renderizador do exercício
+ */
+function handleExerciseAnswer(result) {
+  const { exercise, correct, xpEarned = 0 } = result;
+  const progress = AppState.progress;
+
+  progress.exercises = progress.exercises || {};
+  const prev = progress.exercises[exercise.id] || { attempts: 0, correct: false, xp_earned: 0 };
+  progress.exercises[exercise.id] = {
+    attempts: (prev.attempts || 0) + 1,
+    correct: Boolean(prev.correct || correct),
+    xp_earned: (prev.xp_earned || 0) + xpEarned,
+    last_attempt_date: new Date().toISOString()
+  };
+
+  if (xpEarned > 0) {
+    const streakBefore = progress.stats.current_streak || 0;
+    progress.stats.total_xp = (progress.stats.total_xp || 0) + xpEarned;
+    progress.stats.level = levelFromXP(progress.stats.total_xp);
+    updateStreak(progress);
+    progressStore.save();
+    updateHeaderXpBar();
+    showToast(t('feedback.xpGain', { xp: xpEarned }), 'xp');
+    announce(t('feedback.xpGain', { xp: xpEarned }));
+
+    const streakAfter = progress.stats.current_streak || 0;
+    if (streakAfter > streakBefore) {
+      announce(t('feedback.streakUpdate', { days: streakAfter }), 'assertive');
+    }
+
+    checkAndAnnounceAchievements({ curriculum: AppState.curriculum, hour: new Date().getHours() });
+    checkDailyGoalReached();
+  } else {
+    progressStore.save();
+  }
+}
+
+/**
+ * Conclui a lição: marca como concluída, agenda SRS e notifica.
+ */
+function handleLessonComplete(lessonId, sem, disc, mod, exercises) {
+  const progress = AppState.progress;
+  const allCorrect = exercises.length > 0 && exercises.every((ex) => progress.exercises?.[ex.id]?.correct);
+
+  markLessonComplete(progress, lessonId);
+  scheduleReview(progress, lessonId);
+  progressStore.save();
+
+  checkAndAnnounceAchievements({
+    curriculum: AppState.curriculum,
+    perfectLesson: allCorrect,
+    hour: new Date().getHours()
+  });
+
+  showToast(t('lesson.completedTitle'), 'success');
+  announce(t('lesson.completedTitle'), 'assertive');
+
+  navigate(`/semester/${sem.id}/discipline/${disc.id}/module/${mod.id}`);
+}
+
+/**
+ * "Praticar mais": carrega exercícios das outras lições do mesmo módulo
+ * (mesma unidade teórica) e os renderiza como prática (sem bônus de 1ª vez).
+ */
+async function handlePracticeMore(host, ctx) {
+  const { lessonId, sem, disc, mod } = ctx;
+  const siblingIds = (mod.lessons || []).filter((id) => id !== lessonId);
+  const results = await Promise.all(siblingIds.map((id) => loadExercisesForLesson(id, disc.id, sem.number)));
+  const extras = results.flat().filter(Boolean);
+
+  if (extras.length === 0) {
+    showToast(t('lesson.noPractice'));
+    return;
+  }
+
+  mountLesson(host, { ...ctx, exercises: extras, isPractice: true });
+}
+
+/**
+ * Extrai um resumo curto (2–3 parágrafos) do conteúdo Markdown da unidade teórica.
+ * @param {Object} theoryUnit
+ * @returns {string} HTML simples
+ */
+function getTheorySummaryHTML(theoryUnit) {
+  const content = theoryUnit?.content || '';
+  const blocks = content
+    .split(/\n{2,}/)
+    .map((b) => b.trim())
+    .filter((b) => b && !b.startsWith('#') && !b.startsWith('---') && !b.startsWith('|'));
+
+  const paragraphs = blocks.slice(0, 2).map((b) => `<p>${escapeHtml(b)}</p>`);
+  return paragraphs.join('');
+}
+
+/**
+ * Escapa HTML de texto derivado da fonte (defesa contra injeção/atributos).
+ * @param {string} value
+ * @returns {string}
+ */
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 /**
@@ -739,6 +979,7 @@ function exportProgress() {
   a.click();
   URL.revokeObjectURL(url);
   showToast(t('settings.exported'));
+  checkAndAnnounceAchievements({ curriculum: AppState.curriculum, exported: true });
 }
 
 /**

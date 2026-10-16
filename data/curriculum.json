@@ -13,6 +13,7 @@
             {
               "id": "m01",
               "title": "Introdução a Algoritmos",
+              "theory": "th-sem1-algorithms-m01-intro",
               "lessons": ["l01", "l02", "l03"],
               "lessonTitles": {
                 "l01": "O que é um algoritmo",
@@ -23,6 +24,7 @@
             {
               "id": "m02",
               "title": "Variáveis e Tipos",
+              "theory": "th-sem1-algorithms-m02-variables",
               "lessons": ["l04", "l05", "l06"],
               "lessonTitles": {
                 "l04": "Variáveis e constantes",
@@ -33,6 +35,7 @@
             {
               "id": "m03",
               "title": "Controle de Fluxo",
+              "theory": "th-sem1-algorithms-m03-control-flow",
               "lessons": ["l07", "l08", "l09", "l10"],
               "lessonTitles": {
                 "l07": "Condicionais (se/senão)",
@@ -50,6 +53,7 @@
             {
               "id": "m01",
               "title": "Lógica Proposicional",
+              "theory": "th-sem1-discrete-math-m01-logic",
               "lessons": ["l01", "l02", "l03"],
               "lessonTitles": {
                 "l01": "Proposições e conectivos",
@@ -60,6 +64,7 @@
             {
               "id": "m02",
               "title": "Lógica de Predicados",
+              "theory": "th-sem1-discrete-math-m02-predicate-logic",
               "lessons": ["l04", "l05"],
               "lessonTitles": {
                 "l04": "Quantificadores",
@@ -69,6 +74,7 @@
             {
               "id": "m03",
               "title": "Provas e Indução",
+              "theory": "th-sem1-discrete-math-m03-proofs-induction",
               "lessons": ["l06", "l07", "l08"],
               "lessonTitles": {
                 "l06": "Métodos de prova",

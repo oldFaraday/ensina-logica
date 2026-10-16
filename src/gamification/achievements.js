@@ -194,12 +194,12 @@ export function checkAchievements(progress, context = {}) {
 
       case 'module-1':
         // Check if all lessons in first module of any discipline are completed
-        shouldUnlock = checkModuleComplete(progress, 'sem1', 'algorithms', 'm01') ||
-                       checkModuleComplete(progress, 'sem1', 'discrete-math', 'm01');
+        shouldUnlock = checkModuleComplete(context.curriculum, progress, 'sem1', 'algorithms', 'm01') ||
+                       checkModuleComplete(context.curriculum, progress, 'sem1', 'discrete-math', 'm01');
         break;
 
       case 'module-all-sem1':
-        shouldUnlock = checkAllModulesComplete(progress, 'sem1');
+        shouldUnlock = checkAllModulesComplete(context.curriculum, progress, 'sem1');
         break;
 
       case 'exercises-10':
@@ -269,27 +269,49 @@ export function checkAchievements(progress, context = {}) {
 
 /**
  * Check if all lessons in a module are completed
+ * @param {Object} curriculum - Loaded curriculum (may be undefined)
  * @param {Object} progress
  * @param {string} semesterId
  * @param {string} disciplineId
  * @param {string} moduleId
  * @returns {boolean}
  */
-function checkModuleComplete(progress, semesterId, disciplineId, moduleId) {
-  // This would need curriculum data to know which lessons belong to the module
-  // For now, return false - will be implemented when curriculum is loaded
-  return false;
+function checkModuleComplete(curriculum, progress, semesterId, disciplineId, moduleId) {
+  if (!curriculum) return false;
+  const sem = curriculum.semesters?.find((s) => s.id === semesterId);
+  const disc = sem?.disciplines?.find((d) => d.id === disciplineId);
+  const mod = disc?.modules?.find((m) => m.id === moduleId);
+  if (!mod || !mod.lessons || mod.lessons.length === 0) return false;
+
+  const completedLessons = progress.completed?.lessons || [];
+  return mod.lessons.every((lessonId) => completedLessons.includes(lessonId));
 }
 
 /**
  * Check if all modules in a semester are completed
+ * @param {Object} curriculum - Loaded curriculum (may be undefined)
  * @param {Object} progress
  * @param {string} semesterId
  * @returns {boolean}
  */
-function checkAllModulesComplete(progress, semesterId) {
-  // Requires curriculum data
-  return false;
+function checkAllModulesComplete(curriculum, progress, semesterId) {
+  if (!curriculum) return false;
+  const sem = curriculum.semesters?.find((s) => s.id === semesterId);
+  if (!sem || sem.status === 'coming-soon') return false;
+
+  const completedLessons = progress.completed?.lessons || [];
+  let hasAnyLesson = false;
+
+  for (const disc of sem.disciplines) {
+    for (const mod of disc.modules) {
+      for (const lessonId of (mod.lessons || [])) {
+        hasAnyLesson = true;
+        if (!completedLessons.includes(lessonId)) return false;
+      }
+    }
+  }
+
+  return hasAnyLesson;
 }
 
 /**

@@ -97,7 +97,44 @@
     "xpEarned": "+{xp} XP",
     "firstTryBonus": " (bônus primeira vez: +5 XP)",
     "streakBonus": " (bônus streak: +{bonus} XP)",
-    "retryPenalty": " (tentativa: 50% XP)"
+    "retryPenalty": " (tentativa: 50% XP)",
+    "moveUp": "Mover para cima",
+    "moveDown": "Mover para baixo",
+    "progressLabel": "Progresso da lição",
+    "progressCount": "Exercício {current} de {total}",
+    "exerciseNumber": "Exercício {number}",
+    "aiGenerated": "Gerado por IA",
+    "aiGeneratedHint": "Exercício gerado por IA e conferido contra a fonte",
+    "noExercises": "Esta lição ainda não tem exercícios publicados (em construção).",
+    "unsupportedType": "Tipo de exercício não suportado: {type}",
+    "completedTitle": "Lição concluída!",
+    "completionSummary": "Você acertou {correct} de {total} exercícios e ganhou {xp} XP.",
+    "finish": "Concluir lição",
+    "practiceMode": "Modo prática: exercícios de reforço da mesma unidade teórica.",
+    "noPractice": "Ainda não há exercícios de reforço disponíveis para esta unidade.",
+    "feedback": {
+      "correct": "Correto!",
+      "incorrect": "Incorreto",
+      "partial": "Quase lá",
+      "info": "Informação",
+      "first_try_bonus": " (bônus primeira tentativa)",
+      "streak_bonus": " (bônus streak +{streak})"
+    },
+    "flashcards": {
+      "front": "Frente",
+      "back": "Verso",
+      "showAnswer": "Mostrar resposta",
+      "known": "Já sei",
+      "unknown": "Ainda não sei"
+    },
+    "codeCompletion": {
+      "yourCode": "Seu código",
+      "hint": "Complete o código em {language} e clique em verificar.",
+      "check": "Verificar",
+      "reference": "Solução de referência",
+      "syntaxError": "Erro de sintaxe: {message}",
+      "notQuite": "O código tem sintaxe válida, mas não é a solução esperada. Veja a referência abaixo."
+    }
   },
   "theory": {
     "title": "Biblioteca",

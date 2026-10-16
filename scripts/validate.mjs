@@ -337,36 +337,50 @@ function validateExerciseFile(filePath) {
   const relPath = filePath.replace(ROOT_DIR + '/', '');
 
   try {
-    const exercise = JSON.parse(readFileSync(filePath, 'utf-8'));
+    const parsed = JSON.parse(readFileSync(filePath, 'utf-8'));
+    // Convenção: 1 arquivo por lição, contendo um ARRAY de exercícios.
+    // Compatibilidade: também aceita um único objeto.
+    const exercises = Array.isArray(parsed) ? parsed : [parsed];
 
-    for (const field of REQUIRED_EXERCISE_FIELDS) {
-      if (!(field in exercise)) {
-        error(`Campo obrigatório ausente: ${field}`, relPath);
-      }
+    if (exercises.length === 0) {
+      error('Arquivo de exercícios vazio', relPath);
+      return;
     }
 
-    // generated_by_ai deve ser true
-    if (exercise.generated_by_ai !== true) {
-      error('generated_by_ai deve ser true', relPath);
-    }
-
-    // Tipos válidos
-    if (exercise.type && !['multiple-choice', 'true-false', 'order-steps', 'code-completion', 'flashcards'].includes(exercise.type)) {
-      error(`Tipo inválido: ${exercise.type}`, relPath);
-    }
-
-    // code-completion precisa de test_command
-    if (exercise.type === 'code-completion' && !exercise.test_command) {
-      error('code-completion requer test_command', relPath);
-    }
-
-    // theory_unit_id pattern
-    if (exercise.theory_unit_id && !/^th-sem[1-8]-[a-z-]+-[a-z0-9-]+$/.test(exercise.theory_unit_id)) {
-      error(`theory_unit_id inválido: ${exercise.theory_unit_id}`, relPath);
-    }
-
+    exercises.forEach((exercise, idx) => {
+      const label = `${relPath}#${idx}`;
+      validateExerciseObject(exercise, label);
+    });
   } catch (e) {
     error(`JSON inválido: ${e.message}`, relPath);
+  }
+}
+
+function validateExerciseObject(exercise, relPath) {
+  for (const field of REQUIRED_EXERCISE_FIELDS) {
+    if (!(field in exercise)) {
+      error(`Campo obrigatório ausente: ${field}`, relPath);
+    }
+  }
+
+  // generated_by_ai deve ser true
+  if (exercise.generated_by_ai !== true) {
+    error('generated_by_ai deve ser true', relPath);
+  }
+
+  // Tipos válidos
+  if (exercise.type && !['multiple-choice', 'true-false', 'order-steps', 'code-completion', 'flashcards'].includes(exercise.type)) {
+    error(`Tipo inválido: ${exercise.type}`, relPath);
+  }
+
+  // code-completion precisa de test_command
+  if (exercise.type === 'code-completion' && !exercise.test_command) {
+    error('code-completion requer test_command', relPath);
+  }
+
+  // theory_unit_id pattern
+  if (exercise.theory_unit_id && !/^th-sem[1-8]-[a-z-]+-[a-z0-9-]+$/.test(exercise.theory_unit_id)) {
+    error(`theory_unit_id inválido: ${exercise.theory_unit_id}`, relPath);
   }
 }
 

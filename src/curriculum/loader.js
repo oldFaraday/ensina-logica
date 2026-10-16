@@ -106,32 +106,33 @@ export async function loadExercisesForLesson(lessonId, discipline, semNum = 1) {
 }
 
 /**
- * Carrega todos os exercícios de uma unidade teórica
+ * Carrega todos os exercícios ligados a uma unidade teórica.
+ * Usa `linked_lessons` (mesma convenção de arquivo por lição) e filtra por
+ * `linked_exercises` quando presente.
  * @param {string} theoryUnitId - ID da unidade teórica
  * @returns {Promise<Array>} Array de exercícios
  */
 export async function loadExercisesForTheoryUnit(theoryUnitId) {
   const theoryUnit = await loadTheoryUnit(theoryUnitId);
-  if (!theoryUnit || !theoryUnit.linked_exercises) return [];
+  if (!theoryUnit) return [];
 
-  const exercises = [];
-  for (const exId of theoryUnit.linked_exercises) {
-    const match = exId.match(/^ex-sem([1-8])-([a-z-]+)-/);
-    if (!match) continue;
+  const match = theoryUnitId.match(/^th-sem([1-8])-([a-z-]+)-/);
+  if (!match) return [];
+  const [, semNum, discipline] = match;
 
-    const [, semNum, discipline] = match;
-    const url = `${EXERCISES_BASE_URL}sem${semNum}/${discipline}/${exId}.json`;
+  const linkedLessons = theoryUnit.linked_lessons || [];
+  const linkedExerciseIds = theoryUnit.linked_exercises || [];
 
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        exercises.push(await response.json());
-      }
-    } catch (error) {
-      console.warn(`[CurriculumLoader] Erro ao carregar exercício ${exId}:`, error);
-    }
+  const collected = [];
+  for (const lessonId of linkedLessons) {
+    const exercises = await loadExercisesForLesson(lessonId, discipline, Number(semNum));
+    collected.push(...exercises);
   }
-  return exercises;
+
+  if (linkedExerciseIds.length > 0) {
+    return collected.filter((ex) => linkedExerciseIds.includes(ex.id));
+  }
+  return collected;
 }
 
 /**
@@ -258,8 +259,9 @@ function parseYaml(yaml) {
 }
 
 /**
- * Pré-carrega índice de teorias para busca rápida
- * @returns {Promise<Array>} Lista de metadados de todas as teorias
+ * Pré-carrega índice de teorias para busca rápida.
+ * Usa o campo `theory` de cada módulo do currículo (link explícito módulo → unidade).
+ * @returns {Promise<Array>} Lista de metadados de todas as teorias publicadas
  */
 export async function loadTheoryIndex() {
   if (theoryIndexCache) return theoryIndexCache;
@@ -270,19 +272,18 @@ export async function loadTheoryIndex() {
   for (const sem of curriculum.semesters) {
     for (const disc of sem.disciplines) {
       for (const mod of disc.modules) {
-        for (const lessonId of mod.lessons) {
-          // Teoria típica por módulo
-          const theoryId = `th-sem${sem.number}-${disc.id}-${mod.id}-intro`;
-          const theory = await loadTheoryUnit(theoryId);
-          if (theory) {
-            index.push({
-              id: theory.id,
-              title: theory.title,
-              discipline: theory.discipline,
-              module: theory.module,
-              content: theory.content
-            });
-          }
+        if (!mod.theory) continue;
+        const theory = await loadTheoryUnit(mod.theory);
+        // Constitution §2 / T112: só entra no índice o que foi conferido com a fonte
+        if (theory && theory.verification_status === 'verified_with_source') {
+          index.push({
+            id: theory.id,
+            title: theory.title,
+            discipline: theory.discipline,
+            module: theory.module,
+            semester: sem.id,
+            content: theory.content
+          });
         }
       }
     }

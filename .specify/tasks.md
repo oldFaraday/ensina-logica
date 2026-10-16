@@ -128,26 +128,26 @@ description: "Task list template for feature implementation"
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested)
 
-- [ ] T042 [P] [US3] Unit test: multiple-choice exercise rendering + feedback
-- [ ] T043 [P] [US3] Unit test: true-false exercise rendering + feedback
-- [ ] T044 [P] [US3] Unit test: order-steps exercise rendering + feedback
-- [ ] T045 [P] [US3] Unit test: code-completion exercise rendering + feedback
-- [ ] T046 [P] [US3] Unit test: flashcards exercise rendering + feedback
+- [x] T042 [P] [US3] Unit test: multiple-choice exercise rendering + feedback — `scripts/test-lesson-dom.mjs`
+- [x] T043 [P] [US3] Unit test: true-false exercise rendering + feedback — `scripts/test-lesson-dom.mjs`
+- [x] T044 [P] [US3] Unit test: order-steps exercise rendering + feedback — `scripts/test-lesson-dom.mjs`
+- [x] T045 [P] [US3] Unit test: code-completion exercise rendering + feedback — `scripts/test-lesson-dom.mjs`
+- [x] T046 [P] [US3] Unit test: flashcards exercise rendering + feedback — `scripts/test-lesson-dom.mjs`
 
 ### Implementation for User Story 3
 
-- [ ] T047 [US3] Create src/lesson/renderer.js — renders lesson: theory summary + exercise list
+- [x] T047 [US3] Create src/lesson/renderer.js — renders lesson: theory summary + exercise list
 - [x] T048 [US3] Create src/lesson/exercise-types/multiple-choice.js — radio options, single correct, explanation
 - [x] T049 [US3] Create src/lesson/exercise-types/true-false.js — two buttons, explanation
 - [x] T050 [US3] Create src/lesson/exercise-types/order-steps.js — drag-and-drop or up/down buttons, explanation
-- [ ] T051 [US3] Create src/lesson/exercise-types/code-completion.js — textarea with highlight.js, "Run" button (node --check for JS), explanation
-- [ ] T052 [US3] Create src/lesson/exercise-types/flashcards.js — flip card, mark known/unknown, spaced repetition
+- [x] T051 [US3] Create src/lesson/exercise-types/code-completion.js — textarea with highlight.js, "Run"/"Verificar" button (checagem de sintaxe JS no navegador; `test_command` validado no CI), explanation
+- [x] T052 [US3] Create src/lesson/exercise-types/flashcards.js — flip card, mark known/unknown, spaced repetition
 - [x] T053 [US3] Create src/lesson/feedback.js — icon+text+color (never color only), ARIA live for XP/streak/achievement
-- [ ] T054 [US3] Create view: lesson (#/lesson/:lessonId) — loads lesson data, renders exercises sequentially (hoje: placeholder em app.js)
-- [ ] T055 [US3] Implement XP calculation on correct answer (first try bonus, retry penalty, streak bonus)
-- [ ] T056 [US3] Implement "Praticar mais" → opens extra exercises from same theory unit (SRS queue)
-- [ ] T057 [US3] Persist exercise attempts (correct/incorrect/tentatives/xp_earned) to ProgressStore
-- [ ] T058 [US3] Schedule SRS review on lesson complete (intervals 1→3→7→21 days)
+- [x] T054 [US3] Create view: lesson (#/lesson/:lessonId) — loads lesson data, renders exercises sequentially
+- [x] T055 [US3] Implement XP calculation on correct answer (first try bonus, retry penalty, streak bonus)
+- [x] T056 [US3] Implement "Praticar mais" → opens extra exercises from same theory unit (SRS queue)
+- [x] T057 [US3] Persist exercise attempts (correct/incorrect/tentatives/xp_earned) to ProgressStore
+- [x] T058 [US3] Schedule SRS review on lesson complete (intervals 1→3→7→21 days)
 
 ---
 

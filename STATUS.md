@@ -83,6 +83,7 @@ ensina-logica/
 ```
 
 ### Código Implementado (Fases 1-4 COMPLETO)
+- **Fase 5 (US3 - Lesson & Exercises)**: `src/lesson/renderer.js` (resumo teórico + lista sequencial de exercícios, progresso, conclusão, "Praticar mais"); os 5 tipos em `src/lesson/exercise-types/` (`multiple-choice`, `true-false`, `order-steps`, `code-completion`, `flashcards`); view `#/lesson/:lessonId` ligada (carrega teoria + exercícios, marca tentativas, XP com first-time/retry/streak, SRS ao concluir, conquistas, aria-live, barra de XP do cabeçalho) ✅ ; teste `scripts/test-lesson-dom.mjs` (T042–T046) ✅
 - **Fase 1 (Setup)**: Estrutura, package.json, .gitignore, .editorconfig, .nojekyll, 404.html, index.html, favicon, README, licenças, atribuições, contributing, code of conduct, security, changelog, locales/pt-BR.json ✅
 - **Fase 2 (Foundational)**: router.js, i18n.js, ProgressStore.js, schema-version.js, xp.js, streak.js, achievements.js, srs.js, theme.css, app.js, curriculum/loader.js, unlock.js, progress.js, data/curriculum.json, data/theory/_schema.json, data/exercises/_schema.json, scripts/validate.mjs, scripts/test-core.mjs, scripts/download-libs.mjs, .github/workflows/validate.yml, .github/workflows/deploy-pages.yml, src/ui/theme.js, toasts.js, modals.js, a11y.js ✅
 - **Fase 3 (US1 - Onboarding & Semester View)**: renderDashboard, renderSemesterView, showWelcomeModal, bindDashboardEvents, updateDailyGoalUI, setDailyGoal, navegação completa, persistência daily_goal, locales completos, CSS completo para dashboard ✅
@@ -153,11 +154,11 @@ ensina-logica/
 - [x] Lista de lições com status (concluída/pendente/bloqueada)
 - [x] Botão "Iniciar" para lições desbloqueadas
 
-### Fase 5: US3 - Lesson & Exercises (Core MVP) — 🚧 PARCIAL
-- [x] `src/lesson/feedback.js` + 3 de 5 tipos de exercício (`multiple-choice`, `true-false`, `order-steps`)
-- [ ] `src/lesson/renderer.js` + tipos `code-completion` e `flashcards`
-- [ ] View: lesson (#/lesson/:lessonId) — **parcial: app.js tem renderLessonView placeholder**
-- [ ] Ligar XP no fluxo, "Praticar mais", persistir tentativas, agendar SRS (módulos gamification já prontos)
+### Fase 5: US3 - Lesson & Exercises (Core MVP) — ✅ COMPLETO
+- [x] `src/lesson/renderer.js` + 5/5 tipos (`multiple-choice`, `true-false`, `order-steps`, `code-completion`, `flashcards`)
+- [x] View: lesson (#/lesson/:lessonId) — resumo teórico + exercícios sequenciais, barra de progresso, conclusão
+- [x] XP no fluxo (first-time bonus, retry penalty, streak bonus), "Praticar mais", tentativas persistidas, SRS ao concluir
+- [x] Testes dos 5 tipos (`scripts/test-lesson-dom.mjs`, T042–T046)
 
 ### Fase 6: US4 - Theory Library (Core MVP) — 🚧 NÃO INICIADA
 - [ ] `src/theory/renderer.js` (KaTeX, highlight.js, atribuição, ver original)
@@ -202,20 +203,17 @@ ensina-logica/
 
 ## 🎯 Próxima Etapa
 
-**Próxima fase: Fase 5 (US3 - Lesson & Exercises)** — concluir o núcleo do MVP. Já prontos: `feedback.js` e 3/5 tipos de exercício. Falta:
+**Próxima fase: Fase 6 (US4 - Biblioteca Teórica)** e **Fase 8 (US6 - Conteúdo do 1º semestre)**, que são independentes entre si (US4 = código; US6 = dados).
 
-1. Criar `src/lesson/renderer.js` — renderiza lição: resumo teórico + lista de exercícios
-2. Completar os tipos faltantes em `src/lesson/exercise-types/`:
-   - `code-completion.js` — textarea com highlight.js, botão "Run" (`node --check` para JS), explanation
-   - `flashcards.js` — flip card, marcar conhecido/desconhecido, revisão espaçada
-3. Completar `renderLessonView` em `src/app.js` — carrega dados da lição e renderiza exercícios sequencialmente
-4. Implementar XP na resposta correta (first try bonus, retry penalty, streak bonus) — lógica em `xp.js` já pronta
-5. Implementar "Praticar mais" → exercícios extras da mesma unidade teórica (fila SRS)
-6. Persistir tentativas de exercício (correct/incorrect/tentativas/xp_earned) no ProgressStore
-7. Agendar SRS ao concluir lição (intervalos 1→3→7→21 dias)
-8. Testes unitários dos 5 tipos de exercício + feedback (T042–T046)
+Fase 6 — implementar:
+1. `src/theory/renderer.js` — Markdown + KaTeX + highlight.js, cabeçalho de atribuição, "ver original"
+2. `src/theory/sidebar.js`, `annotations.js`, `search.js`
+3. Views: `#/theory/:id` e `#/library` (substituir placeholders em `src/app.js`)
 
-**Paralelizáveis**: Fase 6 (US4 — Biblioteca Teórica, do zero) e Fase 8 (US6 — conteúdo do 1º semestre), junto com as verificações de conteúdo T109–T112.
+Fase 8 — conteúdo (só fontes aprovadas, nada inventado):
+1. 6 unidades teóricas (3 algorithms + 3 discrete-math) derivadas das fontes aprovadas, com front-matter válido
+2. Exercícios para todas as lições (3–5 cada, `generated_by_ai: true`, conferidos contra a fonte)
+3. ATTRIBUTIONS.md atualizado e `validate.mjs` verde
 
 ---
 
