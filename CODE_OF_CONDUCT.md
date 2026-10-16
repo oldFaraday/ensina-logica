@@ -34,7 +34,7 @@ Este Código de Conduta se aplica tanto nos espaços do projeto (GitHub, issues,
 
 ## Aplicação
 
-Instâncias de comportamento abusivo, assediador ou inaceitável podem ser relatadas entrando em contato com a equipe do projeto em **conduct@ensina-logica.example.com** (substitua pelo email real). Todas as reclamações serão analisadas e investigadas e resultarão em uma resposta considerada necessária e apropriada às circunstâncias. A equipe do projeto é obrigada a manter a confidencialidade em relação ao relator de um incidente.
+Instâncias de comportamento abusivo, assediador ou inaceitável podem ser relatadas entrando em contato com a equipe do projeto em **encodedink@proton.me**. Todas as reclamações serão analisadas e investigadas e resultarão em uma resposta considerada necessária e apropriada às circunstâncias. A equipe do projeto é obrigada a manter a confidencialidade em relação ao relator de um incidente.
 
 ## Atribuição
 
