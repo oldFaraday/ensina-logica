@@ -435,3 +435,11 @@ Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constit
 - [x] T123 [Convergence] Biblioteca (`#/library`): adicionar filtro por disciplina e agrupamento/expansão por semestre per spec §4 / T064 (partial) — MEDIUM ✅
 - [x] T124 [Convergence] Adicionar teste estático do `404.html` (fallback SPA → `#/`) e registrar a validação no Pages publicado per AC-10 / T090 (partial) — MEDIUM ✅ `scripts/test-404.mjs` (validação no Pages publicado segue pendente)
 - [x] T125 [Convergence] Memoizar o índice de busca (haystack normalizado) em `src/theory/search.js` per T095 (partial) — LOW ✅
+
+---
+
+## Phase 15: Convergence (2026-10-16)
+
+Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constitution (`.specify/constitution.md`; a cópia em `.specify/memory/constitution.md` é template vazio → governança ignorada com segurança). **Append-only:** nenhuma tarefa existente foi alterada, renumerada ou removida.
+
+- [x] T126 [Convergence] Expor a entrada "Biblioteca" no menu/cabeçalho global apontando para `#/library` (hoje o índice só é alcançável voltando de uma unidade teórica) per spec §4 / AC-05 (missing) — HIGH ✅ (ícone no header + `library.nav`; coberto em `scripts/test-e2e-dom.mjs`)

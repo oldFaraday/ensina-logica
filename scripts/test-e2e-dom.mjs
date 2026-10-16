@@ -138,9 +138,12 @@ async function main() {
   assert.ok(doc.querySelector('.theory-attribution'), 'cabeçalho de atribuição presente');
   ok('lição → teoria (link "ler na biblioteca")');
 
-  // ---- 4. Biblioteca (índice) com filtro por disciplina ----
-  window.EnsinaLogica.navigate('/library');
+  // ---- 4. Biblioteca (índice) a partir do MENU do cabeçalho (AC-05) ----
+  const libraryLink = doc.querySelector('header a[href="#/library"]');
+  assert.ok(libraryLink, 'menu do cabeçalho tem entrada para a Biblioteca (AC-05)');
+  libraryLink.click();
   await wait(120);
+  assert.equal(hash(), '#/library', 'clicar em "Biblioteca" no menu abre o índice');
   assert.ok(doc.querySelector('#library-discipline-filter'), 'filtro de disciplina presente');
   assert.ok(doc.querySelector('.library-semester'), 'índice agrupado por semestre');
   const filter = doc.querySelector('#library-discipline-filter');

@@ -209,13 +209,16 @@ ensina-logica/
 - [x] T125 Índice de busca memoizado (`WeakMap` em `src/theory/search.js`)
 - [x] T093/T094/T095/T097 fechados junto: docs, cleanup (`console.log`), performance (debounce+memoização) e CSP/sanitize
 
+### Fase 15: Convergence — ✅ COMPLETO (T126)
+- [x] T126 Entrada "Biblioteca" no menu/cabeçalho global → `#/library` (AC-05, faltava o acesso por menu); coberto pelo teste e2e
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**MVP completo no código e no conteúdo.** Fases 1–14 concluídas.
+**MVP completo no código e no conteúdo.** Fases 1–15 concluídas (trilha, lições, teoria, gamificação, conteúdo do 1º semestre e as duas rodadas de convergence).
 
-**Implement executado em 2026-10-16** sobre as tarefas do converge — T121–T125 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca) e também T093/T094/T095/T097. `npm test` verde (**13 suítes**) e `npm run validate` sem erros.
+**Implement executado em 2026-10-16** sobre as tarefas do converge — T121–T125 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca) e também T093/T094/T095/T097. **Segunda rodada:** T126 (entrada "Biblioteca" no menu do cabeçalho, AC-05). `npm test` verde (**13 suítes**) e `npm run validate` sem erros.
 
 Restam apenas itens que exigem ambiente externo:
 1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).

@@ -469,6 +469,7 @@ function applyHeaderLabels() {
     ['#theme-toggle', 'a11y.toggleTheme'],
     ['a[href="#/settings"]', 'settings.title'],
     ['a[href="#/achievements"]', 'achievements.title'],
+    ['a[href="#/library"]', 'library.nav'],
   ];
 
   for (const [selector, key] of targets) {
