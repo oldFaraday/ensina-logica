@@ -216,9 +216,11 @@ ensina-logica/
 
 ## 🎯 Próxima Etapa
 
-**MVP completo no código e no conteúdo.** Fases 1–15 concluídas (trilha, lições, teoria, gamificação, conteúdo do 1º semestre e as duas rodadas de convergence).
+**✅ Converged (2026-10-16).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–15 concluídas.
 
-**Implement executado em 2026-10-16** sobre as tarefas do converge — T121–T125 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca) e também T093/T094/T095/T097. **Segunda rodada:** T126 (entrada "Biblioteca" no menu do cabeçalho, AC-05). `npm test` verde (**13 suítes**) e `npm run validate` sem erros.
+**Converge — 2ª rodada:** avaliados os 13 critérios de aceitação (AC-01…AC-13) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
+
+**Implement executado em 2026-10-16** — T121–T126 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca, entrada "Biblioteca" no menu) e também T093/T094/T095/T097. `npm test` verde (**13 suítes**) e `npm run validate` sem erros.
 
 Restam apenas itens que exigem ambiente externo:
 1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).
