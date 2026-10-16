@@ -323,6 +323,29 @@ code, pre, kbd, samp {
   display: block;
 }
 
+/* Botão de tema: sol no claro, lua no escuro */
+.icon-moon {
+  display: none;
+}
+
+html[data-theme="dark"] .icon-sun {
+  display: none;
+}
+
+html[data-theme="dark"] .icon-moon {
+  display: block;
+}
+
+/* Fallback pré-JS (antes do data-theme) para não mostrar os dois ícones */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .icon-sun {
+    display: none;
+  }
+  html:not([data-theme="light"]) .icon-moon {
+    display: block;
+  }
+}
+
 /* XP bar do cabeçalho */
 .xp-bar {
   height: 28px;

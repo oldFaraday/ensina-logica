@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "validate": "node scripts/validate.mjs",
-    "test": "node scripts/test-core.mjs && node scripts/test-imports.mjs && node scripts/test-smoke.mjs && node scripts/test-dom.mjs && node scripts/test-i18n-dom.mjs && node scripts/test-onboarding-dom.mjs && node scripts/test-contrast.mjs && node scripts/test-interaction-dom.mjs",
+    "test": "node scripts/test-core.mjs && node scripts/test-imports.mjs && node scripts/test-smoke.mjs && node scripts/test-dom.mjs && node scripts/test-i18n-dom.mjs && node scripts/test-onboarding-dom.mjs && node scripts/test-contrast.mjs && node scripts/test-interaction-dom.mjs && node scripts/test-theme-dom.mjs",
     "download-libs": "node scripts/download-libs.mjs",
     "dev": "npx serve .",
     "build": "echo 'No build step required - vanilla ES modules'"

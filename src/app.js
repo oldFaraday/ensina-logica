@@ -48,6 +48,7 @@ export async function initApp() {
     initModals();
     initA11y();
     applyHeaderLabels();
+    setupHeaderActions();
 
     // 6. Carrega currículo
     AppState.curriculum = await loadCurriculum();
@@ -410,6 +411,44 @@ function applyHeaderLabels() {
 }
 
 /**
+ * Liga as ações dos botões do cabeçalho (alternância de tema)
+ */
+function setupHeaderActions() {
+  const themeToggle = document.getElementById('theme-toggle');
+  if (!themeToggle || themeToggle.dataset.bound === 'true') return;
+  themeToggle.dataset.bound = 'true';
+  themeToggle.addEventListener('click', () => {
+    // Alterna claro/escuro com base no tema EFETIVO — sempre produz uma mudança
+    // visível. O modo "automático" continua disponível em Configurações.
+    const effective = document.documentElement.getAttribute('data-theme');
+    applyThemePreference(effective === 'dark' ? 'light' : 'dark');
+  });
+}
+
+/**
+ * Aplica um tema e PERSISTE a preferência no progresso, para que a escolha
+ * sobreviva ao reload (o boot lê `progress.preferences.theme`).
+ * @param {string} [theme] - 'light' | 'dark' | 'auto'. Sem argumento, cicla.
+ * @returns {string} o tema escolhido ('light' | 'dark' | 'auto')
+ */
+function applyThemePreference(theme) {
+  const chosen = toggleTheme(theme);
+
+  if (AppState.progress) {
+    AppState.progress.preferences = AppState.progress.preferences || {};
+    AppState.progress.preferences.theme = chosen;
+  }
+  progressStore.update({ preferences: { theme: chosen } });
+
+  // Mantém a marcação dos botões de tema coerente (tela de configurações)
+  document.querySelectorAll('.theme-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.theme === chosen);
+  });
+
+  return chosen;
+}
+
+/**
  * Renderiza visão do semestre
  */
 async function renderSemesterView(params, query, main) {
@@ -641,13 +680,10 @@ function bindSettingsEvents(main) {
     });
   });
 
-  // Tema
+  // Tema — aplica e persiste a preferência (sobrevive ao reload)
   main.querySelectorAll('.theme-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const theme = e.currentTarget.dataset.theme;
-      toggleTheme(theme);
-      main.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-      e.currentTarget.classList.add('active');
+      applyThemePreference(e.currentTarget.dataset.theme);
     });
   });
 

@@ -123,8 +123,11 @@ ensina-logica/
 - **`index.html`**: `theme-color` agora segue o tema do sistema (`#FBF7EC` no claro, `#1E1A2E` no escuro) via `<meta media="(prefers-color-scheme: …)">`.
 - **Verificado**: `npm test` verde (contraste 76 ok/0 falhas; os blocos escuros continuam idênticos) e inspeção no navegador em claro e escuro (painel, semestre, modal de boas-vindas).
 
-### 🐞 Bug conhecido (pré-existente, fora do escopo desta tarefa)
-- **Preferência de tema não persiste no reload**: o boot lê o tema de `AppState.progress.preferences.theme` (`src/app.js`), mas o handler dos botões de tema em Configurações chama apenas `toggleTheme(theme)` (`src/ui/theme.js`, que grava na chave `ensina-logica-theme`) **sem** `progressStore.update({ preferences: { theme } })`. Resultado: escolher claro/escuro/automático volta para "automático" após recarregar. Sugerido corrigir numa tarefa de tema dedicada.
+### Correções de tema (2026-10-16) — T120
+- **Persistência**: os botões de tema (cabeçalho e Configurações) agora chamam `applyThemePreference()`, que grava a escolha em `progress.preferences.theme` (`progressStore.update()`). O boot já lia essa preferência — antes ela nunca era escrita, então o tema voltava para "automático" após recarregar. ✅
+- **Botão do cabeçalho**: o `#theme-toggle` não tinha handler algum; agora **alterna claro ↔ escuro** (com base no tema efetivo, garantindo mudança visível) e persiste. O modo "automático" segue disponível em Configurações. A ligação é idempotente (guarda `data-bound`), para não duplicar listeners se o boot rodar mais de uma vez. ✅
+- **Ícone de Configurações**: o `path` do SVG estava corrompido e não formava uma engrenagem; substituído pelo *gear* do Feather (traço). O botão de tema passou a mostrar **sol no claro / lua no escuro** (antes aparecia os dois juntos), com fallback pré-JS via `prefers-color-scheme`. ✅
+- **Teste**: `scripts/test-theme-dom.mjs` (jsdom) simula **recarregamentos** reais (processos separados + localStorage em arquivo) e cobre: padrão "auto", persistência ao escolher "escuro" em Configurações, o botão do cabeçalho alternando o tema e a preferência sobrevivendo a dois reloads; incluído em `npm test`.
 
 ---
 
