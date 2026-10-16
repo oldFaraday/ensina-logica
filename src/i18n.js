@@ -78,8 +78,10 @@ export async function setLocale(locale) {
   window.dispatchEvent(new CustomEvent('localechange', { detail: { locale } }));
 }
 
-// Initialize with default locale
-loadLocale('pt-BR').catch(() => {});
+// Initialize with default locale only in browser environment
+if (typeof window !== 'undefined') {
+  loadLocale('pt-BR').catch(() => {});
+}
 
 // Export for direct access if needed
 export { translations as _translations };

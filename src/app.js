@@ -12,8 +12,8 @@ import { initToasts, showToast } from './ui/toasts.js';
 import { initModals } from './ui/modals.js';
 import { initA11y } from './ui/a11y.js';
 import { loadCurriculum } from './curriculum/loader.js';
-import { XP, calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
-import { updateStreak, getFreezesRemaining } from './gamification/streak.js';
+import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
+import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
 import { scheduleReview, getDueReviews } from './gamification/srs.js';
 
@@ -87,8 +87,8 @@ function updateStreakOnBoot(progress) {
   updateStreak(progress, today);
 
   // Recalcula freezes (reset semanal segunda-feira)
-  const freezes = getFreezesRemaining(progress, today);
-  progress.stats.freezes_remaining = freezes;
+  const { freezesRemaining } = getStreakInfo(progress);
+  progress.stats.freezes_remaining = freezesRemaining;
 
   // Salva progresso atualizado
   const store = new ProgressStore('ensina-logica-progress');
@@ -110,38 +110,33 @@ function checkPendingAchievements() {
  */
 function setupRoutes() {
   // Dashboard / Boas-vindas
-  router.addRoute('/', () => renderDashboard());
+  router.add('/', () => renderDashboard());
 
   // Semestre
-  router.addRoute('/semester/:semId', ({ semId }) => renderSemesterView(semId));
+  router.add('/semester/:semId', ({ semId }) => renderSemesterView(semId));
 
   // Disciplina
-  router.addRoute('/semester/:semId/discipline/:discId', ({ semId, discId }) =>
+  router.add('/semester/:semId/discipline/:discId', ({ semId, discId }) =>
     renderDisciplineView(semId, discId)
   );
 
   // Módulo
-  router.addRoute('/semester/:semId/discipline/:discId/module/:modId', ({ semId, discId, modId }) =>
+  router.add('/semester/:semId/discipline/:discId/module/:modId', ({ semId, discId, modId }) =>
     renderModuleView(semId, discId, modId)
   );
 
   // Lição
-  router.addRoute('/lesson/:lessonId', ({ lessonId }) => renderLessonView(lessonId));
+  router.add('/lesson/:lessonId', ({ lessonId }) => renderLessonView(lessonId));
 
   // Teoria / Biblioteca
-  router.addRoute('/theory/:theoryUnitId', ({ theoryUnitId }) => renderTheoryView(theoryUnitId));
-  router.addRoute('/library', () => renderLibraryView());
+  router.add('/theory/:theoryUnitId', ({ theoryUnitId }) => renderTheoryView(theoryUnitId));
+  router.add('/library', () => renderLibraryView());
 
   // Configurações
-  router.addRoute('/settings', () => renderSettingsView());
+  router.add('/settings', () => renderSettingsView());
 
   // Conquistas
-  router.addRoute('/achievements', () => renderAchievementsView());
-
-  // 404 fallback
-  router.setNotFoundHandler(() => {
-    navigate('/');
-  });
+  router.add('/achievements', () => renderAchievementsView());
 }
 
 /**
@@ -804,15 +799,19 @@ function bindNavigationEvents(container) {
 }
 
 // Inicializa automaticamente quando DOM pronto
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
-} else {
-  initApp();
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
 }
 
 // Exporta para uso em console/debug
-window.EnsinaLogica = {
-  navigate,
-  getProgress: () => AppState.progress,
-  getCurriculum: () => AppState.curriculum
-};
+if (typeof window !== 'undefined') {
+  window.EnsinaLogica = {
+    navigate,
+    getProgress: () => AppState.progress,
+    getCurriculum: () => AppState.curriculum
+  };
+}

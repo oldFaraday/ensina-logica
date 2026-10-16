@@ -41,7 +41,7 @@ const LIBS = [
     name: 'highlight.js',
     version: '11.9.0',
     license: 'BSD-3-Clause',
-    baseUrl: 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/',
+    baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/',
     files: [
       'highlight.min.js',
       'styles/github.min.css',

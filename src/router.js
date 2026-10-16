@@ -12,9 +12,11 @@ class Router {
     this.afterHooks = [];
 
     // Handle hash changes
-    window.addEventListener('hashchange', () => this.handleHashChange());
-    // Handle initial load
-    window.addEventListener('load', () => this.handleHashChange());
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hashchange', () => this.handleHashChange());
+      // Handle initial load
+      window.addEventListener('load', () => this.handleHashChange());
+    }
   }
 
   /**
@@ -84,6 +86,7 @@ class Router {
    * Handle hash change event
    */
   async handleHashChange() {
+    if (typeof window === 'undefined') return;
     const hash = window.location.hash || '#/';
     const [path, queryString] = hash.split('?');
 
@@ -151,6 +154,22 @@ class Router {
 
 // Singleton instance
 export const router = new Router();
+
+/**
+ * Navigate to a path
+ * @param {string} path 
+ * @param {boolean} replace 
+ */
+export function navigate(path, replace = false) {
+  router.navigate(path, replace);
+}
+
+/**
+ * Start router listener
+ */
+export function startRouter() {
+  router.handleHashChange();
+}
 
 /**
  * Helper to create route handlers that render views
