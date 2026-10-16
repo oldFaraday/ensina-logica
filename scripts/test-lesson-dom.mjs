@@ -44,7 +44,7 @@ await loadLocale('pt-BR');
 const { renderMultipleChoice } = await import(new URL('../src/lesson/exercise-types/multiple-choice.js', import.meta.url));
 const { renderTrueFalse } = await import(new URL('../src/lesson/exercise-types/true-false.js', import.meta.url));
 const { renderOrderSteps } = await import(new URL('../src/lesson/exercise-types/order-steps.js', import.meta.url));
-const { renderCodeCompletion, normalizeCode, checkJavaScriptSyntax } = await import(new URL('../src/lesson/exercise-types/code-completion.js', import.meta.url));
+const { renderCodeCompletion, normalizeCode, normalizeForComparison, checkJavaScriptSyntax, runJavaScriptSnippet, validateBehaviorally } = await import(new URL('../src/lesson/exercise-types/code-completion.js', import.meta.url));
 const { renderFlashcards } = await import(new URL('../src/lesson/exercise-types/flashcards.js', import.meta.url));
 const { renderLesson, getExerciseRenderer } = await import(new URL('../src/lesson/renderer.js', import.meta.url));
 
@@ -130,6 +130,13 @@ try {
     assert.equal(checkJavaScriptSyntax('let a = 1;').ok, true, 'sintaxe válida reconhecida');
     assert.equal(checkJavaScriptSyntax('let a = ;').ok, false, 'sintaxe inválida detectada');
 
+    // Equivalência de texto: ignora comentários e todo espaço em branco.
+    // O operador de divisão inteira `//` (Python) é preservado, não tratado como comentário.
+    assert.equal(normalizeForComparison('a // b'), 'a//b', 'remove espaços ao redor do operador');
+    assert.equal(normalizeForComparison(' a // b '), 'a//b', 'ignora espaços nas extremidades');
+    assert.equal(normalizeForComparison('a /* x */ // b'), 'a//b', 'remove comentário de bloco');
+    assert.equal(normalizeForComparison('a // b # comentário'), 'a//b', 'remove comentário de linha e quebra');
+
     let answer = null;
     const solution = 'function soma(a, b) { return a + b; }';
     const ex = makeExercise({
@@ -145,6 +152,65 @@ try {
     el.querySelector('.check-btn').click();
     assert.equal(answer?.correct, true, 'código igual à referência deveria ser correto');
     ok('T045 completar código renderiza, valida sintaxe/solução e mostra feedback');
+  }
+
+  // ---------- T045b: validação comportamental ----------
+  {
+    const testCases = [
+      { vars: { a: 7, b: 3 } },
+      { vars: { a: 10, b: 2 } },
+      { vars: { a: -7, b: 3 } },
+      { vars: { a: 0, b: 5 } }
+    ];
+    const reference = 'console.log(a + b);';
+
+    // Código sintaticamente diferente, mas equivalente -> correto
+    let answer = null;
+    const ex = makeExercise({
+      type: 'code-completion',
+      correct: reference,
+      testCases,
+      language: 'javascript'
+    });
+    const el = renderCodeCompletion(ex, { streak: 0, calculateXP: () => 15, onAnswer: (r) => { answer = r; } });
+    mount(el);
+    el.querySelector('.code-input').value = 'console.log(b + a);';
+    el.querySelector('.check-btn').click();
+    assert.equal(answer?.correct, true, 'código equivalente com sintaxe diferente é correto (comportamental)');
+
+    // Código que produz saída diferente -> erro de lógica com caso informado
+    answer = null;
+    const el2 = renderCodeCompletion(makeExercise({
+      type: 'code-completion',
+      correct: reference,
+      testCases,
+      language: 'javascript'
+    }), { streak: 0, calculateXP: () => 15, onAnswer: (r) => { answer = r; } });
+    mount(el2);
+    el2.querySelector('.code-input').value = 'console.log(a - b);';
+    el2.querySelector('.check-btn').click();
+    assert.equal(answer?.correct, false, 'saída diferente é marcado como incorreto');
+    const fb2 = el2.querySelector('.exercise-feedback');
+    assert.ok(fb2.textContent.includes('Resultado incorreto'), 'feedback de lógica informa o caso');
+    assert.ok(fb2.textContent.includes('Esperado'), 'feedback mostra saída esperada vs obtida');
+
+    // Divisão por zero -> erro de execução informativo (não falha silenciosamente)
+    answer = null;
+    const ex3 = makeExercise({
+      type: 'code-completion',
+      correct: 'console.log(a / b);',
+      testCases: [{ vars: { a: 7, b: 0 } }],
+      language: 'javascript'
+    });
+    const el3 = renderCodeCompletion(ex3, { streak: 0, calculateXP: () => 15, onAnswer: (r) => { answer = r; } });
+    mount(el3);
+    el3.querySelector('.code-input').value = 'console.log(a / b);';
+    el3.querySelector('.check-btn').click();
+    assert.equal(answer?.correct, false, 'divisão por zero é erro de execução');
+    const fb3 = el3.querySelector('.exercise-feedback');
+    assert.ok(fb3.textContent.includes('Erro de execução'), 'divisão por zero informa erro de execução');
+
+    ok('T045b validação comportamental: casos de teste, erro de lógica e divisão por zero');
   }
 
   // ---------- T046: flashcards ----------

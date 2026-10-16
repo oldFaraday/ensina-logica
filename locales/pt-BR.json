@@ -135,7 +135,9 @@
       "check": "Verificar",
       "reference": "Solução de referência",
       "syntaxError": "Erro de sintaxe: {message}",
-      "notQuite": "O código tem sintaxe válida, mas não é a solução esperada. Veja a referência abaixo."
+      "notQuite": "O código tem sintaxe válida, mas não é a solução esperada. Veja a referência abaixo.",
+      "runtimeError": "Erro de execução: {message}",
+      "logicError": "Resultado incorreto para {case}. Esperado '{reference}', seu código produziu '{student}'."
     }
   },
   "theory": {
@@ -272,6 +274,7 @@
       "aria": "Resposta incorreta"
     },
     "xpGain": "Ganhou {xp} XP",
+    "xpAlreadyEarned": "Já completado hoje — sem XP adicional",
     "streakUpdate": "Streak de {days} dias!",
     "achievementUnlocked": "Conquista desbloqueada: {name}",
     "dailyGoalReached": "Meta diária atingida! Parabéns!"

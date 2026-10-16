@@ -799,7 +799,23 @@ function mountLesson(host, ctx) {
 }
 
 /**
+ * Verifica se o exercício já rendeu XP no dia civil atual.
+ * Gate de idempotência: evita farm de XP respondendo o mesmo item várias vezes.
+ * @param {Object} progress
+ * @param {string} exerciseId
+ * @returns {boolean}
+ */
+function exerciseAlreadyEarnedXPToday(progress, exerciseId) {
+  const today = new Date().toISOString().split('T')[0];
+  const entry = progress.exercises?.[exerciseId];
+  return Boolean(entry && entry.correct && entry.last_attempt_date?.startsWith(today));
+}
+
+/**
  * Persiste a resposta de um exercício e atualiza gamificação.
+ * O crédito de XP é idempotente por exercício e por dia civil: se o item já
+ * rendeu XP hoje (correct:true com last_attempt_date de hoje), não soma XP
+ * novamente. O progresso do SRS (escada [0,1,3,7,21]) continua normalmente.
  * @param {Object} result - Resultado vindo do renderizador do exercício
  */
 function handleExerciseAnswer(result) {
@@ -808,10 +824,15 @@ function handleExerciseAnswer(result) {
 
   progress.exercises = progress.exercises || {};
   const prev = progress.exercises[exercise.id] || { attempts: 0, correct: false, xp_earned: 0 };
+
+  // Gate de idempotência: já concedeu XP para este item hoje?
+  const alreadyEarnedToday = exerciseAlreadyEarnedXPToday(progress, exercise.id);
+
   progress.exercises[exercise.id] = {
     attempts: (prev.attempts || 0) + 1,
     correct: Boolean(prev.correct || correct),
-    xp_earned: (prev.xp_earned || 0) + xpEarned,
+    // Não acumula xp_earned quando o crédito de hoje já foi travado
+    xp_earned: alreadyEarnedToday ? (prev.xp_earned || 0) : (prev.xp_earned || 0) + xpEarned,
     last_attempt_date: new Date().toISOString()
   };
 
@@ -824,7 +845,10 @@ function handleExerciseAnswer(result) {
     processExerciseReview(progress, exercise.id, true);
   }
 
-  if (xpEarned > 0) {
+  // Concede XP somente na primeira vez que o item é acertado hoje.
+  const shouldAwardXP = xpEarned > 0 && correct && !alreadyEarnedToday;
+
+  if (shouldAwardXP) {
     const streakBefore = progress.stats.current_streak || 0;
     progress.stats.total_xp = (progress.stats.total_xp || 0) + xpEarned;
     progress.stats.level = levelFromXP(progress.stats.total_xp);
@@ -843,6 +867,11 @@ function handleExerciseAnswer(result) {
     checkDailyGoalReached();
   } else {
     progressStore.save();
+
+    // Feedback visual claro quando o item já foi completado hoje (sem conceder XP)
+    if (correct && alreadyEarnedToday) {
+      showToast(t('feedback.xpAlreadyEarned'), 'info');
+    }
   }
 }
 
