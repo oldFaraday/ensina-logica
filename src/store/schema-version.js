@@ -3,7 +3,7 @@
  * Handles migration of progress data between schema versions
  */
 
-export const CURRENT_SCHEMA_VERSION = 2;
+export const CURRENT_SCHEMA_VERSION = 3;
 
 /**
  * Migration functions by version
@@ -17,6 +17,13 @@ const migrations = {
     progress.preferences = progress.preferences || {};
     if (progress.preferences.onboarding_completed === undefined) {
       progress.preferences.onboarding_completed = false;
+    }
+    return progress;
+  },
+  // Version 3 adds review_queue (fila de erros para revisão no mesmo dia — T129)
+  3: (progress) => {
+    if (!Array.isArray(progress.review_queue)) {
+      progress.review_queue = [];
     }
     return progress;
   },
@@ -35,10 +42,13 @@ export function migrateProgress(progress) {
   const version = progress.schema_version || 0;
 
   if (version === CURRENT_SCHEMA_VERSION) {
-    // Defensive: garante a flag mesmo em dados já na versão atual
+    // Defensive: garante as chaves mesmo em dados já na versão atual
     progress.preferences = progress.preferences || {};
     if (progress.preferences.onboarding_completed === undefined) {
       progress.preferences.onboarding_completed = false;
+    }
+    if (!Array.isArray(progress.review_queue)) {
+      progress.review_queue = [];
     }
     return progress;
   }
@@ -88,6 +98,7 @@ function migrateToV1(progress) {
     },
     exercises: progress.exercises || {},
     srs_queue: progress.srs_queue || [],
+    review_queue: progress.review_queue || [],
     achievements: progress.achievements || [],
     annotations: progress.annotations || {}
   };
@@ -122,6 +133,7 @@ export function createDefaultProgress() {
     },
     exercises: {},
     srs_queue: [],
+    review_queue: [],
     achievements: [],
     annotations: {}
   };
@@ -140,6 +152,7 @@ export function validateProgress(progress) {
   if (!progress.completed || typeof progress.completed !== 'object') return false;
   if (!progress.exercises || typeof progress.exercises !== 'object') return false;
   if (!Array.isArray(progress.srs_queue)) return false;
+  if (progress.review_queue !== undefined && !Array.isArray(progress.review_queue)) return false;
   if (!Array.isArray(progress.achievements)) return false;
   if (!progress.annotations || typeof progress.annotations !== 'object') return false;
   return true;

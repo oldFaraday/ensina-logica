@@ -491,6 +491,7 @@ function validateProgressSchema() {
     completed: { lessons: [], theory_sections: [] },
     exercises: {},
     srs_queue: [],
+    review_queue: [],
     achievements: [],
     annotations: {}
   };

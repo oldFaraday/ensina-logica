@@ -14,10 +14,10 @@ const ROOT_DIR = dirname(__dirname);
 // Importa módulos para teste
 import { calculateXP, levelFromXP, xpForLevel } from '../src/gamification/xp.js';
 import { updateStreak, getStreakInfo, getMondayOfWeek } from '../src/gamification/streak.js';
-import { scheduleReview, getDueReviews, SRS_INTERVALS } from '../src/gamification/srs.js';
+import { scheduleReview, getDueReviews, recordWrongExercise, processExerciseReview, getDueExerciseReviews, getNextReview, SRS_INTERVALS } from '../src/gamification/srs.js';
 import { isModuleUnlocked, getAvailableDisciplines, getDisciplineProgress, getModuleProgress } from '../src/curriculum/unlock.js';
 import { markLessonComplete, isModuleComplete, getSemesterProgress } from '../src/curriculum/progress.js';
-import { migrateProgress, createDefaultProgress, CURRENT_SCHEMA_VERSION } from '../src/store/schema-version.js';
+import { migrateProgress, createDefaultProgress, validateProgress, CURRENT_SCHEMA_VERSION } from '../src/store/schema-version.js';
 
 let passed = 0;
 let failed = 0;
@@ -91,6 +91,7 @@ function createMockProgress(overrides = {}) {
     completed: { lessons: [], theory_sections: [], ...overrides.completed },
     exercises: { ...overrides.exercises },
     srs_queue: [],
+    review_queue: overrides.review_queue || [],
     achievements: [],
     annotations: {}
   };
@@ -188,36 +189,88 @@ function testSRS() {
   console.log('\n🧪 Testando SRS...');
 
   const progress = createMockProgress();
+  const today = new Date();
 
-  // Primeira agenda
+  // Primeira agenda: vence HOJE (índice 0 = 0 dias) — T129
   scheduleReview(progress, 'l01');
   assertEqual(progress.srs_queue.length, 1, 'Uma review agendada');
-  assertEqual(progress.srs_queue[0].interval_index, 0, 'Intervalo índice 0 (1 dia)');
+  assertEqual(progress.srs_queue[0].interval_index, 0, 'Intervalo índice 0 (hoje)');
+  assertEqual(getDueReviews(progress, today).length, 1, 'Review recém-agendada vence hoje');
 
-  // Repetição - avança intervalo
+  // Repetição avança a escada [0, 1, 3, 7, 21]
   scheduleReview(progress, 'l01');
-  assertEqual(progress.srs_queue[0].interval_index, 1, 'Intervalo índice 1 (3 dias)');
-
-  scheduleReview(progress, 'l01');
-  assertEqual(progress.srs_queue[0].interval_index, 2, 'Intervalo índice 2 (7 dias)');
+  assertEqual(progress.srs_queue[0].interval_index, 1, 'Intervalo índice 1 (1 dia)');
 
   scheduleReview(progress, 'l01');
-  assertEqual(progress.srs_queue[0].interval_index, 3, 'Intervalo índice 3 (21 dias)');
+  assertEqual(progress.srs_queue[0].interval_index, 2, 'Intervalo índice 2 (3 dias)');
 
-  // Teto no máximo
   scheduleReview(progress, 'l01');
-  assertEqual(progress.srs_queue[0].interval_index, 3, 'Intervalo teto em 3 (21 dias)');
+  assertEqual(progress.srs_queue[0].interval_index, 3, 'Intervalo índice 3 (7 dias)');
 
-  // Due reviews - agendada para hoje
-  const today = new Date();
-  const due = getDueReviews(progress, today);
-  // A primeira review é agendada para hoje + 1 dia, então não vence hoje
-  // Para testar "due today", agendamos com today = new Date(Date.now() - 86400000)
-  const yesterday = new Date(today.getTime() - 86400000);
-  const progress2 = createMockProgress();
-  scheduleReview(progress2, 'l02', yesterday);
-  const due2 = getDueReviews(progress2, today);
-  assertEqual(due2.length, 1, 'Review agendada ontem vence hoje');
+  scheduleReview(progress, 'l01');
+  assertEqual(progress.srs_queue[0].interval_index, 4, 'Intervalo índice 4 (21 dias)');
+
+  // Teto no máximo (21 dias)
+  scheduleReview(progress, 'l01');
+  assertEqual(progress.srs_queue[0].interval_index, 4, 'Intervalo teto em 4 (21 dias)');
+  assertEqual(getDueReviews(progress, today).length, 0, 'Review futura não vence hoje');
+
+  // Escada exposta
+  assertEqual(SRS_INTERVALS.length, 5, 'SRS_INTERVALS tem 5 degraus');
+}
+
+// ============================================
+// Fila de revisões (T129)
+// ============================================
+function testReviewQueue() {
+  console.log('\n🧪 Testando fila de revisões (T129)...');
+
+  const today = new Date('2026-10-16T12:00:00Z');
+  const progress = createMockProgress();
+
+  // Errar → entra na fila vencendo HOJE
+  recordWrongExercise(progress, 'ex01', 'l01', today);
+  assertEqual(progress.review_queue.length, 1, 'Erro entra na fila');
+  assertEqual(progress.review_queue[0].interval_index, 0, 'Erro vence no índice 0 (hoje)');
+  assertEqual(getDueExerciseReviews(progress, today).length, 1, 'Erro vence hoje');
+
+  // Errar de novo → sem duplicar; wrong_count incrementa
+  recordWrongExercise(progress, 'ex01', 'l01', today);
+  assertEqual(progress.review_queue.length, 1, 'Erro repetido não duplica');
+  assertEqual(progress.review_queue[0].wrong_count, 2, 'wrong_count = 2');
+
+  // Acertar em revisão → avança a escada (hoje + 1)
+  processExerciseReview(progress, 'ex01', true, today);
+  assertEqual(progress.review_queue[0].interval_index, 1, 'Acerto avança para índice 1');
+  const expectedDue = new Date(today);
+  expectedDue.setHours(0, 0, 0, 0);
+  expectedDue.setDate(expectedDue.getDate() + 1);
+  const due = new Date(progress.review_queue[0].due_date);
+  due.setHours(0, 0, 0, 0);
+  assertEqual(due.getTime(), expectedDue.getTime(), 'Acerto agenda para hoje + 1 dia');
+  assertEqual(getDueExerciseReviews(progress, today).length, 0, 'Após acerto não vence hoje');
+
+  // Errar em revisão → volta ao índice 0 / hoje
+  processExerciseReview(progress, 'ex01', false, today);
+  assertEqual(progress.review_queue[0].interval_index, 0, 'Erro em revisão reinicia no índice 0');
+  assertEqual(getDueExerciseReviews(progress, today).length, 1, 'Volta a vencer hoje');
+  assertEqual(progress.review_queue[0].wrong_count, 3, 'wrong_count = 3');
+
+  // Acerto de exercício nunca errado não agenda nada
+  processExerciseReview(progress, 'ex99', true, today);
+  assertEqual(progress.review_queue.length, 1, 'Acerto sem erro prévio não agenda');
+
+  // Lição concluída → revisão de lição vence hoje
+  const p2 = createMockProgress();
+  scheduleReview(p2, 'l01', today);
+  assertEqual(getDueReviews(p2, today).length, 1, 'Lição concluída agenda revisão para hoje');
+
+  // getNextReview enxerga a fila de exercícios
+  const p3 = createMockProgress();
+  recordWrongExercise(p3, 'exA', 'l01', today);
+  processExerciseReview(p3, 'exA', true, today); // vence hoje + 1
+  const next = getNextReview(p3, today);
+  assert(next !== null && next.exercise_id === 'exA', 'getNextReview enxerga a fila de exercícios');
 }
 
 // ============================================
@@ -308,6 +361,19 @@ function testMigration() {
   const migratedFlag = migrateProgress(withFlag);
   assertEqual(migratedFlag.preferences.onboarding_completed, true, 'onboarding_completed = true preservado');
 
+  // v2 → v3: migração adiciona review_queue
+  const v2 = createMockProgress();
+  v2.schema_version = 2;
+  delete v2.review_queue;
+  const migratedV2 = migrateProgress(v2);
+  assertEqual(migratedV2.schema_version, CURRENT_SCHEMA_VERSION, 'v2 migrado para a versão atual');
+  assert(Array.isArray(migratedV2.review_queue), 'v2 ganha review_queue []');
+
+  // Compat de importação: dados sem review_queue ainda passam na validação
+  const v2NoQueue = createMockProgress();
+  delete v2NoQueue.review_queue;
+  assert(validateProgress(v2NoQueue), 'validateProgress aceita dados sem review_queue');
+
   // Objeto inválido cai no padrão
   const fallback = migrateProgress(null);
   assertEqual(fallback.preferences.onboarding_completed, false, 'progresso inválido -> padrão com flag false');
@@ -323,6 +389,7 @@ function main() {
   testXP();
   testStreak();
   testSRS();
+  testReviewQueue();
   testUnlock();
   testProgress();
   testMigration();

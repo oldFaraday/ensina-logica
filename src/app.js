@@ -16,7 +16,7 @@ import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson
 import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
-import { scheduleReview, getDueReviews } from './gamification/srs.js';
+import { scheduleReview, getDueReviews, getDueExerciseReviews, getNextReview, recordWrongExercise, processExerciseReview } from './gamification/srs.js';
 import { markLessonComplete, markTheorySectionRead, unmarkTheorySectionRead } from './curriculum/progress.js';
 import { renderLesson } from './lesson/renderer.js';
 import { renderTheoryUnit } from './theory/renderer.js';
@@ -240,7 +240,10 @@ function getDashboardHTML() {
   const freezes = stats.freezes_remaining || 0;
   const dailyGoal = progress.preferences?.daily_xp_goal || DEFAULT_DAILY_GOAL;
   const todayXP = getTodayXP(progress);
-  const dueReviews = getDueReviews(progress).length;
+  const dueReviewItems = getCombinedReviewItems(progress);
+  const dueReviews = dueReviewItems.length;
+  const nextReview = getNextReview(progress);
+  const nextReviewDays = nextReview ? daysUntil(nextReview.due_date) : 0;
 
   return `
     <section class="dashboard" aria-label="${t('dashboard.title')}">
@@ -298,10 +301,15 @@ function getDashboardHTML() {
       </section>
 
       ${dueReviews > 0 ? `
-        <section class="dashboard-reviews" aria-labelledby="reviews-title">
+        <section class="dashboard-reviews" aria-labelledby="reviews-title" aria-live="polite">
           <h2 id="reviews-title">${t('dashboard.todays_reviews')}</h2>
           <div class="review-cards" id="review-cards"></div>
           <button class="btn btn-primary" id="start-reviews-btn">${t('dashboard.start_reviews')}</button>
+        </section>
+      ` : nextReview ? `
+        <section class="dashboard-reviews" aria-labelledby="reviews-title">
+          <h2 id="reviews-title">${t('dashboard.todays_reviews')}</h2>
+          <p class="review-next">${t('dashboard.next_review_in', { days: nextReviewDays })}</p>
         </section>
       ` : ''}
 
@@ -345,13 +353,14 @@ function bindDashboardEvents() {
     });
   });
 
-  // Botão iniciar revisões
+  // Botão iniciar revisões (lições + exercícios da fila de erros)
   const startReviewsBtn = document.getElementById('start-reviews-btn');
   if (startReviewsBtn) {
     startReviewsBtn.addEventListener('click', () => {
-      const dueReviews = getDueReviews(AppState.progress);
-      if (dueReviews.length > 0) {
-        navigate(`/lesson/${dueReviews[0].lesson_id}`);
+      const items = getCombinedReviewItems(AppState.progress);
+      const first = items.find((item) => item.lesson_id);
+      if (first) {
+        navigate(`/lesson/${first.lesson_id}`);
       }
     });
   }
@@ -361,19 +370,68 @@ function bindDashboardEvents() {
 }
 
 /**
+ * Lista combinada das revisões vencidas (fila de erros + revisões de lição).
+ * @param {Object} progress
+ * @returns {Array<{kind:string, lesson_id:string|null, exercise_id?:string, interval_index:number}>}
+ */
+function getCombinedReviewItems(progress) {
+  const lessons = getDueReviews(progress).map((r) => ({
+    kind: 'lesson',
+    lesson_id: r.lesson_id || null,
+    interval_index: r.interval_index || 0
+  }));
+  const exercises = getDueExerciseReviews(progress).map((r) => ({
+    kind: 'exercise',
+    lesson_id: r.lesson_id || null,
+    exercise_id: r.exercise_id || null,
+    interval_index: r.interval_index || 0
+  }));
+  return [...exercises, ...lessons];
+}
+
+/**
+ * Rótulo de um item de revisão (título da lição quando disponível).
+ * @param {Object} item
+ * @returns {string}
+ */
+function getReviewItemLabel(item) {
+  if (item.lesson_id) {
+    const ctx = findLessonContext(item.lesson_id);
+    if (ctx) return getLessonTitle(ctx.mod, item.lesson_id, ctx.index);
+  }
+  return t('dashboard.todays_reviews');
+}
+
+/**
+ * Dias até uma data (>= 1), normalizada ao início do dia.
+ * @param {string|Date} dateStr
+ * @returns {number}
+ */
+function daysUntil(dateStr) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const due = new Date(dateStr);
+  due.setHours(0, 0, 0, 0);
+  return Math.max(1, Math.round((due - today) / 86400000));
+}
+
+/**
  * Renderiza cards de revisão do dia
  */
 function renderReviewCards() {
   const container = document.getElementById('review-cards');
   if (!container) return;
 
-  const dueReviews = getDueReviews(AppState.progress);
-  container.innerHTML = dueReviews.slice(0, 3).map(review => `
-    <div class="review-card" data-lesson="${review.lesson_id}">
-      <span class="review-interval">${t('dashboard.review_interval', { days: review.interval })}</span>
-      <button class="btn btn-sm" data-nav="/lesson/${review.lesson_id}">${t('dashboard.review_now')}</button>
-    </div>
-  `).join('');
+  const items = getCombinedReviewItems(AppState.progress).slice(0, 3);
+  container.innerHTML = items.map((item) => {
+    const nav = item.lesson_id ? `/lesson/${item.lesson_id}` : null;
+    return `
+      <div class="review-card" data-lesson="${item.lesson_id || ''}">
+        <span class="review-label">${escapeHtml(getReviewItemLabel(item))}</span>
+        ${nav ? `<button class="btn btn-sm" data-nav="${nav}">${t('dashboard.review_now')}</button>` : ''}
+      </div>
+    `;
+  }).join('');
 
   container.querySelectorAll('[data-nav]').forEach(btn => {
     btn.addEventListener('click', (e) => navigate(e.currentTarget.dataset.nav));
@@ -720,7 +778,7 @@ function mountLesson(host, ctx) {
       return calculateXP({ isFirstAttempt, isRetry, streak, baseXp: exercise.xp_base });
     },
     getStreak: () => AppState.progress.stats?.current_streak || 0,
-    onAnswer: (result) => handleExerciseAnswer(result),
+    onAnswer: (result) => handleExerciseAnswer({ ...result, lessonId }),
     onComplete: () => handleLessonComplete(lessonId, sem, disc, mod, preparedExercises),
     onPracticeMore: () => handlePracticeMore(host, ctx),
     onReadTheory: theoryUnit ? (id) => navigate(`/theory/${id}`) : null
@@ -742,7 +800,7 @@ function mountLesson(host, ctx) {
  * @param {Object} result - Resultado vindo do renderizador do exercício
  */
 function handleExerciseAnswer(result) {
-  const { exercise, correct, xpEarned = 0 } = result;
+  const { exercise, correct, xpEarned = 0, lessonId = null } = result;
   const progress = AppState.progress;
 
   progress.exercises = progress.exercises || {};
@@ -753,6 +811,15 @@ function handleExerciseAnswer(result) {
     xp_earned: (prev.xp_earned || 0) + xpEarned,
     last_attempt_date: new Date().toISOString()
   };
+
+  // T129: fila de revisões do mesmo dia.
+  // - Errar: upsert (vencendo HOJE, sem duplicar); erro numa revisão reinicia a escada.
+  // - Acertar: se o exercício está na fila (revisão), avança a escada [0,1,3,7,21].
+  if (correct === false) {
+    recordWrongExercise(progress, exercise.id, lessonId);
+  } else {
+    processExerciseReview(progress, exercise.id, true);
+  }
 
   if (xpEarned > 0) {
     const streakBefore = progress.stats.current_streak || 0;

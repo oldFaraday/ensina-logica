@@ -31,6 +31,7 @@
     "level_progress": "Progresso do nível",
     "todays_reviews": "Revisões de hoje",
     "start_reviews": "Iniciar revisões",
+    "next_review_in": "Próxima revisão: em {days} dia(s)",
     "review_interval": "Intervalo: {days} dias",
     "review_now": "Revisar agora",
     "current_semester": "Semestre atual",

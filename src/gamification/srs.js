@@ -3,7 +3,7 @@
  * Pure functions for SRS logic
  */
 
-export const SRS_INTERVALS = [1, 3, 7, 21]; // Days
+export const SRS_INTERVALS = [0, 1, 3, 7, 21]; // Days (0 = revisar hoje)
 
 /**
  * Schedule a review for a lesson
@@ -63,22 +63,128 @@ export function getDueReviews(progress, today = new Date()) {
 }
 
 /**
+ * Normaliza uma data para o início do dia (00:00:00).
+ * @param {Date} [date=new Date()]
+ * @returns {Date}
+ */
+function startOfDay(date = new Date()) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+/* --------------------------------------------------------------------------
+ * Fila de erros (T129) — "revisar no mesmo dia".
+ * progress.review_queue = [{
+ *   exercise_id, lesson_id, due_date, interval_index, wrong_count, last_wrong_at
+ * }]
+ * A escada de repetição espaçada é mantida (0/1/3/7/21): o item novo vence HOJE
+ * (índice 0) e avança ao acertar em modo revisão.
+ * ------------------------------------------------------------------------ */
+
+/**
+ * Registra (upsert) um exercício errado na fila de revisões, vencendo HOJE.
+ * Não duplica: o índice é por `exercise_id`.
+ * @param {Object} progress
+ * @param {string} exerciseId
+ * @param {string|null} [lessonId]
+ * @param {Date} [today=new Date()]
+ * @returns {Object} Entrada atualizada
+ */
+export function recordWrongExercise(progress, exerciseId, lessonId = null, today = new Date()) {
+  const queue = progress.review_queue || (progress.review_queue = []);
+  const todayDate = startOfDay(today);
+  const index = queue.findIndex(q => q.exercise_id === exerciseId);
+
+  if (index >= 0) {
+    const entry = queue[index];
+    queue[index] = {
+      ...entry,
+      lesson_id: lessonId || entry.lesson_id || null,
+      due_date: todayDate.toISOString(),
+      interval_index: 0,
+      wrong_count: (entry.wrong_count || 0) + 1,
+      last_wrong_at: todayDate.toISOString()
+    };
+    progress.review_queue = queue;
+    return queue[index];
+  }
+
+  const entry = {
+    exercise_id: exerciseId,
+    lesson_id: lessonId || null,
+    due_date: todayDate.toISOString(),
+    interval_index: 0,
+    wrong_count: 1,
+    last_wrong_at: todayDate.toISOString()
+  };
+  queue.push(entry);
+  progress.review_queue = queue;
+  return entry;
+}
+
+/**
+ * Processa o resultado de um exercício que está (ou deveria estar) na fila.
+ * - Correto: avança a escada [0,1,3,7,21] (`due_date = hoje + intervalo`).
+ * - Incorreto: volta ao índice 0 e vence hoje (upsert, sem duplicar).
+ * @param {Object} progress
+ * @param {string} exerciseId
+ * @param {boolean} correct
+ * @param {Date} [today=new Date()]
+ * @returns {Object|null} Entrada atualizada (ou null se correto e não rastreado)
+ */
+export function processExerciseReview(progress, exerciseId, correct, today = new Date()) {
+  const queue = progress.review_queue || (progress.review_queue = []);
+  const index = queue.findIndex(q => q.exercise_id === exerciseId);
+
+  if (index < 0) {
+    // Só erros entram na fila; um acerto de exercício nunca respondido não agenda nada.
+    return correct ? null : recordWrongExercise(progress, exerciseId, null, today);
+  }
+
+  const entry = queue[index];
+  const todayDate = startOfDay(today);
+
+  if (!correct) {
+    return recordWrongExercise(progress, exerciseId, entry.lesson_id, today);
+  }
+
+  const newIntervalIndex = Math.min((entry.interval_index || 0) + 1, SRS_INTERVALS.length - 1);
+  const dueDate = new Date(todayDate);
+  dueDate.setDate(dueDate.getDate() + SRS_INTERVALS[newIntervalIndex]);
+
+  queue[index] = {
+    ...entry,
+    due_date: dueDate.toISOString(),
+    interval_index: newIntervalIndex,
+    last_reviewed: todayDate.toISOString()
+  };
+  progress.review_queue = queue;
+  return queue[index];
+}
+
+/**
+ * Revisões de exercícios (fila de erros) vencidas hoje ou antes.
+ * @param {Object} progress
+ * @param {Date} [today=new Date()]
+ * @returns {Array<Object>}
+ */
+export function getDueExerciseReviews(progress, today = new Date()) {
+  const queue = progress.review_queue || [];
+  const todayDate = startOfDay(today);
+  return queue.filter(q => startOfDay(new Date(q.due_date)) <= todayDate);
+}
+
+/**
  * Get next upcoming review
  * @param {Object} progress
  * @param {Date} [today=new Date()]
  * @returns {Object|null}
  */
 export function getNextReview(progress, today = new Date()) {
-  const queue = progress.srs_queue || [];
-  const todayDate = new Date(today);
-  todayDate.setHours(0, 0, 0, 0);
-
-  const future = queue
-    .filter(q => {
-      const dueDate = new Date(q.due_date);
-      dueDate.setHours(0, 0, 0, 0);
-      return dueDate > todayDate;
-    })
+  const todayDate = startOfDay(today);
+  const future = [...(progress.srs_queue || []), ...(progress.review_queue || [])]
+    .filter(q => startOfDay(new Date(q.due_date)) > todayDate)
     .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
 
   return future[0] || null;
@@ -165,7 +271,8 @@ export function resetSRS(progress, lessonId, today = new Date()) {
  * @returns {string}
  */
 export function getIntervalLabel(intervalIndex) {
-  const days = SRS_INTERVALS[intervalIndex] || SRS_INTERVALS[SRS_INTERVALS.length - 1];
+  const days = SRS_INTERVALS[intervalIndex] ?? SRS_INTERVALS[SRS_INTERVALS.length - 1];
+  if (days === 0) return 'hoje';
   if (days === 1) return '1 dia';
   return `${days} dias`;
 }

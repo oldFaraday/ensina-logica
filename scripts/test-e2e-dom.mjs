@@ -129,6 +129,77 @@ async function main() {
   assert.ok(doc.querySelector('.lesson-summary'), 'lição mostra o resumo teórico');
   ok(`jornada até a lição (${lessonNav})`);
 
+  // ---- 2b. T129: errar exercício → revisão no mesmo dia (fila de erros) ----
+  const answerExercise = (item, forceWrong = false) => {
+    const ex = item.querySelector('.exercise');
+    if (!ex) return;
+    const type = ex.dataset.exerciseType;
+    if (type === 'multiple-choice') {
+      const radios = ex.querySelectorAll('input[type="radio"]');
+      if (!radios.length) return;
+      const pick = forceWrong ? radios[radios.length - 1] : radios[0];
+      pick.checked = true;
+      pick.dispatchEvent(new window.Event('change', { bubbles: true }));
+      ex.querySelector('.submit-btn')?.click();
+    } else if (type === 'true-false') {
+      ex.querySelector(forceWrong ? '.tf-false' : '.tf-true')?.click();
+    } else if (type === 'order-steps') {
+      ex.querySelector('.submit-btn')?.click();
+    } else if (type === 'flashcards') {
+      ex.querySelector('.flip-btn')?.click();
+      ex.querySelector(forceWrong ? '.unknown-btn' : '.known-btn')?.click();
+    } else if (type === 'code-completion') {
+      ex.querySelector('.check-btn')?.click();
+    }
+  };
+
+  const exerciseItems = [...doc.querySelectorAll('.lesson .exercise-item')];
+  let forcedWrong = false;
+  for (const item of exerciseItems) {
+    const type = item.querySelector('.exercise')?.dataset.exerciseType;
+    if (!forcedWrong && type === 'flashcards') {
+      answerExercise(item, true); // flashcard "não conheço" = erro garantido
+      forcedWrong = true;
+    } else {
+      answerExercise(item);
+    }
+  }
+  assert.ok(forcedWrong, 'lição tem um flashcard para forçar erro');
+
+  const liveProgress = window.EnsinaLogica.getProgress();
+  assert.ok(
+    Array.isArray(liveProgress.review_queue) && liveProgress.review_queue.length >= 1,
+    'T129: erro entra na fila de revisão'
+  );
+  assert.ok(
+    liveProgress.review_queue.some((r) => r.interval_index === 0),
+    'T129: item da fila vence hoje (índice 0)'
+  );
+
+  // Conclui a lição → agenda revisão de lição para hoje
+  const completionBlock = doc.querySelector('.lesson .lesson-completion');
+  assert.ok(completionBlock && !completionBlock.hidden, 'lição completa após responder todos os exercícios');
+  click(completionBlock.querySelector('.finish-btn'), 'concluir lição');
+  await wait(120);
+  assert.ok(/\/module\//.test(hash()), `concluir lição volta ao módulo (${hash()})`);
+  assert.ok(
+    liveProgress.srs_queue.some((r) => r.lesson_id === lessonNav.replace('/lesson/', '')),
+    'T129: concluir lição agenda revisão para hoje'
+  );
+
+  // Painel mostra revisões pendentes no mesmo dia
+  window.EnsinaLogica.navigate('/');
+  await wait(120);
+  const reviewsStat = doc.querySelector('.stat-card.reviews .stat-value')?.textContent?.trim();
+  assert.ok(Number(reviewsStat) >= 1, `painel mostra revisões pendentes > 0 (${reviewsStat})`);
+  assert.ok(doc.getElementById('review-cards'), 'painel lista cards de revisão');
+  ok('T129: revisão no mesmo dia (fila de erros + lição)');
+
+  // Volta à lição para o restante da jornada
+  window.EnsinaLogica.navigate(lessonNav);
+  await wait(120);
+  assert.ok(doc.querySelector('.read-theory-btn'), 'lição remontada para seguir a jornada');
+
   // ---- 3. Lição → biblioteca de teoria ----
   click(doc.querySelector('.read-theory-btn'), '"ler na biblioteca"');
   await wait(120);
