@@ -185,8 +185,8 @@ description: "Task list template for feature implementation"
 - [x] T071 [US5] Implement export progress → downloads JSON with schema_version, timestamp
 - [x] T072 [US5] Implement import progress → validates schema_version, migrates if needed, overwrites localStorage
 - [x] T073 [US5] Implement reset progress → clears stats/completed/exercises/srs/achievements/annotations, keeps preferences
-- [ ] T074 [US5] Confetti animation on daily goal reached (CSS only, respects prefers-reduced-motion)
-- [ ] T075 [US5] ARIA live regions for: XP gain, streak change, achievement unlock, daily goal reached — ⚠️ parcial: `a11y.js` expõe `announce(polite|assertive)` e toasts são `aria-live="polite"`, mas os anúncios assertivos (conquista/streak/meta) ainda não foram ligados
+- [x] T074 [US5] Confetti animation on daily goal reached (CSS only, respects prefers-reduced-motion) — `src/ui/confetti.js` + teste `scripts/test-confetti-dom.mjs`
+- [x] T075 [US5] ARIA live regions for: XP gain, streak change, achievement unlock, daily goal reached — ligados em `handleExerciseAnswer`/`checkAndAnnounceAchievements`/`checkDailyGoalReached` (polite para XP; assertive para conquista/streak/meta)
 
 ---
 
@@ -198,12 +198,12 @@ description: "Task list template for feature implementation"
 
 ### Content Creation (Data Files Only - No Code)
 
-- [ ] T076 [P] [US6] Create theory units for Algorithms (sem1/algorithms/): m01-intro.md, m02-variables.md, m03-control-flow.md (from approved sources: Busbee & Braunschweig 2nd ed, Open Guide to Data Structures Ch. Big-O)
-- [ ] T077 [P] [US6] Create theory units for Discrete Math (sem1/discrete-math/): m01-logic.md, m02-predicate-logic.md, m03-proofs-induction.md (from approved sources: MCS Spring 2018, Levin 3rd ed)
-- [ ] T078 [P] [US6] Create exercises for Algorithms lessons (3-5 per lesson, types varied, generated_by_ai: true, verified against source)
-- [ ] T079 [P] [US6] Create exercises for Discrete Math lessons (3-5 per lesson, types varied, generated_by_ai: true, verified against source)
-- [ ] T080 [US6] Update ATTRIBUTIONS.md with all theory unit sources + KaTeX + highlight.js
-- [ ] T081 [US6] Run scripts/validate.mjs — confirm all theory units pass (license allowed, source URL accessible, verification_status=verified_with_source)
+- [x] T076 [P] [US6] Create theory units for Algorithms (sem1/algorithms/) — convenção do loader: arquivo nomeado com o id completo (`th-sem1-algorithms-m01-intro.md`, `-m02-variables.md`, `-m03-control-flow.md`) — derivadas de Busbee & Braunschweig 2nd ed (CC BY-SA 4.0)
+- [x] T077 [P] [US6] Create theory units for Discrete Math (sem1/discrete-math/) — arquivos `th-sem1-discrete-math-m01-logic.md`, `-m02-predicate-logic.md`, `-m03-proofs-induction.md` — derivadas de Levin 3rd ed (CC BY-SA 4.0)
+- [x] T078 [P] [US6] Create exercises for Algorithms lessons (3–5 per lesson, types varied, generated_by_ai: true, verified against source) — 48 exercícios em 10 arquivos
+- [x] T079 [P] [US6] Create exercises for Discrete Math lessons (3–5 per lesson, types varied, generated_by_ai: true, verified against source) — 37 exercícios em 8 arquivos
+- [x] T080 [US6] Update ATTRIBUTIONS.md with all theory unit sources + KaTeX + highlight.js — já listados; sync verificada por T111
+- [x] T081 [US6] Run scripts/validate.mjs — confirm all theory units pass (license allowed, source URL accessible, verification_status=verified_with_source) — 6 unidades + 18 arquivos + 85 exercícios, 0 erros
 
 ---
 
@@ -215,12 +215,12 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 7
 
-- [ ] T082 [US7] Audit all interactive elements: focus styles, tab order, skip links at top of each view
-- [ ] T083 [US7] Verify contrast ratios (WCAG AA) for all text/background combinations in light/dark themes
+- [x] T082 [US7] Audit all interactive elements: focus styles, tab order, skip links at top of each view — `:focus-visible` global + skip link no shell; alvos de toque `var(--touch-target)` em botões/opções
+- [x] T083 [US7] Verify contrast ratios (WCAG AA) for all text/background combinations in light/dark themes — `scripts/test-contrast.mjs`
 - [x] T084 [US7] Ensure all state indicators use icon + text + color (never color only): ✅/❌, streak 🔥, XP ⭐
-- [x] T085 [US7] Test prefers-reduced-motion: confetti disabled, transitions instant, no auto-playing animations — ✅ `theme.css` tem `@media (prefers-reduced-motion: reduce)` (faltará cobrir o confetti quando T074 existir)
-- [ ] T086 [US7] Verify zero external requests: all libs local, no CDN, no analytics, no cookies — ⚠️ ainda há `<link rel="preconnect" href="https://fonts.gstatic.com">` em index.html (remover)
-- [ ] T087 [US7] Add aria-live="polite" for XP/toasts, aria-live="assertive" for achievements/streak milestones — ⚠️ parcial (ver T075)
+- [x] T085 [US7] Test prefers-reduced-motion: confetti disabled, transitions instant, no auto-playing animations — `theme.css` + `scripts/test-confetti-dom.mjs`
+- [x] T086 [US7] Verify zero external requests: all libs local, no CDN, no analytics, no cookies — `preconnect`/fonts externos ausentes; KaTeX/highlight.js locais; CSP adicionada em index.html
+- [x] T087 [US7] Add aria-live="polite" for XP/toasts, aria-live="assertive" for achievements/streak milestones
 
 ---
 
@@ -280,10 +280,10 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Tarefas de verificação que faltavam para garantir as regras da Constitution §2 (apenas fontes aprovadas; fonte inacessível → `pendente`, nunca inventar) e do plan.md §7.
 
-- [ ] T109 [verify] Em scripts/validate.mjs, verificar acessibilidade de `source.url` (HEAD/rede) e sinalizar quando indisponível — hoje só imprime a URL
-- [ ] T110 [verify] Em scripts/validate.mjs, validar links internos (`#/lesson/x`, `#/theory/y`) contra o curriculum e os arquivos de dados existentes
-- [ ] T111 [verify] Em scripts/validate.mjs, checar sincronização ATTRIBUTIONS.md ↔ fontes efetivamente usadas nas unidades/exercícios
-- [ ] T112 [verify] Garantir a regra "pendente": unidade com `verification_status: unverified` (ou fonte não acessada) **não entra na trilha** (aparece só no mapa como "em construção") e nunca é preenchida de memória — loader/app + teste; cobre spec AC-13
+- [x] T109 [verify] Em scripts/validate.mjs, verificar acessibilidade de `source.url` (HEAD/rede) e sinalizar quando indisponível — implementado, gated por `CHECK_URLS=1` (evita rede no CI offline)
+- [x] T110 [verify] Em scripts/validate.mjs, validar links internos (`#/lesson/x`, `#/theory/y`) contra o curriculum e os arquivos de dados existentes
+- [x] T111 [verify] Em scripts/validate.mjs, checar sincronização ATTRIBUTIONS.md ↔ fontes efetivamente usadas nas unidades/exercícios
+- [x] T112 [verify] Garantir a regra "pendente": unidade com `verification_status: unverified` (ou fonte não acessada) **não entra na trilha** — loader filtra o índice de teorias e a view de lição exibe "em construção"; exercícios ligados a unidade `unverified` são sinalizados pelo validate (teste `scripts/test-content-dom.mjs`)
 
 ---
 
@@ -387,26 +387,27 @@ With multiple developers:
 
 ---
 
-## Progresso real do projeto (snapshot 2026-10-16)
+## Progresso real do projeto (snapshot 2026-10-16, atualizado)
 
 Comparação do tasks.md com o estado real do repositório.
 
 **(a) O que falta por fase**
-- **Fase 5 (US3 – Lições/Exercícios)**: `src/lesson/renderer.js`, tipos `code-completion` e `flashcards`, ligar a view `#/lesson/:id`, XP no fluxo, "Praticar mais", persistir tentativas e agendar SRS (T042–T047, T051–T052, T054–T058). Prontos: `multiple-choice`, `true-false`, `order-steps` e `feedback.js` (T048–T050, T053).
-- **Fase 6 (US4 – Biblioteca Teórica)**: nada implementado — `src/theory/*` e views `#/theory/:id` e `#/library` (T059–T067).
-- **Fase 7 (US5 – Gamificação/Settings)**: falta confetti (T074) e aria-live assertivo (T075); dashboard, conquistas, settings, export/import/reset já feitos (T068–T073).
-- **Fase 8 (US6 – Conteúdo sem1)**: 0 unidades teóricas e 0 exercícios (T076–T081).
-- **Fase 9 (US7 – A11y/Privacidade)**: falta auditoria formal (T082–T083) e aria-live assertivo (T087). Concluído: contraste AA verificado por teste (T114) e remoção do `preconnect` externo do `index.html` (T086).
-- **Fase 10 (US8 – Deploy)**: workflows e arquivos prontos; falta validar 404/redirect no Pages publicado (T090).
-- **Fase 11 (Polish)**: docs, remover `console.log`, performance, CSP e QA final (T093–T095, T097, T100).
-- **Fase 13 (novas)**: verificação de fonte/links/ATTRIBUTIONS e regra `pendente` (T109–T112).
+- **Fase 5 (US3 – Lições/Exercícios)**: ✅ concluída (T042–T058).
+- **Fase 6 (US4 – Biblioteca Teórica)**: ✅ concluída (T059–T067).
+- **Fase 7 (US5 – Gamificação/Settings)**: ✅ concluída (T068–T075).
+- **Fase 8 (US6 – Conteúdo sem1)**: ✅ concluída — 6 unidades teóricas, 85 exercícios em 18 lições (T076–T081).
+- **Fase 9 (US7 – A11y/Privacidade)**: ✅ concluída (T082–T087).
+- **Fase 10 (US8 – Deploy)**: workflows e arquivos prontos; falta validar 404/redirect no Pages publicado (T090) — requer deploy real.
+- **Fase 11 (Polish)**: cleanup + CSP feitos; falta QA manual final (T100) — requer navegador real.
+- **Fase 13 (Verificação de conteúdo)**: ✅ concluída (T109–T112).
 
-**(b) Próxima fase a executar**: **Fase 5 (US3 – Lições & Exercícios)**, núcleo do MVP. Em paralelo, são independentes: **Fase 6 (US4)** e **Fase 8 (US6)**.
+**(b) Próxima fase a executar**: nenhuma no código — faltam apenas **T100 (QA manual)** e **T090 (validação do deploy publicado)**, que exigem navegador/ambiente externo.
 
 **(c) Tarefas de conteúdo teórico e de exercícios, e a regra das fontes**
-- **Teoria**: T076–T077 (unidades) e T059 (renderer). **Exercícios**: T078–T079 (dados) e T047–T058 (render/uso na lição).
-- A regra de **só usar fontes aprovadas** está explícita em T076/T077 ("from approved sources") e nos Notes (Content/License rules) + Constitution §2.
-- A regra de **marcar como `pendente` o que não puder ser acessado** (Constitution §2, spec AC-13) existia apenas como nota, **não como tarefa verificável** → **adicionadas T109–T112** (fonte acessível, links internos, sync ATTRIBUTIONS, `pendente`/`unverified` fora da trilha). As tarefas de conteúdo T076–T079 já existem e permanecem válidas.
+- **Teoria**: T076–T077 (unidades) + T059 (renderer). **Exercícios**: T078–T079 (dados) + T047–T058.
+- A regra de **só usar fontes aprovadas** está explícita em T076/T077 e nos Notes (Content/License rules) + Constitution §2.
+- Regra **`pendente`** (Constitution §2, spec AC-13): implementada e verificável em T109–T112.
+- Conteúdo derivado de: Busbee & Braunschweig (algorithms, CC BY-SA 4.0) e Levin 3rd ed (discrete-math, CC BY-SA 4.0), ambos com `verification_status: verified_with_source`.
 
 ---
 

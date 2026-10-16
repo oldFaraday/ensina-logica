@@ -11,6 +11,7 @@ import { initTheme, getTheme, toggleTheme } from './ui/theme.js';
 import { initToasts, showToast } from './ui/toasts.js';
 import { initModals } from './ui/modals.js';
 import { initA11y, announce } from './ui/a11y.js';
+import { celebrate } from './ui/confetti.js';
 import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadExercisesForTheoryUnit } from './curriculum/loader.js';
 import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
@@ -84,7 +85,6 @@ export async function initApp() {
       updateDailyGoalUI();
     }
 
-    console.log('[App] Inicializado com sucesso');
   } catch (error) {
     console.error('[App] Erro na inicialização:', error);
     showToast(t('error.init_failed'), 'error');
@@ -157,14 +157,24 @@ function updateHeaderXpBar() {
 
 /**
  * Verifica se a meta diária foi atingida e notifica (toast + anúncio assertive)
+ * e celebra com confete UMA vez por dia.
  */
 function checkDailyGoalReached() {
   const goal = AppState.progress?.preferences?.daily_xp_goal || 20;
   const todayXP = getTodayXP(AppState.progress);
-  if (todayXP >= goal) {
-    showToast(t('feedback.dailyGoalReached'), 'success');
-    announce(t('feedback.dailyGoalReached'), 'assertive');
-  }
+  if (todayXP < goal) return;
+
+  const today = new Date().toISOString().split('T')[0];
+  const progress = AppState.progress;
+  progress.stats = progress.stats || {};
+  if (progress.stats.last_daily_goal_date === today) return;
+
+  progress.stats.last_daily_goal_date = today;
+  progressStore.save();
+
+  showToast(t('feedback.dailyGoalReached'), 'success');
+  announce(t('feedback.dailyGoalReached'), 'assertive');
+  celebrate();
 }
 
 /**
@@ -912,7 +922,7 @@ async function renderLibraryView(params, query, main) {
         <button class="btn btn-back" data-nav="/">${t('common.back')}</button>
         <h1>${t('library.title')}</h1>
       </header>
-      <form class="library-search" role="search" onsubmit="return false">
+      <form class="library-search" role="search">
         <label for="library-search-input">${t('theory.search')}</label>
         <input id="library-search-input" class="library-search-input" type="search"
           placeholder="${escapeHtml(t('theory.searchPlaceholder'))}" aria-describedby="library-search-status" autocomplete="off">
@@ -922,6 +932,9 @@ async function renderLibraryView(params, query, main) {
     </section>
   `;
   bindNavigationEvents(main);
+
+  const form = main.querySelector('.library-search');
+  if (form) form.addEventListener('submit', (e) => e.preventDefault());
 
   const list = main.querySelector('.library-list');
   const status = main.querySelector('#library-search-status');

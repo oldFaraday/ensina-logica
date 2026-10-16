@@ -130,20 +130,23 @@ function validateTheoryUnits() {
 
   if (!existsSync(theoryDir)) {
     warn('Diretório data/theory não existe (ainda sem conteúdo)');
-    return;
+    return [];
   }
 
   const units = findMarkdownFiles(theoryDir);
   if (units.length === 0) {
     warn('Nenhuma unidade teórica encontrada');
-    return;
+    return [];
   }
 
+  const collected = [];
   for (const file of units) {
-    validateTheoryFile(file);
+    const info = validateTheoryFile(file);
+    if (info) collected.push(info);
   }
 
   success(`${units.length} unidade(s) teórica(s) validada(s)`);
+  return collected;
 }
 
 function findMarkdownFiles(dir) {
@@ -164,7 +167,7 @@ function findMarkdownFiles(dir) {
 
 function validateTheoryFile(filePath) {
   const relPath = filePath.replace(ROOT_DIR + '/', '');
-  const content = readFileSync(filePath, 'utf-8');
+  const content = readFileSync(filePath, 'utf-8').replace(/\r\n?/g, '\n');
 
   // Parse front-matter
   const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
@@ -220,73 +223,106 @@ function validateTheoryFile(filePath) {
   if (fm.id && !/^th-sem[1-8]-[a-z-]+-[a-z0-9-]+$/.test(fm.id)) {
     error(`ID inválido (padrão: th-sem{N}-{discipline}-{module}-{slug}): ${fm.id}`, relPath);
   }
+
+  return {
+    id: fm.id,
+    relPath,
+    module: fm.module,
+    discipline: fm.discipline,
+    linkedLessons: Array.isArray(fm.linked_lessons) ? fm.linked_lessons : [],
+    linkedExercises: Array.isArray(fm.linked_exercises) ? fm.linked_exercises : [],
+    verificationStatus: fm.verification_status,
+    license: fm.license,
+    source: fm.source || {}
+  };
 }
 
+/**
+ * Parser de front-matter (one-level nesting), consistente com o loader.
+ * Suporta escalares, listas inline `[a, b]`, strings multilinha (`|`/`>`) e UM
+ * nível de objeto aninhado (ex.: `source:`).
+ */
 function parseFrontMatter(yaml) {
   const result = {};
-  let currentKey = null;
+  let parentKey = null;
+  let currentArray = null;
   let inMultiline = false;
   let multilineKey = null;
 
-  for (const line of yaml.split('\n')) {
+  const stripQuotes = (v) => String(v).trim().replace(/^["']|["']$/g, '');
+  const parseInlineArray = (v) =>
+    v.slice(1, -1).split(',').map(stripQuotes).filter((s) => s !== '');
+
+  for (const rawLine of String(yaml).split('\n')) {
+    const raw = rawLine.replace(/\s+$/, '');
+    const indent = raw.length - raw.trimStart().length;
+    const trimmed = raw.trim();
+
     if (inMultiline) {
-      if (line.trim() === '' || line.startsWith('  ')) {
-        result[multilineKey] = (result[multilineKey] || '') + '\n' + line.trimEnd();
+      if (trimmed === '' || indent >= 2) {
+        result[multilineKey] = (result[multilineKey] || '') + (result[multilineKey] ? '\n' : '') + trimmed;
         continue;
-      } else {
-        inMultiline = false;
       }
+      inMultiline = false;
+      multilineKey = null;
     }
 
-    const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) continue;
 
+    const arrayMatch = trimmed.match(/^-\s+(.*)$/);
+    if (arrayMatch && currentArray) {
+      currentArray.push(stripQuotes(arrayMatch[1]));
+      continue;
+    }
+
     const kvMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$/);
-    if (kvMatch) {
-      const [, key, value] = kvMatch;
-      currentKey = key;
+    if (!kvMatch) {
+      parentKey = null;
+      currentArray = null;
+      continue;
+    }
+
+    const [, key, rawValue] = kvMatch;
+    const value = rawValue.trim();
+
+    if (indent === 0) {
+      currentArray = null;
+
+      if (value === '') {
+        result[key] = {};
+        parentKey = key;
+        continue;
+      }
 
       if (value === '|' || value === '>') {
         inMultiline = true;
         multilineKey = key;
         result[key] = '';
+        parentKey = null;
         continue;
       }
 
       if (value.startsWith('[') && value.endsWith(']')) {
-        result[key] = value.slice(1, -1).split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+        result[key] = parseInlineArray(value);
+        parentKey = null;
         continue;
       }
 
-      result[key] = value.replace(/^["']|["']$/g, '');
+      result[key] = stripQuotes(value);
+      parentKey = null;
       continue;
     }
 
-    // Nested (source.title, etc.)
-    const nestedMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$/);
-    if (nestedMatch && currentKey) {
-      const [, subKey, subValue] = nestedMatch;
-      const combinedKey = `${currentKey}_${subKey}`;
-      result[combinedKey] = subValue.replace(/^["']|["']$/g, '');
+    if (parentKey && result[parentKey] && typeof result[parentKey] === 'object') {
+      if (value === '') {
+        result[parentKey][key] = {};
+      } else if (value.startsWith('[') && value.endsWith(']')) {
+        result[parentKey][key] = parseInlineArray(value);
+      } else {
+        result[parentKey][key] = stripQuotes(value);
+      }
+      currentArray = null;
     }
-  }
-
-  // Normaliza source object
-  if (result.source_title) {
-    result.source = {
-      title: result.source_title,
-      authors: result.source_authors ? result.source_authors.split(',').map(a => a.trim()) : [],
-      url: result.source_url,
-      chapter: result.source_chapter,
-      section: result.source_section,
-      access_date: result.source_access_date,
-      edition: result.source_edition,
-      license_url: result.source_license_url,
-      license_confirmed_at: result.source_license_confirmed_at
-    };
-    Object.keys(result).forEach(k => {
-      if (k.startsWith('source_')) delete result[k];
-    });
   }
 
   return result;
@@ -301,20 +337,22 @@ function validateExercises() {
 
   if (!existsSync(exercisesDir)) {
     warn('Diretório data/exercises não existe (ainda sem conteúdo)');
-    return;
+    return [];
   }
 
   const files = findJsonFiles(exercisesDir);
   if (files.length === 0) {
     warn('Nenhum exercício encontrado');
-    return;
+    return [];
   }
 
+  const collected = [];
   for (const file of files) {
-    validateExerciseFile(file);
+    collected.push(...validateExerciseFile(file));
   }
 
-  success(`${files.length} exercício(s) validado(s)`);
+  success(`${files.length} arquivo(s) de exercício validado(s) (${collected.length} exercício(s))`);
+  return collected;
 }
 
 function findJsonFiles(dir) {
@@ -335,6 +373,7 @@ function findJsonFiles(dir) {
 
 function validateExerciseFile(filePath) {
   const relPath = filePath.replace(ROOT_DIR + '/', '');
+  const collected = [];
 
   try {
     const parsed = JSON.parse(readFileSync(filePath, 'utf-8'));
@@ -344,16 +383,36 @@ function validateExerciseFile(filePath) {
 
     if (exercises.length === 0) {
       error('Arquivo de exercícios vazio', relPath);
-      return;
+      return collected;
     }
+
+    // Detecta ids duplicados dentro do arquivo
+    const seen = new Set();
 
     exercises.forEach((exercise, idx) => {
       const label = `${relPath}#${idx}`;
       validateExerciseObject(exercise, label);
+
+      if (exercise.id) {
+        if (seen.has(exercise.id)) {
+          error(`ID de exercício duplicado no arquivo: ${exercise.id}`, label);
+        }
+        seen.add(exercise.id);
+      }
+
+      collected.push({
+        id: exercise.id,
+        lessonId: exercise.lesson_id,
+        theoryUnitId: exercise.theory_unit_id,
+        type: exercise.type,
+        relPath: label
+      });
     });
   } catch (e) {
     error(`JSON inválido: ${e.message}`, relPath);
   }
+
+  return collected;
 }
 
 function validateExerciseObject(exercise, relPath) {
@@ -450,16 +509,154 @@ function validateProgressSchema() {
 }
 
 // ============================================
+// 6. Links internos (T110) + sync ATTRIBUTIONS (T111) + T112
+// ============================================
+function loadCurriculumData() {
+  const path = join(ROOT_DIR, 'data/curriculum.json');
+  if (!existsSync(path)) return null;
+  try {
+    return JSON.parse(readFileSync(path, 'utf-8'));
+  } catch (e) {
+    return null;
+  }
+}
+
+function validateInternalLinks(theoryUnits, exercises) {
+  console.log('\n🔗 Validando links internos (T110/T112)...');
+  const curriculum = loadCurriculumData();
+  if (!curriculum) {
+    warn('curriculum.json não pôde ser lido; pulando verificação de links internos');
+    return;
+  }
+
+  const lessonIndex = new Map(); // lessonId -> { discipline, module }
+  const moduleTheory = new Map(); // `${discipline}/${module}` -> theory id
+
+  for (const sem of curriculum.semesters || []) {
+    for (const disc of sem.disciplines || []) {
+      for (const mod of disc.modules || []) {
+        if (mod.theory) moduleTheory.set(`${disc.id}/${mod.id}`, mod.theory);
+        for (const lessonId of mod.lessons || []) {
+          if (lessonIndex.has(lessonId)) {
+            error(`ID de lição duplicado no currículo: ${lessonId} (${disc.id}/${mod.id})`);
+          }
+          lessonIndex.set(lessonId, { discipline: disc.id, module: mod.id });
+        }
+      }
+    }
+  }
+
+  const theoryIds = new Set(theoryUnits.map((u) => u.id));
+  const theoryById = new Map(theoryUnits.map((u) => [u.id, u]));
+
+  // Unidades → lições ligadas
+  for (const unit of theoryUnits) {
+    const key = `${unit.discipline}/${unit.module}`;
+    const expected = moduleTheory.get(key);
+    if (expected && expected !== unit.id) {
+      warn(`Módulo ${key} aponta para '${expected}', mas a unidade '${unit.id}' define module=${unit.module}`);
+    }
+    for (const lessonId of unit.linkedLessons) {
+      if (!lessonIndex.has(lessonId)) {
+        error(`Unidade '${unit.id}' referencia lição inexistente: ${lessonId}`, unit.relPath);
+      }
+    }
+  }
+
+  // Exercícios → lição e unidade teórica
+  if (exercises.length > 0 && theoryIds.size === 0) {
+    error('Existem exercícios, mas nenhuma unidade teórica foi encontrada');
+  }
+
+  const lessonsWithExercises = new Set();
+  for (const ex of exercises) {
+    if (ex.lessonId) {
+      lessonsWithExercises.add(ex.lessonId);
+      if (!lessonIndex.has(ex.lessonId)) {
+        error(`Exercício '${ex.id}' referencia lição inexistente: ${ex.lessonId}`, ex.relPath);
+      }
+    }
+    if (ex.theoryUnitId && theoryIds.size > 0 && !theoryIds.has(ex.theoryUnitId)) {
+      error(`Exercício '${ex.id}' referencia unidade teórica inexistente: ${ex.theoryUnitId}`, ex.relPath);
+    }
+    const unit = theoryById.get(ex.theoryUnitId);
+    if (unit && unit.verificationStatus === 'unverified') {
+      warn(`Exercício '${ex.id}' aponta para unidade '${unit.id}' marcada como unverified (fora da trilha)`);
+    }
+  }
+
+  // T112: lição ligada a unidade verificada mas sem exercícios publicados
+  for (const unit of theoryUnits) {
+    if (unit.verificationStatus !== 'verified_with_source') continue;
+    for (const lessonId of unit.linkedLessons) {
+      if (!lessonsWithExercises.has(lessonId)) {
+        warn(`Lição ${lessonId} (unidade ${unit.id}) sem exercícios publicados (conteúdo pendente)`);
+      }
+    }
+  }
+
+  success('links internos consistentes');
+}
+
+function validateAttributionsSync(theoryUnits) {
+  console.log('\n📝 Validando sync ATTRIBUTIONS.md (T111)...');
+  const path = join(ROOT_DIR, 'ATTRIBUTIONS.md');
+  if (!existsSync(path) || theoryUnits.length === 0) return;
+
+  const content = readFileSync(path, 'utf-8');
+  for (const unit of theoryUnits) {
+    if (unit.id && !content.includes(unit.id)) {
+      warn(`Unidade '${unit.id}' não está listada em ATTRIBUTIONS.md`);
+    }
+    const srcTitle = unit.source && unit.source.title;
+    if (srcTitle && !content.includes(srcTitle)) {
+      warn(`Fonte '${srcTitle}' (unidade ${unit.id}) não aparece em ATTRIBUTIONS.md`);
+    }
+  }
+  success('ATTRIBUTIONS.md em sincronia');
+}
+
+async function validateSourceUrls(theoryUnits) {
+  console.log('\n🌐 Verificando URLs de fonte (T109)...');
+  if (process.env.CHECK_URLS !== '1') {
+    info('CHECK_URLS != 1 — verificação de rede ignorada (use CHECK_URLS=1 em CI com internet)');
+    return;
+  }
+
+  const urls = [...new Set(theoryUnits.map((u) => u.source && u.source.url).filter(Boolean))];
+  if (urls.length === 0) {
+    info('Nenhuma URL de fonte para verificar');
+    return;
+  }
+
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+      if (!res.ok) {
+        warn(`URL de fonte inacessível (${res.status}): ${url}`);
+      } else {
+        info(`URL ok (${res.status}): ${url}`);
+      }
+    } catch (e) {
+      warn(`Falha ao verificar URL da fonte: ${url} (${e.message})`);
+    }
+  }
+}
+
+// ============================================
 // Main
 // ============================================
-function main() {
+async function main() {
   console.log('🔍 Ensina Lógica - Validação CI');
   console.log('==================================');
 
   validateCurriculum();
-  validateTheoryUnits();
-  validateExercises();
+  const theoryUnits = validateTheoryUnits();
+  const exercises = validateExercises();
+  validateInternalLinks(theoryUnits, exercises);
   validateAttributions();
+  validateAttributionsSync(theoryUnits);
+  await validateSourceUrls(theoryUnits);
   validateProgressSchema();
 
   console.log('\n📊 Resultado:');

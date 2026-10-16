@@ -166,53 +166,53 @@ ensina-logica/
 - [x] `src/theory/markdown.js` (renderer Markdown sem dependência, escapado), `assets.js` (KaTeX/hljs lazy, sem CDN), `sidebar.js`, `annotations.js`, `search.js`
 - [x] Views: theory (#/theory/:id) e library index (#/library) ligadas; teste `scripts/test-theory-dom.mjs` (T059–T067)
 
-### Fase 7: US5 - Gamification Dashboard & Settings — 🚧 PARCIAL
+### Fase 7: US5 - Gamification Dashboard & Settings — ✅ COMPLETO
 - [x] Dashboard com XP bar, nível, streak + freeze, revisões do dia
 - [x] Conquistas (renderAchievementsView) e Settings (meta diária, tema, export/import/reset; reset mantém preferências)
-- [ ] Confetti (CSS, respects reduced-motion)
-- [ ] aria-live assertivo para conquista/streak/meta (`announce()` existe; falta ligar)
+- [x] Confetti (CSS, respects reduced-motion) — `src/ui/confetti.js` + teste `scripts/test-confetti-dom.mjs`
+- [x] aria-live assertivo para conquista/streak/meta (polite para XP) ligado no fluxo de lição
 
-### Fase 8: US6 - 1º Semestre Conteúdo (Data only)
-- [ ] 6 theory units (3 algorithms + 3 discrete-math) com front-matter válido
-- [ ] Exercícios para todas as lições (3-5 cada, generated_by_ai: true, verified)
-- [ ] ATTRIBUTIONS.md atualizado
-- [ ] validate.mjs passa
+### Fase 8: US6 - 1º Semestre Conteúdo (Data only) — ✅ COMPLETO
+- [x] 6 teoria units (3 algorithms + 3 discrete-math) com front-matter válido, todas `verified_with_source`
+- [x] Exercícios para todas as 18 lições (85 no total, 3–5 cada, `generated_by_ai: true`, conferidos contra a fonte)
+- [x] ATTRIBUTIONS.md em sincronia (verificado por T111)
+- [x] validate.mjs passa (0 erros) + teste de conteúdo `scripts/test-content-dom.mjs`
+- [x] Fix: parser de front-matter aninhado (`source:`) do loader/validate + lições do discrete-math renumeradas (l11–l18) para não colidir com as de algorithms
 
-### Fase 9: US7 - Acessibilidade & Privacidade — 🚧 PARCIAL
+### Fase 9: US7 - Acessibilidade & Privacidade — ✅ COMPLETO
 - [x] Ícones do cabeçalho com aria-label/title; estado sempre ícone+texto+cor; `prefers-reduced-motion` no CSS
 - [x] Contraste AA dos tokens verificado por `scripts/test-contrast.mjs` (claro/escuro)
-- [ ] Auditoria completa: focus, tab order, skip links
-- [x] Zero external requests: `<link rel="preconnect" href="https://fonts.gstatic.com">` removido do index.html (fontes por pilhas do sistema)
+- [x] Auditoria de foco/ordem de tabulação/skip links: `:focus-visible` global + `--touch-target` + skip link
+- [x] Zero external requests: sem preconnect/fontes externas; KaTeX/highlight.js locais; CSP no index.html
 
 ### Fase 10: US8 - Deploy & Repo Files — 🚧 PARCIAL
 - [x] Workflows validados (validate.yml + deploy-pages.yml) e arquivos Definition of Done presentes
-- [ ] Validar 404.html/redirect no Pages publicado
+- [ ] Validar 404.html/redirect no Pages publicado (requer deploy remoto)
 - [x] Publication checklist (README.md)
 
 ### Fase 11: Polish
 - [x] Testes de edge cases de gamificação (streak/segunda, SRS cap, níveis XP) e suíte completa verde
-- [ ] Documentation, cleanup (remover `console.log`), performance, security hardening (CSP)
-- [ ] QA manual final (depende de US3/US4)
+- [x] Documentation, cleanup (remover `console.log`) e security hardening (CSP no index.html + zero requisições externas)
+- [ ] QA manual final (jornada completa) — requer navegador real
 
-### Fase 13: Verificação de Conteúdo (novas tarefas em tasks.md) — 🚧 PENDENTE
-- [ ] T109 Verificar acessibilidade da `source.url` no validate.mjs (HEAD)
-- [ ] T110 Validar links internos (lesson/theory) no validate.mjs
-- [ ] T111 Checar sincronização ATTRIBUTIONS.md ↔ fontes usadas
-- [ ] T112 Garantir que unidade `pendente`/`unverified` não entra na trilha (spec AC-13)
+### Fase 13: Verificação de Conteúdo — ✅ COMPLETO
+- [x] T109 Verificar acessibilidade da `source.url` no validate.mjs (HEAD, gated por `CHECK_URLS=1`)
+- [x] T110 Validar links internos (lesson/theory) no validate.mjs
+- [x] T111 Checar sincronização ATTRIBUTIONS.md ↔ fontes usadas
+- [x] T112 Garantir que unidade `pendente`/`unverified` não entra na trilha (spec AC-13)
 
 ---
 
 ## 🎯 Próxima Etapa
 
-**Próxima fase: Fase 8 (US6 - Conteúdo do 1º semestre)** — última peça do MVP. A Fase 6 (US4) foi concluída.
+**MVP completo no código e no conteúdo.** Fases 1–9 e 13 concluídas (Fase 10 e 11 têm apenas itens que exigem navegador/deploy reais).
 
-Fase 8 — conteúdo (só fontes aprovadas, nada inventado):
-1. 6 unidades teóricas (3 algorithms + 3 discrete-math) derivadas das fontes aprovadas, com front-matter válido
-2. Exercícios para todas as lições (3–5 cada, `generated_by_ai: true`, conferidos contra a fonte)
-3. ATTRIBUTIONS.md atualizado e `validate.mjs` verde
-4. T109–T112 (verificações de fonte acessível, links internos, sync ATTRIBUTIONS, `pendente` fora da trilha)
+Pendências que exigem ambiente externo:
+1. **QA manual final (T100)** — jornada: boas-vindas → lição → teoria → configurações → export/import (navegador real).
+2. **Deploy (Fase 10)** — validar 404.html e redirect no GitHub Pages publicado (o repo aponta para a branch `master`).
+3. Ao publicar, atualizar `ATTRIBUTIONS.md`/CHANGELOG com a data do deploy.
 
-Depois: Fase 7 (confetti T074 + aria-live já ligado), Fase 9 (a11y/privacy restante), Fase 10 (deploy) e Fase 13 (verificação).
+Verificação automatizada disponível agora: `npm test` (9 suítes) e `npm run validate` (curriculum, teoria, exercícios, links internos, licenças, ATTRIBUTIONS, schema). Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
 
 ---
 
