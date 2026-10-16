@@ -159,15 +159,15 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 4
 
-- [ ] T059 [US4] Create src/theory/renderer.js — renders theory markdown with KaTeX, highlight.js, attribution header, "ver original" toggle
-- [ ] T060 [US4] Create src/theory/sidebar.js — collapsible module→section index, keyboard navigable, highlights current section
-- [ ] T061 [US4] Create src/theory/annotations.js — CRUD per section (section-id → text), persists to localStorage
-- [ ] T062 [US4] Create src/theory/search.js — in-memory full-text index (title, content, metadata), results with snippet highlight
-- [ ] T063 [US4] Create view: theory (#/theory/:theoryUnitId) — loads unit, renders with sidebar, annotations, search
-- [ ] T064 [US4] Create view: library index (#/library) — search input, all semesters expandable, filter by discipline
-- [ ] T065 [US4] Implement "Ver original" — side-by-side original/translation when license permits (CC BY/CC BY-SA)
-- [ ] T066 [US4] Implement "Praticar este trecho" — lists linked lessons/exercises, navigates to lesson
-- [ ] T067 [US4] Persist "section read" checkboxes to ProgressStore.completed.theory_sections
+- [x] T059 [US4] Create src/theory/renderer.js — renders theory markdown with KaTeX, highlight.js, attribution header, "ver original" toggle
+- [x] T060 [US4] Create src/theory/sidebar.js — collapsible module→section index, keyboard navigable, highlights current section
+- [x] T061 [US4] Create src/theory/annotations.js — CRUD per section (section-id → text), persists to localStorage
+- [x] T062 [US4] Create src/theory/search.js — in-memory full-text index (title, content, metadata), results with snippet highlight
+- [x] T063 [US4] Create view: theory (#/theory/:theoryUnitId) — loads unit, renders with sidebar, annotations, search
+- [x] T064 [US4] Create view: library index (#/library) — search input, all semesters expandable, filter by discipline
+- [x] T065 [US4] Implement "Ver original" — side-by-side original/translation when license permits (CC BY/CC BY-SA)
+- [x] T066 [US4] Implement "Praticar este trecho" — lists linked lessons/exercises, navigates to lesson
+- [x] T067 [US4] Persist "section read" checkboxes to ProgressStore.completed.theory_sections
 
 ---
 

@@ -83,6 +83,7 @@ ensina-logica/
 ```
 
 ### Código Implementado (Fases 1-4 COMPLETO)
+- **Fase 6 (US4 - Biblioteca Teórica)**: `src/theory/markdown.js` (renderer Markdown próprio, escapado, math `$..$`/`$$..$$` e código como placeholders), `assets.js` (KaTeX/highlight.js locais, lazy, zero CDN), `renderer.js` (atribuição, "ver original", seções com lida/anotações/"praticar"), `sidebar.js`, `annotations.js`, `search.js`; views `#/theory/:id` e `#/library` ligadas ✅ ; teste `scripts/test-theory-dom.mjs` (T059–T067) ✅
 - **Fase 5 (US3 - Lesson & Exercises)**: `src/lesson/renderer.js` (resumo teórico + lista sequencial de exercícios, progresso, conclusão, "Praticar mais"); os 5 tipos em `src/lesson/exercise-types/` (`multiple-choice`, `true-false`, `order-steps`, `code-completion`, `flashcards`); view `#/lesson/:lessonId` ligada (carrega teoria + exercícios, marca tentativas, XP com first-time/retry/streak, SRS ao concluir, conquistas, aria-live, barra de XP do cabeçalho) ✅ ; teste `scripts/test-lesson-dom.mjs` (T042–T046) ✅
 - **Fase 1 (Setup)**: Estrutura, package.json, .gitignore, .editorconfig, .nojekyll, 404.html, index.html, favicon, README, licenças, atribuições, contributing, code of conduct, security, changelog, locales/pt-BR.json ✅
 - **Fase 2 (Foundational)**: router.js, i18n.js, ProgressStore.js, schema-version.js, xp.js, streak.js, achievements.js, srs.js, theme.css, app.js, curriculum/loader.js, unlock.js, progress.js, data/curriculum.json, data/theory/_schema.json, data/exercises/_schema.json, scripts/validate.mjs, scripts/test-core.mjs, scripts/download-libs.mjs, .github/workflows/validate.yml, .github/workflows/deploy-pages.yml, src/ui/theme.js, toasts.js, modals.js, a11y.js ✅
@@ -160,10 +161,10 @@ ensina-logica/
 - [x] XP no fluxo (first-time bonus, retry penalty, streak bonus), "Praticar mais", tentativas persistidas, SRS ao concluir
 - [x] Testes dos 5 tipos (`scripts/test-lesson-dom.mjs`, T042–T046)
 
-### Fase 6: US4 - Theory Library (Core MVP) — 🚧 NÃO INICIADA
-- [ ] `src/theory/renderer.js` (KaTeX, highlight.js, atribuição, ver original)
-- [ ] `src/theory/sidebar.js`, `annotations.js`, `search.js`
-- [ ] Views: theory (#/theory/:id), library index (#/library) — **parcial: app.js tem placeholders**
+### Fase 6: US4 - Theory Library (Core MVP) — ✅ COMPLETO
+- [x] `src/theory/renderer.js` (Markdown próprio → HTML; KaTeX + highlight.js locais aplicados após montar; atribuição; "ver original"; seções com "lida"/anotações/"praticar")
+- [x] `src/theory/markdown.js` (renderer Markdown sem dependência, escapado), `assets.js` (KaTeX/hljs lazy, sem CDN), `sidebar.js`, `annotations.js`, `search.js`
+- [x] Views: theory (#/theory/:id) e library index (#/library) ligadas; teste `scripts/test-theory-dom.mjs` (T059–T067)
 
 ### Fase 7: US5 - Gamification Dashboard & Settings — 🚧 PARCIAL
 - [x] Dashboard com XP bar, nível, streak + freeze, revisões do dia
@@ -203,17 +204,15 @@ ensina-logica/
 
 ## 🎯 Próxima Etapa
 
-**Próxima fase: Fase 6 (US4 - Biblioteca Teórica)** e **Fase 8 (US6 - Conteúdo do 1º semestre)**, que são independentes entre si (US4 = código; US6 = dados).
-
-Fase 6 — implementar:
-1. `src/theory/renderer.js` — Markdown + KaTeX + highlight.js, cabeçalho de atribuição, "ver original"
-2. `src/theory/sidebar.js`, `annotations.js`, `search.js`
-3. Views: `#/theory/:id` e `#/library` (substituir placeholders em `src/app.js`)
+**Próxima fase: Fase 8 (US6 - Conteúdo do 1º semestre)** — última peça do MVP. A Fase 6 (US4) foi concluída.
 
 Fase 8 — conteúdo (só fontes aprovadas, nada inventado):
 1. 6 unidades teóricas (3 algorithms + 3 discrete-math) derivadas das fontes aprovadas, com front-matter válido
 2. Exercícios para todas as lições (3–5 cada, `generated_by_ai: true`, conferidos contra a fonte)
 3. ATTRIBUTIONS.md atualizado e `validate.mjs` verde
+4. T109–T112 (verificações de fonte acessível, links internos, sync ATTRIBUTIONS, `pendente` fora da trilha)
+
+Depois: Fase 7 (confetti T074 + aria-live já ligado), Fase 9 (a11y/privacy restante), Fase 10 (deploy) e Fase 13 (verificação).
 
 ---
 

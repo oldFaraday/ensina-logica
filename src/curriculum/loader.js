@@ -280,8 +280,11 @@ export async function loadTheoryIndex() {
             id: theory.id,
             title: theory.title,
             discipline: theory.discipline,
+            disciplineTitle: disc.title,
             module: theory.module,
+            moduleTitle: mod.title,
             semester: sem.id,
+            semesterTitle: sem.title,
             content: theory.content
           });
         }

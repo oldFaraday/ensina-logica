@@ -11,13 +11,19 @@ import { initTheme, getTheme, toggleTheme } from './ui/theme.js';
 import { initToasts, showToast } from './ui/toasts.js';
 import { initModals } from './ui/modals.js';
 import { initA11y, announce } from './ui/a11y.js';
-import { loadCurriculum, loadTheoryUnit, loadExercisesForLesson, loadExercisesForTheoryUnit } from './curriculum/loader.js';
+import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadExercisesForTheoryUnit } from './curriculum/loader.js';
 import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
 import { scheduleReview, getDueReviews } from './gamification/srs.js';
-import { markLessonComplete } from './curriculum/progress.js';
+import { markLessonComplete, markTheorySectionRead, unmarkTheorySectionRead } from './curriculum/progress.js';
 import { renderLesson } from './lesson/renderer.js';
+import { renderTheoryUnit } from './theory/renderer.js';
+import { renderTheorySidebar } from './theory/sidebar.js';
+import { searchTheory } from './theory/search.js';
+import { getAnnotation, saveAnnotation } from './theory/annotations.js';
+import { loadKatex, loadHighlight } from './theory/assets.js';
+import { renderMathIn, highlightIn } from './theory/markdown.js';
 import { getModuleUnlockStatus, getModuleProgress, isLessonCompleted, isModuleUnlocked } from './curriculum/unlock.js';
 
 // Estado global da aplicação
@@ -824,40 +830,145 @@ function escapeHtml(value) {
 }
 
 /**
- * Renderiza visão da teoria (placeholder - implementação completa em US4)
+ * Renderiza visão da teoria (#/theory/:theoryUnitId)
+ * Carrega a unidade, monta o índice lateral, renderiza seções com anotações,
+ * "marcar como lida" e "praticar este trecho"; aplica KaTeX + highlight.js.
  */
 async function renderTheoryView(params, query, main) {
   const { theoryUnitId } = params;
+  const [unit, index] = await Promise.all([loadTheoryUnit(theoryUnitId), loadTheoryIndex()]);
+
+  if (!unit) {
+    main.innerHTML = `
+      <section class="theory-view" aria-label="${t('theory.title')}">
+        <header class="view-header">
+          <button class="btn btn-back" data-nav="/library">${t('common.back')}</button>
+          <h1>${t('theory.title')}</h1>
+        </header>
+        <p class="placeholder">${t('theory.notFound')}</p>
+      </section>
+    `;
+    bindNavigationEvents(main);
+    return;
+  }
+
   main.innerHTML = `
-    <section class="theory-view" aria-label="${t('theory.title')}">
+    <section class="theory-view" aria-label="${escapeHtml(unit.title)}">
       <header class="view-header">
         <button class="btn btn-back" data-nav="/library">${t('common.back')}</button>
-        <h1>${t('theory.title')}</h1>
+        <h1>${escapeHtml(unit.title)}</h1>
       </header>
-      <div class="theory-content">
-        <p class="placeholder">${t('theory.coming_soon')}</p>
-        <p class="placeholder">${t('theory.implemented_in_us4')}</p>
+      <div class="theory-layout">
+        <div class="theory-sidebar-host"></div>
+        <div class="theory-main"></div>
       </div>
     </section>
   `;
+
+  const sidebarHost = main.querySelector('.theory-sidebar-host');
+  sidebarHost.appendChild(renderTheorySidebar(index, theoryUnitId));
+
+  const unitEl = renderTheoryUnit(unit, {
+    isRead: (sectionId) => (AppState.progress.completed?.theory_sections || []).includes(sectionId),
+    getAnnotation: (sectionId) => getAnnotation(AppState.progress, theoryUnitId, sectionId),
+    onToggleRead: (sectionId, read) => {
+      if (read) {
+        markTheorySectionRead(AppState.progress, sectionId);
+      } else {
+        unmarkTheorySectionRead(AppState.progress, sectionId);
+      }
+      progressStore.save();
+      checkAndAnnounceAchievements({ curriculum: AppState.curriculum });
+    },
+    onSaveAnnotation: (sectionId, text) => {
+      saveAnnotation(AppState.progress, theoryUnitId, sectionId, text);
+      progressStore.save();
+      showToast(t('theory.annotationSaved'));
+    },
+    onPractice: (_sectionId, lessonIds) => {
+      const target = Array.isArray(lessonIds) ? lessonIds[0] : lessonIds;
+      if (target) navigate(`/lesson/${target}`);
+    }
+  });
+
+  main.querySelector('.theory-main').appendChild(unitEl);
   bindNavigationEvents(main);
+
+  // Libs locais (KaTeX/highlight.js) — carregadas sob demanda, nunca via CDN.
+  const [katex, hljs] = await Promise.all([loadKatex(), loadHighlight()]);
+  renderMathIn(unitEl, katex);
+  highlightIn(unitEl, hljs);
 }
 
 /**
- * Renderiza índice da biblioteca (placeholder)
+ * Renderiza índice da biblioteca (#/library): busca full-text + lista.
  */
 async function renderLibraryView(params, query, main) {
+  const index = await loadTheoryIndex();
+
   main.innerHTML = `
     <section class="library-view" aria-label="${t('library.title')}">
       <header class="view-header">
+        <button class="btn btn-back" data-nav="/">${t('common.back')}</button>
         <h1>${t('library.title')}</h1>
       </header>
-      <div class="library-content">
-        <p class="placeholder">${t('library.coming_soon')}</p>
-        <p class="placeholder">${t('library.implemented_in_us4')}</p>
-      </div>
+      <form class="library-search" role="search" onsubmit="return false">
+        <label for="library-search-input">${t('theory.search')}</label>
+        <input id="library-search-input" class="library-search-input" type="search"
+          placeholder="${escapeHtml(t('theory.searchPlaceholder'))}" aria-describedby="library-search-status" autocomplete="off">
+        <p id="library-search-status" class="library-search-status" role="status"></p>
+      </form>
+      <ul class="library-list"></ul>
     </section>
   `;
+  bindNavigationEvents(main);
+
+  const list = main.querySelector('.library-list');
+  const status = main.querySelector('#library-search-status');
+  const input = main.querySelector('#library-search-input');
+
+  const allItems = index.map((u) => ({
+    id: u.id,
+    title: u.title,
+    discipline: u.discipline,
+    disciplineTitle: u.disciplineTitle,
+    moduleTitle: u.moduleTitle,
+    snippet: ''
+  }));
+
+  const renderList = (items, isSearch) => {
+    list.innerHTML = '';
+    if (items.length === 0) {
+      status.textContent = isSearch ? t('theory.noResults') : t('library.empty');
+      return;
+    }
+    status.textContent = t('library.resultCount', { count: items.length });
+    for (const item of items) {
+      const li = document.createElement('li');
+      li.className = 'library-item';
+      li.innerHTML = `
+        <h3><a href="#/theory/${encodeURIComponent(item.id)}">${escapeHtml(item.title)}</a></h3>
+        <p class="library-meta">${escapeHtml(item.disciplineTitle || item.discipline || '')}${item.moduleTitle ? ` · ${escapeHtml(item.moduleTitle)}` : ''}</p>
+        ${item.snippet ? `<p class="library-snippet">${escapeHtml(item.snippet)}</p>` : ''}
+      `;
+      list.appendChild(li);
+    }
+  };
+
+  renderList(allItems, false);
+
+  let debounceId = null;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceId);
+    debounceId = setTimeout(() => {
+      const q = input.value.trim();
+      if (!q) {
+        renderList(allItems, false);
+        return;
+      }
+      renderList(searchTheory(index, q), true);
+    }, 150);
+  });
 }
 
 /**
