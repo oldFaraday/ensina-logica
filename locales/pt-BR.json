@@ -231,6 +231,13 @@
     "retry": "Tentar novamente",
     "continue": "Continuar"
   },
+  "error": {
+    "init_failed": "Falha ao inicializar o aplicativo. Tente recarregar a página.",
+    "loadFailed": "Falha ao carregar. Tente recarregar a página.",
+    "saveFailed": "Falha ao salvar. Verifique o armazenamento do navegador.",
+    "notFound": "Não encontrado",
+    "generic": "Ocorreu um erro inesperado"
+  },
   "errors": {
     "init_failed": "Falha ao inicializar o aplicativo. Tente recarregar a página.",
     "loadFailed": "Falha ao carregar. Tente recarregar a página.",

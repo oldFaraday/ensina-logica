@@ -132,12 +132,12 @@ class Router {
         await matchedRoute.handler(params, query);
       } catch (error) {
         console.error('[Router] Handler error:', error);
-        this.navigate('#/');
+        if (hash !== '#/') this.navigate('#/');
         return;
       }
     } else {
       // 404 - redirect to home
-      this.navigate('#/');
+      if (hash !== '#/') this.navigate('#/');
       return;
     }
 

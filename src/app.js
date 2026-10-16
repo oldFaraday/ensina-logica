@@ -34,8 +34,8 @@ export async function initApp() {
     await loadLocale('pt-BR');
 
     // 2. Inicializa store de progresso
-    const store = new ProgressStore('ensina-logica-progress');
-    AppState.progress = store.load();
+    const store = new ProgressStore();
+    AppState.progress = await store.init();
 
     // 3. Migra schema se necessário
     AppState.progress = migrateProgress(AppState.progress);
