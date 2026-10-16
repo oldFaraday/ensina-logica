@@ -4,8 +4,8 @@
  */
 
 import { loadLocale, t, setLocale } from './i18n.js';
-import { router, navigate, startRouter } from './router.js';
-import { ProgressStore } from './store/ProgressStore.js';
+import { router, navigate, startRouter, createViewHandler } from './router.js';
+import { progressStore } from './store/ProgressStore.js';
 import { migrateProgress } from './store/schema-version.js';
 import { initTheme, getTheme, toggleTheme } from './ui/theme.js';
 import { initToasts, showToast } from './ui/toasts.js';
@@ -34,8 +34,7 @@ export async function initApp() {
     await loadLocale('pt-BR');
 
     // 2. Inicializa store de progresso
-    const store = new ProgressStore();
-    AppState.progress = await store.init();
+    AppState.progress = await progressStore.init();
 
     // 3. Migra schema se necessário
     AppState.progress = migrateProgress(AppState.progress);
@@ -91,8 +90,7 @@ function updateStreakOnBoot(progress) {
   progress.stats.freezes_remaining = freezesRemaining;
 
   // Salva progresso atualizado
-  const store = new ProgressStore('ensina-logica-progress');
-  store.save(progress);
+  progressStore.save();
 }
 
 /**
@@ -110,40 +108,35 @@ function checkPendingAchievements() {
  */
 function setupRoutes() {
   // Dashboard / Boas-vindas
-  router.add('/', () => renderDashboard());
+  router.add('/', createViewHandler(renderDashboard));
 
   // Semestre
-  router.add('/semester/:semId', ({ semId }) => renderSemesterView(semId));
+  router.add('/semester/:semId', createViewHandler(renderSemesterView));
 
   // Disciplina
-  router.add('/semester/:semId/discipline/:discId', ({ semId, discId }) =>
-    renderDisciplineView(semId, discId)
-  );
+  router.add('/semester/:semId/discipline/:discId', createViewHandler(renderDisciplineView));
 
   // Módulo
-  router.add('/semester/:semId/discipline/:discId/module/:modId', ({ semId, discId, modId }) =>
-    renderModuleView(semId, discId, modId)
-  );
+  router.add('/semester/:semId/discipline/:discId/module/:modId', createViewHandler(renderModuleView));
 
   // Lição
-  router.add('/lesson/:lessonId', ({ lessonId }) => renderLessonView(lessonId));
+  router.add('/lesson/:lessonId', createViewHandler(renderLessonView));
 
   // Teoria / Biblioteca
-  router.add('/theory/:theoryUnitId', ({ theoryUnitId }) => renderTheoryView(theoryUnitId));
-  router.add('/library', () => renderLibraryView());
+  router.add('/theory/:theoryUnitId', createViewHandler(renderTheoryView));
+  router.add('/library', createViewHandler(renderLibraryView));
 
   // Configurações
-  router.add('/settings', () => renderSettingsView());
+  router.add('/settings', createViewHandler(renderSettingsView));
 
   // Conquistas
-  router.add('/achievements', () => renderAchievementsView());
+  router.add('/achievements', createViewHandler(renderAchievementsView));
 }
 
 /**
  * Renderiza Dashboard (#/)
  */
-function renderDashboard() {
-  const main = document.querySelector('main');
+async function renderDashboard(params, query, main) {
   const isFirstVisit = !AppState.progress.stats?.last_activity_date;
 
   if (isFirstVisit) {
@@ -369,11 +362,11 @@ function getTodayXP(progress) {
 /**
  * Renderiza visão do semestre
  */
-function renderSemesterView(semId) {
+async function renderSemesterView(params, query, main) {
+  const semId = params.semId;
   const sem = AppState.curriculum.semesters.find(s => s.id === semId);
   if (!sem) return navigate('/');
 
-  const main = document.querySelector('main');
   main.innerHTML = `
     <section class="semester-view" aria-label="${sem.title}">
       <header class="view-header">
@@ -398,12 +391,12 @@ function renderSemesterView(semId) {
 /**
  * Renderiza visão da disciplina
  */
-function renderDisciplineView(semId, discId) {
+async function renderDisciplineView(params, query, main) {
+  const { semId, discId } = params;
   const sem = AppState.curriculum.semesters.find(s => s.id === semId);
   const disc = sem?.disciplines.find(d => d.id === discId);
   if (!disc) return navigate(`/semester/${semId}`);
 
-  const main = document.querySelector('main');
   main.innerHTML = `
     <section class="discipline-view" aria-label="${disc.title}">
       <header class="view-header">
@@ -441,13 +434,13 @@ function renderDisciplineView(semId, discId) {
 /**
  * Renderiza visão do módulo
  */
-function renderModuleView(semId, discId, modId) {
+async function renderModuleView(params, query, main) {
+  const { semId, discId, modId } = params;
   const sem = AppState.curriculum.semesters.find(s => s.id === semId);
   const disc = sem?.disciplines.find(d => d.id === discId);
   const mod = disc?.modules.find(m => m.id === modId);
   if (!mod) return navigate(`/semester/${semId}/discipline/${discId}`);
 
-  const main = document.querySelector('main');
   main.innerHTML = `
     <section class="module-view" aria-label="${mod.title}">
       <header class="view-header">
@@ -479,8 +472,8 @@ function renderModuleView(semId, discId, modId) {
 /**
  * Renderiza visão da lição (placeholder - implementação completa em US3)
  */
-function renderLessonView(lessonId) {
-  const main = document.querySelector('main');
+async function renderLessonView(params, query, main) {
+  const { lessonId } = params;
   main.innerHTML = `
     <section class="lesson-view" aria-label="${t('lesson.title')}">
       <header class="view-header">
@@ -499,8 +492,8 @@ function renderLessonView(lessonId) {
 /**
  * Renderiza visão da teoria (placeholder - implementação completa em US4)
  */
-function renderTheoryView(theoryUnitId) {
-  const main = document.querySelector('main');
+async function renderTheoryView(params, query, main) {
+  const { theoryUnitId } = params;
   main.innerHTML = `
     <section class="theory-view" aria-label="${t('theory.title')}">
       <header class="view-header">
@@ -519,8 +512,7 @@ function renderTheoryView(theoryUnitId) {
 /**
  * Renderiza índice da biblioteca (placeholder)
  */
-function renderLibraryView() {
-  const main = document.querySelector('main');
+async function renderLibraryView(params, query, main) {
   main.innerHTML = `
     <section class="library-view" aria-label="${t('library.title')}">
       <header class="view-header">
@@ -537,8 +529,7 @@ function renderLibraryView() {
 /**
  * Renderiza configurações
  */
-function renderSettingsView() {
-  const main = document.querySelector('main');
+async function renderSettingsView(params, query, main) {
   const prefs = AppState.progress.preferences || {};
   main.innerHTML = `
     <section class="settings-view" aria-label="${t('settings.title')}">
@@ -578,44 +569,44 @@ function renderSettingsView() {
     </section>
   `;
 
-  bindSettingsEvents();
+  bindSettingsEvents(main);
 }
 
 /**
  * Bind eventos de configurações
  */
-function bindSettingsEvents() {
+function bindSettingsEvents(main) {
   // Meta diária
-  document.querySelectorAll('.goal-btn').forEach(btn => {
+  main.querySelectorAll('.goal-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const goal = parseInt(e.currentTarget.dataset.goal, 10);
       setDailyGoal(goal);
-      document.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('active'));
+      main.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('active'));
       e.currentTarget.classList.add('active');
     });
   });
 
   // Tema
-  document.querySelectorAll('.theme-btn').forEach(btn => {
+  main.querySelectorAll('.theme-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const theme = e.currentTarget.dataset.theme;
       toggleTheme(theme);
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      main.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
       e.currentTarget.classList.add('active');
     });
   });
 
   // Export
-  document.getElementById('export-progress')?.addEventListener('click', exportProgress);
+  main.querySelector('#export-progress')?.addEventListener('click', exportProgress);
 
   // Import
-  document.getElementById('import-progress')?.addEventListener('click', () => {
-    document.getElementById('import-file').click();
+  main.querySelector('#import-progress')?.addEventListener('click', () => {
+    main.querySelector('#import-file')?.click();
   });
-  document.getElementById('import-file')?.addEventListener('change', importProgress);
+  main.querySelector('#import-file')?.addEventListener('change', importProgress);
 
   // Reset
-  document.getElementById('reset-progress')?.addEventListener('click', resetProgress);
+  main.querySelector('#reset-progress')?.addEventListener('click', resetProgress);
 
   bindNavigationEvents(main);
 }
@@ -624,10 +615,9 @@ function bindSettingsEvents() {
  * Define meta diária
  */
 function setDailyGoal(goal) {
-  const store = new ProgressStore('ensina-logica-progress');
   AppState.progress.preferences = AppState.progress.preferences || {};
   AppState.progress.preferences.daily_xp_goal = goal;
-  store.save(AppState.progress);
+  progressStore.update({ preferences: { daily_xp_goal: goal } });
   AppState.dailyGoal = goal;
   updateDailyGoalUI();
   showToast(t('settings.goal_updated', { goal }));
@@ -649,8 +639,7 @@ function updateDailyGoalUI() {
  * Exporta progresso
  */
 function exportProgress() {
-  const store = new ProgressStore('ensina-logica-progress');
-  const json = store.export();
+  const json = progressStore.export();
   const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -670,10 +659,9 @@ async function importProgress(e) {
 
   try {
     const text = await file.text();
-    const store = new ProgressStore('ensina-logica-progress');
-    const success = store.import(text);
+    const success = progressStore.import(text);
     if (success) {
-      AppState.progress = store.load();
+      AppState.progress = progressStore.get();
       showToast(t('settings.imported'));
       navigate('/');
     } else {
@@ -692,9 +680,8 @@ async function importProgress(e) {
 function resetProgress() {
   if (!confirm(t('settings.reset_confirm'))) return;
 
-  const store = new ProgressStore('ensina-logica-progress');
-  store.reset();
-  AppState.progress = store.load();
+  progressStore.reset();
+  AppState.progress = progressStore.get();
   showToast(t('settings.reset_done'));
   navigate('/');
 }
@@ -702,8 +689,7 @@ function resetProgress() {
 /**
  * Renderiza conquistas
  */
-function renderAchievementsView() {
-  const main = document.querySelector('main');
+async function renderAchievementsView(params, query, main) {
   main.innerHTML = `
     <section class="achievements-view" aria-label="${t('achievements.title')}">
       <header class="view-header">
@@ -765,10 +751,9 @@ function showWelcomeModal() {
   });
 
   modal.querySelector('#welcome-start').addEventListener('click', () => {
-    const store = new ProgressStore('ensina-logica-progress');
     AppState.progress.preferences = AppState.progress.preferences || {};
     AppState.progress.preferences.daily_xp_goal = selectedGoal;
-    store.save(AppState.progress);
+    progressStore.update({ preferences: { daily_xp_goal: selectedGoal } });
     AppState.dailyGoal = selectedGoal;
     modal.remove();
     updateDailyGoalUI();

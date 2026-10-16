@@ -109,6 +109,13 @@ class ProgressStore {
   }
 
   /**
+   * Public save method
+   */
+  save() {
+    return this._save();
+  }
+
+  /**
    * Save progress to localStorage
    * @private
    */

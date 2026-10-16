@@ -88,7 +88,8 @@ class Router {
   async handleHashChange() {
     if (typeof window === 'undefined') return;
     const hash = window.location.hash || '#/';
-    const [path, queryString] = hash.split('?');
+    const [rawPath, queryString] = hash.split('?');
+    const path = rawPath.replace(/^#\//, '/'); // Strip leading #/ and treat as /path
 
     // Parse query string
     const query = new URLSearchParams(queryString || '');
