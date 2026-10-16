@@ -9,6 +9,18 @@ Uma plataforma web **gamificada, estilo Duolingo**, para estudar o conteúdo de 
 - **Escopo MVP:** mapa completo dos 8 semestres como dados; **1º semestre end-to-end** (Algoritmos e Lógica de Programação + Matemática Discreta/Lógica) com lições, exercícios e teoria completos.
 - **Tamanho mínimo do 1º semestre:** 2 disciplinas × 3 módulos cada = 6 módulos. Cada módulo com **pelo menos 1 unidade teórica, 3–5 lições e flashcards**. Se o conteúdo real disponível for menor, o app **funciona mesmo assim** e a diferença é registrada no CHANGELOG/docs.
 
+## Identidade Visual (neo-brutalista)
+
+- **Direção:** neo-brutalista — chapado, contrastado, honesto. Detalhes em `DESIGN.md`.
+- **Bordas:** sólidas e grossas (2–4 px) em cartões, botões e campos.
+- **Sombras:** duras, sem desfoque, deslocadas; botões têm efeito de "apertar" ao clicar, **desativado** com `prefers-reduced-motion`.
+- **Cores:** planas e saturadas, **sem gradientes**. Tema claro com fundo **creme**; tema escuro com fundo **quase preto** e bordas/sombras claras.
+- **Cantos:** retos ou quase retos (raio 0–4 px).
+- **Tipografia:** títulos pesados (800); **monoespaçada** para código e rótulos. Fontes por **pilhas do sistema** (sem download, sem CDN) para preservar "zero requisições externas".
+- **Centralização:** todas as cores, tipografia, espaçamentos, espessuras, sombras e alvos de toque são **tokens CSS** (`src/ui/theme.css`); **nenhum valor solto**.
+- **Contraste:** pares de cor verificados por `scripts/test-contrast.mjs` (falha abaixo de **WCAG AA**).
+- **Estado nunca só por cor:** acerto/erro/bloqueado/concluído/selecionado sempre incluem **ícone ou texto**.
+
 ---
 
 ## Jornada do Usuário (MVP)

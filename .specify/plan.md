@@ -1,5 +1,17 @@
 # Plan — ensina-logica
 
+## 0. Identidade Visual (neo-brutalista)
+
+Decisões de design que governam o CSS (`src/ui/theme.css`); detalhes completos em `DESIGN.md`.
+
+- **Estética:** neo-brutalista — cores chapadas e saturadas, **sem gradientes**; bordas sólidas de **2–4 px**; **sombras duras** sem desfoque e deslocadas; cantos **retos ou quase retos**.
+- **Temas:** claro com fundo **creme**; escuro com fundo **quase preto** e bordas/sombras claras.
+- **Interação:** botões com efeito de "apertar" ao clicar (deslocamento + remoção da sombra), **desativado** com `prefers-reduced-motion`.
+- **Tipografia:** títulos peso **800**; **monoespaçada** para código e rótulos; fontes por **pilhas do sistema** (sem download/CDN, mantendo zero requisições externas).
+- **Tokens:** cores (claro/escuro), tipografia, espaçamento, espessura de borda, sombras e alvo de toque (`--touch-target: 44px`) centralizados como **variáveis CSS**; o CSS não usa valores soltos.
+- **Acessibilidade:** foco visível **distinto da borda**; estado nunca só por cor (ícone/texto); contraste **AA** verificado por `scripts/test-contrast.mjs` (falha o build abaixo de AA).
+- **Tarefa correspondente:** `T113`–`T114` em `.specify/tasks.md` (Fase 4.5).
+
 ## 1. Stack Tecnológico
 
 | Camada | Escolha | Justificativa |

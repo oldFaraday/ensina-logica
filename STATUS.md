@@ -10,7 +10,8 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo); inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5); inclui **snapshot do progresso real** (2026-10-16)
+- Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
 ```
@@ -47,7 +48,7 @@ ensina-logica/
 │   ├── theory/                 # (pendente: renderer, sidebar, annotations, search)
 │   ├── lesson/                 # (parcial: feedback + 3/5 tipos; falta renderer, code-completion, flashcards)
 │   └── ui/
-│       ├── theme.css           # ✅ Completo - light/dark, a11y, reduced-motion, toasts, modals
+│       ├── theme.css           # ✅ Completo - tokens neo-brutalistas, light/dark, a11y, reduced-motion, toasts, modals
 │       ├── theme.js            # ✅ Completo - theme toggle + prefers-color-scheme
 │       ├── toasts.js           # ✅ Completo - notificações não-intrusivas
 │       ├── modals.js           # ✅ Completo - modais acessíveis (ARIA)
@@ -60,6 +61,7 @@ ensina-logica/
 │   ├── test-dom.mjs            # ✅ Completo - integração jsdom (rota inicial #/ renderiza)
 │   ├── test-i18n-dom.mjs       # ✅ Completo - integração jsdom (sem chaves de tradução cruas)
 │   ├── test-onboarding-dom.mjs # ✅ Completo - integração jsdom (fluxo de boas-vindas/meta)
+│   ├── test-contrast.mjs       # ✅ Completo - contraste WCAG AA dos design tokens (falha abaixo de AA)
 │   └── download-libs.mjs       # ✅ Completo - baixa KaTeX/highlight.js para lib/
 ├── index.html                  # ✅ Completo - shell com header, main, footer, skip links
 ├── 404.html                    # ✅ Completo - SPA redirect para GitHub Pages
@@ -91,6 +93,23 @@ ensina-logica/
 - **Ícones do cabeçalho**: `aria-label` + `title` (tooltip) aplicados via i18n (`applyHeaderLabels()`), cobrindo tema, configurações e conquistas.
 - **Onboarding / modal de boas-vindas**: passou a usar uma flag dedicada `preferences.onboarding_completed` (padrão `false`), em vez de depender de `stats.last_activity_date` (que o boot sobrescrevia). O modal aparece sempre que a flag é `false` e é gravada como `true` ao escolher a meta. Schema de progresso versionado em **v2** com migração (progresso antigo sem a flag é tratado como `false`). "Resetar progresso" mantém as preferências e a flag (não reabre o modal); limpar tudo (`clear`) reabre. Teste: `scripts/test-onboarding-dom.mjs` (jsdom, múltiplos "recarregamentos"). Migração coberta em `scripts/test-core.mjs`.
 - `npm test` agora inclui os testes de DOM, i18n e onboarding (jsdom é devDependency).
+
+### Fundamentos visuais / neo-brutalismo (2026-10-16) — Fase 4.5 (T113–T114)
+- **Nova identidade neo-brutalista**: cores chapadas e saturadas (sem gradientes), bordas sólidas de 2–4px, sombras **duras** sem desfoque, cantos retos/quase retos, títulos pesados (800) e **monoespaçada** para código e rótulos.
+- **`DESIGN.md` criado**: fonte da verdade dos *design tokens* (cores claro/escuro, tipografia, espaçamento, espessura de borda, sombras, alvo de toque) + princípios e revisão de telas.
+- **`src/ui/theme.css` reescrito** usando **apenas tokens** (`var(--token)`); nenhum valor solto de cor/espaço/borda/sombra/raio. Tokens de cor do tema escuro sob `html[data-theme="dark"]` + fallback `@media (prefers-color-scheme: dark)` (pré-JS) — o teste garante que os dois blocos são idênticos.
+- **Revisão das telas** (painel, semestre, disciplina, módulo, configurações, conquistas) nos temas **claro e escuro** e nas larguras **375 / 768 / 1280 px** (verificado no navegador com *harness* de iframes nessa largura). Correções aplicadas:
+  - **Cabeçalho compacto** (padding reduzido; barra de XP fina com borda; ícones quadrados com borda e sombra dura).
+  - **Botão "Voltar" com seta** (`←` via `::before`, sem alterar o rótulo traduzido).
+  - **Próxima ação ("Continuar") com destaque forte**: botão amarelo (`--color-cta`), borda grossa e sombra dura, largura total.
+  - **Cartões de XP, nível, streak e revisões com mais presença**: borda 4px, sombra dura, número grande em monoespaçada e *chip* colorido atrás do ícone.
+  - **Foco visível distinto da borda**: `outline` na cor de foco com `outline-offset` (nunca se confunde com a borda).
+  - **Estado nunca só por cor/sombra**: acerto/erro/bloqueado/concluído/selecionado sempre têm **ícone ou texto** (✅/❌, 🔒, "Bloqueado", "Em breve", "✓" no selecionado).
+- **Zero requisições externas**: removido o `<link rel="preconnect" href="https://fonts.gstatic.com">` do `index.html`; decisão de **pilhas de fontes do sistema** (sem download/CDN) registrada em `DESIGN.md` e `ATTRIBUTIONS.md`.
+- **Teste de contraste WCAG AA**: `scripts/test-contrast.mjs` lê os tokens de `theme.css`, calcula o contraste dos pares semânticos (texto ≥ 4.5, UI/borda/foco ≥ 3.0) e **falha (exit 1) abaixo de AA**; também valida a estrutura dos tokens (bordas 2–4px, alvo de toque ≥ 44px, sombras sem desfoque) e a igualdade do fallback escuro. Incluído em `npm test`.
+
+### 🐞 Bug conhecido (fora do escopo desta tarefa)
+- **Deep-link/refresh em rota interna volta para `#/`**: abrir/recarregar diretamente uma URL como `#/settings` ou `#/semester/sem1` renderiza o painel e normaliza o hash para `#/`. A navegação **dentro** do app (mudança de hash após o boot) funciona normalmente. Não foi corrigido aqui por estar fora do escopo de design; sugerido tratar em tarefa de roteamento (router inicial lê o hash antes de `startRouter`/`setupRoutes`, caindo no *fallback* `#/`).
 
 ---
 
@@ -141,8 +160,9 @@ ensina-logica/
 
 ### Fase 9: US7 - Acessibilidade & Privacidade — 🚧 PARCIAL
 - [x] Ícones do cabeçalho com aria-label/title; estado sempre ícone+texto+cor; `prefers-reduced-motion` no CSS
-- [ ] Auditoria completa: focus, tab order, skip links, contraste AA
-- [ ] Zero external requests: remover `<link rel="preconnect" href="https://fonts.gstatic.com">` do index.html
+- [x] Contraste AA dos tokens verificado por `scripts/test-contrast.mjs` (claro/escuro)
+- [ ] Auditoria completa: focus, tab order, skip links
+- [x] Zero external requests: `<link rel="preconnect" href="https://fonts.gstatic.com">` removido do index.html (fontes por pilhas do sistema)
 
 ### Fase 10: US8 - Deploy & Repo Files — 🚧 PARCIAL
 - [x] Workflows validados (validate.yml + deploy-pages.yml) e arquivos Definition of Done presentes

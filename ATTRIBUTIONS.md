@@ -4,6 +4,12 @@ Este arquivo registra todas as fontes de conteúdo (teoria) e bibliotecas de ter
 
 ---
 
+## Tipografia
+
+A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, definidas em `src/ui/theme.css`), **sem download e sem CDN**, para preservar a regra do projeto de **zero requisições externas**. Nenhum binário de fonte de terceiro é distribuído neste repositório, portanto não há licença de fonte a registrar aqui.
+
+---
+
 ## Fontes de Conteúdo (Teoria)
 
 ### 1. Mathematics for Computer Science

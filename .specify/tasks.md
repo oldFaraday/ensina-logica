@@ -111,6 +111,15 @@ description: "Task list template for feature implementation"
 
 ---
 
+## Phase 4.5: Fundamentos visuais (Design tokens neo-brutalistas)
+
+**Purpose**: Estabelecer a identidade visual neo-brutalista e centralizar tudo em tokens **antes** das telas de lição/exercício. Detalhes em `DESIGN.md`.
+
+- [x] T113 [UI] Fundamentos visuais: criar `DESIGN.md`; centralizar tokens (cores claro/escuro, tipografia, espaçamento, espessura de borda, sombras duras, alvo de toque) em `src/ui/theme.css`; aplicar estética neo-brutalista (bordas 2–4px, sombras duras sem desfoque, sem gradientes, cantos retos, títulos pesados, monoespaçada para código/rótulos, fontes por pilhas do sistema); revisar painel/semestre/disciplina/módulo/configurações nos temas claro/escuro e em 375/768/1280px (cabeçalho compacto, botão Voltar com seta, destaque forte de "Continuar", cartões de XP/nível/streak com presença, foco visível distinto da borda); nunca indicar estado só por cor/sombra (ícone ou texto sempre)
+- [x] T114 [test] Teste de contraste WCAG AA (`scripts/test-contrast.mjs`) lendo os tokens de `src/ui/theme.css` e falhando abaixo de AA; incluído em `npm test`
+
+---
+
 ## Phase 5: User Story 3 - Lesson & Exercises (Priority: P1) 🎯 MVP
 
 **Goal**: Lesson screen with theory summary + 3-5 exercises (multiple types), immediate feedback with icon+text+color, XP award
