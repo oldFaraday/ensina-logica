@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m01-l02-simbolos",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l02",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "No capítulo Flowcharts, qual símbolo do fluxograma representa uma decisão (uma pergunta de verdadeiro ou falso)?",
+    "options": [
+      "O losango",
+      "O retângulo arredondado (terminal)",
+      "O paralelogramo",
+      "O retângulo"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Flowcharts define o losango (decision symbol) como o símbolo usado para representar a pergunta de verdadeiro/falso testada em uma decisão.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l02-terminal",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l02",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "No fluxograma, os retângulos arredondados (terminais) indicam os pontos de início e de fim.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Segundo o capítulo Flowcharts, os retângulos arredondados, chamados de terminais, indicam os pontos de início e de fim do fluxograma.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l02-ordem-pseudo",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l02",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene as partes do esboço em pseudocódigo que calcula a média de duas idades, conforme o capítulo Pseudocode.",
+    "options": [
+      "Processamento: calcular a resposta somando as duas idades e dividindo por dois",
+      "Entrada: exibir mensagens e ler as duas idades do teclado",
+      "Saída: exibir a resposta na tela e pausar para o usuário ver"
+    ],
+    "correct": [1, 0, 2],
+    "explanation": "O capítulo Pseudocode apresenta o esboço na ordem Entrada, Processamento e Saída, seguindo o modelo IPO para documentar a lógica do programa.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l02-code",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l02",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o código Python que implementa a média de duas idades descrita no esboço em pseudocódigo (entrada, processamento e saída).",
+    "starter_code": "# Entrada: ler as duas idades\nidade1 = int(input(\"Primeira idade: \"))\nidade2 = int(input(\"Segunda idade: \"))\n\n# Processamento: calcular a media\nmedia = ___\n\n# Saida: exibir o resultado\nprint(\"Media:\", media)",
+    "test_command": "python -m py_compile",
+    "language": "python",
+    "correct": "(idade1 + idade2) / 2",
+    "explanation": "No capítulo Pseudocode, o processamento calcula a resposta somando as duas idades e dividindo por dois; por isso a expressão (idade1 + idade2) / 2.",
+    "difficulty": "medium",
+    "xp_base": 20
+  }
+]

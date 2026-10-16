@@ -1,0 +1,79 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m03-l08-while-quatro",
+    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "lesson_id": "l08",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Quais são os quatro atributos de um laço while que funciona corretamente, segundo o capítulo While Loop?",
+    "options": [
+      "Inicializar a flag, expressão de teste, ação(ões) e atualizar a flag",
+      "Entrada, processamento, saída e pausa",
+      "Compilar, executar, depurar e publicar",
+      "Variável, constante, literal e tipo"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo While Loop lista quatro atributos: inicializar a flag, a expressão de teste, a ação ou ações e a atualização da flag; faltar um deles pode causar laço infinito.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l08-do-while",
+    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "lesson_id": "l08",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "O laço do while é um laço com teste depois (test after): a ação é executada pelo menos uma vez.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "O capítulo Do While Loop explica que, por ser um laço com teste depois (post-test), a ação sempre acontece pelo menos uma vez antes de a condição ser verificada.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l08-for",
+    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "lesson_id": "l08",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo o capítulo For Loop, quando o laço for é normalmente usado?",
+    "options": [
+      "Quando o número de repetições é conhecido antes de entrar no laço",
+      "Quando nunca se sabe quantas repetições ocorrerão",
+      "Quando não existe condição de parada",
+      "Quando a ação deve ocorrer no máximo uma vez"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo For Loop afirma que o for é um laço de contagem usado quando o número de iterações é conhecido antes de entrar no laço, com valor inicial e valor de parada.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l08-infinite",
+    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "lesson_id": "l08",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Se a flag de um laço nunca for atualizada, a expressão de teste pode permanecer verdadeira e gerar um laço infinito.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Os capítulos While Loop e For Loop avisam que esquecer de atualizar a flag faz a expressão de teste continuar verdadeira, produzindo um laço infinito (infinite loop).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l08-code",
+    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "lesson_id": "l08",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o código Python do laço de contagem que imprime a mensagem cinco vezes (contador de 0 a 4).",
+    "starter_code": "# Contar de 0 a 4 (5 repeticoes)\ncontador = 0\n\nwhile ___:\n    print(\"Eu amo sorvete!\")\n    contador += 1",
+    "test_command": "python -m py_compile",
+    "language": "python",
+    "correct": "contador < 5",
+    "explanation": "O capítulo While Loop mostra o laço de contagem com a expressão de teste contador < 5; o contador começa em 0 e é atualizado até o teste ficar falso.",
+    "difficulty": "medium",
+    "xp_base": 20
+  }
+]

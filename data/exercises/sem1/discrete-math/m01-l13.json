@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-de-morgan",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l13",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Pela Lei de De Morgan, a negação ¬(P ∧ Q) é logicamente equivalente a:",
+    "options": ["¬P ∧ ¬Q", "¬P ∨ ¬Q", "P ∨ Q", "P → Q"],
+    "correct": 1,
+    "explanation": "De Morgan diz que ¬(P ∧ Q) é logicamente equivalente a ¬P ∨ ¬Q: ao distribuir a negação sobre a conjunção, trocamos o 'e' pelo 'ou' e negamos cada parte (Seção 3.1).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-implicacao-disjuncao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l13",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "A implicação P → Q é logicamente equivalente à disjunção ¬P ∨ Q.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Toda implicação pode ser escrita como disjunção: P → Q é equivalente a ¬P ∨ Q, como mostra a igualdade das colunas finais das duas tabelas-verdade (Seção 3.1).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-negacao-implicacao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l13",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "A negação de uma implicação, ¬(P → Q), é logicamente equivalente a:",
+    "options": ["¬P → ¬Q", "P ∧ ¬Q", "¬P ∨ ¬Q", "Q → P"],
+    "correct": 1,
+    "explanation": "A negação de uma implicação é uma conjunção: ¬(P → Q) é equivalente a P ∧ ¬Q. A implicação só é falsa quando a hipótese é verdadeira e a conclusão é falsa (Seção 3.1).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-dupla-negacao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l13",
+    "type": "flashcards",
+    "generated_by_ai": true,
+    "prompt": "A qual proposição é logicamente equivalente a dupla negação ¬¬P?",
+    "starter_code": "P",
+    "correct": "P",
+    "explanation": "Pela regra da dupla negação, ¬¬P é logicamente equivalente a P (Seção 3.1, Double Negation).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-definicao-equivalencia",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l13",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Duas proposições moleculares P e Q são logicamente equivalentes quando:",
+    "options": [
+      "Têm o mesmo valor de verdade em toda atribuição de valores às partes atômicas.",
+      "São ambas verdadeiras em pelo menos uma linha da tabela.",
+      "Aparecem na mesma tabela-verdade.",
+      "Têm o mesmo número de conectivos."
+    ],
+    "correct": 0,
+    "explanation": "P e Q são logicamente equivalentes quando P é verdadeira exatamente quando Q é verdadeira. Isso se verifica comparando as colunas finais das duas tabelas-verdade: se forem idênticas, são equivalentes (Seção 3.1).",
+    "difficulty": "medium",
+    "xp_base": 10
+  }
+]

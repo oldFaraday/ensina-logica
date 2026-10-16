@@ -54,32 +54,32 @@
               "id": "m01",
               "title": "Lógica Proposicional",
               "theory": "th-sem1-discrete-math-m01-logic",
-              "lessons": ["l01", "l02", "l03"],
+              "lessons": ["l11", "l12", "l13"],
               "lessonTitles": {
-                "l01": "Proposições e conectivos",
-                "l02": "Tabelas-verdade",
-                "l03": "Equivalências lógicas"
+                "l11": "Proposições e conectivos",
+                "l12": "Tabelas-verdade",
+                "l13": "Equivalências lógicas"
               }
             },
             {
               "id": "m02",
               "title": "Lógica de Predicados",
               "theory": "th-sem1-discrete-math-m02-predicate-logic",
-              "lessons": ["l04", "l05"],
+              "lessons": ["l14", "l15"],
               "lessonTitles": {
-                "l04": "Quantificadores",
-                "l05": "Variáveis e escopo"
+                "l14": "Quantificadores",
+                "l15": "Variáveis e escopo"
               }
             },
             {
               "id": "m03",
               "title": "Provas e Indução",
               "theory": "th-sem1-discrete-math-m03-proofs-induction",
-              "lessons": ["l06", "l07", "l08"],
+              "lessons": ["l16", "l17", "l18"],
               "lessonTitles": {
-                "l06": "Métodos de prova",
-                "l07": "Indução matemática",
-                "l08": "Indução forte e recursão"
+                "l16": "Métodos de prova",
+                "l17": "Indução matemática",
+                "l18": "Indução forte e recursão"
               }
             }
           ]

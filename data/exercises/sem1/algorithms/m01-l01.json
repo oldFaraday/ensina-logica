@@ -1,0 +1,81 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m01-l01-algoritmo",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l01",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo o capítulo Program Design, o que deve acontecer ANTES de começar a codificar um programa em uma linguagem específica?",
+    "options": [
+      "Elaborar o design do programa: entender o problema, modelar a lógica e preparar dados de teste",
+      "Instalar o sistema operacional da máquina",
+      "Escrever o manual do usuário final",
+      "Traduzir manualmente o código para linguagem de máquina"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Program Design explica que o design do programa reúne os passos que o programador faz antes de codificar; documentar esse design torna o programa mais fácil de manter depois.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l01-pseudo",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l01",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Pseudocódigo é código real que um compilador converte automaticamente para linguagem de máquina.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 1,
+    "explanation": "O capítulo Pseudocode lembra que 'pseudo' significa falso: o pseudocódigo imita código, mas não é código real, e não existe compilador que o traduza para linguagem de máquina.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l01-ipo",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l01",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "A sigla IPO, usada no capítulo Program Design para entender a finalidade de um programa, corresponde a:",
+    "options": [
+      "Entrada, Processamento e Saída (Inputs, Processing, Outputs)",
+      "Interface, Programa e Operação",
+      "Instrução, Pilha e Operando",
+      "Índice, Ponteiro e Objeto"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Program Design afirma que entender o propósito de um programa geralmente envolve compreender suas entradas, o processamento realizado e as saídas produzidas (IPO).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l01-ordem",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l01",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene as três grandes áreas de atividade do design de um programa descritas no capítulo Program Design.",
+    "options": [
+      "Desenvolver dados de teste (prever as saídas)",
+      "Entender o programa (entradas, processamento e saídas)",
+      "Usar ferramentas de design para criar um modelo (pseudocódigo, fluxograma)"
+    ],
+    "correct": [1, 2, 0],
+    "explanation": "O capítulo Program Design lista três áreas: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste para verificar esse modelo.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l01-flash",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l01",
+    "type": "flashcards",
+    "generated_by_ai": true,
+    "prompt": "O que é um algoritmo e como ele é documentado no design de um programa?",
+    "starter_code": "É uma sequência finita e ordenada de passos que descreve como resolver um problema ou realizar uma tarefa. No design de um programa, ele é documentado com ferramentas como o pseudocódigo e o fluxograma, antes de ser escrito em uma linguagem.",
+    "correct": "É uma sequência finita e ordenada de passos que descreve como resolver um problema ou realizar uma tarefa. No design de um programa, ele é documentado com ferramentas como o pseudocódigo e o fluxograma, antes de ser escrito em uma linguagem.",
+    "explanation": "A unidade de Introdução a Algoritmos define o algoritmo como uma sequência ordenada de passos e mostra que o design (pseudocódigo e fluxograma) planeja a lógica antes de codificar.",
+    "difficulty": "easy",
+    "xp_base": 5
+  }
+]

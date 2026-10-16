@@ -1,0 +1,69 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m01-l03-tres",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l03",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Quais são as três categorias principais de estruturas de controle apresentadas no capítulo Structured Programming?",
+    "options": [
+      "Sequência, seleção e iteração",
+      "Entrada, processamento e saída",
+      "Compilação, ligação e execução",
+      "Variável, constante e literal"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Structured Programming lista três categorias: sequência (fazer uma instrução após a outra), seleção (escolher entre caminhos) e iteração (repetição).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l03-selecao",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l03",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Na seleção o programa escolhe entre dois ou mais fluxos; na iteração (repetição) um trecho de código pode ser executado várias vezes.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Segundo o capítulo Structured Programming, a seleção escolhe entre dois ou mais caminhos e a iteração permite repetir um trecho de código várias vezes (inclusive zero vezes).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l03-fluxo-if",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l03",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "No pseudocódigo 'Se idade > 17 ... Senão ... Fim', a qual categoria de estrutura de controle esse trecho pertence?",
+    "options": [
+      "Seleção de duas vias",
+      "Sequência",
+      "Iteração",
+      "Ramificação descontrolada"
+    ],
+    "correct": 0,
+    "explanation": "Tanto o capítulo Selection Control Structures quanto os fluxogramas mostram que o 'if then else' é uma seleção de duas vias: apenas um dos caminhos é executado.",
+    "difficulty": "medium",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l03-ordem",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l03",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene o pseudocódigo de um laço while que exibe uma mensagem cinco vezes (exemplo do capítulo Flowcharts).",
+    "options": [
+      "Incrementar count",
+      "count recebe 0 (inicialização da flag)",
+      "Fim enquanto",
+      "Enquanto count < 5: exibir a mensagem"
+    ],
+    "correct": [1, 3, 0, 2],
+    "explanation": "O capítulo Flowcharts mostra o laço while começando pela inicialização da flag (count = 0), seguida do teste (Enquanto count < 5), da ação e da atualização da flag, até o fim.",
+    "difficulty": "medium",
+    "xp_base": 15
+  }
+]

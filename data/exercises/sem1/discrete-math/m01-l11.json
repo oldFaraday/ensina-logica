@@ -1,0 +1,64 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m01-l11-proposicao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l11",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual das frases a seguir é uma proposição, ou seja, uma sentença declarativa que é verdadeira ou falsa?",
+    "options": [
+      "Que dia é hoje?",
+      "3 + 7 = 12.",
+      "Some dois números.",
+      "x + 3 = 12, sem especificar o valor de x."
+    ],
+    "correct": 1,
+    "explanation": "Uma proposição é qualquer sentença declarativa que é verdadeira ou falsa. '3 + 7 = 12' é declarativa e tem valor de verdade (falsa). Perguntas, ordens e sentenças com variável livre, como 'x + 3 = 12', não são proposições (Seção 0.2).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l11-conjuncao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l11",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "A conjunção P ∧ Q, lida como 'P e Q', é verdadeira somente quando ambas P e Q são verdadeiras.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Segundo as condições de verdade dos conectivos, P ∧ Q é verdadeira quando P e Q são ambas verdadeiras e falsa em qualquer outro caso (Seção 0.2, Conectivos lógicos).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l11-implicacao-falsa",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l11",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Em qual situação a implicação P → Q é FALSA?",
+    "options": [
+      "Quando P é falsa e Q é verdadeira.",
+      "Quando P é verdadeira e Q é falsa.",
+      "Quando P e Q são ambas falsas.",
+      "Nunca, pois uma implicação é sempre verdadeira."
+    ],
+    "correct": 1,
+    "explanation": "A única maneira de P → Q ser falsa é a hipótese P ser verdadeira e a conclusão Q ser falsa. Nos demais casos a implicação é verdadeira (Seção 0.2, Implicações).",
+    "difficulty": "medium",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l11-disjuncao-inclusiva",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "lesson_id": "l11",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Na lógica que estudamos, o 'ou' é inclusivo: P ∨ Q é verdadeira também quando P e Q são ambas verdadeiras.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "O 'ou' usado é o inclusivo e não o exclusivo: P ∨ Q é verdadeira quando P é verdadeira, ou Q é verdadeira, ou ambas (Seção 0.2).",
+    "difficulty": "easy",
+    "xp_base": 5
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m02-l04-var-const",
+    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "lesson_id": "l04",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo o capítulo Constants and Variables, qual é a diferença entre constante e variável?",
+    "options": [
+      "A constante tem valor que não muda durante a execução; a variável pode ter seu valor alterado",
+      "A variável nunca pode ser lida pelo programa",
+      "A constante só existe na linguagem Python",
+      "As duas mudam de valor a cada linha executada"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Constants and Variables define constante como um item de dado cujo valor não pode mudar durante a execução, em contraste com a variável, cujo valor pode variar.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-literal",
+    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "lesson_id": "l04",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Um valor digitado diretamente no código, como 21, 12.34 ou \"Hello world!\", é chamado de constante literal.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "O capítulo Constants and Variables explica que a constante literal é um valor digitado no programa onde ele é necessário, como 21, 12.34, 'A', \"Hello world!\", false ou null.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-identificador",
+    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "lesson_id": "l04",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual boa prática sobre nomes de identificadores é recomendada no capítulo Identifier Names?",
+    "options": [
+      "Usar nomes significativos e ser consistente com maiúsculas e minúsculas",
+      "Usar nomes curtos e crípticos, como 'p'",
+      "Reutilizar palavras reservadas, como 'if', como nome de variável",
+      "Começar todo identificador com um dígito"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Identifier Names recomenda nomes significativos (que expliquem o que o dado representa) e consistência de maiúsculas/minúsculas, evitando palavras reservadas.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-code",
+    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "lesson_id": "l04",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o código Python para calcular a área de um círculo, usando a constante nomeada PI e a variável raio definidas acima.",
+    "starter_code": "# Constante nomeada (por convencao, em MAIUSCULAS)\nPI = 3.14159\n\nraio = 2.0\n\n# Processamento: area do circulo\narea = ___\n\nprint(area)",
+    "test_command": "python -m py_compile",
+    "language": "python",
+    "correct": "PI * raio ** 2",
+    "explanation": "O capítulo Constants and Variables mostra uma constante nomeada (PI = 3.14159) e uma variável (raio); a área do círculo é a constante PI multiplicada pelo raio ao quadrado.",
+    "difficulty": "medium",
+    "xp_base": 20
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-flash",
+    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "lesson_id": "l04",
+    "type": "flashcards",
+    "generated_by_ai": true,
+    "prompt": "O que é uma constante nomeada e como ela se diferencia de uma constante literal?",
+    "starter_code": "A constante nomeada é um valor representado por um nome (frequentemente em MAIÚSCULAS, como PI) cujo valor não muda durante a execução. A constante literal é um valor digitado diretamente no código, como 21 ou \"Hello world!\".",
+    "correct": "A constante nomeada é um valor representado por um nome (frequentemente em MAIÚSCULAS, como PI) cujo valor não muda durante a execução. A constante literal é um valor digitado diretamente no código, como 21 ou \"Hello world!\".",
+    "explanation": "O capítulo Constants and Variables distingue a constante literal (valor digitado no código) da constante nomeada/simbólica (valor associado a um nome, normalmente em letras maiúsculas).",
+    "difficulty": "medium",
+    "xp_base": 5
+  }
+]

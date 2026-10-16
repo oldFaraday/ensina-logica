@@ -142,12 +142,13 @@ export async function loadExercisesForTheoryUnit(theoryUnitId) {
  * @returns {Object} Objeto com front-matter e content
  */
 function parseTheoryMarkdown(id, markdown) {
+  const normalized = String(markdown || '').replace(/\r\n?/g, '\n');
   const frontMatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
-  const match = markdown.match(frontMatterRegex);
+  const match = normalized.match(frontMatterRegex);
 
   if (!match) {
     console.warn(`[CurriculumLoader] Front-matter inválido em ${id}`);
-    return { id, frontMatter: {}, content: markdown };
+    return { id, frontMatter: {}, content: normalized };
   }
 
   const [, frontMatterYaml, content] = match;
@@ -161,98 +162,100 @@ function parseTheoryMarkdown(id, markdown) {
 }
 
 /**
- * Parser YAML simples para front-matter (suporta subset necessário)
- * @param {string} yaml - String YAML
+ * Parser YAML simples (one-level nesting) para front-matter.
+ * Suporta: escalares, listas inline `[a, b]`, listas em bloco (`- item`),
+ * strings multilinha (`|`/`>`) e UM nível de objeto aninhado (ex.: `source:`).
+ * @param {string} yaml
  * @returns {Object} Objeto parseado
  */
 function parseYaml(yaml) {
   const result = {};
-  const lines = yaml.split('\n');
-  let currentKey = null;
+  let parentKey = null;
   let currentArray = null;
   let inMultiline = false;
   let multilineKey = null;
   let multilineIndent = 0;
 
-  for (const line of lines) {
-    // Multiline string (| ou >)
+  const stripQuotes = (v) => String(v).trim().replace(/^["']|["']$/g, '');
+  const parseInlineArray = (v) =>
+    v.slice(1, -1).split(',').map(stripQuotes).filter((s) => s !== '');
+
+  for (const rawLine of String(yaml).split('\n')) {
+    const raw = rawLine.replace(/\s+$/, '');
+    const indent = raw.length - raw.trimStart().length;
+    const trimmed = raw.trim();
+
     if (inMultiline) {
-      const lineIndent = line.length - line.trimStart().length;
-      if (line.trim() === '' || lineIndent > multilineIndent) {
-        result[multilineKey] += '\n' + line.trimEnd();
+      if (trimmed === '' || indent >= multilineIndent) {
+        result[multilineKey] = (result[multilineKey] || '') + (result[multilineKey] ? '\n' : '') + trimmed;
         continue;
-      } else {
-        inMultiline = false;
-        multilineKey = null;
-        multilineIndent = 0;
       }
+      inMultiline = false;
+      multilineKey = null;
     }
 
-    const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) continue;
 
-    // Array item
+    // Item de lista em bloco
     const arrayMatch = trimmed.match(/^-\s+(.*)$/);
-    if (arrayMatch && currentArray !== null) {
-      currentArray.push(arrayMatch[1].replace(/^["']|["']$/g, ''));
+    if (arrayMatch && currentArray) {
+      currentArray.push(stripQuotes(arrayMatch[1]));
       continue;
     }
 
-    // Key: value
     const kvMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$/);
-    if (kvMatch) {
-      const [, key, value] = kvMatch;
-      currentKey = key;
+    if (!kvMatch) {
+      parentKey = null;
+      currentArray = null;
+      continue;
+    }
+
+    const [, key, rawValue] = kvMatch;
+    const value = rawValue.trim();
+
+    // Chave de topo (indentação 0)
+    if (indent === 0) {
       currentArray = null;
 
-      // Multiline
+      if (value === '') {
+        result[key] = {};
+        parentKey = key;
+        continue;
+      }
+
       if (value === '|' || value === '>') {
         inMultiline = true;
         multilineKey = key;
-        multilineIndent = line.length - trimmed.length + 2;
+        multilineIndent = 2;
         result[key] = '';
+        parentKey = null;
         continue;
       }
 
-      // Array inline
       if (value.startsWith('[') && value.endsWith(']')) {
-        result[key] = value.slice(1, -1).split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+        result[key] = parseInlineArray(value);
+        parentKey = null;
         continue;
       }
 
-      // String ou número
-      result[key] = value.replace(/^["']|["']$/g, '');
+      result[key] = stripQuotes(value);
+      parentKey = null;
       continue;
     }
 
-    // Indented key (nested object - simplified)
-    const indentedMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$/);
-    if (indentedMatch && currentKey) {
-      // Para simplificar, achatamos source.title etc em source_title
-      // Implementação completa usaria js-yaml, mas evitamos dependência
-      const [, subKey, subValue] = indentedMatch;
-      const combinedKey = `${currentKey}_${subKey}`;
-      result[combinedKey] = subValue.replace(/^["']|["']$/g, '');
+    // Chave aninhada (indentação > 0)
+    if (parentKey && result[parentKey] && typeof result[parentKey] === 'object') {
+      if (value === '') {
+        result[parentKey][key] = {};
+        currentArray = null;
+      } else if (value.startsWith('[') && value.endsWith(']')) {
+        result[parentKey][key] = parseInlineArray(value);
+        currentArray = null;
+      } else {
+        result[parentKey][key] = stripQuotes(value);
+        currentArray = null;
+      }
     }
-  }
-
-  // Normaliza source object se achatado
-  if (result.source_title) {
-    result.source = {
-      title: result.source_title,
-      authors: result.source_authors ? result.source_authors.split(',').map(a => a.trim()) : [],
-      url: result.source_url,
-      chapter: result.source_chapter,
-      section: result.source_section,
-      access_date: result.source_access_date,
-      edition: result.source_edition,
-      license_url: result.source_license_url,
-      license_confirmed_at: result.source_license_confirmed_at
-    };
-    // Remove chaves achatadas
-    Object.keys(result).forEach(k => {
-      if (k.startsWith('source_')) delete result[k];
-    });
   }
 
   return result;

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m03-l18-inducao-forte",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l18",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Como se descreve a hipótese indutiva na indução forte?",
+    "options": [
+      "Assume-se apenas P(k) para provar P(k+1).",
+      "Assume-se que P(i) é verdadeira para todo i < n, para provar P(n).",
+      "Assume-se P(n) verdadeira e deduz-se P(n+1).",
+      "Não existe caso base na indução forte."
+    ],
+    "correct": 1,
+    "explanation": "Na indução forte assume-se que P(k) é verdadeira para todo k < n e, com essa hipótese mais forte, prova-se que P(n) é verdadeira (Seção 2.5, Indução Forte).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l18-caso-base",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l18",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "A indução forte também exige um caso base, provado diretamente.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Tal como a indução comum, a indução forte precisa do caso base (por exemplo P(0) ou o primeiro valor relevante), provado de forma direta (Seção 2.5).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l18-chocolate",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l18",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Para provar que uma barra retangular de n quadradinhos precisa de n−1 quebras, por que a indução forte é útil?",
+    "options": [
+      "Porque a afirmação não tem caso base.",
+      "Porque, após a primeira quebra, as duas partes têm tamanhos a e b com a + b = n, e a hipótese forte garante o resultado para ambos.",
+      "Porque a indução comum não permite somas.",
+      "Porque n−1 é sempre par."
+    ],
+    "correct": 1,
+    "explanation": "Após a primeira quebra restam barras de a e b quadradinhos, com a + b = n e a, b < n. A hipótese forte fornece P(a) e P(b), e 1 + (a−1) + (b−1) = n−1 (Seção 2.5, Indução Forte).",
+    "difficulty": "hard",
+    "xp_base": 20
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l18-recursao",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l18",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual é a relação entre definição recursiva e indução, conforme estudado?",
+    "options": [
+      "São a mesma coisa que prova por contradição.",
+      "Assim como uma sequência definida recursivamente usa termos anteriores, a indução usa casos anteriores para estabelecer o próximo.",
+      "A recursão dispensa um valor inicial.",
+      "A indução vale apenas para números reais."
+    ],
+    "correct": 1,
+    "explanation": "Uma definição recursiva de sequência usa termos anteriores e exige um valor inicial; a indução faz o análogo com afirmações, passando de casos anteriores para o próximo (Seção 2.5).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l18-fibonacci",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l18",
+    "type": "flashcards",
+    "generated_by_ai": true,
+    "prompt": "Qual é a definição recursiva da sequência de Fibonacci F(n), sabendo que F(0) = 0 e F(1) = 1?",
+    "starter_code": "F(n) = F(n-1) + F(n-2)",
+    "correct": "F(n) = F(n-1) + F(n-2)",
+    "explanation": "A sequência de Fibonacci é definida recursivamente por F₀ = 0, F₁ = 1 e Fₙ = Fₙ₋₁ + Fₙ₋₂. Recorrências como essa aparecem nos exercícios de indução (Seção 2.5).",
+    "difficulty": "easy",
+    "xp_base": 5
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m03-l16-prova-direta",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l16",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Para provar diretamente uma implicação P → Q, qual é o formato correto?",
+    "options": [
+      "Assumir Q e deduzir P.",
+      "Assumir P e deduzir Q.",
+      "Assumir ¬P e deduzir ¬Q.",
+      "Assumir ¬Q e deduzir ¬P."
+    ],
+    "correct": 1,
+    "explanation": "Na prova direta de P → Q assumimos a hipótese P e, por meio de explicações, deduzimos a conclusão Q. Para uma afirmação universal ∀x (P(x) → Q(x)), fixamos um x arbitrário (Seção 3.2, Prova Direta).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l16-contrapositiva",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l16",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "A contrapositiva da implicação P → Q é:",
+    "options": ["Q → P", "¬P → ¬Q", "¬Q → ¬P", "P ∧ ¬Q"],
+    "correct": 2,
+    "explanation": "A contrapositiva de P → Q é ¬Q → ¬P, que é logicamente equivalente ao original. Já a conversa Q → P não é equivalente e precisa ser provada separadamente (Seções 0.2 e 3.2).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l16-contradicao",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l16",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Na prova por contradição, para provar uma afirmação P assumimos ¬P e mostramos que isso leva a uma contradição, concluindo então que P é verdadeira.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Se ¬P conduz a uma contradição, então ¬P é falsa e P é verdadeira. Foi assim que se provou que existem infinitos primos (Seção 3.2, Prova por Contradição).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l16-exemplo-universal",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l16",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Por que NÃO se pode provar a afirmação 'para todo inteiro n, P(n)' apresentando apenas um exemplo?",
+    "options": [
+      "Porque exemplos nunca são verdadeiros.",
+      "Porque a afirmação universal precisa valer para todos os n, e um caso isolado não garante os demais.",
+      "Porque exemplos só valem para números pares.",
+      "Porque P(n) pode ser uma tautologia."
+    ],
+    "correct": 1,
+    "explanation": "Uma afirmação universal ∀x P(x) exige que a propriedade valha para todo elemento do domínio; mostrar que funciona para um n não prova os outros casos (Seção 3.2, Prova por (contra)exemplo).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l16-contraexemplo",
+    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "lesson_id": "l16",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "A conjectura 'para todo inteiro positivo n, n² − n + 41 é primo' é falsa. Qual valor de n serve como contraexemplo?",
+    "options": ["n = 1", "n = 7", "n = 41", "n = 40"],
+    "correct": 2,
+    "explanation": "Para n = 41, n² − n + 41 = 41² = 1681, que não é primo. Como a afirmação é universal, um único contraexemplo a refuta (Seção 3.2).",
+    "difficulty": "medium",
+    "xp_base": 15
+  }
+]

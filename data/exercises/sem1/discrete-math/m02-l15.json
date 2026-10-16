@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m02-l15-variavel-livre",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l15",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Uma sentença que contém uma variável livre não quantificada, como '3 + x = 12', não é uma proposição, pois não é nem verdadeira nem falsa enquanto x não for especificado.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "Por conter variável livre, a sentença não tem valor de verdade definido; ela só se torna proposição quando a variável recebe um valor ou é quantificada (Seção 0.2).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l15-predicado",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l15",
+    "type": "flashcards",
+    "generated_by_ai": true,
+    "prompt": "Como se chama uma sentença que contém variáveis e que se torna uma proposição ao atribuir valores a elas?",
+    "starter_code": "predicado",
+    "correct": "predicado",
+    "explanation": "Uma sentença que contém variáveis é chamada de predicado; cada atribuição de valores às variáveis a transforma em uma proposição (Seção 0.2).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l15-captura-variavel",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l15",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Seja P(n) o predicado 'n é primo'. Como quantificar corretamente a sentença P(n) → ¬P(n+7) para torná-la uma proposição?",
+    "options": [
+      "∃n (P(n) → ¬P(n+7))",
+      "∀n (P(n) → ¬P(n+7))",
+      "∀n P(n) → ¬P(n+7)",
+      "P(n) ∧ ¬P(n+7)"
+    ],
+    "correct": 1,
+    "explanation": "A variável n está livre; quantificá-la a captura. O que se afirma é 'para todo n, se n é primo então n+7 não é primo', isto é, ∀n (P(n) → ¬P(n+7)) (Seção 0.2).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l15-escopo",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l15",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Quando escrevemos apenas S(x) → R(x), onde S(x) significa 'x é um quadrado' e R(x) significa 'x é um retângulo', a convenção adotada é que:",
+    "options": [
+      "A sentença é falsa por ter variável livre.",
+      "A variável x está implicitamente quantificada de forma universal.",
+      "A variável x está implicitamente quantificada de forma existencial.",
+      "x deve ser substituído por 0."
+    ],
+    "correct": 1,
+    "explanation": "Por convenção, sentenças com predicados e variáveis livres são interpretadas como universalmente quantificadas: entendemos ∀x (S(x) → R(x)) (Seção 0.2, Quantificadores implícitos).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l15-ordem-quantificadores",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l15",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "As afirmações ∀x ∃y P(x, y) e ∃y ∀x P(x, y) são sempre logicamente equivalentes.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 1,
+    "explanation": "Trocar a ordem dos quantificadores altera o significado: ∀x∃y P(x,y) e ∃y∀x P(x,y) não são logicamente equivalentes (Seção 3.1, Beyond Propositions / Exemplo 3.1.9).",
+    "difficulty": "medium",
+    "xp_base": 10
+  }
+]

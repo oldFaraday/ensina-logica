@@ -1,0 +1,64 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m02-l14-quantificador-universal",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l14",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "O que a afirmação ∀x P(x) significa?",
+    "options": [
+      "Existe pelo menos um x para o qual P(x) é verdadeira.",
+      "Para todo x do domínio, P(x) é verdadeira.",
+      "Nenhum x satisfaz P(x).",
+      "Existe um único x que satisfaz P(x)."
+    ],
+    "correct": 1,
+    "explanation": "O quantificador universal ∀ é lido 'para todo' ou 'todo': ∀x P(x) afirma que P(x) vale para cada elemento do domínio de discurso (Seção 0.2, Predicados e Quantificadores).",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l14-existencial",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l14",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "O quantificador existencial ∃ é lido 'existe' ou 'há', e ∃x P(x) afirma que ao menos um elemento do domínio satisfaz P(x).",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "∃ é o quantificador existencial, lido 'there exists'/'existe'. A afirmação é verdadeira se algum elemento do domínio tornar P(x) verdadeira (Seção 0.2).",
+    "difficulty": "easy",
+    "xp_base": 5
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l14-negacao-universal",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l14",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual é a negação correta de ∀x P(x)?",
+    "options": ["∀x ¬P(x)", "∃x ¬P(x)", "¬∃x P(x)", "∃x P(x)"],
+    "correct": 1,
+    "explanation": "Negar um quantificador universal troca-o pelo existencial e nega o predicado: ¬∀x P(x) é equivalente a ∃x ¬P(x). Em palavras: se nem tudo tem a propriedade, então algo não a tem (Seção 0.2).",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l14-dominio",
+    "theory_unit_id": "th-sem1-discrete-math-m02-predicate-logic",
+    "lesson_id": "l14",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Por que o valor de verdade de ∀x ∃y (y < x) depende do domínio de discurso?",
+    "options": [
+      "Porque a ordem dos quantificadores muda conforme o domínio.",
+      "Porque se o domínio são os naturais, não existe y natural menor que x quando x = 0.",
+      "Porque < não é um predicado válido.",
+      "Porque ∀ e ∃ são o mesmo quantificador."
+    ],
+    "correct": 1,
+    "explanation": "O domínio define sobre quais elementos quantificamos. Sobre os naturais 0, 1, 2, … a afirmação ∀x∃y(y<x) é falsa, pois para x = 0 não há natural menor (o valor y = −1 não pertence ao domínio) (Seção 0.2).",
+    "difficulty": "medium",
+    "xp_base": 15
+  }
+]
