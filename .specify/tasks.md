@@ -244,14 +244,14 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T093 [P] Documentation updates: inline code comments, architecture decisions in docs/
-- [ ] T094 Code cleanup: remove console.log, consistent naming, remove dead code — ⚠️ ainda há `console.log('[App] Inicializado com sucesso')` em src/app.js
-- [ ] T095 Performance: lazy-load theory/exercise data, memoize search index, debounce search input
+- [x] T093 [P] Documentation updates: inline code comments, architecture decisions in docs/ — ✅ `docs/CONTENT_MODEL.md` + README alinhado (ver T121)
+- [x] T094 Code cleanup: remove console.log, consistent naming, remove dead code — ✅ `console.log` removido de src/app.js
+- [x] T095 Performance: lazy-load theory/exercise data, memoize search index, debounce search input — ✅ dados sob demanda + cacheados; busca com debounce e haystack memoizado (`WeakMap`)
 - [x] T096 [P] Additional unit tests for edge cases in gamification (streak freeze Monday reset, SRS interval cap, XP level boundaries) — ✅ coberto em scripts/test-core.mjs
-- [ ] T097 Security hardening: CSP meta tag, sanitize any user-generated content (annotations)
+- [x] T097 Security hardening: CSP meta tag, sanitize any user-generated content (annotations) — ✅ CSP no index.html; anotações escapadas (`escapeHtml`) ao renderizar
 - [x] T098 Run full validation suite (scripts/validate.mjs) and fix any issues — ✅ passa (2 avisos esperados: sem conteúdo ainda)
 - [x] T099 Run full test suite (scripts/test-core.mjs) and ensure 100% pure function coverage — ✅ `npm test` verde (core + smoke + imports + dom + i18n + onboarding)
-- [ ] T100 Final manual QA: complete user journey from welcome → lesson → theory → settings → export/import — bloqueado por US3/US4 (lições e teoria)
+- [ ] T100 Final manual QA: complete user journey from welcome → lesson → theory → settings → export/import — ✅ jornada automatizada em `scripts/test-e2e-dom.mjs` (AC-06); QA manual em navegador real ainda pendente
 
 ---
 
@@ -430,8 +430,8 @@ Comparação do tasks.md com o estado real do repositório.
 
 Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constitution (`.specify/constitution.md`; a cópia em `.specify/memory/constitution.md` é template vazio → governança ignorada com segurança). **Append-only:** nenhuma tarefa existente foi alterada, renumerada ou removida.
 
-- [ ] T121 [Convergence] Corrigir a documentação do modelo de conteúdo: o README documenta `data/theory/sem{X}/{discipline}/{module-id}.md` e exercício como **objeto único**, mas o loader lê `{theory-unit-id}.md` e um **array** de exercícios por lição. Alinhar o README e criar `docs/CONTENT_MODEL.md` com o fluxo "adicionar fonte → gerar unidade → verificar → publicar" per spec §10 / T093 (contradicts) — HIGH
-- [ ] T122 [Convergence] Adicionar teste end-to-end (jsdom) da jornada welcome → lição → teoria → configurações → export/import, cobrindo AC-06 e AC-11 per T100 / AC-06 (missing) — MEDIUM
-- [ ] T123 [Convergence] Biblioteca (`#/library`): adicionar filtro por disciplina e agrupamento/expansão por semestre per spec §4 / T064 (partial) — MEDIUM
-- [ ] T124 [Convergence] Adicionar teste estático do `404.html` (fallback SPA → `#/`) e registrar a validação no Pages publicado per AC-10 / T090 (partial) — MEDIUM
-- [ ] T125 [Convergence] Memoizar o índice de busca (haystack normalizado) em `src/theory/search.js` per T095 (partial) — LOW
+- [x] T121 [Convergence] Corrigir a documentação do modelo de conteúdo: o README documenta `data/theory/sem{X}/{discipline}/{module-id}.md` e exercício como **objeto único**, mas o loader lê `{theory-unit-id}.md` e um **array** de exercícios por lição. Alinhar o README e criar `docs/CONTENT_MODEL.md` com o fluxo "adicionar fonte → gerar unidade → verificar → publicar" per spec §10 / T093 (contradicts) — HIGH ✅
+- [x] T122 [Convergence] Adicionar teste end-to-end (jsdom) da jornada welcome → lição → teoria → configurações → export/import, cobrindo AC-06 e AC-11 per T100 / AC-06 (missing) — MEDIUM ✅ `scripts/test-e2e-dom.mjs`
+- [x] T123 [Convergence] Biblioteca (`#/library`): adicionar filtro por disciplina e agrupamento/expansão por semestre per spec §4 / T064 (partial) — MEDIUM ✅
+- [x] T124 [Convergence] Adicionar teste estático do `404.html` (fallback SPA → `#/`) e registrar a validação no Pages publicado per AC-10 / T090 (partial) — MEDIUM ✅ `scripts/test-404.mjs` (validação no Pages publicado segue pendente)
+- [x] T125 [Convergence] Memoizar o índice de busca (haystack normalizado) em `src/theory/search.js` per T095 (partial) — LOW ✅

@@ -911,10 +911,23 @@ async function renderTheoryView(params, query, main) {
 }
 
 /**
- * Renderiza índice da biblioteca (#/library): busca full-text + lista.
+ * Renderiza índice da biblioteca (#/library): busca full-text + filtro por
+ * disciplina + agrupamento por semestre/disciplina.
  */
 async function renderLibraryView(params, query, main) {
   const index = await loadTheoryIndex();
+
+  // Títulos de disciplina/semestre para filtro e agrupamento
+  const disciplines = new Map();
+  const semesterTitles = new Map();
+  for (const u of index) {
+    if (u.discipline && !disciplines.has(u.discipline)) {
+      disciplines.set(u.discipline, u.disciplineTitle || u.discipline);
+    }
+    if (u.semester && !semesterTitles.has(u.semester)) {
+      semesterTitles.set(u.semester, u.semesterTitle || u.semester);
+    }
+  }
 
   main.innerHTML = `
     <section class="library-view" aria-label="${t('library.title')}">
@@ -923,12 +936,23 @@ async function renderLibraryView(params, query, main) {
         <h1>${t('library.title')}</h1>
       </header>
       <form class="library-search" role="search">
-        <label for="library-search-input">${t('theory.search')}</label>
-        <input id="library-search-input" class="library-search-input" type="search"
-          placeholder="${escapeHtml(t('theory.searchPlaceholder'))}" aria-describedby="library-search-status" autocomplete="off">
+        <div class="library-field">
+          <label for="library-search-input">${t('theory.search')}</label>
+          <input id="library-search-input" class="library-search-input" type="search"
+            placeholder="${escapeHtml(t('theory.searchPlaceholder'))}" aria-describedby="library-search-status" autocomplete="off">
+        </div>
+        <div class="library-field">
+          <label for="library-discipline-filter">${t('library.filterDiscipline')}</label>
+          <select id="library-discipline-filter" class="library-discipline-filter">
+            <option value="">${t('library.allDisciplines')}</option>
+            ${[...disciplines.entries()]
+              .map(([id, title]) => `<option value="${escapeHtml(id)}">${escapeHtml(title)}</option>`)
+              .join('')}
+          </select>
+        </div>
         <p id="library-search-status" class="library-search-status" role="status"></p>
       </form>
-      <ul class="library-list"></ul>
+      <div class="library-list"></div>
     </section>
   `;
   bindNavigationEvents(main);
@@ -939,49 +963,96 @@ async function renderLibraryView(params, query, main) {
   const list = main.querySelector('.library-list');
   const status = main.querySelector('#library-search-status');
   const input = main.querySelector('#library-search-input');
+  const filter = main.querySelector('#library-discipline-filter');
 
   const allItems = index.map((u) => ({
     id: u.id,
     title: u.title,
     discipline: u.discipline,
     disciplineTitle: u.disciplineTitle,
+    semester: u.semester,
+    semesterTitle: u.semesterTitle,
     moduleTitle: u.moduleTitle,
     snippet: ''
   }));
 
+  const createItem = (item) => {
+    const li = document.createElement('li');
+    li.className = 'library-item';
+    li.innerHTML = `
+      <h4><a href="#/theory/${encodeURIComponent(item.id)}">${escapeHtml(item.title)}</a></h4>
+      <p class="library-meta">${escapeHtml(item.moduleTitle || '')}</p>
+      ${item.snippet ? `<p class="library-snippet">${escapeHtml(item.snippet)}</p>` : ''}
+    `;
+    return li;
+  };
+
   const renderList = (items, isSearch) => {
+    const selectedDiscipline = filter.value;
+    const visible = selectedDiscipline
+      ? items.filter((item) => item.discipline === selectedDiscipline)
+      : items;
+
     list.innerHTML = '';
-    if (items.length === 0) {
-      status.textContent = isSearch ? t('theory.noResults') : t('library.empty');
+
+    if (visible.length === 0) {
+      status.textContent = isSearch || selectedDiscipline ? t('theory.noResults') : t('library.empty');
       return;
     }
-    status.textContent = t('library.resultCount', { count: items.length });
-    for (const item of items) {
-      const li = document.createElement('li');
-      li.className = 'library-item';
-      li.innerHTML = `
-        <h3><a href="#/theory/${encodeURIComponent(item.id)}">${escapeHtml(item.title)}</a></h3>
-        <p class="library-meta">${escapeHtml(item.disciplineTitle || item.discipline || '')}${item.moduleTitle ? ` · ${escapeHtml(item.moduleTitle)}` : ''}</p>
-        ${item.snippet ? `<p class="library-snippet">${escapeHtml(item.snippet)}</p>` : ''}
-      `;
-      list.appendChild(li);
+    status.textContent = t('library.resultCount', { count: visible.length });
+
+    // Agrupa por semestre → disciplina
+    const bySemester = new Map();
+    for (const item of visible) {
+      const semKey = item.semester || 'sem1';
+      if (!bySemester.has(semKey)) bySemester.set(semKey, new Map());
+      const byDiscipline = bySemester.get(semKey);
+      const discKey = item.discipline || 'outros';
+      if (!byDiscipline.has(discKey)) byDiscipline.set(discKey, []);
+      byDiscipline.get(discKey).push(item);
+    }
+
+    for (const [semKey, byDiscipline] of bySemester) {
+      const details = document.createElement('details');
+      details.className = 'library-semester';
+      details.open = true;
+
+      const summary = document.createElement('summary');
+      summary.textContent = semesterTitles.get(semKey) || semKey;
+      details.appendChild(summary);
+
+      for (const [discKey, discItems] of byDiscipline) {
+        const group = document.createElement('section');
+        group.className = 'library-discipline';
+
+        const title = document.createElement('h3');
+        title.textContent = discItems[0]?.disciplineTitle || disciplines.get(discKey) || discKey;
+        group.appendChild(title);
+
+        const ul = document.createElement('ul');
+        for (const item of discItems) ul.appendChild(createItem(item));
+        group.appendChild(ul);
+
+        details.appendChild(group);
+      }
+
+      list.appendChild(details);
     }
   };
 
-  renderList(allItems, false);
+  const refresh = () => {
+    const q = input.value.trim();
+    renderList(q ? searchTheory(index, q) : allItems, Boolean(q));
+  };
 
   let debounceId = null;
   input.addEventListener('input', () => {
     clearTimeout(debounceId);
-    debounceId = setTimeout(() => {
-      const q = input.value.trim();
-      if (!q) {
-        renderList(allItems, false);
-        return;
-      }
-      renderList(searchTheory(index, q), true);
-    }, 150);
+    debounceId = setTimeout(refresh, 150);
   });
+  filter.addEventListener('change', refresh);
+
+  refresh();
 }
 
 /**

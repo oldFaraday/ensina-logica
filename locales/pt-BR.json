@@ -181,7 +181,9 @@
     "coming_soon": "O índice da biblioteca será implementado na Fase 4 (US4)",
     "implemented_in_us4": "Aguardando implementação da busca full-text e índice geral",
     "empty": "Ainda não há unidades teóricas publicadas.",
-    "resultCount": "{count} unidades encontradas"
+    "resultCount": "{count} unidades encontradas",
+    "filterDiscipline": "Filtrar por disciplina",
+    "allDisciplines": "Todas as disciplinas"
   },
   "gamification": {
     "xp": "XP",

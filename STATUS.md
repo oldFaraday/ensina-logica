@@ -201,30 +201,28 @@ ensina-logica/
 - [x] T111 Checar sincronização ATTRIBUTIONS.md ↔ fontes usadas
 - [x] T112 Garantir que unidade `pendente`/`unverified` não entra na trilha (spec AC-13)
 
+### Fase 14: Convergence — ✅ COMPLETO (T121–T125)
+- [x] T121 Documentação do modelo de conteúdo corrigida (`docs/CONTENT_MODEL.md` + README alinhado com a convenção do loader)
+- [x] T122 Teste end-to-end da jornada (`scripts/test-e2e-dom.mjs`) — AC-06 (export/import round-trip) ✅
+- [x] T123 Biblioteca com filtro por disciplina e agrupamento por semestre
+- [x] T124 Teste estático do `404.html` (`scripts/test-404.mjs`)
+- [x] T125 Índice de busca memoizado (`WeakMap` em `src/theory/search.js`)
+- [x] T093/T094/T095/T097 fechados junto: docs, cleanup (`console.log`), performance (debounce+memoização) e CSP/sanitize
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**MVP completo no código e no conteúdo.** Fases 1–9 e 13 concluídas (Fase 10 e 11 têm apenas itens que exigem navegador/deploy reais).
+**MVP completo no código e no conteúdo.** Fases 1–14 concluídas.
 
-**Converge executado em 2026-10-16** (Fase 14 anexada ao `tasks.md`, append-only) — foram avaliados FR/AC da spec, decisões do plan e os arquivos em escopo. 5 lacunas encontradas e registradas como tarefas:
+**Implement executado em 2026-10-16** sobre as tarefas do converge — T121–T125 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca) e também T093/T094/T095/T097. `npm test` verde (**13 suítes**) e `npm run validate` sem erros.
 
-| ID | Severidade | Origem | Lacuna |
-|----|-----------|--------|--------|
-| T121 | HIGH | spec §10 / T093 | README descreve o modelo de conteúdo desatualizado (nome do arquivo de teoria e objeto vs array de exercícios) |
-| T122 | MEDIUM | T100 / AC-06 | Falta teste end-to-end automatizado da jornada completa |
-| T123 | MEDIUM | spec §4 / T064 | Biblioteca sem filtro por disciplina |
-| T124 | MEDIUM | AC-10 / T090 | Teste estático do `404.html` ausente |
-| T125 | LOW | T095 | Índice de busca não memoizado |
-
-Observação: 42 passou / 0 falhou antes do converge; divisão de trabalho: **T121–T124** são implementáveis no repositório, **T090 (deploy publicado)** e **T100 (QA manual em navegador real)** têm partes que dependem de ambiente externo.
-
-Pendências que exigem ambiente externo:
-1. **QA manual final (T100)** — jornada: boas-vindas → lição → teoria → configurações → export/import (navegador real).
-2. **Deploy (Fase 10)** — validar 404.html e redirect no GitHub Pages publicado (o repo aponta para a branch `master`).
+Restam apenas itens que exigem ambiente externo:
+1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).
+2. **T100 / QA manual (Fase 11)** — jornada real em navegador (a jornada automatizada está em `scripts/test-e2e-dom.mjs`).
 3. Ao publicar, atualizar `ATTRIBUTIONS.md`/CHANGELOG com a data do deploy.
 
-Verificação automatizada disponível agora: `npm test` (10 suítes) e `npm run validate` (curriculum, teoria, exercícios, links internos, licenças, ATTRIBUTIONS, schema). Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
+Verificação automatizada: `npm test` (13 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
 
 ---
 

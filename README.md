@@ -147,9 +147,12 @@ ensina-logica/
 
 O conteúdo é **data-driven**: novos semestres, disciplinas, módulos, lições e exercícios entram como **arquivos de dados** (não mexem em código).
 
+> 📖 Guia completo (regras de licença, contratos de front-matter/exercício e o fluxo
+> "adicionar fonte → gerar unidade → verificar → publicar"): [`docs/CONTENT_MODEL.md`](docs/CONTENT_MODEL.md).
+
 ### 1. Adicionar unidade teórica
 
-Crie um arquivo Markdown em `data/theory/sem{X}/{discipline}/{module-id}.md` com front-matter obrigatório:
+Crie um arquivo Markdown em `data/theory/sem{X}/{discipline}/{theory-unit-id}.md` — **o nome do arquivo é o próprio `id` da unidade** (ex.: `th-sem1-algorithms-m01-intro.md`), pois o loader monta a URL a partir do `id`. O front-matter é obrigatório:
 
 ```markdown
 ---
@@ -158,51 +161,59 @@ title: "O que é um Algoritmo"
 discipline: "algorithms"
 module: "m01"
 source:
-  title: "Mathematics for Computer Science"
-  authors: ["Eric Lehman", "F. Thomson Leighton", "Albert R. Meyer"]
-  url: "https://courses.csail.mit.edu/6.042/spring18/mcs.pdf"
-  chapter: "Chapter 1: What is a Proof?"
-  section: "1.1"
-  access_date: "2026-10-15"
-license: "CC-BY-SA-3.0"
-derivation_type: "translated"
+  title: "Programming Fundamentals"
+  authors: ["Kenneth Leroy Busbee", "Dave Braunschweig"]
+  url: "https://press.rebus.community/programmingfundamentals/chapter/program-design/"
+  chapter: "I. Introduction to Programming"
+  section: "Program Design"
+  access_date: "2026-10-16"
+  edition: "2nd Edition (2018)"
+  license_url: "https://creativecommons.org/licenses/by-sa/4.0/"
+  license_confirmed_at: "2026-10-16"
+license: "CC-BY-SA-4.0"
+derivation_type: "summarized"
 language: "pt-BR"
 verification_status: "verified_with_source"
 linked_lessons: ["l01", "l02"]
-linked_exercises: ["ex-sem1-algorithms-m01-l01", "ex-sem1-algorithms-m01-l02"]
-original_excerpt: |
-  An algorithm is a finite sequence of well-defined instructions...
+linked_exercises: ["ex-sem1-algorithms-m01-l01-algoritmo", "ex-sem1-algorithms-m01-l01-pseudo"]
+original_excerpt: "An algorithm is a finite sequence of well-defined instructions."
 ---
-# O que é um Algoritmo
+## O que é um Algoritmo
 
 Um algoritmo é uma sequência finita de instruções bem-definidas...
+
+## Propriedades
+
+Finito, definido e eficaz.
 ```
 
-**Campos obrigatórios**: todos acima. `verification_status` = `unverified` | `verified_with_source`. `derivation_type` = `original` | `translated` | `adapted` | `summarized`. `license` = identificador SPDX.
+**Campos obrigatórios**: todos acima. `verification_status` = `unverified` | `verified_with_source`. `derivation_type` = `original` | `translated` | `adapted` | `summarized`. `license` = identificador SPDX. No corpo, use `## ` para cada seção (o `#` é reservado ao título da unidade) e `$...$`/`$$...$$` para matemática.
 
 ### 2. Adicionar exercícios
 
-Crie um arquivo JSON em `data/exercises/sem{X}/{discipline}/{module-id}-{lesson-id}.json`:
+Crie um arquivo JSON em `data/exercises/sem{X}/{discipline}/{module-id}-{lesson-id}.json` contendo **um array de 3–5 exercícios**:
 
 ```json
-{
-  "id": "ex-sem1-algorithms-m01-l01",
-  "theory_unit_id": "th-sem1-algorithms-m01-intro",
-  "lesson_id": "l01",
-  "type": "multiple-choice",
-  "generated_by_ai": true,
-  "prompt": "Qual das seguintes melhor define um algoritmo?",
-  "options": [
-    "Um programa de computador escrito em Python",
-    "Uma sequência finita de instruções bem-definidas para resolver um problema",
-    "Qualquer código que compila sem erros",
-    "Uma fórmula matemática complexa"
-  ],
-  "correct": 1,
-  "explanation": "Definição padrão (Lehman et al., 2018, §1.1): algoritmo é uma sequência finita de instruções bem-definidas...",
-  "difficulty": "easy",
-  "xp_base": 10
-}
+[
+  {
+    "id": "ex-sem1-algorithms-m01-l01-algoritmo",
+    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "lesson_id": "l01",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual das seguintes melhor define um algoritmo?",
+    "options": [
+      "Um programa de computador escrito em Python",
+      "Uma sequência finita de instruções bem-definidas para resolver um problema",
+      "Qualquer código que compila sem erros",
+      "Uma fórmula matemática complexa"
+    ],
+    "correct": 1,
+    "explanation": "Definição padrão (Busbee & Braunschweig, 2018, §Program Design): algoritmo é uma sequência finita de instruções bem-definidas...",
+    "difficulty": "easy",
+    "xp_base": 10
+  }
+]
 ```
 
 **Tipos suportados**: `multiple-choice` | `true-false` | `order-steps` | `code-completion` | `flashcards`.
