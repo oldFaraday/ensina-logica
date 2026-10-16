@@ -6,7 +6,7 @@ Como este é um projeto client-side apenas (rodando no navegador do usuário, se
 
 ## Reportando uma Vulnerabilidade
 
-Se você descobrir uma vulnerabilidade de segurança, por favor **não abra uma issue pública**. Em vez disso, envie um email para **security@ensina-logica.example.com** (substitua pelo email real) com:
+Se você descobrir uma vulnerabilidade de segurança, por favor **não abra uma issue pública**. Em vez disso, envie um email para **encodedink@proton.me** com:
 
 1. Descrição da vulnerabilidade
 2. Passos para reproduzir
