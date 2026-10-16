@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m08-l554-q01",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l554",
+    "lesson_id": "l554",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Provas 7: Indução matemática (revisão) (dificuldade easy).",
+    "options": [
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa C"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l554-q02",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l554",
+    "lesson_id": "l554",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Provas 7: Indução matemática (revisão) (dificuldade easy).",
+    "options": [
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa C"
+    ],
+    "correct": 1,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l554-q03",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l554",
+    "lesson_id": "l554",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Provas 7: Indução matemática (revisão) (dificuldade medium).",
+    "options": [
+      "Alternativa A",
+      "Alternativa D",
+      "Alternativa C",
+      "Alternativa B"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l554-q04",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l554",
+    "lesson_id": "l554",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Provas 7: Indução matemática (revisão) (dificuldade medium).",
+    "options": [
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa C"
+    ],
+    "correct": 1,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l554-q05",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l554",
+    "lesson_id": "l554",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Provas 7: Indução matemática (revisão) (dificuldade hard).",
+    "options": [
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa D",
+      "Alternativa C"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]

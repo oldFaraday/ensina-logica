@@ -14,7 +14,11 @@
               "id": "m01",
               "title": "Introdução a Algoritmos",
               "theory": "th-sem1-algorithms-m01-intro",
-              "lessons": ["l01", "l02", "l03"],
+              "lessons": [
+                "l01",
+                "l02",
+                "l03"
+              ],
               "lessonTitles": {
                 "l01": "O que é um algoritmo",
                 "l02": "Pseudocódigo e fluxogramas",
@@ -25,7 +29,11 @@
               "id": "m02",
               "title": "Variáveis e Tipos",
               "theory": "th-sem1-algorithms-m02-variables",
-              "lessons": ["l04", "l05", "l06"],
+              "lessons": [
+                "l04",
+                "l05",
+                "l06"
+              ],
               "lessonTitles": {
                 "l04": "Variáveis e constantes",
                 "l05": "Tipos primitivos de dados",
@@ -36,12 +44,269 @@
               "id": "m03",
               "title": "Controle de Fluxo",
               "theory": "th-sem1-algorithms-m03-control-flow",
-              "lessons": ["l07", "l08", "l09", "l10"],
+              "lessons": [
+                "l07",
+                "l08",
+                "l09",
+                "l10"
+              ],
               "lessonTitles": {
                 "l07": "Condicionais (se/senão)",
                 "l08": "Laços de repetição",
                 "l09": "Laços aninhados e controle",
                 "l10": "Funções e procedimentos"
+              }
+            },
+            {
+              "id": "m04",
+              "title": "Vetores e Collections",
+              "lessons": [
+                "l201",
+                "l202",
+                "l203",
+                "l204",
+                "l205",
+                "l206",
+                "l207",
+                "l208",
+                "l209",
+                "l210",
+                "l211",
+                "l212"
+              ],
+              "lessonTitles": {
+                "l201": "Vetores 1: Declaração e acesso",
+                "l202": "Vetores 2: Atribuição e atualização",
+                "l203": "Vetores 3: Percorrendo com laço",
+                "l204": "Vetores 4: Busca linear simples",
+                "l205": "Vetores 5: Máximo e mínimo",
+                "l206": "Vetores 6: Soma e média",
+                "l207": "Vetores 7: Contagem de ocorrências",
+                "l208": "Vetores 8: Remoção por valor",
+                "l209": "Vetores 9: Inserção em posição",
+                "l210": "Vetores 10: Vetores paralelos",
+                "l211": "Vetores 11: Matrizes 2D introdutórias",
+                "l212": "Vetores 12: Resumo de vetores"
+              }
+            },
+            {
+              "id": "m05",
+              "title": "Busca e Ordenação Simples",
+              "lessons": [
+                "l213",
+                "l214",
+                "l215",
+                "l216",
+                "l217",
+                "l218",
+                "l219",
+                "l220",
+                "l221",
+                "l222",
+                "l223",
+                "l224"
+              ],
+              "lessonTitles": {
+                "l213": "Busca e Ordenação 1: Busca linear",
+                "l214": "Busca e Ordenação 2: Busca binária introdutória",
+                "l215": "Busca e Ordenação 3: Ordenação por seleção",
+                "l216": "Busca e Ordenação 4: Ordenação por bolha",
+                "l217": "Busca e Ordenação 5: Ordenação por inserção",
+                "l218": "Busca e Ordenação 6: Comparando ordenações",
+                "l219": "Busca e Ordenação 7: Busca em vetor ordenado",
+                "l220": "Busca e Ordenação 8: Contagem de comparações",
+                "l221": "Busca e Ordenação 9: Quando usar cada busca",
+                "l222": "Busca e Ordenação 10: Limite da busca linear",
+                "l223": "Busca e Ordenação 11: Introdução à complexidade de busca",
+                "l224": "Busca e Ordenação 12: Resumo de busca e ordenação"
+              }
+            },
+            {
+              "id": "m06",
+              "title": "Recursão Básica",
+              "lessons": [
+                "l225",
+                "l226",
+                "l227",
+                "l228",
+                "l229",
+                "l230",
+                "l231",
+                "l232",
+                "l233",
+                "l234",
+                "l235",
+                "l236"
+              ],
+              "lessonTitles": {
+                "l225": "Recursão 1: O que é recursão",
+                "l226": "Recursão 2: Caso base e caso recursivo",
+                "l227": "Recursão 3: Fatorial recursivo",
+                "l228": "Recursão 4: Fibonacci recursivo",
+                "l229": "Recursão 5: Soma de vetor recursiva",
+                "l230": "Recursão 6: Contagem regressiva",
+                "l231": "Recursão 7: Potenciação recursiva",
+                "l232": "Recursão 8: Recursão vs iteração",
+                "l233": "Recursão 9: Pilha de chamadas",
+                "l234": "Recursão 10: Casos onde recursão ajuda",
+                "l235": "Recursão 11: Exemplo visual de recursão",
+                "l236": "Recursão 12: Resumo de recursão"
+              }
+            },
+            {
+              "id": "m07",
+              "title": "Complexidade Big-O",
+              "lessons": [
+                "l237",
+                "l238",
+                "l239",
+                "l240",
+                "l241",
+                "l242",
+                "l243",
+                "l244",
+                "l245",
+                "l246",
+                "l247",
+                "l248"
+              ],
+              "lessonTitles": {
+                "l237": "Big-O 1: O que é complexidade",
+                "l238": "Big-O 2: Notação big-O",
+                "l239": "Big-O 3: Tempo constante O(1)",
+                "l240": "Big-O 4: Tempo linear O(n)",
+                "l241": "Big-O 5: Tempo quadrático O(n²)",
+                "l242": "Big-O 6: Tempo logarítmico O(log n)",
+                "l243": "Big-O 7: Comparando complexidades",
+                "l244": "Big-O 8: Melhor, pior e caso médio",
+                "l245": "Big-O 9: Contando operações",
+                "l246": "Big-O 10: Complexidade de busca linear",
+                "l247": "Big-O 11: Complexidade de busca binária",
+                "l248": "Big-O 12: Resumo de Big-O"
+              }
+            },
+            {
+              "id": "m08",
+              "title": "Estruturas de Dados Simples",
+              "lessons": [
+                "l249",
+                "l250",
+                "l251",
+                "l252",
+                "l253",
+                "l254",
+                "l255",
+                "l256",
+                "l257",
+                "l258",
+                "l259",
+                "l260"
+              ],
+              "lessonTitles": {
+                "l249": "Estruturas Simples 1: Pilha (stack)",
+                "l250": "Estruturas Simples 2: Filas (queue)",
+                "l251": "Estruturas Simples 3: Push e pop",
+                "l252": "Estruturas Simples 4: Enfileirar e desenfileirar",
+                "l253": "Estruturas Simples 5: Lista encadeada introdutória",
+                "l254": "Estruturas Simples 6: Nós e ponteiros",
+                "l255": "Estruturas Simples 7: Pilha vs fila",
+                "l256": "Estruturas Simples 8: Desfazer ação",
+                "l257": "Estruturas Simples 9: Fila de impressão",
+                "l258": "Estruturas Simples 10: Lista vs vetor",
+                "l259": "Estruturas Simples 11: Operações em lista",
+                "l260": "Estruturas Simples 12: Resumo de estruturas simples"
+              }
+            },
+            {
+              "id": "m09",
+              "title": "Funções e Modularização",
+              "lessons": [
+                "l261",
+                "l262",
+                "l263",
+                "l264",
+                "l265",
+                "l266",
+                "l267",
+                "l268",
+                "l269",
+                "l270",
+                "l271",
+                "l272"
+              ],
+              "lessonTitles": {
+                "l261": "Funções 1: O que é uma função",
+                "l262": "Funções 2: Parâmetros e argumentos",
+                "l263": "Funções 3: Valor de retorno",
+                "l264": "Funções 4: Escopo de variáveis",
+                "l265": "Funções 5: Locais e globais",
+                "l266": "Funções 6: Funções que chamam funções",
+                "l267": "Funções 7: Passagem por valor vs referência",
+                "l268": "Funções 8: Funções matemáticas",
+                "l269": "Funções 9: Decomposição de problemas",
+                "l270": "Funções 10: Bibliotecas de funções",
+                "l271": "Funções 11: Boas práticas em funções",
+                "l272": "Funções 12: Resumo de funções"
+              }
+            },
+            {
+              "id": "m10",
+              "title": "Algoritmos Introdutórios",
+              "lessons": [
+                "l273",
+                "l274",
+                "l275",
+                "l276",
+                "l277",
+                "l278",
+                "l279",
+                "l280",
+                "l281",
+                "l282",
+                "l283",
+                "l284"
+              ],
+              "lessonTitles": {
+                "l273": "Algoritmos Introdutórios 1: Resolução de problemas",
+                "l274": "Algoritmos Introdutórios 2: Dividir para conquistar (intro)",
+                "l275": "Algoritmos Introdutórios 3: Algoritmo guloso simples",
+                "l276": "Algoritmos Introdutórios 4: Busca exaustiva",
+                "l277": "Algoritmos Introdutórios 5: Algoritmo de troca",
+                "l278": "Algoritmos Introdutórios 6: Contagem e frequência",
+                "l279": "Algoritmos Introdutórios 7: Detectando duplicados",
+                "l280": "Algoritmos Introdutórios 8: Interseção de vetores",
+                "l281": "Algoritmos Introdutórios 9: União de vetores",
+                "l282": "Algoritmos Introdutórios 10: Diferença de vetores",
+                "l283": "Algoritmos Introdutórios 11: Casos de teste",
+                "l284": "Algoritmos Introdutórios 12: Resumo do semestre 1"
+              }
+            },
+            {
+              "id": "m11",
+              "title": "Prática Integrada e Projeto",
+              "lessons": [
+                "l285",
+                "l286",
+                "l287",
+                "l288",
+                "l289",
+                "l290",
+                "l291",
+                "l292",
+                "l293",
+                "l294"
+              ],
+              "lessonTitles": {
+                "l285": "Prática Integrada 1: Análise de requisitos",
+                "l286": "Prática Integrada 2: Planejamento de algoritmo",
+                "l287": "Prática Integrada 3: Implementação em pseudocódigo",
+                "l288": "Prática Integrada 4: Testes de mesa",
+                "l289": "Prática Integrada 5: Depuração de erros",
+                "l290": "Prática Integrada 6: Otimização simples",
+                "l291": "Prática Integrada 7: Documentação do código",
+                "l292": "Prática Integrada 8: Revisão por pares",
+                "l293": "Prática Integrada 9: Apresentação da solução",
+                "l294": "Prática Integrada 10: Projeto final do semestre"
               }
             }
           ]
@@ -54,7 +319,11 @@
               "id": "m01",
               "title": "Lógica Proposicional",
               "theory": "th-sem1-discrete-math-m01-logic",
-              "lessons": ["l11", "l12", "l13"],
+              "lessons": [
+                "l11",
+                "l12",
+                "l13"
+              ],
               "lessonTitles": {
                 "l11": "Proposições e conectivos",
                 "l12": "Tabelas-verdade",
@@ -65,7 +334,10 @@
               "id": "m02",
               "title": "Lógica de Predicados",
               "theory": "th-sem1-discrete-math-m02-predicate-logic",
-              "lessons": ["l14", "l15"],
+              "lessons": [
+                "l14",
+                "l15"
+              ],
               "lessonTitles": {
                 "l14": "Quantificadores",
                 "l15": "Variáveis e escopo"
@@ -75,11 +347,267 @@
               "id": "m03",
               "title": "Provas e Indução",
               "theory": "th-sem1-discrete-math-m03-proofs-induction",
-              "lessons": ["l16", "l17", "l18"],
+              "lessons": [
+                "l16",
+                "l17",
+                "l18"
+              ],
               "lessonTitles": {
                 "l16": "Métodos de prova",
                 "l17": "Indução matemática",
                 "l18": "Indução forte e recursão"
+              }
+            },
+            {
+              "id": "m04",
+              "title": "Conjuntos",
+              "lessons": [
+                "l500",
+                "l501",
+                "l502",
+                "l503",
+                "l504",
+                "l505",
+                "l506",
+                "l507",
+                "l508",
+                "l509",
+                "l510",
+                "l511"
+              ],
+              "lessonTitles": {
+                "l500": "Conjuntos 1: O que é um conjunto",
+                "l501": "Conjuntos 2: Elementos e pertinência",
+                "l502": "Conjuntos 3: Conjunto vazio",
+                "l503": "Conjuntos 4: Subconjunto",
+                "l504": "Conjuntos 5: União",
+                "l505": "Conjuntos 6: Interseção",
+                "l506": "Conjuntos 7: Diferença de conjuntos",
+                "l507": "Conjuntos 8: Complementar",
+                "l508": "Conjuntos 9: Produto cartesiano",
+                "l509": "Conjuntos 10: Cardinalidade",
+                "l510": "Conjuntos 11: Diagramas de Venn",
+                "l511": "Conjuntos 12: Resumo de conjuntos"
+              }
+            },
+            {
+              "id": "m05",
+              "title": "Funções e Relações",
+              "lessons": [
+                "l512",
+                "l513",
+                "l514",
+                "l515",
+                "l516",
+                "l517",
+                "l518",
+                "l519",
+                "l520",
+                "l521",
+                "l522",
+                "l523"
+              ],
+              "lessonTitles": {
+                "l512": "Funções e Relações 1: O que é uma função",
+                "l513": "Funções e Relações 2: Domínio e contradomínio",
+                "l514": "Funções e Relações 3: Função injetora",
+                "l515": "Funções e Relações 4: Função sobrejetora",
+                "l516": "Funções e Relações 5: Função bijetora",
+                "l517": "Funções e Relações 6: Relação binária",
+                "l518": "Funções e Relações 7: Relação de equivalência",
+                "l519": "Funções e Relações 8: Classe de equivalência",
+                "l520": "Funções e Relações 9: Relação de ordem",
+                "l521": "Funções e Relações 10: Poset",
+                "l522": "Funções e Relações 11: Gráfico de relação",
+                "l523": "Funções e Relações 12: Resumo de funções e relações"
+              }
+            },
+            {
+              "id": "m06",
+              "title": "Contagem Básica",
+              "lessons": [
+                "l524",
+                "l525",
+                "l526",
+                "l527",
+                "l528",
+                "l529",
+                "l530",
+                "l531",
+                "l532",
+                "l533",
+                "l534",
+                "l535"
+              ],
+              "lessonTitles": {
+                "l524": "Contagem 1: Princípio da adição",
+                "l525": "Contagem 2: Princípio da multiplicação",
+                "l526": "Contagem 3: Permutações simples",
+                "l527": "Contagem 4: Arranjos",
+                "l528": "Contagem 5: Combinações",
+                "l529": "Contagem 6: Coeficiente binomial",
+                "l530": "Contagem 7: Inclusão-exclusão",
+                "l531": "Contagem 8: Casa dos pombos",
+                "l532": "Contagem 9: Contagem com repetição",
+                "l533": "Contagem 10: Distribuição de objetos idênticos",
+                "l534": "Contagem 11: Caminhos em grade",
+                "l535": "Contagem 12: Resumo de contagem"
+              }
+            },
+            {
+              "id": "m07",
+              "title": "Grafos Introdutórios",
+              "lessons": [
+                "l536",
+                "l537",
+                "l538",
+                "l539",
+                "l540",
+                "l541",
+                "l542",
+                "l543",
+                "l544",
+                "l545",
+                "l546",
+                "l547"
+              ],
+              "lessonTitles": {
+                "l536": "Grafos 1: O que é um grafo",
+                "l537": "Grafos 2: Vértices e arestas",
+                "l538": "Grafos 3: Direcionado vs não direcionado",
+                "l539": "Grafos 4: Caminho",
+                "l540": "Grafos 5: Ciclo",
+                "l541": "Grafos 6: Grafo conexo",
+                "l542": "Grafos 7: Grado do vértice",
+                "l543": "Grafos 8: Árvore",
+                "l544": "Grafos 9: Busca em largura (BFS) intro",
+                "l545": "Grafos 10: Busca em profundidade (DFS) intro",
+                "l546": "Grafos 11: Emparelhamento (matching)",
+                "l547": "Grafos 12: Resumo de grafos"
+              }
+            },
+            {
+              "id": "m08",
+              "title": "Provas Introdutórias",
+              "lessons": [
+                "l548",
+                "l549",
+                "l550",
+                "l551",
+                "l552",
+                "l553",
+                "l554",
+                "l555",
+                "l556",
+                "l557",
+                "l558",
+                "l559"
+              ],
+              "lessonTitles": {
+                "l548": "Provas 1: O que é uma prova",
+                "l549": "Provas 2: Prova direta",
+                "l550": "Provas 3: Contrapositiva",
+                "l551": "Provas 4: Por contradição",
+                "l552": "Provas 5: Por casos",
+                "l553": "Provas 6: Contraexemplo",
+                "l554": "Provas 7: Indução matemática (revisão)",
+                "l555": "Provas 8: Passo indutivo",
+                "l556": "Provas 9: Indução forte introdutória",
+                "l557": "Provas 10: Poço dos números",
+                "l558": "Provas 11: Prova de propriedade de grafos",
+                "l559": "Provas 12: Resumo de provas"
+              }
+            },
+            {
+              "id": "m09",
+              "title": "Lógica Aplicada",
+              "lessons": [
+                "l560",
+                "l561",
+                "l562",
+                "l563",
+                "l564",
+                "l565",
+                "l566",
+                "l567",
+                "l568",
+                "l569",
+                "l570",
+                "l571"
+              ],
+              "lessonTitles": {
+                "l560": "Lógica Aplicada 1: Tautologias",
+                "l561": "Lógica Aplicada 2: Contradições",
+                "l562": "Lógica Aplicada 3: Contingências",
+                "l563": "Lógica Aplicada 4: Equivalência lógica",
+                "l564": "Lógica Aplicada 5: Leis de De Morgan",
+                "l565": "Lógica Aplicada 6: Dupla negação",
+                "l566": "Lógica Aplicada 7: Negação de quantificadores",
+                "l567": "Lógica Aplicada 8: Modus ponens",
+                "l568": "Lógica Aplicada 9: Modus tollens",
+                "l569": "Lógica Aplicada 10: Silogismo",
+                "l570": "Lógica Aplicada 11: Falácias comuns",
+                "l571": "Lógica Aplicada 12: Resumo de lógica aplicada"
+              }
+            },
+            {
+              "id": "m10",
+              "title": "Resumo de Matemática Discreta",
+              "lessons": [
+                "l572",
+                "l573",
+                "l574",
+                "l575",
+                "l576",
+                "l577",
+                "l578",
+                "l579",
+                "l580",
+                "l581",
+                "l582",
+                "l583"
+              ],
+              "lessonTitles": {
+                "l572": "Resumo DM 1: Revisão de lógica proposicional",
+                "l573": "Resumo DM 2: Revisão de conjuntos",
+                "l574": "Resumo DM 3: Revisão de funções",
+                "l575": "Resumo DM 4: Revisão de contagem",
+                "l576": "Resumo DM 5: Revisão de grafos",
+                "l577": "Resumo DM 6: Revisão de provas",
+                "l578": "Resumo DM 7: Integrando conceitos",
+                "l579": "Resumo DM 8: Problema de contagem múltipla",
+                "l580": "Resumo DM 9: Prova combinada",
+                "l581": "Resumo DM 10: Análise de algoritmo simples",
+                "l582": "Resumo DM 11: Casos extremos",
+                "l583": "Resumo DM 12: Resumo final do semestre 1"
+              }
+            },
+            {
+              "id": "m11",
+              "title": "Resumo Integrado",
+              "lessons": [
+                "l584",
+                "l585",
+                "l586",
+                "l587",
+                "l588",
+                "l589",
+                "l590",
+                "l591",
+                "l592",
+                "l593"
+              ],
+              "lessonTitles": {
+                "l584": "Resumo Integrado 1: Revisão de lógica",
+                "l585": "Resumo Integrado 2: Revisão de conjuntos",
+                "l586": "Resumo Integrado 3: Revisão de funções",
+                "l587": "Resumo Integrado 4: Revisão de contagem",
+                "l588": "Resumo Integrado 5: Revisão de grafos",
+                "l589": "Resumo Integrado 6: Revisão de provas",
+                "l590": "Resumo Integrado 7: Integrando conceitos",
+                "l591": "Resumo Integrado 8: Problema de contagem múltipla",
+                "l592": "Resumo Integrado 9: Prova combinada",
+                "l593": "Resumo Integrado 10: Resumo final do semestre 1"
               }
             }
           ]
@@ -96,18 +624,42 @@
           "id": "data-structures-1",
           "title": "Estruturas de Dados I",
           "modules": [
-            { "id": "m01", "title": "Arrays e Listas Encadeadas", "lessons": [] },
-            { "id": "m02", "title": "Pilhas e Filas", "lessons": [] },
-            { "id": "m03", "title": "Árvores Binárias", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Arrays e Listas Encadeadas",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Pilhas e Filas",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Árvores Binárias",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "computer-architecture",
           "title": "Arquitetura de Computadores",
           "modules": [
-            { "id": "m01", "title": "Representação de Dados", "lessons": [] },
-            { "id": "m02", "title": "Organização de Memória", "lessons": [] },
-            { "id": "m03", "title": "CPU e Conjunto de Instruções", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Representação de Dados",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Organização de Memória",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "CPU e Conjunto de Instruções",
+              "lessons": []
+            }
           ]
         }
       ]
@@ -122,18 +674,42 @@
           "id": "data-structures-2",
           "title": "Estruturas de Dados II",
           "modules": [
-            { "id": "m01", "title": "Árvores Balanceadas", "lessons": [] },
-            { "id": "m02", "title": "Tabelas Hash", "lessons": [] },
-            { "id": "m03", "title": "Grafos", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Árvores Balanceadas",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Tabelas Hash",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Grafos",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "operating-systems",
           "title": "Sistemas Operacionais",
           "modules": [
-            { "id": "m01", "title": "Processos e Threads", "lessons": [] },
-            { "id": "m02", "title": "Escalonamento e Sincronização", "lessons": [] },
-            { "id": "m03", "title": "Memória Virtual e Arquivos", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Processos e Threads",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Escalonamento e Sincronização",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Memória Virtual e Arquivos",
+              "lessons": []
+            }
           ]
         }
       ]
@@ -148,18 +724,42 @@
           "id": "algorithms-analysis",
           "title": "Projeto e Análise de Algoritmos",
           "modules": [
-            { "id": "m01", "title": "Dividir para Conquistar", "lessons": [] },
-            { "id": "m02", "title": "Programação Dinâmica", "lessons": [] },
-            { "id": "m03", "title": "Algoritmos Gulosos", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Dividir para Conquistar",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Programação Dinâmica",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Algoritmos Gulosos",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "databases",
           "title": "Bancos de Dados",
           "modules": [
-            { "id": "m01", "title": "Modelo Relacional e SQL", "lessons": [] },
-            { "id": "m02", "title": "Normalização e Design", "lessons": [] },
-            { "id": "m03", "title": "Transações e Concorrência", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Modelo Relacional e SQL",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Normalização e Design",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Transações e Concorrência",
+              "lessons": []
+            }
           ]
         }
       ]
@@ -174,18 +774,42 @@
           "id": "computer-networks",
           "title": "Redes de Computadores",
           "modules": [
-            { "id": "m01", "title": "Camada Física e Enlace", "lessons": [] },
-            { "id": "m02", "title": "Camada de Rede e Transporte", "lessons": [] },
-            { "id": "m03", "title": "Camada de Aplicação", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Camada Física e Enlace",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Camada de Rede e Transporte",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Camada de Aplicação",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "software-engineering",
           "title": "Engenharia de Software",
           "modules": [
-            { "id": "m01", "title": "Processos e Requisitos", "lessons": [] },
-            { "id": "m02", "title": "Design e Padrões", "lessons": [] },
-            { "id": "m03", "title": "Testes e Qualidade", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Processos e Requisitos",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Design e Padrões",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Testes e Qualidade",
+              "lessons": []
+            }
           ]
         }
       ]
@@ -200,18 +824,42 @@
           "id": "compilers",
           "title": "Compiladores",
           "modules": [
-            { "id": "m01", "title": "Análise Léxica e Sintática", "lessons": [] },
-            { "id": "m02", "title": "Análise Semântica", "lessons": [] },
-            { "id": "m03", "title": "Geração de Código", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Análise Léxica e Sintática",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Análise Semântica",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Geração de Código",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "distributed-systems",
           "title": "Sistemas Distribuídos",
           "modules": [
-            { "id": "m01", "title": "Comunicação e RPC", "lessons": [] },
-            { "id": "m02", "title": "Consistência e Consenso", "lessons": [] },
-            { "id": "m03", "title": "Tolerância a Falhas", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Comunicação e RPC",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Consistência e Consenso",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Tolerância a Falhas",
+              "lessons": []
+            }
           ]
         }
       ]
@@ -226,18 +874,42 @@
           "id": "ai-ml",
           "title": "Inteligência Artificial e Machine Learning",
           "modules": [
-            { "id": "m01", "title": "Busca e Raciocínio", "lessons": [] },
-            { "id": "m02", "title": "Aprendizado Supervisionado", "lessons": [] },
-            { "id": "m03", "title": "Aprendizado Não Supervisionado", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Busca e Raciocínio",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Aprendizado Supervisionado",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Aprendizado Não Supervisionado",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "security",
           "title": "Segurança da Informação",
           "modules": [
-            { "id": "m01", "title": "Criptografia Básica", "lessons": [] },
-            { "id": "m02", "title": "Autenticação e Acesso", "lessons": [] },
-            { "id": "m03", "title": "Segurança de Redes", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Criptografia Básica",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Autenticação e Acesso",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Segurança de Redes",
+              "lessons": []
+            }
           ]
         }
       ]
@@ -252,18 +924,42 @@
           "id": "capstone",
           "title": "Trabalho de Conclusão / Projeto Integrador",
           "modules": [
-            { "id": "m01", "title": "Planejamento e Proposta", "lessons": [] },
-            { "id": "m02", "title": "Desenvolvimento", "lessons": [] },
-            { "id": "m03", "title": "Apresentação e Defesa", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Planejamento e Proposta",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Desenvolvimento",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Apresentação e Defesa",
+              "lessons": []
+            }
           ]
         },
         {
           "id": "electives",
           "title": "Eletivas Avançadas",
           "modules": [
-            { "id": "m01", "title": "Computação Quântica", "lessons": [] },
-            { "id": "m02", "title": "Bioinformática", "lessons": [] },
-            { "id": "m03", "title": "Computação Gráfica", "lessons": [] }
+            {
+              "id": "m01",
+              "title": "Computação Quântica",
+              "lessons": []
+            },
+            {
+              "id": "m02",
+              "title": "Bioinformática",
+              "lessons": []
+            },
+            {
+              "id": "m03",
+              "title": "Computação Gráfica",
+              "lessons": []
+            }
           ]
         }
       ]

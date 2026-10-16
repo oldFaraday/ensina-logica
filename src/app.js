@@ -205,6 +205,9 @@ function setupRoutes() {
   router.add('/theory/:theoryUnitId', createViewHandler(renderTheoryView));
   router.add('/library', createViewHandler(renderLibraryView));
 
+  // Glossário
+  router.add('/glossary', createViewHandler(renderGlossaryView));
+
   // Configurações
   router.add('/settings', createViewHandler(renderSettingsView));
 
@@ -1361,6 +1364,112 @@ async function renderAchievementsView(params, query, main) {
     </section>
   `;
   bindNavigationEvents(main);
+}
+
+/**
+ * Carrega os dados do glossário a partir de data/glossary.json.
+ * @returns {Promise<Object>} Dados do glossário
+ */
+async function loadGlossary() {
+  const response = await fetch('./data/glossary.json');
+  if (!response.ok) {
+    throw new Error(`Falha ao carregar glossário: ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Renderiza a página do glossário (#/glossary).
+ * Lista os termos por letra, com tradução PT-BR e definição.
+ * Acessível a partir do rodapé da biblioteca (#/library).
+ */
+async function renderGlossaryView(params, query, main) {
+  let glossary;
+  try {
+    glossary = await loadGlossary();
+  } catch (error) {
+    main.innerHTML = `
+      <section class="glossary-view" aria-label="${t('glossary.title')}">
+        <header class="view-header">
+          <button class="btn btn-back" data-nav="/library">${t('common.back')}</button>
+          <h1>${t('glossary.title')}</h1>
+        </header>
+        <div class="card" style="text-align: center; padding: var(--space-7);">
+          <p class="placeholder">${error.message}</p>
+          <button class="btn btn-primary" data-nav="/library">${t('glossary.back')}</button>
+        </div>
+      </section>
+    `;
+    bindNavigationEvents(main);
+    return;
+  }
+
+  const groupsHTML = glossary.groups.map((group) => {
+    const termsHTML = group.terms.map((term) => `
+      <div class="glossary-term" id="glossary-${slugify(term.en)}">
+        <div class="glossary-term-head">
+          <span class="glossary-term-en">${escapeHtml(term.en)}</span>
+          <span class="glossary-term-arrow">→</span>
+          <span class="glossary-term-pt">${escapeHtml(term.pt)}</span>
+        </div>
+        <p class="glossary-term-def">${escapeHtml(term.definition)}</p>
+        ${term.note ? `<p class="glossary-term-note"><strong>${t('glossary.usage_rule')}:</strong> ${escapeHtml(term.note)}</p>` : ''}
+      </div>
+    `).join('');
+
+    return `
+      <details class="glossary-group" id="glossary-group-${group.letter}">
+        <summary>
+          <span class="glossary-letter">${escapeHtml(group.letter)}</span>
+          <span class="glossary-group-count">${group.terms.length}</span>
+        </summary>
+        <div class="glossary-group-body">
+          ${termsHTML}
+        </div>
+      </details>
+    `;
+  }).join('');
+
+  const rulesHTML = glossary.rules.map((rule) => `
+    <li>${escapeHtml(rule)}</li>
+  `).join('');
+
+  main.innerHTML = `
+    <section class="glossary-view" aria-label="${t('glossary.title')}">
+      <header class="view-header">
+        <button class="btn btn-back" data-nav="/library">${t('glossary.back')}</button>
+        <h1>${t('glossary.title')}</h1>
+      </header>
+      <p class="glossary-subtitle">${escapeHtml(glossary.subtitle)}</p>
+      <p class="glossary-description">${escapeHtml(glossary.description)}</p>
+      <div class="glossary-list" role="region" aria-label="${t('glossary.title')}">
+        ${groupsHTML}
+      </div>
+      <section class="glossary-rules" aria-labelledby="glossary-rules-title">
+        <h2 id="glossary-rules-title">${t('glossary.usage_rule')}</h2>
+        <ul>
+          ${rulesHTML}
+        </ul>
+      </section>
+    </section>
+  `;
+
+  bindNavigationEvents(main);
+}
+
+/**
+ * Transforma um termo em inglês em um slug de âncora válido.
+ * @param {string} text
+ * @returns {string}
+ */
+function slugify(text) {
+  return String(text || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'termo';
 }
 
 /**

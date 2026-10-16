@@ -69,7 +69,7 @@ export async function loadTheoryUnit(theoryUnitId) {
  * @returns {Promise<Array>} Array de exercícios
  */
 export async function loadExercisesForLesson(lessonId, discipline, semNum = 1) {
-  const moduleMatch = lessonId.match(/^l([0-9]{2})$/);
+  const moduleMatch = lessonId.match(/^l([0-9]{2,3})$/);
   if (!moduleMatch) return [];
 
   // Precisamos descobrir o módulo - para simplificar, tentamos carregar todos os exercícios do módulo

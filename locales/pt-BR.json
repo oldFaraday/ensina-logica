@@ -308,5 +308,19 @@
     "closeMenu": "Fechar menu",
     "loading": "Carregando...",
     "liveRegion": "Anúncios"
+  },
+  "glossary": {
+    "title": "Glossário",
+    "subtitle": "Vocabulário canônico inglês → português",
+    "description": "Termos técnicos usados no conteúdo do 1º semestre. A primeira ocorrência de cada termo traz o original em inglês entre parênteses.",
+    "back": "Voltar à biblioteca",
+    "term": "Termo",
+    "definition": "Definição / contexto",
+    "english": "Inglês",
+    "portuguese": "Português",
+    "letter": "Letra",
+    "empty": "Nenhum termo encontrado.",
+    "usage_rule": "Regra de uso",
+    "first_occurrence": "Primeira ocorrência traz o termo em inglês entre parênteses."
   }
 }

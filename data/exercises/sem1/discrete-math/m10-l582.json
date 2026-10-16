@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m10-l582-q01",
+    "theory_unit_id": "th-sem1-discrete-math-m10-l582",
+    "lesson_id": "l582",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Resumo DM 11: Casos extremos (dificuldade easy).",
+    "options": [
+      "Alternativa A",
+      "Alternativa D",
+      "Alternativa B",
+      "Alternativa C"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m10-l582-q02",
+    "theory_unit_id": "th-sem1-discrete-math-m10-l582",
+    "lesson_id": "l582",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Resumo DM 11: Casos extremos (dificuldade easy).",
+    "options": [
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B"
+    ],
+    "correct": 1,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m10-l582-q03",
+    "theory_unit_id": "th-sem1-discrete-math-m10-l582",
+    "lesson_id": "l582",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Resumo DM 11: Casos extremos (dificuldade medium).",
+    "options": [
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m10-l582-q04",
+    "theory_unit_id": "th-sem1-discrete-math-m10-l582",
+    "lesson_id": "l582",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Resumo DM 11: Casos extremos (dificuldade medium).",
+    "options": [
+      "Alternativa C",
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa D"
+    ],
+    "correct": 0,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m10-l582-q05",
+    "theory_unit_id": "th-sem1-discrete-math-m10-l582",
+    "lesson_id": "l582",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Resumo DM 11: Casos extremos (dificuldade hard).",
+    "options": [
+      "Alternativa C",
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa D"
+    ],
+    "correct": 0,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]

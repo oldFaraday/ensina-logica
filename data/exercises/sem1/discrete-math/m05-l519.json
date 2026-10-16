@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m05-l519-q01",
+    "theory_unit_id": "th-sem1-discrete-math-m05-l519",
+    "lesson_id": "l519",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Funções e Relações 8: Classe de equivalência (dificuldade easy).",
+    "options": [
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m05-l519-q02",
+    "theory_unit_id": "th-sem1-discrete-math-m05-l519",
+    "lesson_id": "l519",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Funções e Relações 8: Classe de equivalência (dificuldade easy).",
+    "options": [
+      "Alternativa C",
+      "Alternativa B",
+      "Alternativa A",
+      "Alternativa D"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m05-l519-q03",
+    "theory_unit_id": "th-sem1-discrete-math-m05-l519",
+    "lesson_id": "l519",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Funções e Relações 8: Classe de equivalência (dificuldade medium).",
+    "options": [
+      "Alternativa B",
+      "Alternativa A",
+      "Alternativa D",
+      "Alternativa C"
+    ],
+    "correct": 1,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m05-l519-q04",
+    "theory_unit_id": "th-sem1-discrete-math-m05-l519",
+    "lesson_id": "l519",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Funções e Relações 8: Classe de equivalência (dificuldade medium).",
+    "options": [
+      "Alternativa D",
+      "Alternativa C",
+      "Alternativa A",
+      "Alternativa B"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m05-l519-q05",
+    "theory_unit_id": "th-sem1-discrete-math-m05-l519",
+    "lesson_id": "l519",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Funções e Relações 8: Classe de equivalência (dificuldade hard).",
+    "options": [
+      "Alternativa A",
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa B"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]

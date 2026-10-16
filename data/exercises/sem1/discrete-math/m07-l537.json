@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m07-l537-q01",
+    "theory_unit_id": "th-sem1-discrete-math-m07-l537",
+    "lesson_id": "l537",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Grafos 2: Vértices e arestas (dificuldade easy).",
+    "options": [
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa C"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m07-l537-q02",
+    "theory_unit_id": "th-sem1-discrete-math-m07-l537",
+    "lesson_id": "l537",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Grafos 2: Vértices e arestas (dificuldade easy).",
+    "options": [
+      "Alternativa B",
+      "Alternativa A",
+      "Alternativa C",
+      "Alternativa D"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m07-l537-q03",
+    "theory_unit_id": "th-sem1-discrete-math-m07-l537",
+    "lesson_id": "l537",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Grafos 2: Vértices e arestas (dificuldade medium).",
+    "options": [
+      "Alternativa A",
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa D"
+    ],
+    "correct": 1,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m07-l537-q04",
+    "theory_unit_id": "th-sem1-discrete-math-m07-l537",
+    "lesson_id": "l537",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Grafos 2: Vértices e arestas (dificuldade medium).",
+    "options": [
+      "Alternativa D",
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa A"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m07-l537-q05",
+    "theory_unit_id": "th-sem1-discrete-math-m07-l537",
+    "lesson_id": "l537",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Grafos 2: Vértices e arestas (dificuldade hard).",
+    "options": [
+      "Alternativa C",
+      "Alternativa B",
+      "Alternativa D",
+      "Alternativa A"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]

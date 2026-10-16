@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m04-l205-q01",
+    "theory_unit_id": "th-sem1-algorithms-m04-l205",
+    "lesson_id": "l205",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Vetores 5: Máximo e mínimo (dificuldade easy).",
+    "options": [
+      "Alternativa A",
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa B"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m04-l205-q02",
+    "theory_unit_id": "th-sem1-algorithms-m04-l205",
+    "lesson_id": "l205",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Vetores 5: Máximo e mínimo (dificuldade easy).",
+    "options": [
+      "Alternativa D",
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa A"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-algorithms-m04-l205-q03",
+    "theory_unit_id": "th-sem1-algorithms-m04-l205",
+    "lesson_id": "l205",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Vetores 5: Máximo e mínimo (dificuldade medium).",
+    "options": [
+      "Alternativa D",
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa A"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-algorithms-m04-l205-q04",
+    "theory_unit_id": "th-sem1-algorithms-m04-l205",
+    "lesson_id": "l205",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Vetores 5: Máximo e mínimo (dificuldade medium).",
+    "options": [
+      "Alternativa A",
+      "Alternativa C",
+      "Alternativa B",
+      "Alternativa D"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-algorithms-m04-l205-q05",
+    "theory_unit_id": "th-sem1-algorithms-m04-l205",
+    "lesson_id": "l205",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Vetores 5: Máximo e mínimo (dificuldade hard).",
+    "options": [
+      "Alternativa C",
+      "Alternativa A",
+      "Alternativa D",
+      "Alternativa B"
+    ],
+    "correct": 0,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]

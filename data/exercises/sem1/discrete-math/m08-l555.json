@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m08-l555-q01",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l555",
+    "lesson_id": "l555",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Provas 8: Passo indutivo (dificuldade easy).",
+    "options": [
+      "Alternativa B",
+      "Alternativa A",
+      "Alternativa C",
+      "Alternativa D"
+    ],
+    "correct": 0,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l555-q02",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l555",
+    "lesson_id": "l555",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Provas 8: Passo indutivo (dificuldade easy).",
+    "options": [
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa A"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l555-q03",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l555",
+    "lesson_id": "l555",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Provas 8: Passo indutivo (dificuldade medium).",
+    "options": [
+      "Alternativa B",
+      "Alternativa A",
+      "Alternativa D",
+      "Alternativa C"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l555-q04",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l555",
+    "lesson_id": "l555",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Provas 8: Passo indutivo (dificuldade medium).",
+    "options": [
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa B",
+      "Alternativa A"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m08-l555-q05",
+    "theory_unit_id": "th-sem1-discrete-math-m08-l555",
+    "lesson_id": "l555",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Provas 8: Passo indutivo (dificuldade hard).",
+    "options": [
+      "Alternativa D",
+      "Alternativa B",
+      "Alternativa A",
+      "Alternativa C"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]

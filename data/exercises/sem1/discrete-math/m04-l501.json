@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m04-l501-q01",
+    "theory_unit_id": "th-sem1-discrete-math-m04-l501",
+    "lesson_id": "l501",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 1 sobre Conjuntos 2: Elementos e pertinência (dificuldade easy).",
+    "options": [
+      "Alternativa D",
+      "Alternativa C",
+      "Alternativa B",
+      "Alternativa A"
+    ],
+    "correct": 0,
+    "explanation": "Explicação da questão 1.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m04-l501-q02",
+    "theory_unit_id": "th-sem1-discrete-math-m04-l501",
+    "lesson_id": "l501",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 2 sobre Conjuntos 2: Elementos e pertinência (dificuldade easy).",
+    "options": [
+      "Alternativa B",
+      "Alternativa D",
+      "Alternativa A",
+      "Alternativa C"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 2.",
+    "difficulty": "easy",
+    "xp_base": 10
+  },
+  {
+    "id": "ex-sem1-discrete-math-m04-l501-q03",
+    "theory_unit_id": "th-sem1-discrete-math-m04-l501",
+    "lesson_id": "l501",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 3 sobre Conjuntos 2: Elementos e pertinência (dificuldade medium).",
+    "options": [
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa D",
+      "Alternativa A"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 3.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m04-l501-q04",
+    "theory_unit_id": "th-sem1-discrete-math-m04-l501",
+    "lesson_id": "l501",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 4 sobre Conjuntos 2: Elementos e pertinência (dificuldade medium).",
+    "options": [
+      "Alternativa B",
+      "Alternativa C",
+      "Alternativa A",
+      "Alternativa D"
+    ],
+    "correct": 3,
+    "explanation": "Explicação da questão 4.",
+    "difficulty": "medium",
+    "xp_base": 15
+  },
+  {
+    "id": "ex-sem1-discrete-math-m04-l501-q05",
+    "theory_unit_id": "th-sem1-discrete-math-m04-l501",
+    "lesson_id": "l501",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Questão 5 sobre Conjuntos 2: Elementos e pertinência (dificuldade hard).",
+    "options": [
+      "Alternativa B",
+      "Alternativa D",
+      "Alternativa C",
+      "Alternativa A"
+    ],
+    "correct": 2,
+    "explanation": "Explicação da questão 5.",
+    "difficulty": "hard",
+    "xp_base": 20
+  }
+]
