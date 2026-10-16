@@ -411,6 +411,20 @@ Comparação do tasks.md com o estado real do repositório.
 
 ---
 
+## Phase 17: Encerramento do MVP e organização do repositório (2026-10-16)
+
+**Purpose**: Fechamento de verificação, registro do deploy e faxina de documentação/artefatos.
+
+- [x] T130 [verify][deploy] Fechar T090: validar fallback SPA no Pages publicado — ✅ Validado: 404 redireciona e deep links renderizam.
+- [x] T131 [verify][qa] Fechar T100: QA manual final (jornada completa no site publicado) — ✅ Validado: onboarding, metas, tema, navegação e export.
+- [x] T132 [docs] Registrar data de deploy e release 1.0.0 (CHANGELOG, ATTRIBUTIONS, STATUS) — ✅ Feito: CHANGELOG [1.0.0] - 2026-10-16 e ATTRIBUTIONS.md seção Deploy atualizados.
+- [ ] T133 [chore] Organizar a casa: remover AUDIT.md, design-preview.html, .python-version, spec-kit/
+- [ ] T134 [docs] Corrigir documentação (branch main→master, SRS [0,1,3,7,21], árvore de pastas, license_url)
+- [ ] T135 [chore] Ajustar .gitignore e arquivos do GitHub (REQUIRED_FILES, issue/PR templates)
+- [ ] T136 [test][optional] Guarda anti-drift da documentação (scripts/test-docs.mjs)
+
+---
+
 ## Notes
 
 - [P] tasks = different files, no dependencies

@@ -7,16 +7,15 @@ e este projeto adere a [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
 
+## [1.0.0] - 2026-10-16
+
 ### Adicionado
-- Estrutura inicial do projeto com Spec Kit
-- Constitution, Spec, Plan, Tasks
-- Estrutura de pastas completa
-- package.json, .gitignore, .editorconfig, .nojekyll, 404.html
-- index.html shell com header, main, footer, tema, i18n
-- locales/pt-BR.json com todas as strings da interface
-- README.md, LICENSE (MIT), CONTENT_LICENSE.md, ATTRIBUTIONS.md
-- CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md
-- Favicon SVG
+- Deploy publicado no GitHub Pages: `https://oldfaraday.github.io/ensina-logica/` (T090)
+- Validação do fallback `404.html` no Pages publicado: URL profunda redireciona para rota hash (`/#/...`) e a raiz carrega a aplicação (T090)
+- QA manual da jornada completa em navegador real (T100): welcome → onboarding (meta 300) → semestre → disciplina → módulo → lição ("O que é um algoritmo") → teoria ("Introdução a Algoritmos" com sumário + atribuição) → biblioteca (busca + filtro por disciplina + agrupamento por semestre, 6 unidades) → configurações (tema claro/escuro/automático) → export/import de progresso (sem erros no console)
+
+### Alterado
+- ATTRIBUTIONS.md e CHANGELOG registrados com a data do deploy (2026-10-16)
 
 ### Corrigido
 - **T127 — Responsividade móvel da Biblioteca Teórica** (`fix(ui)`): em `#/theory/:id` e `#/library`, blocos largos (fórmulas KaTeX em bloco, `<pre>`, `<table>`, imagens) não estouram mais o viewport no celular. `src/ui/theme.css`: `min-width:0` no grid `.theory-layout` e seus filhos (+ `max-width:100%` em `.theory-main`/`.theory-sidebar-host`/`.theory-unit`/`.theory-section`); `pre`/`pre code` e `.katex-display` rolam dentro do próprio bloco; mídia/tabelas limitadas; `overflow-wrap`/`word-break` nos contêineres de texto; campos da biblioteca com `width:100%`; coluna única e índice lateral **depois** do conteúdo no celular (DOM reordenado, desktop inalterado); rede de segurança `html { overflow-x: clip; }`. Novo teste estático `scripts/test-responsive.mjs` em `npm test`.

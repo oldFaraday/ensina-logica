@@ -101,3 +101,11 @@ Cada unidade teórica em `data/theory/` carrega no front-matter:
 - `original_excerpt` (quando licença permite)
 
 O script `scripts/validate.mjs` sincroniza este arquivo com os metadados das unidades.
+
+---
+
+## Deploy
+
+- **Data do deploy**: 2026-10-16
+- **URL do GitHub Pages**: https://oldfaraday.github.io/ensina-logica/
+- **Validado**: fallback `404.html` (URL profunda → rota hash) e redirect da raiz funcionando no ambiente publicado (T090); QA manual da jornada completa em navegador real concluído (T100).
