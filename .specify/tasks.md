@@ -423,3 +423,15 @@ Comparação do tasks.md com o estado real do repositório.
 - **Content rule**: No theory text invented. If source not accessed → unit stays `pendente` (not in trail, only in map as "em construção") — ver também T112
 - **License rule**: Only CC0, CC BY, CC BY-SA sources allowed for derivation. NC/ND/all-rights-reserved → only "Leitura recomendada" link
 - **AI exercises**: Must link to theory unit, answer/explanation verified against source, marked "gerados por IA", code exercises tested before commit
+
+---
+
+## Phase 14: Convergence (2026-10-16)
+
+Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constitution (`.specify/constitution.md`; a cópia em `.specify/memory/constitution.md` é template vazio → governança ignorada com segurança). **Append-only:** nenhuma tarefa existente foi alterada, renumerada ou removida.
+
+- [ ] T121 [Convergence] Corrigir a documentação do modelo de conteúdo: o README documenta `data/theory/sem{X}/{discipline}/{module-id}.md` e exercício como **objeto único**, mas o loader lê `{theory-unit-id}.md` e um **array** de exercícios por lição. Alinhar o README e criar `docs/CONTENT_MODEL.md` com o fluxo "adicionar fonte → gerar unidade → verificar → publicar" per spec §10 / T093 (contradicts) — HIGH
+- [ ] T122 [Convergence] Adicionar teste end-to-end (jsdom) da jornada welcome → lição → teoria → configurações → export/import, cobrindo AC-06 e AC-11 per T100 / AC-06 (missing) — MEDIUM
+- [ ] T123 [Convergence] Biblioteca (`#/library`): adicionar filtro por disciplina e agrupamento/expansão por semestre per spec §4 / T064 (partial) — MEDIUM
+- [ ] T124 [Convergence] Adicionar teste estático do `404.html` (fallback SPA → `#/`) e registrar a validação no Pages publicado per AC-10 / T090 (partial) — MEDIUM
+- [ ] T125 [Convergence] Memoizar o índice de busca (haystack normalizado) em `src/theory/search.js` per T095 (partial) — LOW

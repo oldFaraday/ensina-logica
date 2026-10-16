@@ -207,12 +207,24 @@ ensina-logica/
 
 **MVP completo no código e no conteúdo.** Fases 1–9 e 13 concluídas (Fase 10 e 11 têm apenas itens que exigem navegador/deploy reais).
 
+**Converge executado em 2026-10-16** (Fase 14 anexada ao `tasks.md`, append-only) — foram avaliados FR/AC da spec, decisões do plan e os arquivos em escopo. 5 lacunas encontradas e registradas como tarefas:
+
+| ID | Severidade | Origem | Lacuna |
+|----|-----------|--------|--------|
+| T121 | HIGH | spec §10 / T093 | README descreve o modelo de conteúdo desatualizado (nome do arquivo de teoria e objeto vs array de exercícios) |
+| T122 | MEDIUM | T100 / AC-06 | Falta teste end-to-end automatizado da jornada completa |
+| T123 | MEDIUM | spec §4 / T064 | Biblioteca sem filtro por disciplina |
+| T124 | MEDIUM | AC-10 / T090 | Teste estático do `404.html` ausente |
+| T125 | LOW | T095 | Índice de busca não memoizado |
+
+Observação: 42 passou / 0 falhou antes do converge; divisão de trabalho: **T121–T124** são implementáveis no repositório, **T090 (deploy publicado)** e **T100 (QA manual em navegador real)** têm partes que dependem de ambiente externo.
+
 Pendências que exigem ambiente externo:
 1. **QA manual final (T100)** — jornada: boas-vindas → lição → teoria → configurações → export/import (navegador real).
 2. **Deploy (Fase 10)** — validar 404.html e redirect no GitHub Pages publicado (o repo aponta para a branch `master`).
 3. Ao publicar, atualizar `ATTRIBUTIONS.md`/CHANGELOG com a data do deploy.
 
-Verificação automatizada disponível agora: `npm test` (9 suítes) e `npm run validate` (curriculum, teoria, exercícios, links internos, licenças, ATTRIBUTIONS, schema). Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
+Verificação automatizada disponível agora: `npm test` (10 suítes) e `npm run validate` (curriculum, teoria, exercícios, links internos, licenças, ATTRIBUTIONS, schema). Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
 
 ---
 
