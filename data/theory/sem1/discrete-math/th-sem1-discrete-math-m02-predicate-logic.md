@@ -9,10 +9,10 @@ source:
   url: https://discrete.openmathbooks.org/dmoi3/sec_intro-statements.html
   chapter: 0. Introduction and Preliminaries
   section: 0.2 Mathematical Statements
-  access_date: 2026-10-16
+  access_date: 2026-10-17
   edition: 3rd Edition (2019)
   license_url: https://creativecommons.org/licenses/by-sa/4.0/
-  license_confirmed_at: 2026-10-16
+  license_confirmed_at: 2026-10-17
 license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR

@@ -88,7 +88,8 @@
     },
     "verification_status": {
       "type": "string",
-      "enum": ["unverified", "verified_with_source"]
+      "enum": ["pending", "unverified", "verified_with_source"],
+      "description": "pending = ainda não conferida com a fonte; unverified = conferida e não confirmada; verified_with_source = trecho e metadados conferidos na fonte (única que entra na trilha)"
     },
     "linked_lessons": {
       "type": "array",

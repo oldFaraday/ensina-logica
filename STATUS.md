@@ -1,6 +1,6 @@
 # Status do Projeto — Ensina Lógica
 
-**Última atualização**: 2026-10-16
+**Última atualização**: 2026-10-17
 
 ---
 
@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + **T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia)**; inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)**; inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -23,11 +23,11 @@ ensina-logica/
 ├── locales/pt-BR.json          # ✅ Completo - todas as strings da interface
 ├── data/
 │   ├── curriculum.json         # ✅ Completo - mapa 8 semestres
-│   ├── theory/sem1/algorithms/ # (0 arquivos - aguardando conteúdo)
-│   ├── theory/sem1/discrete-math/ # (0 arquivos - aguardando conteúdo)
-│   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas
-│   ├── exercises/sem1/algorithms/ # (0 arquivos - aguardando conteúdo)
-│   ├── exercises/sem1/discrete-math/ # (0 arquivos - aguardando conteúdo)
+│   ├── theory/sem1/algorithms/ # ✅ 3 unidades reais (m01–m03), verificadas na fonte
+│   ├── theory/sem1/discrete-math/ # ✅ 3 unidades reais (m01–m03), verificadas na fonte
+│   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas (pending|unverified|verified_with_source)
+│   ├── exercises/sem1/algorithms/ # ✅ 10 arquivos de lição (l01–l10), 85 exercícios no total do sem1
+│   ├── exercises/sem1/discrete-math/ # ✅ 8 arquivos de lição (l11–l18)
 │   └── exercises/_schema.json  # ✅ Completo - JSON Schema exercícios
 ├── src/
 │   ├── app.js                  # ✅ Completo - entry point, boot, router, store, theme
@@ -75,7 +75,7 @@ ensina-logica/
 ├── README.md                   # ✅ Completo - pt-BR com instruções
 ├── LICENSE                     # ✅ MIT
 ├── CONTENT_LICENSE.md          # ✅ CC BY-SA 4.0 + regra prevalência fonte
-├── ATTRIBUTIONS.md             # ✅ Fontes aprovadas + libs terceiras documentadas
+├── ATTRIBUTIONS.md             # ✅ Regerado a partir das 6 unidades reais + fontes aprovadas sem unidades + libs terceiras
 ├── CONTRIBUTING.md             # ✅ Completo
 ├── CODE_OF_CONDUCT.md          # ✅ Completo (Contributor Covenant 2.1)
 ├── SECURITY.md                 # ✅ Completo
@@ -223,17 +223,28 @@ ensina-logica/
 - [x] T128 Metas de XP 100/300/600/1000 (default 300) com destaque **HARDCORE** na meta 1000 (modal + Configurações)
 - [x] T129 Revisões no mesmo dia: fila de erros (`review_queue`) + revisão de lição vencendo hoje; schema v3; **sem** vidas/bloqueio por erro
 
+### Fase 18: Limpeza do conteúdo placeholder — ✅ COMPLETO (T137–T141, 2026-10-17)
+Limpeza conforme o `CONTENT_AUDIT.md` (sem gerar conteúdo novo).
+- [x] T137 Removidas as **188 unidades teóricas placeholder** (`data/theory/sem1/**/…-m04…m11-*.md`) e os **940 exercícios placeholder** (`data/exercises/sem1/**/m04…m11-*.json`); mantidas as **6 unidades reais** e os **85 exercícios do MVP** (histórico preservado no git). `data/theory/`: 194 → **6** arquivos; exercícios: 206 → **18** arquivos.
+- [x] T138 `data/curriculum.json`: 1º semestre restrito aos módulos reais **m01–m03** (algorithms e discrete-math); semestres **2–8** permanecem só como mapa (disciplinas e módulos, sem lições) e continuam como **"Em breve"**. Nenhuma tela, busca, glossário ou biblioteca lista conteúdo inexistente.
+- [x] T139 `pending` adicionado aos valores permitidos de `verification_status` (`data/theory/_schema.json`, `docs/CONTENT_MODEL.md`, `README.md` e também `scripts/validate.mjs`).
+- [x] T140 As 6 unidades reais reconferidas (URL específica do capítulo, edição e licença). Levin aponta para a **3ª edição** (`https://discrete.openmathbooks.org/dmoi3.html`, CC BY-SA 4.0) e os `original_excerpt` conferem nessa edição (não na 4ª, NC-SA); nenhuma unidade virou `pending`.
+- [x] T141 `ATTRIBUTIONS.md` regerado a partir das unidades que realmente existem (6 unidades); MCS e Open Guide passam a constar como "aprovadas, ainda sem unidades derivadas".
+- Verificação: `npm test` verde (**16 suítes**, inclui `scripts/test-content-dom.mjs`: 6 unidades / 18 lições / 85 exercícios) e `npm run validate` sem erros.
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–16 concluídas.
+**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–18 concluídas.
 
 **Converge — 2ª rodada:** avaliados os 13 critérios de aceitação (AC-01…AC-13) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 
 **Implement executado em 2026-10-16** — T121–T126 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca, entrada "Biblioteca" no menu) e também T093/T094/T095/T097. `npm test` verde (**16 suítes**) e `npm run validate` sem erros.
 
 **Correções pós-QA (2026-10-16)** — T127–T129 concluídas (responsividade móvel da biblioteca, metas de XP 100/300/600/1000 com destaque HARDCODE, revisões no mesmo dia via fila de erros + revisão de lição). `npm test` verde (**16 suítes**, +1 com `scripts/test-responsive.mjs`) e `npm run validate` sem erros (schema **v3**).
+
+**Limpeza do conteúdo placeholder (2026-10-17)** — T137–T141 concluídas a partir do `CONTENT_AUDIT.md`: removidas 188 unidades e 940 exercícios placeholder; currículo do 1º semestre restrito a m01–m03; `pending` adicionado a `verification_status`; as 6 unidades reais reconferidas na 3ª edição (Levin) e na fonte (Programming Fundamentals); `ATTRIBUTIONS.md` regerado. `npm test` verde (**16 suítes**) e `npm run validate` sem erros.
 
 Restam apenas itens que exigem ambiente externo:
 1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).
@@ -251,8 +262,8 @@ Verificação automatizada: `npm test` (16 suítes) e `npm run validate`. Com re
 | # | Fonte | Disciplina/Cobertura | Edição/Versão | Licença | URL Licença | Data Conferência | Restrições |
 |---|-------|---------------------|---------------|---------|-------------|------------------|------------|
 | 1 | **Mathematics for Computer Science** (Lehman, Leighton, Meyer) | Matemática Discreta: lógica, provas, indução, grafos, probabilidade, teoria dos números | Spring 2018 (MIT 6.042) — **somente esta edição** | **CC BY-SA 3.0** | https://courses.csail.mit.edu/6.042/spring18/mcs.pdf (front matter) | 2026-10-15 | Usar só esta edição; OCW 2015 e LibreTexts são NC |
-| 8 | **Discrete Mathematics: An Open Introduction** (Oscar Levin) | Matemática Discreta: lógica, conjuntos, funções, contagem, grafos, provas | **3ª edição** (2019) — **não usar 4ª (NC)** | **CC BY-SA 4.0** | https://discrete.openmathbooks.org/ (rodapé "License") | 2026-10-15 | 3ª ed. apenas |
-| 10 | **Programming Fundamentals** (Busbee & Braunschweig) | Algoritmos e Lógica: variáveis, controle, funções, pseudocode, flowcharts | **2ª edição** (2018), Rebus/Pressbooks | **CC BY-SA 4.0** | https://press.rebus.community/programmingfundamentals/front-matter/preface/ | 2026-10-15 | Conferir licença por capítulo/imagem — "exceto onde indicado" |
+| 8 | **Discrete Mathematics: An Open Introduction** (Oscar Levin) | Matemática Discreta: lógica, conjuntos, funções, contagem, grafos, provas | **3ª edição** (2019, `dmoi3.html`) — **não usar 4ª (NC-SA)** | **CC BY-SA 4.0** | https://discrete.openmathbooks.org/dmoi3.html | 2026-10-17 | 3ª ed. apenas (URLs `.../dmoi3/...`) |
+| 10 | **Programming Fundamentals** (Busbee & Braunschweig) | Algoritmos e Lógica: variáveis, controle, funções, pseudocode, flowcharts | **2ª edição** (2018), Rebus/Pressbooks | **CC BY-SA 4.0** | https://press.rebus.community/programmingfundamentals/front-matter/preface/ | 2026-10-17 | Conferir licença por capítulo/imagem — "exceto onde indicado" |
 | 12 | **An Open Guide to Data Structures and Algorithms** (Bible & Moser) | Algoritmos: **somente capítulo Big-O/complexidade** no MVP | **1ª edição** (2023), PALNI Press | **CC BY 4.0** | https://pressbooks.palni.org/anopenguidetodatastructuresandalgorithms/ (rodapé) | 2026-10-15 | MVP: só Big-O; demais → 2º sem |
 
 ### ⚠️ Só Link "Leitura Recomendada" (licença não permissiva para derivação)

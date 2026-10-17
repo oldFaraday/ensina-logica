@@ -4,8 +4,8 @@ Como adicionar conteúdo **verificável e com fonte** ao Ensina Lógica. O conte
 é *data-driven*: nada disso exige mudar código.
 
 > **Regra de ouro:** nenhum texto teórico pode ser inventado. Se a fonte não foi
-> acessada e conferida, a unidade fica `pendente` (`verification_status: unverified`)
-> e **não aparece na trilha** — apenas no mapa como "em construção".
+> acessada e conferida, a unidade fica `pendente` (`verification_status: pending`)
+> ou `unverified` e **não aparece na trilha** — apenas no mapa como "em construção".
 
 ---
 
@@ -71,7 +71,7 @@ Use `## ` para cada seção e `$...$` / `$$...$$` para matemática (KaTeX).
 | `license` | ✅ | SPDX da **fonte** |
 | `derivation_type` | ✅ | `original` \| `translated` \| `adapted` \| `summarized` |
 | `language` | ✅ | `pt-BR` |
-| `verification_status` | ✅ | `verified_with_source` \| `unverified` |
+| `verification_status` | ✅ | `verified_with_source` \| `pending` \| `unverified` |
 | `linked_lessons` | ✅ | lições do módulo |
 | `linked_exercises` | ✅ | ids dos exercícios da unidade |
 | `original_excerpt` | opcional | trecho verbatim curto (< 300 chars); habilita o alternador **"Ver original"** |
@@ -132,7 +132,7 @@ estiver errado, um exercício apontar para unidade/lição inexistente, ou o
 
 Se você não conseguir acessar/confirmar a fonte:
 
-1. Mantenha a unidade com `verification_status: unverified`.
+1. Mantenha a unidade com `verification_status: pending` (ainda não conferida) ou `unverified` (conferida e não confirmada).
 2. **Não** crie exercícios para ela.
 3. O loader a exclui do índice da biblioteca e da trilha; a lição exibe "em
    construção". O validador avisa sobre exercícios ligados a unidades `unverified`.

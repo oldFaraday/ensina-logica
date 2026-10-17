@@ -187,7 +187,7 @@ Um algoritmo é uma sequência finita de instruções bem-definidas...
 Finito, definido e eficaz.
 ```
 
-**Campos obrigatórios**: todos acima. `verification_status` = `unverified` | `verified_with_source`. `derivation_type` = `original` | `translated` | `adapted` | `summarized`. `license` = identificador SPDX. No corpo, use `## ` para cada seção (o `#` é reservado ao título da unidade) e `$...$`/`$$...$$` para matemática.
+**Campos obrigatórios**: todos acima. `verification_status` = `pending` | `unverified` | `verified_with_source`. `derivation_type` = `original` | `translated` | `adapted` | `summarized`. `license` = identificador SPDX. No corpo, use `## ` para cada seção (o `#` é reservado ao título da unidade) e `$...$`/`$$...$$` para matemática.
 
 ### 2. Adicionar exercícios
 

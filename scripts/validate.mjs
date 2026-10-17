@@ -215,7 +215,7 @@ function validateTheoryFile(filePath) {
   }
 
   // Valida verification_status
-  if (fm.verification_status && !['unverified', 'verified_with_source'].includes(fm.verification_status)) {
+  if (fm.verification_status && !['pending', 'unverified', 'verified_with_source'].includes(fm.verification_status)) {
     error(`verification_status inválido: ${fm.verification_status}`, relPath);
   }
 

@@ -9,10 +9,10 @@ source:
   url: https://press.rebus.community/programmingfundamentals/chapter/program-design/
   chapter: "I. Introduction to Programming"
   section: Program Design
-  access_date: 2026-10-16
+  access_date: 2026-10-17
   edition: 2nd Edition (2018)
   license_url: https://creativecommons.org/licenses/by-sa/4.0/
-  license_confirmed_at: 2026-10-16
+  license_confirmed_at: 2026-10-17
 license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
