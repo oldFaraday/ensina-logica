@@ -12,6 +12,25 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 
 ---
 
+## Unidades publicadas (bloco gerado)
+
+> Bloco gerado automaticamente a partir de `data/theory/` por `scripts/validate.mjs`.
+> **Não editar à mão.** Rode `node scripts/validate.mjs --update-attributions` para regenerar.
+> O CI falha se este bloco divergir das unidades reais.
+
+<!-- BEGIN GENERATED: theory-units -->
+| Unidade | Fonte | Capítulo › Seção |
+| --- | --- | --- |
+| `th-sem1-algorithms-m01-intro` | Programming Fundamentals | I. Introduction to Programming › Program Design |
+| `th-sem1-algorithms-m02-variables` | Programming Fundamentals | II. Data and Operators › Data Types |
+| `th-sem1-algorithms-m03-control-flow` | Programming Fundamentals | IV. Conditions › Structured Programming |
+| `th-sem1-discrete-math-m01-logic` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
+| `th-sem1-discrete-math-m02-predicate-logic` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
+| `th-sem1-discrete-math-m03-proofs-induction` | Discrete Mathematics: An Open Introduction | 2. Sequences › 2.5 Induction |
+<!-- END GENERATED: theory-units -->
+
+---
+
 ## Fontes de Conteúdo (Teoria) — com unidades publicadas
 
 ### 1. Programming Fundamentals
@@ -24,10 +43,7 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 - **Data de conferência**: 2026-10-17
 - **Cobertura**: Algoritmos e Lógica — design de programa, tipos de dados e controle de fluxo
 - **Restrições**: Conferir licença por capítulo/imagem — a licença vale "exceto onde indicado"
-- **Unidades derivadas** (3):
-  - `th-sem1-algorithms-m01-intro` — I. Introduction to Programming › Program Design — https://press.rebus.community/programmingfundamentals/chapter/program-design/
-  - `th-sem1-algorithms-m02-variables` — II. Data and Operators › Data Types — https://press.rebus.community/programmingfundamentals/chapter/data-types/
-  - `th-sem1-algorithms-m03-control-flow` — IV. Conditions › Structured Programming — https://press.rebus.community/programmingfundamentals/chapter/structured-programming/
+- **Unidades derivadas**: ver o "bloco gerado" no topo deste arquivo
 
 ### 2. Discrete Mathematics: An Open Introduction
 
@@ -39,10 +55,7 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 - **Data de conferência**: 2026-10-17
 - **Cobertura**: Matemática Discreta — lógica proposicional, predicados e indução
 - **Restrições**: 3ª edição apenas (URLs `.../dmoi3/...`)
-- **Unidades derivadas** (3):
-  - `th-sem1-discrete-math-m01-logic` — 3. Symbolic Logic and Proofs › 3.1 Propositional Logic — https://discrete.openmathbooks.org/dmoi3/sec_propositional.html
-  - `th-sem1-discrete-math-m02-predicate-logic` — 0. Introduction and Preliminaries › 0.2 Mathematical Statements — https://discrete.openmathbooks.org/dmoi3/sec_intro-statements.html
-  - `th-sem1-discrete-math-m03-proofs-induction` — 2. Sequences › 2.5 Induction — https://discrete.openmathbooks.org/dmoi3/sec_seq-induction.html
+- **Unidades derivadas**: ver o "bloco gerado" no topo deste arquivo
 
 ---
 
@@ -118,9 +131,10 @@ Cada unidade teórica em `data/theory/` carrega no front-matter:
 - `license` (SPDX)
 - `derivation_type`
 - `verification_status`
-- `original_excerpt` (quando licença permite)
+- `verified_at`, `verification_method` (obrigatórios quando `verification_status: verified_with_source`)
+- `original_excerpt` (trecho literal da fonte; obrigatório quando `verified_with_source`)
 
-O script `scripts/validate.mjs` sincroniza este arquivo com os metadados das unidades.
+O script `scripts/validate.mjs` **gera** o bloco de unidades deste arquivo e **falha** se ele divergir das unidades reais.
 
 ---
 

@@ -174,9 +174,11 @@ license: "CC-BY-SA-4.0"
 derivation_type: "summarized"
 language: "pt-BR"
 verification_status: "verified_with_source"
+verified_at: "2026-10-17"
+verification_method: "manual_url_check"
 linked_lessons: ["l01", "l02"]
 linked_exercises: ["ex-sem1-algorithms-m01-l01-algoritmo", "ex-sem1-algorithms-m01-l01-pseudo"]
-original_excerpt: "An algorithm is a finite sequence of well-defined instructions."
+original_excerpt: "Program design consists of the steps a programmer should do before they start coding the program in a specific language."
 ---
 ## O que é um Algoritmo
 
@@ -187,7 +189,7 @@ Um algoritmo é uma sequência finita de instruções bem-definidas...
 Finito, definido e eficaz.
 ```
 
-**Campos obrigatórios**: todos acima. `verification_status` = `pending` | `unverified` | `verified_with_source`. `derivation_type` = `original` | `translated` | `adapted` | `summarized`. `license` = identificador SPDX. No corpo, use `## ` para cada seção (o `#` é reservado ao título da unidade) e `$...$`/`$$...$$` para matemática.
+**Campos obrigatórios**: todos acima. `verification_status` = `pending` | `unverified` | `verified_with_source`. `derivation_type` = `original` | `translated` | `adapted` | `summarized`. `license` = identificador SPDX (CC0, CC BY, CC BY-SA ou domínio público). Quando `verification_status: verified_with_source`, também são obrigatórios `verified_at` (data `YYYY-MM-DD`), `verification_method` (ex.: `manual_url_check`) e um `original_excerpt` **literal da fonte, em inglês e com ≥ 15 palavras** — o CI rejeita placeholders, URLs genéricas e trechos não conferidos (rode `npm run verify-sources` para conferir contra a fonte viva). No corpo, use `## ` para cada seção (o `#` é reservado ao título da unidade) e `$...$`/`$$...$$` para matemática.
 
 ### 2. Adicionar exercícios
 
@@ -227,13 +229,18 @@ Edite `data/curriculum.json` para adicionar a lição ao módulo correspondente.
 ```bash
 npm run validate
 npm test
+npm run verify-sources   # manual, com internet: confere cada trecho contra a fonte viva
 ```
 
-O validador checa: schema do currículo, front-matter das unidades teóricas, licença permitida, URL da fonte acessível, `verification_status` não é `unverified` em produção, exercícios válidos, links internos, licenças proibidas, ATTRIBUTIONS.md sincronizado.
+O validador checa: schema do currículo, front-matter das unidades teóricas, licença permitida, URL da fonte (não genérica), `original_excerpt` literal conferido (idioma da fonte, ≥ 15 palavras) com `verified_at`/`verification_method`, exercícios válidos (sem placeholder e com citação da fonte), links internos, licenças/edições proibidas e o bloco gerado do `ATTRIBUTIONS.md`.
 
 ### 5. Atualizar ATTRIBUTIONS.md
 
-Adicione a nova fonte na seção correspondente com: título, autores, edição, licença, URL da licença, data de conferência.
+Adicione a nova fonte na seção correspondente com: título, autores, edição, licença, URL da licença, data de conferência. Depois regenere o bloco de unidades (o CI falha se ele divergir):
+
+```bash
+node scripts/validate.mjs --update-attributions
+```
 
 ## 📜 Licenças
 

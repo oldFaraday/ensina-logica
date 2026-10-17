@@ -17,6 +17,8 @@ license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
 verification_status: verified_with_source
+verified_at: 2026-10-17
+verification_method: manual_url_check
 linked_lessons: [l16, l17, l18]
 linked_exercises: [ex-sem1-discrete-math-m03-l16-prova-direta, ex-sem1-discrete-math-m03-l17-estrutura, ex-sem1-discrete-math-m03-l18-inducao-forte]
 original_excerpt: "Mathematical induction is a proof technique, not unlike direct proof or proof by contradiction or combinatorial proof."

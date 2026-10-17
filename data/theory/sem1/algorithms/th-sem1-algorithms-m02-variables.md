@@ -17,6 +17,8 @@ license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
 verification_status: verified_with_source
+verified_at: 2026-10-17
+verification_method: manual_url_check
 linked_lessons: [l04, l05, l06]
 linked_exercises: [ex-sem1-algorithms-m02-l04-var-const, ex-sem1-algorithms-m02-l04-literal, ex-sem1-algorithms-m02-l04-identificador, ex-sem1-algorithms-m02-l04-code, ex-sem1-algorithms-m02-l04-flash, ex-sem1-algorithms-m02-l05-tipos, ex-sem1-algorithms-m02-l05-inteiro, ex-sem1-algorithms-m02-l05-string-bool, ex-sem1-algorithms-m02-l05-flash, ex-sem1-algorithms-m02-l05-code, ex-sem1-algorithms-m02-l06-precedencia, ex-sem1-algorithms-m02-l06-mod, ex-sem1-algorithms-m02-l06-atribuicao, ex-sem1-algorithms-m02-l06-code, ex-sem1-algorithms-m02-l06-flash]
 original_excerpt: "A data type is a classification of data which tells the compiler or interpreter how the programmer intends to use the data."

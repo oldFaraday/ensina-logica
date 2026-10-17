@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)**; inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)**; inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -25,7 +25,7 @@ ensina-logica/
 │   ├── curriculum.json         # ✅ Completo - mapa 8 semestres
 │   ├── theory/sem1/algorithms/ # ✅ 3 unidades reais (m01–m03), verificadas na fonte
 │   ├── theory/sem1/discrete-math/ # ✅ 3 unidades reais (m01–m03), verificadas na fonte
-│   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas (pending|unverified|verified_with_source)
+│   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas (pending|unverified|verified_with_source; verified_at/verification_method)
 │   ├── exercises/sem1/algorithms/ # ✅ 10 arquivos de lição (l01–l10), 85 exercícios no total do sem1
 │   ├── exercises/sem1/discrete-math/ # ✅ 8 arquivos de lição (l11–l18)
 │   └── exercises/_schema.json  # ✅ Completo - JSON Schema exercícios
@@ -54,7 +54,10 @@ ensina-logica/
 │       ├── modals.js           # ✅ Completo - modais acessíveis (ARIA)
 │       └── a11y.js             # ✅ Completo - skip links, live regions, reduced-motion
 ├── scripts/
-│   ├── validate.mjs            # ✅ Completo - validação CI (curriculum, theory, exercises, licenses, schema)
+│   ├── validate.mjs            # ✅ Completo - validação CI (curriculum, theory, exercises, links, licenças/edições, ATTRIBUTIONS gerada)
+│   ├── lib/content-rules.mjs   # ✅ Completo - regras anti-placeholder puras (URL genérica, trecho literal, licença/edição) usadas pelo validate e pelos testes
+│   ├── test-validation.mjs     # ✅ Completo - testes das regras anti-placeholder (exemplos ruins são rejeitados)
+│   ├── verify-sources.mjs      # ✅ Completo - verificação MANUAL (fora do CI): baixa cada fonte e confere o trecho ("confere"/"não confere"/"sem acesso")
 │   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS, unlock, progress, migração)
 │   ├── test-imports.mjs        # ✅ Completo - importa todos os módulos de src/ (falha em erro)
 │   ├── test-smoke.mjs          # ✅ Completo - smoke test do initApp (mock de DOM)
@@ -75,7 +78,7 @@ ensina-logica/
 ├── README.md                   # ✅ Completo - pt-BR com instruções
 ├── LICENSE                     # ✅ MIT
 ├── CONTENT_LICENSE.md          # ✅ CC BY-SA 4.0 + regra prevalência fonte
-├── ATTRIBUTIONS.md             # ✅ Regerado a partir das 6 unidades reais + fontes aprovadas sem unidades + libs terceiras
+├── ATTRIBUTIONS.md             # ✅ Regerado a partir das 6 unidades reais (bloco gerado e conferido no CI) + fontes aprovadas sem unidades + libs terceiras
 ├── CONTRIBUTING.md             # ✅ Completo
 ├── CODE_OF_CONDUCT.md          # ✅ Completo (Contributor Covenant 2.1)
 ├── SECURITY.md                 # ✅ Completo
@@ -232,13 +235,23 @@ Limpeza conforme o `CONTENT_AUDIT.md` (sem gerar conteúdo novo).
 - [x] T141 `ATTRIBUTIONS.md` regerado a partir das unidades que realmente existem (6 unidades); MCS e Open Guide passam a constar como "aprovadas, ainda sem unidades derivadas".
 - Verificação: `npm test` verde (**16 suítes**, inclui `scripts/test-content-dom.mjs`: 6 unidades / 18 lições / 85 exercícios) e `npm run validate` sem erros.
 
+### Fase 19: Endurecimento da validação de conteúdo — ✅ COMPLETO (T142–T147, 2026-10-17)
+Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source` sem trecho original literal conferido contra a fonte). **Sem gerar conteúdo novo.**
+- [x] T142 `scripts/lib/content-rules.mjs` (regras puras): `source.url` genérica (homepage sem capítulo/seção), `original_excerpt` no idioma da fonte (inglês), ≥ 15 palavras e sem cara de texto gerado, `verified_at` + `verification_method` obrigatórios em `verified_with_source`, licença permitida (CC0/CC BY/CC BY-SA/domínio público) e edição proibida (Levin 4ª, NC). `scripts/validate.mjs` passou a **falhar** (não só avisar) nesses casos e em exercícios com placeholder ("Questão N sobre", "Alternativa A", "Explicação da questão") ou explicação sem citar a seção/capítulo da fonte.
+- [x] T143 `ATTRIBUTIONS.md`: o validador **gera** o bloco de unidades a partir de `data/theory/` e **falha** se divergir (antes passava com o arquivo desatualizado); marcadores `<!-- BEGIN/END GENERATED: theory-units -->` e regeneração com `node scripts/validate.mjs --update-attributions`. Também rejeita ids de unidades inexistentes no arquivo.
+- [x] T144 `scripts/verify-sources.mjs` (manual, fora do CI; `npm run verify-sources`): baixa cada `source.url` e imprime **"confere"/"não confere"/"sem acesso"** por unidade.
+- [x] T145 `scripts/test-validation.mjs` (em `npm test`): exemplos ruins (unidade placeholder, licença NC, trecho em português, edição Levin 4ª, trecho curto, exercício placeholder/sem citação) confirmados como rejeitados.
+- [x] T146 Critério de aceitação (**AC-14** e **AC-15**) na spec, **Constitution §2** ("nenhuma unidade `verified_with_source` sem trecho original literal conferido contra a fonte" + `pending`), `README.md`, `docs/CONTENT_MODEL.md` e `data/theory/_schema.json` (`verified_at`/`verification_method`; licença com domínio público).
+- [x] T147 As 6 unidades reais ganharam `verified_at: 2026-10-17` + `verification_method: manual_url_check`; o trecho de `th-sem1-discrete-math-m02-predicate-logic` foi estendido para um trecho literal ≥ 15 palavras (mesma seção 0.2) e a explicação do flashcard `ex-sem1-algorithms-m01-l01-flash` passou a citar o capítulo da fonte — satisfazendo as novas regras sem inventar conteúdo.
+- Verificação: `npm test` verde (**17 suítes**, inclui `scripts/test-validation.mjs`) e `npm run validate` sem erros nem avisos; confirmado que o validador **falha** (exit 1) ao introduzir uma unidade inexistente no `ATTRIBUTIONS.md`.
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–18 concluídas.
+**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–19 concluídas.
 
-**Converge — 2ª rodada:** avaliados os 13 critérios de aceitação (AC-01…AC-13) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
+**Converge — 2ª rodada:** avaliados os 15 critérios de aceitação (AC-01…AC-15) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 
 **Implement executado em 2026-10-16** — T121–T126 concluídas (docs do modelo de conteúdo, teste e2e da jornada, filtro da biblioteca, teste do 404, memoização da busca, entrada "Biblioteca" no menu) e também T093/T094/T095/T097. `npm test` verde (**16 suítes**) e `npm run validate` sem erros.
 
@@ -246,12 +259,14 @@ Limpeza conforme o `CONTENT_AUDIT.md` (sem gerar conteúdo novo).
 
 **Limpeza do conteúdo placeholder (2026-10-17)** — T137–T141 concluídas a partir do `CONTENT_AUDIT.md`: removidas 188 unidades e 940 exercícios placeholder; currículo do 1º semestre restrito a m01–m03; `pending` adicionado a `verification_status`; as 6 unidades reais reconferidas na 3ª edição (Levin) e na fonte (Programming Fundamentals); `ATTRIBUTIONS.md` regerado. `npm test` verde (**16 suítes**) e `npm run validate` sem erros.
 
+**Endurecimento da validação (2026-10-17)** — T142–T147 concluídas para que o problema do `CONTENT_AUDIT.md` não se repita: regras anti-placeholder em `scripts/lib/content-rules.mjs` (URL genérica, trecho literal em inglês ≥ 15 palavras, `verified_at`/`verification_method`, licença/edição proibida, exercícios placeholder/sem citação), `ATTRIBUTIONS.md` com bloco **gerado** e comparação estrita, `scripts/verify-sources.mjs` manual e `scripts/test-validation.mjs` no `npm test`. `npm test` verde (**17 suítes**) e `npm run validate` sem erros nem avisos.
+
 Restam apenas itens que exigem ambiente externo:
 1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).
 2. **T100 / QA manual (Fase 11)** — jornada real em navegador (a jornada automatizada está em `scripts/test-e2e-dom.mjs`).
 3. Ao publicar, atualizar `ATTRIBUTIONS.md`/CHANGELOG com a data do deploy.
 
-Verificação automatizada: `npm test` (16 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes.
+Verificação automatizada: `npm test` (17 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes e `npm run verify-sources` confere cada trecho contra a fonte viva.
 
 ---
 
@@ -291,9 +306,9 @@ Verificação automatizada: `npm test` (16 suítes) e `npm run validate`. Com re
 
 1. **Lista de fontes aprovadas**: Salva em **`.specify/plan.md` (Seção 9)** e replicada em **`ATTRIBUTIONS.md`** com detalhes completos (URL da licença, data de conferência, restrições, unidades derivadas mapeadas).
 
-2. **Regra de validação**: `scripts/validate.mjs` (a criar) deve rejeitar qualquer unidade teórica cuja `source.license` não esteja em `ALLOWED_LICENSES = ['CC0-1.0', 'CC-BY-3.0', 'CC-BY-4.0', 'CC-BY-SA-3.0', 'CC-BY-SA-4.0']` e `FORBIDDEN_LICENSES = ['CC-BY-NC-*', 'CC-BY-ND-*', 'GFDL-1.3', 'MIT-OCW-NC-SA']`.
+2. **Regra de validação**: `scripts/validate.mjs` (regras puras em `scripts/lib/content-rules.mjs`) **rejeita** licença fora de `ALLOWED_LICENSES = ['CC0-1.0', 'CC-BY-3.0', 'CC-BY-4.0', 'CC-BY-SA-3.0', 'CC-BY-SA-4.0', 'PUBLIC-DOMAIN']`, edição proibida (ex.: Levin 4ª, NC), `source.url` genérica, unidade `verified_with_source` sem `original_excerpt` literal (inglês, ≥ 15 palavras) / `verified_at` / `verification_method`, exercício com placeholder ou explicação sem citar a fonte, e `ATTRIBUTIONS.md` divergente do bloco gerado.
 
-3. **Constitution §2**: Nenhum texto teórico inventado. Se fonte não acessada → unidade fica `verification_status: "unverified"` e não aparece na trilha (só no mapa como "em construção").
+3. **Constitution §2**: Nenhum texto teórico inventado. Se a fonte não for acessada → unidade fica `verification_status: "pending"` (não conferida) ou `"unverified"` (conferida e não confirmada) e não aparece na trilha (só no mapa como "em construção"). **Nenhuma** unidade é `verified_with_source` sem trecho original literal conferido contra a fonte (AC-14).
 
 4. **Constitution §8**: Bibliotecas terceiras **apenas se essenciais**, hospedadas localmente, versão fixa, creditadas em ATTRIBUTIONS.md. KaTeX 0.16.9 (MIT) e highlight.js 11.9.0 (BSD-3) já definidos no Plan.
 

@@ -74,9 +74,10 @@
         "CC-BY-3.0",
         "CC-BY-4.0",
         "CC-BY-SA-3.0",
-        "CC-BY-SA-4.0"
+        "CC-BY-SA-4.0",
+        "PUBLIC-DOMAIN"
       ],
-      "description": "SPDX license identifier - only permissive licenses allowed for derivation"
+      "description": "SPDX license identifier - only permissive licenses allowed for derivation (CC0, CC BY, CC BY-SA, domínio público)"
     },
     "derivation_type": {
       "type": "string",
@@ -101,7 +102,18 @@
     },
     "original_excerpt": {
       "type": "string",
-      "description": "Original text excerpt when license permits (CC BY/CC BY-SA)"
+      "minLength": 60,
+      "description": "Trecho ORIGINAL literal (idioma da fonte, inglês), com pelo menos 15 palavras, copiado da URL de origem. Obrigatório quando verification_status = verified_with_source. É conferido contra a fonte por scripts/verify-sources.mjs."
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD) em que o trecho e os metadados foram conferidos na fonte. Obrigatório quando verification_status = verified_with_source."
+    },
+    "verification_method": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Como a unidade foi conferida (ex.: manual_url_check). Obrigatório quando verification_status = verified_with_source."
     }
   },
   "additionalProperties": false

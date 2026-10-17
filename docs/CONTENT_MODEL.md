@@ -15,11 +15,12 @@ Estas regras vêm da constituição do projeto e são **não negociáveis**:
 
 1. **Só fontes aprovadas** — lista em `.specify/plan.md` §9 e no `README.md`.
 2. **Licença permissiva confirmada na página da fonte** antes de derivar:
-   - Permitidas para derivar: `CC0-1.0`, `CC-BY-3.0`, `CC-BY-4.0`, `CC-BY-SA-3.0`, `CC-BY-SA-4.0`.
+   - Permitidas para derivar: `CC0-1.0`, `CC-BY-3.0`, `CC-BY-4.0`, `CC-BY-SA-3.0`, `CC-BY-SA-4.0`, domínio público (`PUBLIC-DOMAIN`).
    - Proibidas para derivar (`apenas link "Leitura recomendada"`): `CC-BY-NC-*`, `CC-BY-ND-*`, `GFDL-1.3`, `MIT-OCW-NC-SA`, "todos os direitos reservados", licença incerta.
 3. **Atribuição obrigatória** — cada unidade carrega os metadados da fonte, e a fonte entra no `ATTRIBUTIONS.md`.
 4. **A licença da fonte prevalece** sobre a licença padrão do projeto (CC BY-SA 4.0).
 5. **Exercícios gerados por IA** — sempre ligados a uma unidade teórica, com resposta e explicação conferidas contra a fonte, e exibidos como "gerados por IA".
+6. **Nenhuma unidade é `verified_with_source` sem trecho original literal conferido contra a fonte** — `original_excerpt` no idioma da fonte (inglês), com **≥ 15 palavras**, mais `verified_at` e `verification_method`. O CI rejeita o contrário (ver §5).
 
 ---
 
@@ -74,7 +75,9 @@ Use `## ` para cada seção e `$...$` / `$$...$$` para matemática (KaTeX).
 | `verification_status` | ✅ | `verified_with_source` \| `pending` \| `unverified` |
 | `linked_lessons` | ✅ | lições do módulo |
 | `linked_exercises` | ✅ | ids dos exercícios da unidade |
-| `original_excerpt` | opcional | trecho verbatim curto (< 300 chars); habilita o alternador **"Ver original"** |
+| `verified_at` | ✅ quando `verified_with_source` | data (`YYYY-MM-DD`) em que o trecho foi conferido na fonte |
+| `verification_method` | ✅ quando `verified_with_source` | como foi conferido (ex.: `manual_url_check`) |
+| `original_excerpt` | ✅ quando `verified_with_source` | trecho **literal** da fonte, **no idioma original (inglês)** e com **≥ 15 palavras**; habilita o alternador **"Ver original"** |
 
 ### Passo 3 — Criar os exercícios
 
@@ -115,14 +118,26 @@ Com internet, para conferir se as URLs das fontes estão acessíveis:
 CHECK_URLS=1 npm run validate
 ```
 
-O validador **falha** se: a licença for proibida, o front-matter/link interno
-estiver errado, um exercício apontar para unidade/lição inexistente, ou o
-`ATTRIBUTIONS.md` estiver fora de sincronia.
+Para provar que cada `original_excerpt` existe mesmo na fonte viva (**manual, fora do CI**):
+
+```bash
+npm run verify-sources        # imprime "confere", "não confere" ou "sem acesso" por unidade
+```
+
+O validador **falha** (não apenas avisa) se:
+
+- a licença estiver fora da lista permitida (CC0, CC BY, CC BY-SA, domínio público) ou a edição for proibida (ex.: Levin 4ª edição, NC);
+- o `source.url` for genérico (homepage, sem caminho de capítulo/seção);
+- uma unidade `verified_with_source` não tiver `original_excerpt` (inglês, ≥ 15 palavras, sem cara de texto gerado) ou não tiver `verified_at`/`verification_method`;
+- o enunciado/explicação de um exercício casar com padrões de placeholder ("Questão N sobre", "Alternativa A", "Explicação da questão") ou a explicação não citar a seção/capítulo da fonte;
+- o front-matter/link interno estiver errado, um exercício apontar para unidade/lição inexistente, ou o bloco gerado do `ATTRIBUTIONS.md` divergir das unidades reais.
 
 ### Passo 6 — Atribuição e publicação
 
 - Adicione a fonte ao `ATTRIBUTIONS.md` (título, autores, edição, licença, URL da
   licença, data de conferência).
+- Regenerar o bloco de unidades depois de adicionar/remover unidades:
+  `node scripts/validate.mjs --update-attributions` (o CI **falha** se ele divergir).
 - Faça commit seguindo o `CONTRIBUTING.md`; o workflow `.github/workflows/validate.yml`
   roda a validação a cada push/PR e o `deploy-pages.yml` publica no GitHub Pages.
 

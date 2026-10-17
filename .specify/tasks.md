@@ -482,3 +482,17 @@ Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constit
 - Verificação: `npm test` verde (16 suítes; `scripts/test-content-dom.mjs` = 6 unidades / 18 lições / 85 exercícios) e `npm run validate` sem erros.
 
 **Nota (pendência, fora do escopo desta limpeza):** `scripts/generate-content.mjs` é o gerador que produziu os placeholders removidos; segue no repositório (não é referenciado por script/teste/CI) e recomenda-se removê-lo numa próxima limpeza.
+
+---
+
+## Phase 19: Endurecer a validação de conteúdo (2026-10-17)
+
+**Purpose**: Impedir que o problema do `CONTENT_AUDIT.md` (unidades `verified_with_source` sem trecho literal conferido, URLs genéricas, licenças/edições proibidas, exercícios placeholder) volte. **Append-only**: a partir de T142.
+
+- [x] T142 [feat][validation] `scripts/lib/content-rules.mjs` (regras puras e testáveis): URL genérica (homepage sem capítulo/seção), `original_excerpt` no idioma da fonte (inglês), ≥ 15 palavras e sem cara de texto gerado, `verified_at` + `verification_method` obrigatórios em `verified_with_source`, licença permitida (CC0/CC BY/CC BY-SA/domínio público) e edição proibida (Levin 4ª, NC). `scripts/validate.mjs` passa a **falhar** (não apenas avisar) nesses casos e nos exercícios com placeholder ("Questão N sobre", "Alternativa A", "Explicação da questão") ou explicação sem citar a seção/capítulo da fonte.
+- [x] T143 [fix][validation] `ATTRIBUTIONS.md`: o validador **gera** o bloco de unidades a partir de `data/theory/` e **falha** se o arquivo divergir (antes a checagem passava mesmo com o arquivo desatualizado). Marcadores `<!-- BEGIN/END GENERATED: theory-units -->`; regenerar com `node scripts/validate.mjs --update-attributions`. Também rejeita ids de unidades inexistentes no arquivo.
+- [x] T144 [feat][tooling] `scripts/verify-sources.mjs` (manual, fora do CI; `npm run verify-sources`): baixa cada `source.url` e imprime "confere"/"não confere"/"sem acesso" para cada `original_excerpt`.
+- [x] T145 [test][validation] `scripts/test-validation.mjs` (em `npm test`): asserções com exemplos ruins (unidade placeholder, licença NC, trecho em português, edição Levin 4ª, trecho curto, exercício placeholder/sem citação) confirmando que as regras os rejeitam; helpers e bloco gerado cobertos.
+- [x] T146 [docs] Critério de aceitação nas specs (AC-14, AC-15), Constitution §2 (`pending` + "nenhuma unidade `verified_with_source` sem trecho original literal conferido contra a fonte"), `README.md`, `docs/CONTENT_MODEL.md` e `data/theory/_schema.json` (`verified_at`/`verification_method`; enum de licença com domínio público).
+- [x] T147 [data][content] As 6 unidades reais ganharam `verified_at: 2026-10-17` + `verification_method: manual_url_check`; o trecho de `th-sem1-discrete-math-m02-predicate-logic` foi estendido para um trecho literal ≥ 15 palavras (mesma seção 0.2) e a explicação do flashcard `ex-sem1-algorithms-m01-l01-flash` passou a citar o capítulo da fonte — satisfazendo as novas regras sem inventar conteúdo.
+- Verificação: `npm test` verde (17 suítes; inclui `scripts/test-validation.mjs`) e `npm run validate` sem erros nem avisos. Também confirmado que o validador **falha** (exit 1) quando `ATTRIBUTIONS.md` recebe uma unidade inexistente.

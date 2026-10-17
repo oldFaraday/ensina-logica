@@ -17,6 +17,8 @@ license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
 verification_status: verified_with_source
+verified_at: 2026-10-17
+verification_method: manual_url_check
 linked_lessons: [l01, l02, l03]
 linked_exercises: [ex-sem1-algorithms-m01-l01-algoritmo, ex-sem1-algorithms-m01-l01-pseudo, ex-sem1-algorithms-m01-l01-ipo, ex-sem1-algorithms-m01-l01-ordem, ex-sem1-algorithms-m01-l01-flash, ex-sem1-algorithms-m01-l02-simbolos, ex-sem1-algorithms-m01-l02-terminal, ex-sem1-algorithms-m01-l02-ordem-pseudo, ex-sem1-algorithms-m01-l02-code, ex-sem1-algorithms-m01-l03-tres, ex-sem1-algorithms-m01-l03-selecao, ex-sem1-algorithms-m01-l03-fluxo-if, ex-sem1-algorithms-m01-l03-ordem]
 original_excerpt: "Program design consists of the steps a programmer should do before they start coding the program in a specific language."

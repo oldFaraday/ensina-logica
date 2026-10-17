@@ -74,7 +74,7 @@
     "prompt": "O que é um algoritmo e como ele é documentado no design de um programa?",
     "starter_code": "É uma sequência finita e ordenada de passos que descreve como resolver um problema ou realizar uma tarefa. No design de um programa, ele é documentado com ferramentas como o pseudocódigo e o fluxograma, antes de ser escrito em uma linguagem.",
     "correct": "É uma sequência finita e ordenada de passos que descreve como resolver um problema ou realizar uma tarefa. No design de um programa, ele é documentado com ferramentas como o pseudocódigo e o fluxograma, antes de ser escrito em uma linguagem.",
-    "explanation": "A unidade de Introdução a Algoritmos define o algoritmo como uma sequência ordenada de passos e mostra que o design (pseudocódigo e fluxograma) planeja a lógica antes de codificar.",
+    "explanation": "A unidade de Introdução a Algoritmos (capítulo Program Design) define o algoritmo como uma sequência ordenada de passos e mostra que o design (pseudocódigo e fluxograma) planeja a lógica antes de codificar.",
     "difficulty": "easy",
     "xp_base": 5
   }

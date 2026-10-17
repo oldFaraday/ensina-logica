@@ -139,3 +139,5 @@ O projeto só está "pronto" quando existirem:
 | AC-11 | Todos os arquivos de repositório listados em "Entregáveis" existem e estão corretos. |
 | AC-12 | Mapa dos 8 semestres existe como dados (mesmo que só 1º tenha conteúdo). |
 | AC-13 | Unidades teóricas têm metadados obrigatórios; fontes confirmadas; `pendente` onde fonte não acessada. |
+| AC-14 | Nenhuma unidade pode ser `verified_with_source` sem um **trecho original literal conferido contra a fonte**: `original_excerpt` no idioma da fonte (inglês), com **≥ 15 palavras**, mais `verified_at` e `verification_method`. |
+| AC-15 | O validador de CI (`scripts/validate.mjs`) **rejeita**: URL de fonte genérica (homepage sem capítulo/seção), trecho placeholder/gerado ou em português, licença fora de CC0/CC BY/CC BY-SA/domínio público, edição proibida (Levin 4ª, NC), exercício com enunciado/explicação de placeholder ou explicação sem citar a fonte, e `ATTRIBUTIONS.md` cujo bloco gerado difira das unidades reais. |

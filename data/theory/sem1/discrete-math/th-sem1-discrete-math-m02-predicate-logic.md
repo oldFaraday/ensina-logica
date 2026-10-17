@@ -17,9 +17,11 @@ license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
 verification_status: verified_with_source
+verified_at: 2026-10-17
+verification_method: manual_url_check
 linked_lessons: [l14, l15]
 linked_exercises: [ex-sem1-discrete-math-m02-l14-quantificador-universal, ex-sem1-discrete-math-m02-l15-variavel-livre]
-original_excerpt: "A sentence that contains variables is called a predicate."
+original_excerpt: "For one thing, because this sentence has a free variable (that is, a variable that we have not specified anything about), it is not a statement. A sentence that contains variables is called a predicate."
 ---
 
 Nem toda afirmação pode ser analisada apenas com conectivos. Frases como "todo primo maior que 2 é ímpar" dependem de **variáveis** e de **propriedades** dessas variáveis. Esta unidade estuda a lógica de predicados: os quantificadores universal e existencial, o domínio de discurso, a negação de quantificadores e o escopo das variáveis. O texto baseia-se na Seção 0.2 (Predicados e Quantificadores) e na Seção 3.1 (Beyond Propositions / Além das proposições) de *Discrete Mathematics: An Open Introduction*.

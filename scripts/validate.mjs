@@ -5,28 +5,24 @@
  * Executa: node scripts/validate.mjs
  */
 
-import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'fs';
 import { join, extname, basename, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { CURRENT_SCHEMA_VERSION } from '../src/store/schema-version.js';
+import {
+  ALLOWED_LICENSES,
+  FORBIDDEN_LICENSES,
+  theoryUnitContentErrors,
+  exerciseContentErrors,
+  generateAttributionsBlock,
+  extractAttributionsBlock,
+  collectUnitIds,
+  ATTRIBUTIONS_BEGIN,
+  ATTRIBUTIONS_END
+} from './lib/content-rules.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = dirname(__dirname);
-
-// Licenças permitidas para derivação (SPDX)
-const ALLOWED_LICENSES = [
-  'CC0-1.0',
-  'CC-BY-3.0', 'CC-BY-4.0',
-  'CC-BY-SA-3.0', 'CC-BY-SA-4.0'
-];
-
-// Licenças explicitamente proibidas
-const FORBIDDEN_LICENSES = [
-  'CC-BY-NC-4.0', 'CC-BY-NC-SA-4.0', 'CC-BY-NC-ND-4.0',
-  'CC-BY-ND-4.0',
-  'GFDL-1.3',
-  'MIT-OCW-NC-SA'
-];
 
 // Schema IDs esperados
 const REQUIRED_THEORY_FIELDS = [
@@ -224,6 +220,12 @@ function validateTheoryFile(filePath) {
     error(`ID inválido (padrão: th-sem{N}-{discipline}-{module}-{slug}): ${fm.id}`, relPath);
   }
 
+  // Regras anti-placeholder (endurecidas): URL genérica, trecho literal,
+  // idioma do trecho, verified_at/verification_method, licença/edição proibida.
+  for (const msg of theoryUnitContentErrors(fm)) {
+    error(msg, relPath);
+  }
+
   return {
     id: fm.id,
     relPath,
@@ -331,7 +333,7 @@ function parseFrontMatter(yaml) {
 // ============================================
 // 3. Valida exercícios
 // ============================================
-function validateExercises() {
+function validateExercises(theoryById = new Map()) {
   console.log('\n🏋️ Validando exercícios...');
   const exercisesDir = join(ROOT_DIR, 'data/exercises');
 
@@ -348,7 +350,7 @@ function validateExercises() {
 
   const collected = [];
   for (const file of files) {
-    collected.push(...validateExerciseFile(file));
+    collected.push(...validateExerciseFile(file, theoryById));
   }
 
   success(`${files.length} arquivo(s) de exercício validado(s) (${collected.length} exercício(s))`);
@@ -371,7 +373,7 @@ function findJsonFiles(dir) {
   return files;
 }
 
-function validateExerciseFile(filePath) {
+function validateExerciseFile(filePath, theoryById = new Map()) {
   const relPath = filePath.replace(ROOT_DIR + '/', '');
   const collected = [];
 
@@ -391,7 +393,7 @@ function validateExerciseFile(filePath) {
 
     exercises.forEach((exercise, idx) => {
       const label = `${relPath}#${idx}`;
-      validateExerciseObject(exercise, label);
+      validateExerciseObject(exercise, label, theoryById);
 
       if (exercise.id) {
         if (seen.has(exercise.id)) {
@@ -415,7 +417,7 @@ function validateExerciseFile(filePath) {
   return collected;
 }
 
-function validateExerciseObject(exercise, relPath) {
+function validateExerciseObject(exercise, relPath, theoryById = new Map()) {
   for (const field of REQUIRED_EXERCISE_FIELDS) {
     if (!(field in exercise)) {
       error(`Campo obrigatório ausente: ${field}`, relPath);
@@ -440,6 +442,14 @@ function validateExerciseObject(exercise, relPath) {
   // theory_unit_id pattern
   if (exercise.theory_unit_id && !/^th-sem[1-8]-[a-z-]+-[a-z0-9-]+$/.test(exercise.theory_unit_id)) {
     error(`theory_unit_id inválido: ${exercise.theory_unit_id}`, relPath);
+  }
+
+  // Regras anti-placeholder (T1xx): enunciado/explicação gerados ou sem
+  // citação da seção da fonte vinculada.
+  const unit = exercise.theory_unit_id ? theoryById.get(exercise.theory_unit_id) : null;
+  const sourceSection = (unit && unit.source && unit.source.section) || '';
+  for (const msg of exerciseContentErrors(exercise, { sourceSection })) {
+    error(msg, relPath);
   }
 }
 
@@ -599,22 +609,73 @@ function validateInternalLinks(theoryUnits, exercises) {
   success('links internos consistentes');
 }
 
+/**
+ * Regenera o bloco de unidades dentro de ATTRIBUTIONS.md a partir das unidades
+ * reais. Usado por `node scripts/validate.mjs --update-attributions`.
+ */
+function updateAttributionsFile(theoryUnits) {
+  const path = join(ROOT_DIR, 'ATTRIBUTIONS.md');
+  if (!existsSync(path)) {
+    error('ATTRIBUTIONS.md não encontrado para atualização');
+    return;
+  }
+
+  const content = readFileSync(path, 'utf-8');
+  const expected = generateAttributionsBlock(theoryUnits);
+  const actual = extractAttributionsBlock(content);
+
+  if (!actual) {
+    error(`ATTRIBUTIONS.md sem o bloco gerado ('${ATTRIBUTIONS_BEGIN}' / '${ATTRIBUTIONS_END}')`);
+    return;
+  }
+
+  writeFileSync(path, content.replace(actual, expected), 'utf-8');
+  info('ATTRIBUTIONS.md atualizado (bloco de unidades regenerado)');
+}
+
+/**
+ * Compara o bloco gerado de ATTRIBUTIONS.md com o esperado a partir das
+ * unidades reais. FALHA (não apenas avisa) quando o arquivo difere, quando há
+ * ids de unidades inexistentes e quando falta a fonte de alguma unidade.
+ */
 function validateAttributionsSync(theoryUnits) {
   console.log('\n📝 Validando sync ATTRIBUTIONS.md (T111)...');
   const path = join(ROOT_DIR, 'ATTRIBUTIONS.md');
-  if (!existsSync(path) || theoryUnits.length === 0) return;
+
+  if (!existsSync(path)) {
+    error('ATTRIBUTIONS.md não encontrado (não é possível sincronizar)');
+    return;
+  }
 
   const content = readFileSync(path, 'utf-8');
-  for (const unit of theoryUnits) {
-    if (unit.id && !content.includes(unit.id)) {
-      warn(`Unidade '${unit.id}' não está listada em ATTRIBUTIONS.md`);
-    }
-    const srcTitle = unit.source && unit.source.title;
-    if (srcTitle && !content.includes(srcTitle)) {
-      warn(`Fonte '${srcTitle}' (unidade ${unit.id}) não aparece em ATTRIBUTIONS.md`);
+  const expected = generateAttributionsBlock(theoryUnits);
+  const actual = extractAttributionsBlock(content);
+
+  if (!actual) {
+    error(`ATTRIBUTIONS.md sem bloco gerado (esperado entre '${ATTRIBUTIONS_BEGIN}' e '${ATTRIBUTIONS_END}')`);
+    return;
+  }
+
+  if (actual.trimEnd() !== expected.trimEnd()) {
+    error('ATTRIBUTIONS.md desatualizado: o bloco de unidades difere das unidades em data/theory/ (rode: node scripts/validate.mjs --update-attributions)');
+  }
+
+  // Nenhum id de unidade obsoleto pode sobrar em qualquer parte do arquivo.
+  const currentIds = new Set(theoryUnits.map((u) => u.id));
+  for (const id of collectUnitIds(content)) {
+    if (!currentIds.has(id)) {
+      error(`ATTRIBUTIONS.md lista unidade inexistente: ${id}`);
     }
   }
-  success('ATTRIBUTIONS.md em sincronia');
+
+  // Cada fonte efetivamente usada precisa aparecer no arquivo.
+  for (const title of new Set(theoryUnits.map((u) => u.source && u.source.title).filter(Boolean))) {
+    if (!content.includes(title)) {
+      error(`Fonte '${title}' (usada por unidades) não aparece em ATTRIBUTIONS.md`);
+    }
+  }
+
+  success(`ATTRIBUTIONS.md em sincronia (${theoryUnits.length} unidade(s))`);
 }
 
 async function validateSourceUrls(theoryUnits) {
@@ -653,9 +714,13 @@ async function main() {
 
   validateCurriculum();
   const theoryUnits = validateTheoryUnits();
-  const exercises = validateExercises();
+  const theoryById = new Map(theoryUnits.map((u) => [u.id, u]));
+  const exercises = validateExercises(theoryById);
   validateInternalLinks(theoryUnits, exercises);
   validateAttributions();
+  if (process.argv.includes('--update-attributions')) {
+    updateAttributionsFile(theoryUnits);
+  }
   validateAttributionsSync(theoryUnits);
   await validateSourceUrls(theoryUnits);
   validateProgressSchema();

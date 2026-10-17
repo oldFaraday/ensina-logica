@@ -7,6 +7,14 @@ e este projeto adere a [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
 
+### Adicionado
+- `scripts/lib/content-rules.mjs`, `scripts/test-validation.mjs` e `scripts/verify-sources.mjs`: regras anti-placeholder puras, testes com exemplos ruins (unidade placeholder, licença NC, trecho em português, edição Levin 4ª, exercício sem citação) e verificação manual de cada `original_excerpt` contra a fonte viva (`npm run verify-sources`, fora do CI).
+
+### Alterado
+- `scripts/validate.mjs` passa a **falhar** (não só avisar) em: `source.url` genérica (homepage sem capítulo/seção), `original_excerpt` não literal (fora do idioma da fonte, < 15 palavras ou com cara de texto gerado), `verified_with_source` sem `verified_at`/`verification_method`, licença/edição proibida (ex.: Levin 4ª, NC), exercício com placeholder ou explicação sem citar a fonte, e `ATTRIBUTIONS.md` divergente do bloco gerado a partir das unidades (antes a checagem passava com o arquivo desatualizado). Novo flag `node scripts/validate.mjs --update-attributions`.
+- As 6 unidades reais ganharam `verified_at`/`verification_method`; o trecho de `th-sem1-discrete-math-m02-predicate-logic` foi estendido para ≥ 15 palavras e o flashcard `ex-sem1-algorithms-m01-l01-flash` passou a citar o capítulo da fonte.
+- Critério de aceitação AC-14/AC-15 na spec e Constitution §2: nenhuma unidade `verified_with_source` sem trecho original literal conferido contra a fonte.
+
 ## [1.0.0] - 2026-10-16
 
 ### Adicionado

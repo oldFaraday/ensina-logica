@@ -17,6 +17,8 @@ license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
 verification_status: verified_with_source
+verified_at: 2026-10-17
+verification_method: manual_url_check
 linked_lessons: [l11, l12, l13]
 linked_exercises: [ex-sem1-discrete-math-m01-l11-proposicao, ex-sem1-discrete-math-m01-l12-tabela-verdade]
 original_excerpt: "Two (molecular) statements P and Q are logically equivalent provided P is true precisely when Q is true."

@@ -17,6 +17,8 @@ license: CC-BY-SA-4.0
 derivation_type: summarized
 language: pt-BR
 verification_status: verified_with_source
+verified_at: 2026-10-17
+verification_method: manual_url_check
 linked_lessons: [l07, l08, l09, l10]
 linked_exercises: [ex-sem1-algorithms-m03-l07-if-else, ex-sem1-algorithms-m03-l07-mutuamente, ex-sem1-algorithms-m03-l07-relacionais, ex-sem1-algorithms-m03-l07-code, ex-sem1-algorithms-m03-l07-ordem, ex-sem1-algorithms-m03-l08-while-quatro, ex-sem1-algorithms-m03-l08-do-while, ex-sem1-algorithms-m03-l08-for, ex-sem1-algorithms-m03-l08-infinite, ex-sem1-algorithms-m03-l08-code, ex-sem1-algorithms-m03-l09-aninhados, ex-sem1-algorithms-m03-l09-break, ex-sem1-algorithms-m03-l09-continue, ex-sem1-algorithms-m03-l09-code, ex-sem1-algorithms-m03-l09-ordem, ex-sem1-algorithms-m03-l10-modular, ex-sem1-algorithms-m03-l10-param-arg, ex-sem1-algorithms-m03-l10-return, ex-sem1-algorithms-m03-l10-code, ex-sem1-algorithms-m03-l10-flash]
 original_excerpt: "The mechanisms that allow us to control the flow of execution are called control structures."
