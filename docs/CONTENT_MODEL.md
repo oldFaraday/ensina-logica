@@ -116,13 +116,17 @@ Tipos e campos específicos:
 }
 ```
 
-A verificação compara a resposta digitada com cada `accepted_answers` **após
-normalizar aspas tipográficas e remover todos os espaços em branco** — logo
-`(a+b)/2` ≡ `( a + b ) / 2`. Equivalências que não são só de formatação (ex.:
-`(a+b)/2` vs `(b+a)/2`, ou `a // b` vs `a % b`) **precisam** ser listadas
-explicitamente em `accepted_answers`. A primeira resposta da lista é a de
-referência exibida quando o aluno erra. Nada de `eval`/execução: o código nunca
-é executado, apenas comparado como texto.
+A verificação compara a resposta digitada com cada `accepted_answers` após uma
+normalização **conservadora**: uniformiza aspas tipográficas, colapsa espaços
+repetidos em um só e remove espaços **apenas ao redor de operadores/pontuação**
+(`+ - * / % ( ) [ ] , : = < >`). Logo `(a+b)/2` ≡ `( a + b ) / 2`, mas o que não é
+só formatação **nunca** é aceito por engano: o espaço entre palavras é
+preservado (por ex. `not x` ≠ `notx` e `a and b` ≠ `aandb`) e o conteúdo entre
+aspas não é alterado (`"a b"` ≠ `"ab"`). Equivalências reais (ex.: `(a+b)/2` vs
+`(b+a)/2`, ou `a // b` vs `a % b`) **precisam** ser listadas explicitamente em
+`accepted_answers`. A primeira resposta da lista é a de referência exibida
+quando o aluno erra. Nada de `eval`/execução: o código nunca é executado, apenas
+comparado como texto.
 
 ### Passo 4 — Atualizar o currículo
 

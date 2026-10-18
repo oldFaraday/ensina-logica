@@ -39,6 +39,36 @@ export function calculateXP({ isFirstAttempt, isRetry, streak, baseXp = BASE_XP 
 }
 
 /**
+ * Calcula o XP de UM exercício de acordo com a regra "XP uma vez por exercício".
+ *
+ * - Resposta incorreta → 0.
+ * - Primeira resposta correta (sem tentativa anterior) → base + bônus de 1ª vez + streak.
+ * - Acerto após uma tentativa anterior (erro/retry) → valor reduzido (retry), sem bônus de 1ª vez.
+ * - Exercício já creditado (`correct === true` ou `xp_earned > 0`) → 0: repetir não rende XP.
+ *
+ * @param {Object} params
+ * @param {Object} params.exercise - Exercício (usa `xp_base`)
+ * @param {Object|null|undefined} params.previous - Registro anterior em `progress.exercises[id]`
+ * @param {boolean} params.isCorrect - Se a resposta atual está correta
+ * @param {number} [params.streak=0] - Streak atual em dias
+ * @returns {number} XP concedido (0 se não houver concessão)
+ */
+export function calculateExerciseXP({ exercise, previous, isCorrect, streak = 0 }) {
+  if (!isCorrect) return 0;
+
+  // Concede uma única vez: se o exercício já foi resolvido/creditado, repetir não rende.
+  const alreadyCredited = Boolean(previous) && (previous.correct === true || (previous.xp_earned || 0) > 0);
+  if (alreadyCredited) return 0;
+
+  return calculateXP({
+    isFirstAttempt: !previous,
+    isRetry: Boolean(previous),
+    streak,
+    baseXp: exercise?.xp_base
+  });
+}
+
+/**
  * Calculate level from total XP
  * Level formula: floor(sqrt(total_xp / 1000)) + 1
  * Levels: 1 (0-999), 2 (1000-3999), 3 (4000-8999), 4 (9000-15999), 5 (16000-24999)...

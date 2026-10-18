@@ -80,14 +80,14 @@ function makeExercise(overrides) {
   };
 }
 
-/** Renderiza um code-completion e expõe a resposta capturada por `onAnswer`. */
+/** Renderiza um code-completion e expõe as respostas capturadas por `onAnswer`. */
 function mountCodeCompletion(overrides) {
-  const state = { answer: null };
+  const state = { answer: null, answers: [] };
   const ex = makeExercise({ type: 'code-completion', ...overrides });
   const el = renderCodeCompletion(ex, {
     streak: 0,
     calculateXP: () => 20,
-    onAnswer: (r) => { state.answer = r; }
+    onAnswer: (r) => { state.answer = r; state.answers.push(r); }
   });
   mount(el);
   return { el, state };
@@ -203,10 +203,34 @@ try {
   // ===================================================================
   {
     // --- Utilitários de normalização/comparação ---
-    assert.equal(normalizeBlankAnswer(' (A + B) / 2 '), '(A+B)/2', 'remove todos os espaços');
+    // Formatação irrelevante: espaços em volta de operadores/pontuação somem.
+    assert.equal(normalizeBlankAnswer(' (A + B) / 2 '), '(A+B)/2', 'remove espaços só ao redor de operadores');
+    assert.equal(normalizeBlankAnswer('lista[0] , x : y = z'), 'lista[0],x:y=z', 'pontuação também normaliza');
+    assert.equal(normalizeBlankAnswer('a  *   b'), 'a*b', 'colapsa e remove espaços repetidos em volta de operador');
+    assert.equal(normalizeBlankAnswer('not  x'), 'not x', 'colapsa espaços repetidos entre palavras');
+    assert.equal(normalizeBlankAnswer('a   and    b'), 'a and b', 'mantém um espaço entre palavras');
+    assert.equal(normalizeBlankAnswer('  x  '), 'x', 'remove espaços nas pontas');
     assert.equal(normalizeBlankAnswer('\u201Cx\u2019'), '"x\'', 'normaliza aspas tipográficas');
+
+    // Conteúdo entre aspas é preservado (não vira "ab").
+    assert.equal(normalizeBlankAnswer('print("a b")'), 'print("a b")', 'não altera espaços dentro de aspas');
+    assert.equal(normalizeBlankAnswer("print('a  b')"), "print('a  b')", 'preserva aspas simples (inclusive espaços repetidos)');
+    assert.equal(normalizeBlankAnswer('mensagem = "ola  mundo"'), 'mensagem="ola  mundo"', 'normaliza fora das aspas, preserva dentro');
+
+    // Equivalências de formatação continuam aceitas.
     assert.ok(answersMatch('(idade1+idade2)/2', ['(idade1 + idade2) / 2']), 'equivalência só de espaços');
+    assert.ok(answersMatch('x = 1 + 2', ['x=1+2']), 'espaços em volta de operadores são ignorados');
+    assert.ok(answersMatch('not   x', ['not x']), 'espaços repetidos entre palavras são colapsados');
     assert.ok(answersMatch('(idade2 + idade1) / 2', ['(idade1 + idade2) / 2', '(idade2 + idade1) / 2']), 'aceita equivalência listada');
+
+    // Respostas ERRADAS que a normalização antiga (remover TODOS os espaços) aceitaria.
+    assert.ok(!answersMatch('notx', ['not x']), 'REGRESSÃO: "notx" não pode casar com "not x"');
+    assert.ok(!answersMatch('aandb', ['a and b']), 'REGRESSÃO: "aandb" não pode casar com "a and b"');
+    assert.ok(!answersMatch('x andy', ['x and y']), 'REGRESSÃO: "x andy" não pode casar com "x and y"');
+    assert.ok(!answersMatch('print("ab")', ['print("a b")']), 'REGRESSÃO: conteúdo entre aspas não pode ser esvaziado');
+    assert.ok(!answersMatch('"ab"', ['"a b"']), 'REGRESSÃO: "ab" não pode casar com "a b"');
+
+    // Respostas realmente diferentes nunca casam.
     assert.ok(!answersMatch('(idade1 - idade2)/2', ['(idade1 + idade2) / 2']), 'resposta diferente não casa');
     assert.ok(!answersMatch('', ['x']), 'resposta vazia nunca casa');
     assert.ok(!answersMatch('   ', ['x']), 'resposta só com espaços nunca casa');
@@ -355,6 +379,25 @@ try {
     const fb = el.querySelector('.exercise-feedback');
     assert.ok(fb.textContent.includes('Lacuna 2'), 'feedback aponta a lacuna errada (2)');
     assert.ok(!fb.textContent.includes('Lacuna 1'), 'feedback não acusa a lacuna correta (1)');
+  }
+
+  {
+    // --- Clicar "Verificar" várias vezes NÃO concede XP várias vezes ---
+    const single = {
+      code: 'media = ___',
+      language: 'python',
+      blanks: [{ accepted_answers: ['(idade1 + idade2) / 2'] }]
+    };
+    const { el, state } = mountCodeCompletion(single);
+    const input = el.querySelector('.code-blank');
+    input.value = '(idade1 + idade2) / 2';
+    const btn = el.querySelector('.check-btn');
+    btn.click();
+    btn.click();
+    btn.click();
+    // onAnswer deve disparar uma única vez (guard `answered`) → 1 XP, não 3.
+    assert.equal(state.answers.length, 1, 'Verificar várias vezes verifica uma única vez');
+    assert.equal(state.answers[0].xpEarned, 20, 'XP concedido uma única vez por render');
   }
 
   ok('T045 completar código: lacunas inline, normalização e respostas aceitas');

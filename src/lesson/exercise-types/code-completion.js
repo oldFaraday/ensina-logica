@@ -13,9 +13,12 @@
  *                 lacunas; a primeira resposta costuma ser a de referência
  *  - `language` → rótulo exibido na badge (javascript, python, pseudocode...)
  *
- * A comparação de cada lacuna normaliza aspas e espaços em branco, de modo que
- * `(a+b)/2`, `(a + b) / 2` e `(a+b) /2` sejam equivalentes. Diferenças que não
- * são só de formatação (ex.: `(a+b)/2` vs. `(b+a)/2`) precisam ser listadas em
+ * A comparação normaliza aspas e apenas a formatação "segura": colapsa espaços
+ * repetidos e remove espaços ao redor de operadores/pontuação, de modo que
+ * `(a+b)/2`, `(a + b) / 2` e `(a+b) /2` sejam equivalentes. O que NÃO é só
+ * formatação nunca é aceito por engano: espaços entre palavras são preservados
+ * (`not x` ≠ `notx`) e o conteúdo entre aspas não é alterado (`"a b"` ≠ `"ab"`).
+ * Diferenças reais (ex.: `(a+b)/2` vs. `(b+a)/2`) precisam ser listadas em
  * `accepted_answers`.
  */
 
@@ -31,19 +34,54 @@ const LANGUAGE_LABELS = {
 /** Marcador de lacuna usado no campo `code`. */
 export const CODE_BLANK_TOKEN = '___';
 
+// Operadores/pontuação cujos espaços ao redor são irrelevantes.
+const OPERATOR_CHARS = '+\\-*/%()\\[\\],:=<>';
+const OPERATOR_SPACES_RE = new RegExp(`\\s*([${OPERATOR_CHARS}])\\s*`, 'g');
+// Trecho entre aspas simples/duplas, respeitando escapes (\" e \').
+const QUOTED_SEGMENT_RE = /(["'])(?:\\.|(?!\1)[\s\S])*\1/g;
+
+/**
+ * Normaliza um trecho FORA de aspas: colapsa espaços repetidos e remove espaços
+ * ao redor de operadores/pontuação. Preserva pelo menos um espaço entre duas
+ * palavras ("not x" ≠ "notx").
+ * @param {string} segment
+ * @returns {string}
+ */
+function normalizeUnquotedSegment(segment) {
+  return segment
+    .replace(/\s+/g, ' ')
+    .replace(OPERATOR_SPACES_RE, '$1');
+}
+
 /**
  * Normaliza a resposta de uma lacuna antes de comparar:
  *  - uniformiza aspas tipográficas ("" '' ′ ″) para ASCII;
- *  - remove todos os espaços em branco (espaços, tabs, quebras de linha).
+ *  - colapsa espaços repetidos em um único espaço;
+ *  - remove espaços apenas ao redor de operadores e pontuação
+ *    ( + - * / % ( ) [ ] , : = < > );
+ *  - mantém pelo menos um espaço entre duas palavras (`not x` ≠ `notx`);
+ *  - não altera o conteúdo entre aspas (`"a b"` ≠ `"ab"`).
  * Não altera maiúsculas/minúsculas (identificadores diferenciam caixa).
  * @param {unknown} value
  * @returns {string}
  */
 export function normalizeBlankAnswer(value) {
-  return String(value ?? '')
+  const raw = String(value ?? '')
     .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
     .replace(/[\u201C\u201D\u201E\u201F\u2033]/g, '"')
-    .replace(/\s+/g, '');
+    .trim();
+
+  let normalized = '';
+  let lastIndex = 0;
+  QUOTED_SEGMENT_RE.lastIndex = 0;
+  let match;
+  while ((match = QUOTED_SEGMENT_RE.exec(raw)) !== null) {
+    normalized += normalizeUnquotedSegment(raw.slice(lastIndex, match.index));
+    normalized += match[0]; // conteúdo entre aspas é preservado
+    lastIndex = match.index + match[0].length;
+  }
+  normalized += normalizeUnquotedSegment(raw.slice(lastIndex));
+  return normalized;
 }
 
 /**

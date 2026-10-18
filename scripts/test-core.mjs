@@ -12,7 +12,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = dirname(__dirname);
 
 // Importa módulos para teste
-import { calculateXP, levelFromXP, xpForLevel } from '../src/gamification/xp.js';
+import { calculateXP, calculateExerciseXP, levelFromXP, xpForLevel } from '../src/gamification/xp.js';
 import { updateStreak, getStreakInfo, getMondayOfWeek } from '../src/gamification/streak.js';
 import { scheduleReview, getDueReviews, recordWrongExercise, processExerciseReview, getDueExerciseReviews, getNextReview, SRS_INTERVALS } from '../src/gamification/srs.js';
 import { isModuleUnlocked, getAvailableDisciplines, getDisciplineProgress, getModuleProgress } from '../src/curriculum/unlock.js';
@@ -127,6 +127,44 @@ function testXP() {
   assertEqual(xpForLevel(2), 1000, 'Level 2 starts at 1000');
   assertEqual(xpForLevel(3), 4000, 'Level 3 starts at 4000');
   assertEqual(xpForLevel(4), 9000, 'Level 4 starts at 9000');
+
+  // ---------------------------------------------------------------
+  // XP por exercício: concedido UMA única vez por exercício.
+  // ---------------------------------------------------------------
+  const ex = { id: 'ex-x', xp_base: 20 };
+
+  // 1ª resposta correta → base + bônus de 1ª vez + streak (20 + 5 + 1*2 = 27).
+  assertEqual(
+    calculateExerciseXP({ exercise: ex, previous: undefined, isCorrect: true, streak: 1 }),
+    27,
+    'Exercício: 1ª resposta correta = base + 1ª vez + streak (+27)'
+  );
+
+  // Errou antes (não creditado) e acertou agora → retry (metade da base + streak).
+  assertEqual(
+    calculateExerciseXP({ exercise: ex, previous: { correct: false, xp_earned: 0 }, isCorrect: true, streak: 0 }),
+    10,
+    'Exercício: acerto após erro vale retry (50%), sem bônus de 1ª vez'
+  );
+
+  // Já resolvido/corretamente creditado → repetir NÃO rende XP.
+  assertEqual(
+    calculateExerciseXP({ exercise: ex, previous: { correct: true, xp_earned: 27 }, isCorrect: true, streak: 5 }),
+    0,
+    'Exercício: acertar de novo um já creditado vale 0 (não dá para farmar)'
+  );
+  assertEqual(
+    calculateExerciseXP({ exercise: ex, previous: { correct: false, xp_earned: 10 }, isCorrect: true, streak: 5 }),
+    0,
+    'Exercício: repetir quando já houve concessão de XP vale 0'
+  );
+
+  // Errar nunca rende XP, mesmo na 1ª tentativa.
+  assertEqual(
+    calculateExerciseXP({ exercise: ex, previous: undefined, isCorrect: false, streak: 3 }),
+    0,
+    'Exercício: resposta incorreta vale 0'
+  );
 }
 
 // ============================================

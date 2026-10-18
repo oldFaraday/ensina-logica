@@ -13,7 +13,7 @@ import { initModals } from './ui/modals.js';
 import { initA11y, announce } from './ui/a11y.js';
 import { celebrate } from './ui/confetti.js';
 import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadExercisesForTheoryUnit } from './curriculum/loader.js';
-import { calculateXP, levelFromXP, xpForLevel } from './gamification/xp.js';
+import { calculateExerciseXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
 import { scheduleReview, getDueReviews, getDueExerciseReviews, getNextReview, recordWrongExercise, processExerciseReview } from './gamification/srs.js';
@@ -772,13 +772,16 @@ function mountLesson(host, ctx) {
     exercises: preparedExercises
   }, {
     calculateXP: (exercise, isCorrect) => {
-      if (!isCorrect) return 0;
-      // Qualquer tentativa após a primeira recebe XP reduzido (retry penalty).
-      const previous = AppState.progress.exercises?.[exercise.id];
-      const isFirstAttempt = !previous;
-      const isRetry = Boolean(previous);
-      const streak = AppState.progress.stats?.current_streak || 0;
-      return calculateXP({ isFirstAttempt, isRetry, streak, baseXp: exercise.xp_base });
+      // Regra: o XP de um exercício é concedido uma única vez. A 1ª resposta
+      // correta recebe base + bônus de 1ª vez + streak; acertar depois de um
+      // erro vale o valor de retry (menor); acertar de novo um exercício já
+      // creditado vale 0 (não dá para "farmar" XP repetindo o mesmo exercício).
+      return calculateExerciseXP({
+        exercise,
+        previous: AppState.progress.exercises?.[exercise.id],
+        isCorrect,
+        streak: AppState.progress.stats?.current_streak || 0
+      });
     },
     getStreak: () => AppState.progress.stats?.current_streak || 0,
     onAnswer: (result) => handleExerciseAnswer({ ...result, lessonId }),
