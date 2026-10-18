@@ -184,8 +184,10 @@ export function renderOrderSteps(exercise, options = {}) {
     list.querySelectorAll('.move-up, .move-down').forEach(btn => btn.disabled = true);
     if (submitBtn) submitBtn.hidden = true;
 
-    // Highlight correct/incorrect positions
-    items.forEach((item, idx) => {
+    // Highlight correct/incorrect positions. Importante: usar a ordem ATUAL do
+    // DOM (mesma de getCurrentOrder), e não a ordem inicial capturada em
+    // `items`, senão o destaque contradiz o resultado da verificação.
+    Array.from(list.querySelectorAll('.step-item')).forEach((item, idx) => {
       const originalIdx = parseInt(item.dataset.originalIndex, 10);
       const correctIdx = correctOrder[idx];
       if (originalIdx === correctIdx) {
@@ -226,7 +228,8 @@ export function renderOrderSteps(exercise, options = {}) {
       item.draggable = true;
       item.classList.remove('correct-position', 'incorrect-position');
     });
-    list.querySelectorAll('.move-up, .move-down').forEach(btn => btn.disabled = false);
+    // updateStepNumbers() já ajusta o estado (des)abilitado de cada botão.
+    updateStepNumbers();
     if (submitBtn) submitBtn.hidden = false;
     if (retryBtn) retryBtn.hidden = true;
     feedbackEl.hidden = true;

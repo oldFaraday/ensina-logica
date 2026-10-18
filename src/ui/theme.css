@@ -1920,17 +1920,68 @@ label {
   margin-bottom: var(--space-2);
 }
 
-.code-input {
-  width: 100%;
+.code-block {
+  margin: 0;
+  padding: var(--space-3);
   font-family: var(--font-mono);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
-  padding: var(--space-3);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-2);
   color: var(--color-ink);
-  resize: vertical;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.code-block code {
+  font-family: inherit;
+  white-space: inherit;
+}
+
+/* Campo de lacuna: largura FIXA (não revela o tamanho da resposta correta),
+   texto centralizado e monoespaçado para alinhar com o código. */
+.code-blank {
+  width: 10ch;
+  max-width: 100%;
+  margin: 0 var(--space-1);
+  padding: 0 var(--space-1);
+  font-family: var(--font-mono);
+  font-size: inherit;
+  line-height: inherit;
+  text-align: center;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-bottom-style: dashed;
+  border-radius: var(--radius-sm);
+}
+
+.code-blank.correct {
+  background: var(--color-success-soft);
+  border-color: var(--color-success);
+}
+
+.code-blank.incorrect {
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
+}
+
+.feedback-reference,
+.reference-blanks {
+  margin: var(--space-2) 0 0;
+  padding-left: var(--space-5);
+  font-size: var(--font-size-sm);
+}
+
+.feedback-reference code,
+.reference-blanks code {
+  font-family: var(--font-mono);
+  background: var(--color-surface-2);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-1);
 }
 
 .code-hint {

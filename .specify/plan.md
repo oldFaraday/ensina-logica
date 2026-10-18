@@ -393,7 +393,7 @@ Executa no CI (`validate.yml`) e localmente (`npm run validate`):
 
 1. **Curriculum schema** → valida `data/curriculum.json` contra JSON Schema.
 2. **Theory units** → cada `.md` em `data/theory/` tem front-matter válido, `license` em lista permitida, `source.url` acessível (HEAD request), `verification_status` não é `unverified` em produção.
-3. **Exercises** → cada `.json` em `data/exercises/` válido, `theory_unit_id` existe, `generated_by_ai` boolean, se `type === "code-completion"` → tem campo `test_command` (ex.: `node --check`).
+3. **Exercises** → cada `.json` em `data/exercises/` válido, `theory_unit_id` existe, `generated_by_ai` boolean, campos obrigatórios por tipo (`options`/`correct`, `starter_code` em flashcards) e, se `type === "code-completion"` → `code`/`blanks`/`language`, com o número de `___` no `code` igual ao número de `blanks` e toda lacuna com `accepted_answers` (≥ 1 string não vazia).
 4. **Links internos** → `#/lesson/x`, `#/theory/y` existem no curriculum/data.
 5. **Licenças** → nenhuma unidade usa fonte NC/ND/"all rights reserved" sem ser só link recomendado.
 6. **Atribuições** → `ATTRIBUTIONS.md` sincronizado com metadados das unidades.

@@ -31,7 +31,16 @@ const { loadCurriculum, loadTheoryUnit, loadExercisesForLesson } = await import(
 const { splitSections } = await import(new URL('../src/theory/renderer.js', import.meta.url));
 
 const VALID_TYPES = ['multiple-choice', 'true-false', 'order-steps', 'code-completion', 'flashcards'];
-const REQUIRED_EX = ['id', 'theory_unit_id', 'lesson_id', 'type', 'generated_by_ai', 'prompt', 'correct', 'explanation', 'difficulty', 'xp_base'];
+const REQUIRED_EX = ['id', 'theory_unit_id', 'lesson_id', 'type', 'generated_by_ai', 'prompt', 'explanation', 'difficulty', 'xp_base'];
+// Campos obrigatórios por tipo (code-completion usa code+blanks, não correct).
+const TYPE_REQUIRED = {
+  'multiple-choice': ['options', 'correct'],
+  'true-false': ['options', 'correct'],
+  'order-steps': ['options', 'correct'],
+  'flashcards': ['starter_code', 'correct'],
+  'code-completion': ['code', 'blanks', 'language']
+};
+const codeBlanks = (code) => String(code || '').split('___').length - 1;
 
 let passed = 0;
 const ok = (label) => { passed += 1; console.log(`  ✅ ${label}`); };
@@ -86,6 +95,21 @@ try {
           }
           assert.equal(ex.generated_by_ai, true, `${ex.id}: generated_by_ai true`);
           assert.ok(VALID_TYPES.includes(ex.type), `${ex.id}: tipo válido (${ex.type})`);
+          for (const field of TYPE_REQUIRED[ex.type] || []) {
+            assert.ok(field in ex, `${ex.id}: campo ${field} para o tipo ${ex.type}`);
+          }
+          // code-completion: uma lacuna por entrada de blanks e respostas aceitas.
+          if (ex.type === 'code-completion') {
+            assert.ok(Array.isArray(ex.blanks) && ex.blanks.length >= 1, `${ex.id}: tem blanks`);
+            assert.equal(codeBlanks(ex.code), ex.blanks.length, `${ex.id}: nº de ___ == nº de lacunas`);
+            ex.blanks.forEach((blank, i) => {
+              assert.ok(
+                Array.isArray(blank.accepted_answers) && blank.accepted_answers.length >= 1 &&
+                  blank.accepted_answers.every((a) => typeof a === 'string' && a.trim() !== ''),
+                `${ex.id}: lacuna ${i + 1} tem accepted_answers válidos`
+              );
+            });
+          }
           assert.equal(ex.lesson_id, lessonId, `${ex.id}: lesson_id bate`);
           assert.ok(!allExerciseIds.has(ex.id), `${ex.id}: id único`);
           allExerciseIds.add(ex.id);

@@ -55,10 +55,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete o código JavaScript para que o laço pare quando o contador chegar a 4, como no exemplo de break do capítulo Branching Statements.",
-    "starter_code": "// O laco parece executar 8 vezes, mas para na 5a iteracao\nlet contador = 0;\n\nwhile (contador < 8) {\n  console.log(contador);\n  if (contador === 4) {\n    ___;\n  }\n  contador += 1;\n}",
-    "test_command": "node --check",
+    "code": "// O laco parece executar 8 vezes, mas para na 5a iteracao\nlet contador = 0;\n\nwhile (contador < 8) {\n  console.log(contador);\n  if (contador === 4) {\n    ___;\n  }\n  contador += 1;\n}",
     "language": "javascript",
-    "correct": "break",
+    "blanks": [
+      { "accepted_answers": ["break"] }
+    ],
     "explanation": "O capítulo Branching Statements mostra que break termina a estrutura: quando o contador chega a 4, o break faz o laço parar de executar.",
     "difficulty": "medium",
     "xp_base": 20

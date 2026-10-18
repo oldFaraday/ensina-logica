@@ -55,10 +55,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete o código Python para calcular a área de um círculo, usando a constante nomeada PI e a variável raio definidas acima.",
-    "starter_code": "# Constante nomeada (por convencao, em MAIUSCULAS)\nPI = 3.14159\n\nraio = 2.0\n\n# Processamento: area do circulo\narea = ___\n\nprint(area)",
-    "test_command": "python -m py_compile",
+    "code": "# Constante nomeada (por convencao, em MAIUSCULAS)\nPI = 3.14159\n\nraio = 2.0\n\n# Processamento: area do circulo\narea = ___\n\nprint(area)",
     "language": "python",
-    "correct": "PI * raio ** 2",
+    "blanks": [
+      { "accepted_answers": ["PI * raio ** 2", "raio ** 2 * PI", "PI * (raio ** 2)", "PI * raio * raio"] }
+    ],
     "explanation": "O capítulo Constants and Variables mostra uma constante nomeada (PI = 3.14159) e uma variável (raio); a área do círculo é a constante PI multiplicada pelo raio ao quadrado.",
     "difficulty": "medium",
     "xp_base": 20

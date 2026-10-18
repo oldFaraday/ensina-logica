@@ -68,10 +68,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete o código JavaScript para que a variável aprovado seja um valor booleano: verdadeiro quando a nota for maior ou igual a 7.",
-    "starter_code": "// Tipo booleano resultante de uma comparacao\nconst nota = 8;\n\nlet aprovado = ___;\n\nconsole.log(aprovado);",
-    "test_command": "node --check",
+    "code": "// Tipo booleano resultante de uma comparacao\nconst nota = 8;\n\nlet aprovado = ___;\n\nconsole.log(aprovado);",
     "language": "javascript",
-    "correct": "nota >= 7",
+    "blanks": [
+      { "accepted_answers": ["nota >= 7", "7 <= nota"] }
+    ],
     "explanation": "O capítulo Boolean Data Type explica que o booleano representa verdadeiro ou falso; comparando a nota com o operador relacional >=, obtemos um valor booleano (true ou false).",
     "difficulty": "medium",
     "xp_base": 20

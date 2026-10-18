@@ -118,7 +118,7 @@ export function renderTrueFalse(exercise, options = {}) {
     if (answered) return;
     if (e.key.toLowerCase() === 'v' || e.key.toLowerCase() === 't' || e.key === '1') {
       buttons[0]?.click();
-    } else if (e.key.toLowerCase() === 'f' || e.key.toLowerCase() === 'f' || e.key === '2') {
+    } else if (e.key.toLowerCase() === 'f' || e.key === '2') {
       buttons[1]?.click();
     }
   });

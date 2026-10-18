@@ -33,9 +33,23 @@ const REQUIRED_THEORY_FIELDS = [
 
 const REQUIRED_EXERCISE_FIELDS = [
   'id', 'theory_unit_id', 'lesson_id', 'type',
-  'generated_by_ai', 'prompt', 'correct', 'explanation',
+  'generated_by_ai', 'prompt', 'explanation',
   'difficulty', 'xp_base'
 ];
+
+// Campos obrigatórios adicionais por tipo de exercício.
+const TYPE_REQUIRED_FIELDS = {
+  'multiple-choice': ['options', 'correct'],
+  'true-false': ['options', 'correct'],
+  'order-steps': ['options', 'correct'],
+  'flashcards': ['starter_code', 'correct'],
+  'code-completion': ['code', 'blanks', 'language']
+};
+
+/** Conta as lacunas (`___`) de um código de completar. */
+function countCodeBlanks(code) {
+  return String(code ?? '').split('___').length - 1;
+}
 
 const REQUIRED_SOURCE_FIELDS = [
   'title', 'authors', 'url', 'chapter', 'section',
@@ -429,14 +443,48 @@ function validateExerciseObject(exercise, relPath, theoryById = new Map()) {
     error('generated_by_ai deve ser true', relPath);
   }
 
+  const VALID_EXERCISE_TYPES = ['multiple-choice', 'true-false', 'order-steps', 'code-completion', 'flashcards'];
+
   // Tipos válidos
-  if (exercise.type && !['multiple-choice', 'true-false', 'order-steps', 'code-completion', 'flashcards'].includes(exercise.type)) {
+  if (exercise.type && !VALID_EXERCISE_TYPES.includes(exercise.type)) {
     error(`Tipo inválido: ${exercise.type}`, relPath);
   }
 
-  // code-completion precisa de test_command
-  if (exercise.type === 'code-completion' && !exercise.test_command) {
-    error('code-completion requer test_command', relPath);
+  // Campos obrigatórios por tipo (ex.: code-completion usa blanks, não correct).
+  const typeFields = TYPE_REQUIRED_FIELDS[exercise.type] || [];
+  for (const field of typeFields) {
+    if (!(field in exercise)) {
+      error(`${exercise.type} requer o campo ${field}`, relPath);
+    }
+  }
+
+  // code-completion: uma lacuna `___` no código para cada entrada de `blanks`,
+  // e nenhuma lacuna sem resposta aceita.
+  if (exercise.type === 'code-completion') {
+    const blankCount = countCodeBlanks(exercise.code);
+    const blanks = Array.isArray(exercise.blanks) ? exercise.blanks : null;
+
+    if (blankCount === 0) {
+      error('code-completion: o código não contém nenhuma lacuna (___)', relPath);
+    }
+    if (!blanks || blanks.length === 0) {
+      error('code-completion: requer ao menos uma lacuna em blanks', relPath);
+    } else {
+      if (blankCount !== blanks.length) {
+        error(
+          `code-completion: ${blankCount} lacuna(s) "___" no código, mas ${blanks.length} entrada(s) em blanks`,
+          relPath
+        );
+      }
+      blanks.forEach((blank, index) => {
+        const answers = Array.isArray(blank && blank.accepted_answers) ? blank.accepted_answers : null;
+        if (!answers || answers.length === 0) {
+          error(`code-completion: lacuna ${index + 1} sem accepted_answers`, relPath);
+        } else if (answers.some((a) => typeof a !== 'string' || a.trim() === '')) {
+          error(`code-completion: lacuna ${index + 1} tem resposta aceita vazia`, relPath);
+        }
+      });
+    }
   }
 
   // theory_unit_id pattern

@@ -54,10 +54,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete o código Python que implementa a média de duas idades descrita no esboço em pseudocódigo (entrada, processamento e saída).",
-    "starter_code": "# Entrada: ler as duas idades\nidade1 = int(input(\"Primeira idade: \"))\nidade2 = int(input(\"Segunda idade: \"))\n\n# Processamento: calcular a media\nmedia = ___\n\n# Saida: exibir o resultado\nprint(\"Media:\", media)",
-    "test_command": "python -m py_compile",
+    "code": "# Entrada: ler as duas idades\nidade1 = int(input(\"Primeira idade: \"))\nidade2 = int(input(\"Segunda idade: \"))\n\n# Processamento: calcular a media\nmedia = ___\n\n# Saida: exibir o resultado\nprint(\"Media:\", media)",
     "language": "python",
-    "correct": "(idade1 + idade2) / 2",
+    "blanks": [
+      { "accepted_answers": ["(idade1 + idade2) / 2", "(idade2 + idade1) / 2"] }
+    ],
     "explanation": "No capítulo Pseudocode, o processamento calcula a resposta somando as duas idades e dividindo por dois; por isso a expressão (idade1 + idade2) / 2.",
     "difficulty": "medium",
     "xp_base": 20

@@ -50,10 +50,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete a condição do código JavaScript para exibir 'Pode votar' quando a idade for maior ou igual a 18.",
-    "starter_code": "const idade = 20;\n\n// Selecao de duas vias: maior de idade vota\nif (___) {\n  console.log(\"Pode votar\");\n} else {\n  console.log(\"Nao pode votar\");\n}",
-    "test_command": "node --check",
+    "code": "const idade = 20;\n\n// Selecao de duas vias: maior de idade vota\nif (___) {\n  console.log(\"Pode votar\");\n} else {\n  console.log(\"Nao pode votar\");\n}",
     "language": "javascript",
-    "correct": "idade >= 18",
+    "blanks": [
+      { "accepted_answers": ["idade >= 18", "18 <= idade", "idade > 17"] }
+    ],
     "explanation": "O capítulo If Then Else usa uma condição booleana para escolher a ação; com o operador relacional >= testamos se a idade é maior ou igual a 18.",
     "difficulty": "medium",
     "xp_base": 20

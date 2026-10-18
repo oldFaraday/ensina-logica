@@ -130,14 +130,13 @@
       "unknown": "Ainda não sei"
     },
     "codeCompletion": {
-      "yourCode": "Seu código",
-      "hint": "Complete o código em {language} e clique em verificar.",
+      "codeLabel": "Complete o código",
+      "hint": "Preencha cada lacuna (___) do código em {language} e clique em verificar.",
       "check": "Verificar",
       "reference": "Solução de referência",
-      "syntaxError": "Erro de sintaxe: {message}",
-      "notQuite": "O código tem sintaxe válida, mas não é a solução esperada. Veja a referência abaixo.",
-      "runtimeError": "Erro de execução: {message}",
-      "logicError": "Resultado incorreto para {case}. Esperado '{reference}', seu código produziu '{student}'."
+      "blank": "Lacuna {index} de {total}",
+      "notQuite": "Ainda não está certo. Veja a resposta de referência das lacunas abaixo.",
+      "answerReference": "Lacuna {index}: resposta de referência: {answer}"
     }
   },
   "theory": {

@@ -50,10 +50,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete o código Python para calcular o quociente da divisão inteira de a por b, conforme o capítulo Integer Division and Modulus.",
-    "starter_code": "a = 3\nb = 2\n\n# soma, divisao inteira e resto\nsoma = a + b\nquociente = ___\nresto = a % b\n\nprint(soma, quociente, resto)",
-    "test_command": "python -m py_compile",
+    "code": "a = 3\nb = 2\n\n# soma, divisao inteira e resto\nsoma = a + b\nquociente = ___\nresto = a % b\n\nprint(soma, quociente, resto)",
     "language": "python",
-    "correct": "a // b",
+    "blanks": [
+      { "accepted_answers": ["a // b"] }
+    ],
     "explanation": "O capítulo Integer Division and Modulus mostra que a divisão inteira descarta a parte fracionária; em Python, o operador a // b realiza essa divisão inteira.",
     "difficulty": "medium",
     "xp_base": 20

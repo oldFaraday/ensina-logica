@@ -55,10 +55,11 @@
     "type": "code-completion",
     "generated_by_ai": true,
     "prompt": "Complete a função Python que converte Fahrenheit em Celsius, usando a fórmula mostrada no capítulo Parameters and Arguments.",
-    "starter_code": "def calcular_celsius(fahrenheit):\n    # Formula: (F - 32) * 5 / 9\n    return ___\n\nprint(calcular_celsius(100))",
-    "test_command": "python -m py_compile",
+    "code": "def calcular_celsius(fahrenheit):\n    # Formula: (F - 32) * 5 / 9\n    return ___\n\nprint(calcular_celsius(100))",
     "language": "python",
-    "correct": "(fahrenheit - 32) * 5 / 9",
+    "blanks": [
+      { "accepted_answers": ["(fahrenheit - 32) * 5 / 9", "(fahrenheit - 32) * 5.0 / 9", "5 / 9 * (fahrenheit - 32)", "5 * (fahrenheit - 32) / 9"] }
+    ],
     "explanation": "O capítulo Parameters and Arguments mostra a função CalculateCelsius calculando (fahrenheit - 32) * 5 / 9 e retornando o valor de celsius; aqui o parâmetro é fahrenheit.",
     "difficulty": "medium",
     "xp_base": 20

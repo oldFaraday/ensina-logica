@@ -1,6 +1,6 @@
 # Status do Projeto — Ensina Lógica
 
-**Última atualização**: 2026-10-17
+**Última atualização**: 2026-10-18
 
 ---
 
@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)**; inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)** + **T148–T153 (Fase 20: correção do exercício "completar código" — lacunas inline — e auditoria dos 5 tipos de exercício)**; inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -245,11 +245,21 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - [x] T147 As 6 unidades reais ganharam `verified_at: 2026-10-17` + `verification_method: manual_url_check`; o trecho de `th-sem1-discrete-math-m02-predicate-logic` foi estendido para um trecho literal ≥ 15 palavras (mesma seção 0.2) e a explicação do flashcard `ex-sem1-algorithms-m01-l01-flash` passou a citar o capítulo da fonte — satisfazendo as novas regras sem inventar conteúdo.
 - Verificação: `npm test` verde (**17 suítes**, inclui `scripts/test-validation.mjs`) e `npm run validate` sem erros nem avisos; confirmado que o validador **falha** (exit 1) ao introduzir uma unidade inexistente no `ATTRIBUTIONS.md`.
 
+### Fase 20: Correção do exercício "completar código" + auditoria dos tipos — ✅ COMPLETO (T148–T153, 2026-10-18)
+**Bug corrigido**: a tela mostrava o **código inteiro** num `textarea` editável (com a lacuna `___` dentro) e a verificação comparava o **campo inteiro** com a resposta de **uma** lacuna — o aluno precisava apagar todo o código e digitar só a resposta (ex.: `(idade1 + idade2) / 2`) para acertar. Os testes passavam porque não simulavam o preenchimento.
+- [x] T148 `src/lesson/exercise-types/code-completion.js` reescrito: o código agora é um bloco monoespaçado **fixo e não editável** (`<pre class="code-block">`) e cada `___` é um `<input class="code-blank">` inline. Suporta **várias lacunas**; `aria-label` "Lacuna N de M"; **Tab** percorre as lacunas; **Enter** verifica; a largura é fixa em CSS (`width: 10ch`), sem revelar o tamanho da resposta.
+- [x] T149 Novo formato de dados: `code` (com `___`) + `blanks: [{ accepted_answers: [...] }]` (uma por `___`, na ordem). Verificação normaliza aspas tipográficas e remove todos os espaços, aceitando equivalências listadas (ex.: `(idade1 + idade2) / 2` ≡ `(idade2 + idade1) / 2`). O erro mostra a **resposta de referência** da(s) lacuna(s) errada(s) + explicação, **sem vidas/punição**; **sem `eval`** e sem executar código digitado.
+- [x] T150 **8 exercícios migrados** (`sem1/algorithms/m01-l02, m02-l04, m02-l05, m02-l06, m03-l07, m03-l08, m03-l09, m03-l10`), sem alterar o conteúdo pedagógico (enunciado, código, explicação e dificuldade preservados).
+- [x] T151 `data/exercises/_schema.json` + `scripts/validate.mjs` + `docs/CONTENT_MODEL.md`: `correct` deixou de ser obrigatório em `code-completion`; o validador **falha** se o número de `___` no `code` ≠ número de `blanks`, se alguma lacuna ficar sem `accepted_answers` válidos ou se o código não tiver lacuna.
+- [x] T152 `scripts/test-lesson-dom.mjs`: testes de interação (jsdom, simulando digitação) — cada resposta aceita (inclusive variações de espaço/aspas) ⇒ correto; resposta errada ⇒ incorreto + referência; lacuna **vazia** ⇒ não correto; digitar o **código inteiro** na lacuna ⇒ não correto; Enter verifica; múltiplas lacunas com `aria-label` correto.
+- [x] T153 Auditoria por interação dos demais tipos (o que a tela pede = o que a verificação compara): múltipla escolha, verdadeiro/falso, ordenar passos e flashcards. **Encontrados e corrigidos**: (a) `order-steps` destacava as posições usando a ordem **inicial** em vez da **atual**, contradizendo o resultado (marcava tudo como errado **mesmo no acerto**); (b) `order-steps.resetExercise` reabilitava setas inválidas; (c) `multiple-choice.resetExercise` tinha um `forEach` quebrado (não limpava os marcadores ✅/❌); (d) `true-false` tinha uma condição de teclado duplicada (cosmético).
+- Verificação: `npm test` verde (**17 suítes**) e `npm run validate` sem erros; validação testada negativamente (falha com "3 lacunas `___` ≠ 2 `blanks`" e com "lacuna 2 sem `accepted_answers`"). Exercício resolvido no **navegador real** (`#/lesson/l02`): digitar `(idade2 + idade1) / 2` na lacuna e acionar Verificar ⇒ "✅ Correto! +27 XP"; resposta errada ⇒ "❌ Incorreto" com a resposta de referência e sem punição (Enter também verifica).
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–19 concluídas.
+**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" corrigido (2026-10-18).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–20 concluídas.
 
 **Converge — 2ª rodada:** avaliados os 15 critérios de aceitação (AC-01…AC-15) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 
@@ -260,6 +270,8 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 **Limpeza do conteúdo placeholder (2026-10-17)** — T137–T141 concluídas a partir do `CONTENT_AUDIT.md`: removidas 188 unidades e 940 exercícios placeholder; currículo do 1º semestre restrito a m01–m03; `pending` adicionado a `verification_status`; as 6 unidades reais reconferidas na 3ª edição (Levin) e na fonte (Programming Fundamentals); `ATTRIBUTIONS.md` regerado. `npm test` verde (**16 suítes**) e `npm run validate` sem erros.
 
 **Endurecimento da validação (2026-10-17)** — T142–T147 concluídas para que o problema do `CONTENT_AUDIT.md` não se repita: regras anti-placeholder em `scripts/lib/content-rules.mjs` (URL genérica, trecho literal em inglês ≥ 15 palavras, `verified_at`/`verification_method`, licença/edição proibida, exercícios placeholder/sem citação), `ATTRIBUTIONS.md` com bloco **gerado** e comparação estrita, `scripts/verify-sources.mjs` manual e `scripts/test-validation.mjs` no `npm test`. `npm test` verde (**17 suítes**) e `npm run validate` sem erros nem avisos.
+
+**Correção do "completar código" (2026-10-18)** — T148–T153: o código passou a ser **fixo** (não editável) com **campos inline** por lacuna; a verificação compara só as lacunas com `accepted_answers` (normalizando espaços e aspas) e, no erro, mostra a resposta de referência sem punir. 8 exercícios migrados; schema, `docs/CONTENT_MODEL.md` e `validate.mjs` atualizados (nº de `___` = nº de lacunas; nenhuma lacuna sem resposta aceita); testes de interação cobrem acerto/erro/vazio/código-inteiro-na-lacuna e audits dos 4 outros tipos (com 4 bugs de interface encontrados e corrigidos: destaque do "ordenar passos", reset de "ordenar passos" e "múltipla escolha", tecla duplicada em "verdadeiro/falso"). Exercício resolvido no navegador real. `npm test` verde (**17 suítes**) e `npm run validate` sem erros.
 
 Restam apenas itens que exigem ambiente externo:
 1. **T090 / Deploy (Fase 10)** — validar o fallback `404.html` e o redirect no GitHub Pages **publicado** (o teste estático `scripts/test-404.mjs` já cobre a lógica offline).

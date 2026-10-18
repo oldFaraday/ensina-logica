@@ -136,8 +136,11 @@ export function renderMultipleChoice(exercise, options = {}) {
       input.disabled = false;
       input.checked = false;
     });
-    optionLabels.forEach(l => l.classList.remove('selected', 'correct', 'incorrect'));
-    l => l.querySelector('.option-feedback').textContent = '';
+    optionLabels.forEach(l => {
+      l.classList.remove('selected', 'correct', 'incorrect');
+      const marker = l.querySelector('.option-feedback');
+      if (marker) marker.textContent = '';
+    });
     if (submitBtn) {
       submitBtn.hidden = false;
       submitBtn.disabled = true;

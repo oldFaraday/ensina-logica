@@ -84,21 +84,45 @@ Use `## ` para cada seção e `$...$` / `$$...$$` para matemática (KaTeX).
 Crie `data/exercises/sem{N}/{discipline}/{module-id}-{lesson-id}.json` com **um array de 3–5 exercícios**.
 
 Campos comuns (obrigatórios): `id`, `theory_unit_id`, `lesson_id`, `type`,
-`generated_by_ai` (`true`), `prompt` (10–500), `correct`, `explanation` (20–1000),
-`difficulty` (`easy`\|`medium`\|`hard`), `xp_base` (5–50).
+`generated_by_ai` (`true`), `prompt` (10–500), `explanation` (20–1000),
+`difficulty` (`easy`\|`medium`\|`hard`), `xp_base` (5–50). O campo `correct` é
+obrigatório para todos os tipos, **exceto `code-completion`**.
 
-Tipos e formato de `correct`:
+Tipos e campos específicos:
 
-| `type` | Campos específicos | `correct` |
-|--------|--------------------|-----------|
-| `multiple-choice` | `options` (2–6) | índice inteiro da opção correta |
-| `true-false` | `options: ["Verdadeiro","Falso"]` | `0` ou `1` |
-| `order-steps` | `options` **já embaralhadas** | array de índices na ordem correta |
-| `code-completion` | `starter_code`, `test_command`, `language` | string com a solução de referência |
-| `flashcards` | `starter_code` (verso) | string (mesmo valor do verso) |
+| `type` | Campos específicos | Resposta (`correct` ou `blanks`) |
+|--------|--------------------|----------------------------------|
+| `multiple-choice` | `options` (2–6) | `correct`: índice inteiro da opção correta |
+| `true-false` | `options: ["Verdadeiro","Falso"]` | `correct`: `0` ou `1` |
+| `order-steps` | `options` **já embaralhadas** | `correct`: array de índices na ordem correta |
+| `code-completion` | `code`, `blanks`, `language` | `blanks[].accepted_answers` (ver abaixo) |
+| `flashcards` | `starter_code` (verso) | `correct`: string (mesmo valor do verso) |
 
-> `code-completion`: `test_command` é validado no CI; no navegador a sintaxe JS é
-> checada em tempo real. Nunca inclua código que não seja executável/testado.
+> `code-completion`: o `code` é **fixo** (não editável). Cada lacuna é marcada
+> por `___` e vira um campo de entrada inline. É preciso ter **exatamente uma
+> entrada em `blanks` para cada `___`**, na mesma ordem, e **toda lacuna precisa
+> de ao menos uma resposta aceita** (`blanks[].accepted_answers`, array não
+> vazio de strings). O `validate.mjs` **falha** se a contagem não bater ou se
+> alguma lacuna ficar sem resposta.
+
+```jsonc
+{
+  "type": "code-completion",
+  "code": "media = ___\n",
+  "language": "python",
+  "blanks": [
+    { "accepted_answers": ["(idade1 + idade2) / 2", "(idade2 + idade1) / 2"] }
+  ]
+}
+```
+
+A verificação compara a resposta digitada com cada `accepted_answers` **após
+normalizar aspas tipográficas e remover todos os espaços em branco** — logo
+`(a+b)/2` ≡ `( a + b ) / 2`. Equivalências que não são só de formatação (ex.:
+`(a+b)/2` vs `(b+a)/2`, ou `a // b` vs `a % b`) **precisam** ser listadas
+explicitamente em `accepted_answers`. A primeira resposta da lista é a de
+referência exibida quando o aluno erra. Nada de `eval`/execução: o código nunca
+é executado, apenas comparado como texto.
 
 ### Passo 4 — Atualizar o currículo
 
@@ -130,6 +154,8 @@ O validador **falha** (não apenas avisa) se:
 - o `source.url` for genérico (homepage, sem caminho de capítulo/seção);
 - uma unidade `verified_with_source` não tiver `original_excerpt` (inglês, ≥ 15 palavras, sem cara de texto gerado) ou não tiver `verified_at`/`verification_method`;
 - o enunciado/explicação de um exercício casar com padrões de placeholder ("Questão N sobre", "Alternativa A", "Explicação da questão") ou a explicação não citar a seção/capítulo da fonte;
+- um exercício não tiver os campos obrigatórios do seu tipo (`correct`/`options`, `starter_code` para flashcards, ou `code`/`blanks`/`language` para code-completion);
+- o número de `___` no `code` de um code-completion não for igual ao número de entradas de `blanks`, ou alguma lacuna ficar sem `accepted_answers` válidos;
 - o front-matter/link interno estiver errado, um exercício apontar para unidade/lição inexistente, ou o bloco gerado do `ATTRIBUTIONS.md` divergir das unidades reais.
 
 ### Passo 6 — Atribuição e publicação

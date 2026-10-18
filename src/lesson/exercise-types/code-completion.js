@@ -1,17 +1,22 @@
 /**
  * Code Completion Exercise Type
- * Textarea (highlight.js for the reference solution), "Verificar"/"Run" button,
- * syntax check for JavaScript, behavioral validation and explanation.
  *
- * O app roda 100% no navegador (sem Node/backend), então não executamos
- * `node --check` nem um interpretador Python aqui. Para JavaScript, fazemos uma
- * checagem de sintaxe segura com `new Function(...)` (sem invocar o corpo) e,
- * quando o exercício disponibilizar casos de teste, executamos a solução do
- * aluno e a solução de referência com cada caso e comparamos as saídas
- * produzidas (validação comportamental). Quando não há casos de teste (ou a
- * linguagem não é executável no navegador, ex.: Python), caímos em uma
- * comparação de texto normalizada (remove espaços, quebras de linha e
- * comentários) como fallback.
+ * O código aparece como texto FIXO (bloco monoespaçado, não editável) e cada
+ * lacuna `___` vira um campo de entrada inline. O aluno preenche apenas as
+ * lacunas — nunca editamos nem executamos código digitado (sem `eval`, sem
+ * `new Function`, sem interpretador), o que mantém a verificação
+ * determinística e segura no navegador (sem backend).
+ *
+ * Convenção de dados (ver `data/exercises/_schema.json`):
+ *  - `code`     → código com uma ou mais lacunas marcadas por `___`
+ *  - `blanks`   → array de `{ accepted_answers: string[] }`, na ordem das
+ *                 lacunas; a primeira resposta costuma ser a de referência
+ *  - `language` → rótulo exibido na badge (javascript, python, pseudocode...)
+ *
+ * A comparação de cada lacuna normaliza aspas e espaços em branco, de modo que
+ * `(a+b)/2`, `(a + b) / 2` e `(a+b) /2` sejam equivalentes. Diferenças que não
+ * são só de formatação (ex.: `(a+b)/2` vs. `(b+a)/2`) precisam ser listadas em
+ * `accepted_answers`.
  */
 
 import { t } from '../../i18n.js';
@@ -23,151 +28,59 @@ const LANGUAGE_LABELS = {
   pseudocode: 'Pseudocódigo'
 };
 
-/**
- * Normaliza código para comparação de texto: remove espaços à direita de cada
- * linha, colapsa espaços/tabs internos e apara as extremidades.
- * Mantido para retrocompatibilidade (utilizado pelos testes de unidade).
- * @param {string} code
- * @returns {string}
- */
-export function normalizeCode(code) {
-  return String(code || '')
-    .split('\n')
-    .map((line) => line.replace(/\s+$/, ''))
-    .join('\n')
-    .trim()
-    .replace(/\t/g, ' ')
-    .replace(/[^\S\n]+/g, ' ');
-}
+/** Marcador de lacuna usado no campo `code`. */
+export const CODE_BLANK_TOKEN = '___';
 
 /**
- * Normaliza código para comparação de equivalência:
- * remove comentários de bloco e de linha (#) e TODOS os espaços em branco,
- * incluindo quebras de linha. Assim `a // b`, `a//b`, ` a // b ` e
- * `a // b # comentário` normalizam para o mesmo valor (`a//b`).
- * O operador de divisão inteira `//` (Python) é preservado intencionalmente.
- * @param {string} code
- * @returns {string}
- */
-export function normalizeForComparison(code) {
-  const withoutBlockComments = String(code || '').replace(/\/\*[\s\S]*?\*\//g, ''); // comentários de bloco /* ... */
-  const withoutLineComments = withoutBlockComments.replace(/#[^\n]*/g, '');          // comentários de linha # (Python)
-  return withoutLineComments.replace(/\s/g, '');                                     // remove todo espaço em branco
-}
-
-/**
- * Checa se o código JavaScript tem sintaxe válida (sem executar).
- * @param {string} code
- * @returns {{ ok: boolean, message?: string }}
- */
-export function checkJavaScriptSyntax(code) {
-  try {
-    // Apenas valida a sintaxe: `new Function` faz o parse sem invocar o corpo.
-    // eslint-disable-next-line no-new-func
-    new Function(String(code || ''));
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, message: error.message };
-  }
-}
-
-/**
- * Serializa um valor para um literal JavaScript seguro (número, string,
- * booleano, null), usado para injetar variáveis de caso de teste no snippet.
+ * Normaliza a resposta de uma lacuna antes de comparar:
+ *  - uniformiza aspas tipográficas ("" '' ′ ″) para ASCII;
+ *  - remove todos os espaços em branco (espaços, tabs, quebras de linha).
+ * Não altera maiúsculas/minúsculas (identificadores diferenciam caixa).
  * @param {unknown} value
  * @returns {string}
  */
-function serializeJsValue(value) {
-  if (value === null) return 'null';
-  if (typeof value === 'string') return JSON.stringify(value);
-  if (typeof value === 'boolean') return value ? 'true' : 'false';
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) {
-      return value === Infinity ? 'Infinity' : '-Infinity';
-    }
-    return String(value);
-  }
-  return JSON.stringify(value);
+export function normalizeBlankAnswer(value) {
+  return String(value ?? '')
+    .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u201F\u2033]/g, '"')
+    .replace(/\s+/g, '');
 }
 
 /**
- * Executa um trecho JavaScript com um conjunto de variáveis em escopo,
- * capturando a saída de `console.log` e eventuais erros de execução.
- * Não invoca o corpo antes de validar: o wrapper é criado com `new Function`.
- * @param {string} snippet
- * @param {Object} vars - variáveis a injetar (ex.: { a: 7, b: 3 })
- * @returns {{ output: string, error: Error|null }}
+ * Compara a resposta digitada com a lista de respostas aceitas, após normalizar
+ * espaços e aspas. Uma resposta vazia (ou só espaços) nunca é aceita.
+ * @param {string} value
+ * @param {string[]} acceptedAnswers
+ * @returns {boolean}
  */
-export function runJavaScriptSnippet(snippet, vars = {}) {
-  const logs = [];
-  const originalLog = console.log;
-  console.log = (...args) => logs.push(args.map((arg) => String(arg)).join(' '));
-  let error = null;
-  try {
-    const varDecls = Object.entries(vars)
-      .map(([key, value]) => `const ${key} = ${serializeJsValue(value)};`)
-      .join('\n');
-    const body = `${varDecls}\n${String(snippet || '').trim()}\n`;
-    // eslint-disable-next-line no-new-func
-    new Function(body)();
-  } catch (err) {
-    error = err;
-  } finally {
-    console.log = originalLog;
-  }
-  return { output: logs.join('\n'), error };
+export function answersMatch(value, acceptedAnswers = []) {
+  const normalized = normalizeBlankAnswer(value);
+  if (!normalized) return false;
+  return acceptedAnswers.some((answer) => normalizeBlankAnswer(answer) === normalized);
 }
-
-const NON_FINITE_OUTPUT = /^(Infinity|-Infinity|NaN)$/;
 
 /**
- * Validação comportamental: executa o snippet do aluno e o snippet de
- * referência com cada caso de teste e compara as saídas produzidas.
- * @param {string} studentSnippet
- * @param {string} referenceSnippet
- * @param {Array} testCases - array de { vars: { a, b, ... } }
- * @returns {{ ok: boolean, type?: 'runtime'|'logic'|'reference', error?: Object, case?: Object, studentOutput?: string, referenceOutput?: string }}
+ * Conta quantas lacunas (`___`) existem no código.
+ * @param {string} code
+ * @returns {number}
  */
-export function validateBehaviorally(studentSnippet, referenceSnippet, testCases = []) {
-  for (const tc of testCases) {
-    const vars = tc.vars || {};
-    const student = runJavaScriptSnippet(studentSnippet, vars);
-    const reference = runJavaScriptSnippet(referenceSnippet, vars);
-
-    if (student.error) {
-      return { ok: false, type: 'runtime', error: student.error, case: tc };
-    }
-    if (reference.error) {
-      return { ok: false, type: 'reference', error: reference.error, case: tc };
-    }
-
-    // Divisão por zero: em JavaScript não lança exceção, produz Infinity/NaN.
-    // Trata como erro de execução informativo em vez de falha silenciosa.
-    if (
-      NON_FINITE_OUTPUT.test(student.output) ||
-      NON_FINITE_OUTPUT.test(reference.output)
-    ) {
-      return {
-        ok: false,
-        type: 'runtime',
-        error: { message: 'Divisão por zero detectada.' },
-        case: tc
-      };
-    }
-
-    if (student.output !== reference.output) {
-      return {
-        ok: false,
-        type: 'logic',
-        case: tc,
-        studentOutput: student.output,
-        referenceOutput: reference.output
-      };
-    }
-  }
-  return { ok: true };
+export function countBlanks(code) {
+  return String(code ?? '').split(CODE_BLANK_TOKEN).length - 1;
 }
 
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/**
+ * Renderiza um exercício de completar código.
+ * @param {Object} exercise - Exercise data (code, blanks, language, ...)
+ * @param {Object} options - { isRetry, streak, calculateXP, onAnswer }
+ * @returns {HTMLElement} Exercise element
+ */
 export function renderCodeCompletion(exercise, options = {}) {
   const container = document.createElement('div');
   container.className = 'exercise exercise-code-completion';
@@ -178,6 +91,8 @@ export function renderCodeCompletion(exercise, options = {}) {
   const onAnswer = options.onAnswer || (() => {});
   const language = exercise.language || 'javascript';
   const languageLabel = LANGUAGE_LABELS[language] || language;
+  const acceptedByBlank = Array.isArray(exercise.blanks) ? exercise.blanks : [];
+  const codeTemplate = String(exercise.code ?? '');
 
   container.innerHTML = `
     <div class="exercise-header">
@@ -186,110 +101,141 @@ export function renderCodeCompletion(exercise, options = {}) {
       ${exercise.difficulty ? `<span class="difficulty-badge difficulty-${exercise.difficulty}">${t(`common.difficulty.${exercise.difficulty}`, { defaultValue: exercise.difficulty })}</span>` : ''}
     </div>
     <p class="exercise-prompt">${exercise.prompt}</p>
-    <label class="code-label" for="code-${exercise.id}">${t('lesson.codeCompletion.yourCode')}</label>
-    <textarea id="code-${exercise.id}" class="code-input" rows="6" spellcheck="false"
-      aria-describedby="code-hint-${exercise.id}" ${isRetry ? 'disabled' : ''}>${escapeHtml(exercise.starter_code || '')}</textarea>
+    <p class="code-label">${t('lesson.codeCompletion.codeLabel')}</p>
+    <div class="code-block-host"></div>
     <p id="code-hint-${exercise.id}" class="code-hint">${t('lesson.codeCompletion.hint', { language: languageLabel })}</p>
     <div class="exercise-actions">
       ${!isRetry ? `<button class="btn btn-primary check-btn">${t('lesson.codeCompletion.check')}</button>` : ''}
+      ${isRetry ? `<button class="btn btn-secondary retry-btn">${t('lesson.tryAgain')}</button>` : ''}
     </div>
     <div class="exercise-feedback" aria-live="polite" hidden></div>
     <div class="exercise-explanation" hidden>
       <h4>${t('lesson.explanation')}</h4>
       <p>${exercise.explanation}</p>
-      ${exercise.correct ? `<p class="reference-solution"><strong>${t('lesson.codeCompletion.reference')}:</strong> <code>${escapeHtml(exercise.correct)}</code></p>` : ''}
-    </div>
-    <div class="exercise-actions">
-      ${isRetry ? `<button class="btn btn-secondary retry-btn">${t('lesson.tryAgain')}</button>` : ''}
+      <div class="reference-solution" hidden>
+        <p><strong>${t('lesson.codeCompletion.reference')}:</strong></p>
+        <ul class="reference-blanks"></ul>
+      </div>
     </div>
   `;
 
-  const textarea = container.querySelector('.code-input');
+  // --- Bloco de código fixo com uma entrada inline por lacuna ---
+  const codeBlock = document.createElement('pre');
+  codeBlock.className = 'code-block';
+  const codeEl = document.createElement('code');
+  const parts = codeTemplate.split(CODE_BLANK_TOKEN);
+  const totalBlanks = parts.length - 1;
+  const inputs = [];
+
+  for (let i = 0; i < parts.length; i += 1) {
+    if (parts[i]) codeEl.appendChild(document.createTextNode(parts[i]));
+    if (i < parts.length - 1) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'code-blank';
+      input.dataset.blankIndex = String(i);
+      // A largura é fixa (CSS): não revela o tamanho da resposta correta.
+      input.setAttribute(
+        'aria-label',
+        t('lesson.codeCompletion.blank', { index: i + 1, total: totalBlanks })
+      );
+      input.setAttribute('aria-describedby', `code-hint-${exercise.id}`);
+      input.setAttribute('autocomplete', 'off');
+      input.setAttribute('autocorrect', 'off');
+      input.setAttribute('autocapitalize', 'off');
+      input.setAttribute('spellcheck', 'false');
+      if (isRetry) input.disabled = true;
+      codeEl.appendChild(input);
+      inputs.push(input);
+    }
+  }
+  codeBlock.appendChild(codeEl);
+  container.querySelector('.code-block-host').replaceWith(codeBlock);
+
   const checkBtn = container.querySelector('.check-btn');
   const retryBtn = container.querySelector('.retry-btn');
   const feedbackEl = container.querySelector('.exercise-feedback');
   const explanationEl = container.querySelector('.exercise-explanation');
+  const referenceEl = container.querySelector('.reference-solution');
+  const referenceList = container.querySelector('.reference-blanks');
 
   let answered = isRetry;
 
-  if (checkBtn) {
-    checkBtn.addEventListener('click', handleCheck);
+  // Enter em qualquer lacuna verifica; Tab segue a ordem natural dos campos.
+  container.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && event.target?.classList?.contains('code-blank')) {
+      event.preventDefault();
+      handleCheck();
+    }
+  });
+
+  if (checkBtn) checkBtn.addEventListener('click', handleCheck);
+  if (retryBtn) retryBtn.addEventListener('click', resetExercise);
+
+  function acceptedAnswersFor(index) {
+    const answers = acceptedByBlank[index]?.accepted_answers;
+    return Array.isArray(answers) ? answers : [];
   }
-  if (retryBtn) {
-    retryBtn.addEventListener('click', resetExercise);
+
+  function referenceAnswerFor(index) {
+    const answers = acceptedAnswersFor(index);
+    return answers.length > 0 ? String(answers[0]) : '';
   }
 
   function handleCheck() {
     if (answered) return;
     answered = true;
 
-    const userCode = textarea.value;
-    let syntaxOk = true;
-    let syntaxMessage = null;
+    const values = inputs.map((input) => input.value);
+    const results = inputs.map((input, index) => answersMatch(input.value, acceptedAnswersFor(index)));
+    const isCorrect = results.length > 0 && results.every(Boolean);
 
-    if (language === 'javascript') {
-      const syntax = checkJavaScriptSyntax(userCode);
-      syntaxOk = syntax.ok;
-      syntaxMessage = syntax.message || null;
-    }
+    const xpEarned = isCorrect && options.calculateXP ? options.calculateXP(true, isRetry) : 0;
 
-    let isCorrect = false;
-    let feedbackType = FeedbackType.INCORRECT;
-    let detailHtml = '';
+    inputs.forEach((input, index) => {
+      input.disabled = true;
+      input.classList.toggle('correct', results[index]);
+      input.classList.toggle('incorrect', !results[index]);
+    });
 
-    if (!syntaxOk) {
-      // Erro de sintaxe (ex.: "Unexpected token" na linha X)
-      feedbackType = FeedbackType.INCORRECT;
-      detailHtml = `<p class="feedback-detail">${t('lesson.codeCompletion.syntaxError', { message: syntaxMessage || '' })}</p>`;
-    } else if (language === 'javascript' && exercise.testCases && exercise.testCases.length > 0) {
-      // Validação comportamental com múltiplos casos de teste
-      const result = validateBehaviorally(userCode, exercise.correct, exercise.testCases);
-      if (result.ok) {
-        isCorrect = true;
-        feedbackType = FeedbackType.CORRECT;
-      } else if (result.type === 'runtime') {
-        isCorrect = false;
-        feedbackType = FeedbackType.INCORRECT;
-        detailHtml = `<p class="feedback-detail">${t('lesson.codeCompletion.runtimeError', { message: result.error.message || '' })}</p>`;
-      } else {
-        // Erro de lógica: código roda, mas produz saída diferente da esperada
-        isCorrect = false;
-        feedbackType = FeedbackType.PARTIAL;
-        const vars = (result.case && result.case.vars) || {};
-        detailHtml = `<p class="feedback-detail">${t('lesson.codeCompletion.logicError', {
-          case: JSON.stringify(vars),
-          reference: result.referenceOutput || '',
-          student: result.studentOutput || ''
-        })}</p>`;
-      }
-    } else {
-      // Fallback de comparação de texto normalizado (sem comentários/espços)
-      const matchesReference =
-        normalizeForComparison(userCode) === normalizeForComparison(exercise.correct);
-      if (matchesReference) {
-        isCorrect = true;
-        feedbackType = FeedbackType.CORRECT;
-      } else {
-        isCorrect = false;
-        feedbackType = FeedbackType.PARTIAL;
-        detailHtml = `<p class="feedback-detail">${t('lesson.codeCompletion.notQuite')}</p>`;
-      }
-    }
-
-    const xpEarned = options.calculateXP ? options.calculateXP(isCorrect, isRetry) : 0;
-
-    textarea.disabled = true;
     if (checkBtn) checkBtn.hidden = true;
 
-    showFeedback(feedbackEl, feedbackType, {
+    showFeedback(feedbackEl, isCorrect ? FeedbackType.CORRECT : FeedbackType.INCORRECT, {
       xp: xpEarned,
       streak: options.streak,
       isFirstAttempt: !isRetry
     });
-    if (detailHtml) {
-      feedbackEl.insertAdjacentHTML('beforeend', detailHtml);
+
+    // Sem vidas/punição: ao errar, mostramos a resposta de referência das
+    // lacunas erradas e a explicação; nada é executado.
+    if (!isCorrect) {
+      const detailItems = results
+        .map((isOk, index) => (isOk ? null : index))
+        .filter((index) => index !== null)
+        .map((index) =>
+          `<li>${t('lesson.codeCompletion.answerReference', {
+            index: index + 1,
+            answer: escapeHtml(referenceAnswerFor(index))
+          })}</li>`
+        )
+        .join('');
+      feedbackEl.insertAdjacentHTML(
+        'beforeend',
+        `<p class="feedback-detail">${t('lesson.codeCompletion.notQuite')}</p>` +
+          `<ul class="feedback-reference">${detailItems}</ul>`
+      );
     }
 
+    referenceList.innerHTML = inputs
+      .map(
+        (input, index) =>
+          `<li><span class="reference-blank-index">${t('lesson.codeCompletion.blank', {
+            index: index + 1,
+            total: totalBlanks
+          })}:</span> <code>${escapeHtml(referenceAnswerFor(index))}</code></li>`
+      )
+      .join('');
+    referenceEl.hidden = false;
     explanationEl.hidden = false;
 
     onAnswer({
@@ -297,14 +243,17 @@ export function renderCodeCompletion(exercise, options = {}) {
       correct: isCorrect,
       xpEarned,
       isRetry,
-      userAnswer: userCode
+      userAnswer: values
     });
   }
 
   function resetExercise() {
     answered = false;
-    textarea.disabled = false;
-    textarea.value = exercise.starter_code || '';
+    inputs.forEach((input) => {
+      input.disabled = false;
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
     if (checkBtn) {
       checkBtn.hidden = false;
       checkBtn.disabled = false;
@@ -316,11 +265,4 @@ export function renderCodeCompletion(exercise, options = {}) {
   }
 
   return container;
-}
-
-function escapeHtml(value) {
-  return String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
 }
