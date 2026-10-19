@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)** + **T148–T153 (Fase 20: correção do exercício "completar código" — lacunas inline — e auditoria dos 5 tipos de exercício)** + **T154–T157 (Fase 21: normalização conservadora da resposta + XP concedido uma única vez por exercício)** + **T158–T163 (Fase 21: infraestrutura da pipeline de conteúdo)** + **T164 (Fase 22: piloto `sem1-algorithms-m01` refeito com E0–E7)** + **T165 (Fase 22: `sem1-algorithms-m02` refeito com E0–E7)**; inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)** + **T148–T153 (Fase 20: correção do exercício "completar código" — lacunas inline — e auditoria dos 5 tipos de exercício)** + **T154–T157 (Fase 21: normalização conservadora da resposta + XP concedido uma única vez por exercício)** + **T158–T163 (Fase 21: infraestrutura da pipeline de conteúdo)** + **T164 (Fase 22: piloto `sem1-algorithms-m01` refeito com E0–E7)** + **T165 (Fase 22: `sem1-algorithms-m02` refeito com E0–E7)** + **T170–T173 (Fase 23: embaralhamento determinístico das alternativas)** + **T174–T180 (Fase 24: SRS por exercício e revisão exercício-a-exercício)**; inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -35,12 +35,12 @@ ensina-logica/
 │   ├── i18n.js                 # ✅ Completo - loader + t(key, params)
 │   ├── store/
 │   │   ├── ProgressStore.js    # ✅ Completo - localStorage abstraction + schema migration
-│   │   └── schema-version.js   # ✅ Completo - migrações v0→v1→v2→v3, validação
+│   │   └── schema-version.js   # ✅ Completo - migrações v0→v1→v2→v3→v4, validação
 │   ├── gamification/
 │   │   ├── xp.js               # ✅ Completo - XP, níveis, progresso
 │   │   ├── streak.js           # ✅ Completo - streak + freeze semanal
 │   │   ├── achievements.js     # ✅ Completo - 18 badges com critérios
-│   │   └── srs.js              # ✅ Completo - intervalos 0/1/3/7/21 + fila de revisões (T129)
+│   │   └── srs.js              # ✅ Completo - SRS por exercício (0/1/3/7/21), upsert e revisão um-a-um (T174)
 │   ├── curriculum/
 │   │   ├── loader.js           # ✅ Completo - carrega curriculum/theory/exercises
 │   │   ├── unlock.js           # ✅ Completo - lógica de desbloqueio linear/livre
@@ -58,7 +58,8 @@ ensina-logica/
 │   ├── lib/content-rules.mjs   # ✅ Completo - regras anti-placeholder puras (URL genérica, trecho literal, licença/edição) usadas pelo validate e pelos testes
 │   ├── test-validation.mjs     # ✅ Completo - testes das regras anti-placeholder (exemplos ruins são rejeitados)
 │   ├── verify-sources.mjs      # ✅ Completo - verificação MANUAL (fora do CI): baixa cada fonte e confere o trecho ("confere"/"não confere"/"sem acesso")
-│   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS, unlock, progress, migração)
+│   ├── test-core.mjs           # ✅ Completo - testes puros (XP, streak, SRS por exercício, unlock, progress, migração v4)
+│   ├── test-review-dom.mjs     # ✅ Completo - revisão por exercício (jsdom): migração, painel, sessão, retry, persistência, export/import (T179)
 │   ├── test-imports.mjs        # ✅ Completo - importa todos os módulos de src/ (falha em erro)
 │   ├── test-smoke.mjs          # ✅ Completo - smoke test do initApp (mock de DOM)
 │   ├── test-dom.mjs            # ✅ Completo - integração jsdom (rota inicial #/ renderiza)
@@ -321,11 +322,23 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - **T173 — auditoria e testes:** auditoria dos **68 exercícios de múltipla escolha** do repositório: **0** com opções dependentes de posição (nenhum precisou de ajuste de texto nem de `shuffle: false`) e **0** com "alternativa A"/"primeira opção" em enunciado, opção ou explicação. Novo `scripts/test-multiple-choice-dom.mjs` (em `npm test`): todos os exercícios × 5 tentativas (correta aceita, todos os distratores rejeitados), ordem estável na mesma tentativa e diferente na seguinte, fixas no fim, `shuffle:false`, teclado/ARIA e **1000 tentativas** com distribuição `250/250/250/250` (cada posição entre 15% e 35%).
 - **Verificação:** `npm test` ✅ (19 suítes; 68 exercícios de múltipla escolha, 340 acertos e 1020 distratores nos testes) e `npm run validate` ✅ no patch isolado. No navegador real (`npx serve`, `#/lesson/l01`), a ordem variou entre tentativas (`3,1,0,2` → `1,0,2,3` e `1,2,0,3` → `2,0,3,1`), a resposta correta foi aceita e a explicação não citou letras/posições. Observação: a árvore de trabalho contém o `sem1-algorithms-m03` em andamento (fora desta tarefa), que motivou os avisos residuais de `validate` na árvore não commitada.
 
+### Fase 24: SRS por exercício e revisão exercício-a-exercício — ✅ COMPLETO (T174–T180, 2026-10-19)
+**Como era antes:** a revisão era **por lição** (`progress.srs_queue`): concluir a lição agendava uma entrada da lição (intervalos 0/1/3/7/21) e "Iniciar revisões" abria a lição **inteira** (`/lesson/:id`), mesmo que só um exercício tivesse sido errado. Havia ainda uma fila paralela `review_queue` (T129) já por exercício, mas a experiência principal continuava por lição. O painel misturava as duas filas (`getCombinedReviewItems`) e contava **lições**. A conclusão exigia percorrer todos os exercícios e não havia como refazer apenas os errados.
+
+**Como ficou:**
+- **Fonte única por exercício:** `progress.exercises[id]` guarda `last_result`, `first_try_correct`, `attempts`, `wrong_count`, `last_answered_at`, `srs_stage` e `due_date` (mais `correct`, `xp_earned` e `last_attempt_date`, usados por conquistas/meta diária). `recordExerciseAnswer()` faz **upsert por id** — erros repetidos atualizam o mesmo item e somam `wrong_count`, nunca duplicam.
+- **Escada e regras:** primeira resposta correta → estágio 1 (amanhã); acerto em revisão vencida → 1→3→7→21 dias; erro → estágio 0 (hoje) + `wrong_count++`; acerto antes do vencimento mantém a agenda. Acerto de exercício nunca respondido não cria entrada de revisão.
+- **Sessão de revisão (`#/review`):** abre só os exercícios vencidos, **um por vez**, no tipo correto, com link "ver a teoria" para a seção do `source_ref` (`#/theory/<id>?section=<seção>`, nova aba) e resumo final ("Você acertou X de Y; 1 exercício volta amanhã/hoje"). Os cards do painel usam `/review?start=<exerciseId>`.
+- **Lição sem exigir 100%:** a conclusão mostra "Você acertou X de Y", o XP da sessão e o botão **"Refazer só os que errei (N)"**, que remonta apenas os ids errados (com aviso de modo retry). Sem vidas nem bloqueio por erro; o XP continua sendo concedido **uma única vez** por exercício.
+- **Painel:** conta **exercícios** e mostra "N exercício(s) para revisar".
+- **Schema v4:** a migração converte a `review_queue` (por exercício) para `progress.exercises`, **descarta `srs_queue`** (revisões por lição, que não informam quais exercícios errar) e zera `review_queue`. XP, nível, streak, conquistas, seções lidas e anotações são preservados; importar JSON antigo passa pela migração. No boot, `pruneInvalidExerciseProgress()` remove ids órfãos **silenciosamente** (módulos refeitos).
+- **Testes:** `scripts/test-core.mjs` reescrito para o SRS por exercício + migração v3→v4; novo `scripts/test-review-dom.mjs` (migração/órfãos, contador do painel, sessão um-a-um com teoria/resumo, resultado/retry da lição, erro repetido = 1 item, `?start`, acerto avança estágio e sai da fila, persistência após reload e export/import preservando registros); `test-lesson-dom.mjs` e `test-e2e-dom.mjs` atualizados. `npm test` ✅ (20 suítes) e `npm run validate` ✅; app aberto no navegador para errar exercícios de propósito.
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" + XP corrigidos (2026-10-18), pipeline de conteúdo criada (2026-10-19), piloto m01 e módulo m02 refeitos (2026-10-19).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). T164 e T165 concluídas; restam os módulos T166–T169.
+**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" + XP corrigidos (2026-10-18), pipeline de conteúdo criada (2026-10-19), piloto m01 e módulo m02 refeitos (2026-10-19), SRS por exercício (2026-10-19).** A implementação satisfaz `spec.md` (AC-01…AC-17), `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). T164 e T165 concluídas; restam os módulos T166–T169.
 
 **Converge — 2ª rodada:** avaliados os 15 critérios de aceitação (AC-01…AC-15) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 
@@ -346,7 +359,7 @@ Restam apenas itens que exigem ambiente externo:
 2. **T100 / QA manual (Fase 11)** — jornada real em navegador (a jornada automatizada está em `scripts/test-e2e-dom.mjs`).
 3. Ao publicar, atualizar `ATTRIBUTIONS.md`/CHANGELOG com a data do deploy.
 
-Verificação automatizada: `npm test` (17 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes e `npm run verify-sources` confere cada trecho contra a fonte viva.
+Verificação automatizada: `npm test` (20 suítes) e `npm run validate`. Com rede: `CHECK_URLS=1 npm run validate` valida as URLs das fontes e `npm run verify-sources` confere cada trecho contra a fonte viva.
 
 ---
 

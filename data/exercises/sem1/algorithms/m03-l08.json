@@ -1,80 +1,122 @@
 [
   {
-    "id": "ex-sem1-algorithms-m03-l08-while-quatro",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
-    "lesson_id": "l08",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "Quais são os quatro atributos de um laço while que funciona corretamente, segundo o capítulo While Loop?",
-    "options": [
-      "Inicializar a flag, expressão de teste, ação(ões) e atualizar a flag",
-      "Entrada, processamento, saída e pausa",
-      "Compilar, executar, depurar e publicar",
-      "Variável, constante, literal e tipo"
-    ],
-    "correct": 0,
-    "explanation": "O capítulo While Loop lista quatro atributos: inicializar a flag, a expressão de teste, a ação ou ações e a atualização da flag; faltar um deles pode causar laço infinito.",
-    "difficulty": "medium",
-    "xp_base": 15
-  },
-  {
     "id": "ex-sem1-algorithms-m03-l08-do-while",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "theory_unit_id": "th-sem1-algorithms-m03-do-while",
     "lesson_id": "l08",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "O laço do while é um laço com teste depois (test after): a ação é executada pelo menos uma vez.",
+    "prompt": "O laço do-while executa o corpo pelo menos uma vez antes de testar a condição.",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "O capítulo Do While Loop explica que, por ser um laço com teste depois (post-test), a ação sempre acontece pelo menos uma vez antes de a condição ser verificada.",
+    "explanation": "O capítulo Do While Loop explica que, por ser teste depois (post-test), a ação sempre acontece ao menos uma vez.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-do-while#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'Notice, because this is a test after loop the action will always happen at least once.'"
   },
   {
     "id": "ex-sem1-algorithms-m03-l08-for",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "theory_unit_id": "th-sem1-algorithms-m03-for-loop",
     "lesson_id": "l08",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Segundo o capítulo For Loop, quando o laço for é normalmente usado?",
+    "prompt": "Quando o laço for é normalmente usado, segundo o capítulo For Loop?",
     "options": [
-      "Quando o número de repetições é conhecido antes de entrar no laço",
-      "Quando nunca se sabe quantas repetições ocorrerão",
-      "Quando não existe condição de parada",
-      "Quando a ação deve ocorrer no máximo uma vez"
+      "Voltas conhecidas antes de entrar",
+      "Nunca se sabe quantas voltas",
+      "Ação ocorre no máximo uma vez",
+      "Não existe condição de parada"
     ],
     "correct": 0,
-    "explanation": "O capítulo For Loop afirma que o for é um laço de contagem usado quando o número de iterações é conhecido antes de entrar no laço, com valor inicial e valor de parada.",
+    "explanation": "O capítulo For Loop afirma que o for é usado quando o número de iterações é conhecido antes de entrar no laço.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-for-loop#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'For loops are typically used when the number of iterations is known before entering the loop.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l08-while-quatro",
+    "theory_unit_id": "th-sem1-algorithms-m03-iteration-while",
+    "lesson_id": "l08",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Quais são os quatro atributos de um laço while correto?",
+    "options": [
+      "Iniciar flag, testar, agir, atualizar",
+      "Compilar, executar, depurar, publicar",
+      "Variável, constante, literal, tipo",
+      "Entrada, processamento, saída, pausa"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo While Loop lista: inicializar a flag, expressão de teste, ação(ões), atualizar a flag.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-iteration-while#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'Within the while control structure there are four attributes to a properly working loop: Initializing the flag, Test expression, Action or actions, Update of the flag.'"
   },
   {
     "id": "ex-sem1-algorithms-m03-l08-infinite",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "theory_unit_id": "th-sem1-algorithms-m03-iteration-while",
     "lesson_id": "l08",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Se a flag de um laço nunca for atualizada, a expressão de teste pode permanecer verdadeira e gerar um laço infinito.",
+    "prompt": "Se a flag nunca for atualizada, o laço while pode se tornar infinito.",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "Os capítulos While Loop e For Loop avisam que esquecer de atualizar a flag faz a expressão de teste continuar verdadeira, produzindo um laço infinito (infinite loop).",
+    "explanation": "Os capítulos While Loop e For Loop avisam que esquecer de atualizar a flag faz o teste continuar verdadeiro, gerando laço infinito.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-iteration-while#erros-comuns",
+    "answer_check": "Verificado contra trecho da fonte: 'Missing the flag update usually causes an infinite loop.'"
   },
   {
-    "id": "ex-sem1-algorithms-m03-l08-code",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "id": "ex-sem1-algorithms-m03-l08-code-while",
+    "theory_unit_id": "th-sem1-algorithms-m03-iteration-while",
     "lesson_id": "l08",
     "type": "code-completion",
     "generated_by_ai": true,
-    "prompt": "Complete o código Python do laço de contagem que imprime a mensagem cinco vezes (contador de 0 a 4).",
-    "code": "# Contar de 0 a 4 (5 repeticoes)\ncontador = 0\n\nwhile ___:\n    print(\"Eu amo sorvete!\")\n    contador += 1",
+    "prompt": "Complete o laço while em Python para imprimir 5 vezes (contador 0 a 4).",
+    "code": "contador = 0\n\nwhile ___:\n    print(\"Eu amo sorvete!\")\n    contador += 1",
     "language": "python",
     "blanks": [
       { "accepted_answers": ["contador < 5", "5 > contador"] }
     ],
-    "explanation": "O capítulo While Loop mostra o laço de contagem com a expressão de teste contador < 5; o contador começa em 0 e é atualizado até o teste ficar falso.",
+    "explanation": "O capítulo While Loop mostra o laço de contagem com teste contador < 5; o contador começa em 0 e incrementa até o teste falhar.",
     "difficulty": "medium",
-    "xp_base": 20
+    "xp_base": 20,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-iteration-while#exemplo-resolvido",
+    "answer_check": "Executado em Python 3.12; imprime 5 vezes com qualquer resposta aceita."
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l08-trace",
+    "theory_unit_id": "th-sem1-algorithms-m03-for-loop",
+    "lesson_id": "l08",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene os quatro atributos de um laço for de contagem na ordem em que ocorrem.",
+    "options": [
+      "Atualizar a flag (incremento)",
+      "Inicializar a flag (feita uma vez)",
+      "Expressão de teste",
+      "Ação ou ações (corpo do laço)"
+    ],
+    "correct": [1, 2, 3, 0],
+    "explanation": "O capítulo For Loop lista os atributos em ordem: 1) Inicialização (uma vez), 2) Teste, 3) Ação, 4) Atualização; o laço repete do teste à atualização enquanto o teste for verdadeiro.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-for-loop#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'Within the for control structure, there are four attributes to a properly working loop: Initializing the flag – done once, Test expression, Action or actions, Update of the flag.'"
   }
 ]

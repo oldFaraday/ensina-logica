@@ -33,6 +33,11 @@
           "definition": "Operação que armazena um valor em uma variável."
         },
         {
+          "en": "argument",
+          "pt": "argumento",
+          "definition": "Valor concreto passado na chamada de uma função; corresponde a um parâmetro na definição. Ex.: em `CalcularCelsius(100)`, o argumento é `100`."
+        },
+        {
           "en": "asymptotic notation",
           "pt": "notação assintótica",
           "definition": "Família de notações (Big-O, Big-Ω, Big-Θ) que descreve o crescimento de funções, usado para analisar complexidade de algoritmos."
@@ -56,6 +61,21 @@
           "en": "binary",
           "pt": "binário",
           "definition": "Sistema de numeração de base 2, usando apenas os dígitos 0 e 1."
+        },
+        {
+          "en": "branch",
+          "pt": "ramo / desvio",
+          "definition": "Instrução que faz o fluxo de execução saltar para outra parte do programa (break, continue, return, goto)."
+        },
+        {
+          "en": "branching statements",
+          "pt": "comandos de desvio",
+          "definition": "Instruções que alteram o fluxo sequencial padrão: break, continue, return, goto, exit."
+        },
+        {
+          "en": "break",
+          "pt": "break / interrupção",
+          "definition": "Comando que termina a estrutura existente (sai do laço ou switch imediatamente)."
         },
         {
           "en": "boolean",
@@ -98,6 +118,16 @@
           "definition": "Complexidade O(1): o tempo de execução não depende do tamanho da entrada."
         },
         {
+          "en": "complex logic",
+          "pt": "lógica complexa",
+          "definition": "Problema que envolve múltiplas decisões ou dimensões interdependentes, geralmente resolvido com estruturas de controle aninhadas (ex.: laços dentro de laços, condicionais dentro de laços)."
+        },
+        {
+          "en": "continue",
+          "pt": "continue / continuação",
+          "definition": "Comando que interrompe a iteração atual de um laço e salta para a próxima iteração, sem sair do laço."
+        },
+        {
           "en": "constructor",
           "pt": "construtor",
           "definition": "Método especial que inicializa um objeto no momento de sua criação."
@@ -111,6 +141,51 @@
           "en": "control structures",
           "pt": "estruturas de controle",
           "definition": "Mecanismos que permitem controlar o fluxo de execução de um programa; a fonte lista sequência, seleção, iteração e ramificação."
+        },
+        {
+          "en": "structured programming",
+          "pt": "programação estruturada",
+          "definition": "Paradigma que busca melhorar clareza, qualidade e tempo de desenvolvimento usando seleção, repetição, blocos e sub-rotinas, em vez de saltos como o go to."
+        },
+        {
+          "en": "spaghetti code",
+          "pt": "código espaguete",
+          "definition": "Expressão pejorativa para código não estruturado e difícil de manter."
+        },
+        {
+          "en": "if then else",
+          "pt": "se então senão",
+          "definition": "Estrutura de seleção de duas vias controlada por uma expressão booleana; ações são mutuamente exclusivas."
+        },
+        {
+          "en": "mutually exclusive",
+          "pt": "mutuamente exclusivas",
+          "definition": "Itens que não se sobrepõem; no if then else, apenas uma das duas ações é executada."
+        },
+        {
+          "en": "null else",
+          "pt": "senão vazio",
+          "definition": "Forma curta do if then else quando não há ação para o caso falso; o 'senão não fazer nada' é implícito."
+        },
+        {
+          "en": "relational operator",
+          "pt": "operador relacional",
+          "definition": "Operador que compara dois operandos e produz um valor booleano: <, >, <=, >=, ==, !=."
+        },
+        {
+          "en": "logical operator",
+          "pt": "operador lógico",
+          "definition": "Operador que combina expressões booleanas: AND (&&, and), OR (||, or), NOT (!, not)."
+        },
+        {
+          "en": "Boolean expression",
+          "pt": "expressão booleana",
+          "definition": "Expressão que resulta em verdadeiro ou falso, usada para controlar estruturas de seleção e iteração."
+        },
+        {
+          "en": "case control structure",
+          "pt": "estrutura case / switch",
+          "definition": "Estrutura de seleção múltipla que compara um valor com constantes listadas (cases); exige `break` para evitar fall-through; limitações: apenas tipos inteiros/caractere, sem intervalos."
         },
         {
           "en": "data type",
@@ -141,6 +216,11 @@
           "en": "decision symbol",
           "pt": "símbolo de decisão",
           "definition": "Losango usado em fluxogramas para representar a pergunta de verdadeiro/falso testada em uma decisão."
+        },
+        {
+          "en": "do while loop",
+          "pt": "laço do-while",
+          "definition": "Laço com teste depois (post-test); executa o corpo pelo menos uma vez antes de testar a condição."
         },
         {
           "en": "edge",
@@ -203,6 +283,11 @@
           "definition": "Entidade (função, dado) que pode ser passada como argumento, retornada e atribuída a variáveis como qualquer outro valor."
         },
         {
+          "en": "exit",
+          "pt": "exit / saída",
+          "definition": "Função pré-definida que encerra o programa prematuramente e retorna código ao sistema operacional."
+        },
+        {
           "en": "flowchart",
           "pt": "fluxograma",
           "definition": "Representação gráfica de um algoritmo usando símbolos padronizados (terminal, processo, decisão, entrada/saída)."
@@ -221,6 +306,21 @@
           "en": "floating point",
           "pt": "ponto flutuante",
           "definition": "Tipo de dado que representa números com parte fracionária, armazenado como mantissa e expoente, com um compromisso entre alcance e precisão."
+        },
+        {
+          "en": "flag",
+          "pt": "flag / sinalizador",
+          "definition": "Variável usada para armazenar informação que controla o programa; seu valor é comparado (olhar a flag) para decidir o fluxo."
+        },
+        {
+          "en": "for loop",
+          "pt": "laço for",
+          "definition": "Laço de contagem com teste antes, usado quando o número de iterações é conhecido; tem inicialização, teste, ação e atualização no cabeçalho."
+        },
+        {
+          "en": "counting loop",
+          "pt": "laço de contagem",
+          "definition": "Laço cujo número de iterações é conhecido antes de iniciar; geralmente implementado com `for`, mas também possível com `while` usando um contador."
         },
         {
           "en": "graph",
@@ -286,6 +386,11 @@
           "en": "integer",
           "pt": "inteiro",
           "definition": "Número sem parte fracionária (…, -2, -1, 0, 1, 2, …)."
+        },
+        {
+          "en": "iteration control structure",
+          "pt": "estrutura de controle de iteração",
+          "definition": "Estrutura que permite repetir linhas de código; inclui test before (while, for), test after (do-while) e counting loops."
         }
       ]
     },
@@ -303,6 +408,11 @@
           "definition": "Estrutura de repetição que executa um bloco de código enquanto uma condição for verdadeira (ex.: while, for)."
         },
         {
+          "en": "loop variable",
+          "pt": "variável de laço / contador",
+          "definition": "Variável que controla o número de iterações em um laço de contagem (ex.: contador em for/while)."
+        },
+        {
           "en": "logic",
           "pt": "lógica",
           "definition": "Estudo sistemático do raciocínio válido, incluindo proposições, conectivos e quantificadores."
@@ -312,6 +422,16 @@
     {
       "letter": "M",
       "terms": [
+        {
+          "en": "modular programming",
+          "pt": "programação modular",
+          "definition": "Técnica de design que separa a funcionalidade em módulos independentes (funções); divide programas grandes em partes menores e gerenciáveis."
+        },
+        {
+          "en": "multiway selection",
+          "pt": "seleção múltipla",
+          "definition": "Estrutura de controle que escolhe entre três ou mais caminhos alternativos; implementada via `else if` encadeado ou `case`/`switch`."
+        },
         {
           "en": "modulus",
           "pt": "módulo (resto)",
@@ -326,6 +446,11 @@
           "en": "module",
           "pt": "módulo",
           "definition": "Unidade de organização de código que agrupa funções, tipos e variáveis relacionadas."
+        },
+        {
+          "en": "parameter passing",
+          "pt": "passagem de parâmetros",
+          "definition": "Mecanismo de comunicação de dados entre funções: parâmetros (definição) recebem argumentos (chamada); pode ser por posição ou por nome."
         }
       ]
     },
@@ -336,6 +461,11 @@
           "en": "named constant",
           "pt": "constante nomeada",
           "definition": "Constante representada por um nome, muitas vezes escrita em maiúsculas, que precisa receber valor quando é definida."
+        },
+        {
+          "en": "nested for loops",
+          "pt": "laços for aninhados",
+          "definition": "Um laço for dentro de outro; o laço interno repete por completo a cada iteração do externo (ex.: tabuada linhas × colunas)."
         },
         {
           "en": "nothing data type",
@@ -351,6 +481,11 @@
           "en": "nested loop",
           "pt": "laço aninhado",
           "definition": "Laço de repetição contido dentro de outro laço."
+        },
+        {
+          "en": "nested control structures",
+          "pt": "estruturas de controle aninhadas",
+          "definition": "Conceito de colocar uma estrutura de controle (if, while, for) dentro de outra, permitindo misturar categorias (ex.: if dentro de while, for dentro de if)."
         },
         {
           "en": "node",
@@ -401,6 +536,16 @@
           "en": "Pascal case",
           "pt": "PascalCase",
           "definition": "Estilo de escrita em que cada palavra, inclusive a primeira, começa com maiúscula, sem espaços entre as palavras."
+        },
+        {
+          "en": "post-test loop",
+          "pt": "laço com teste depois",
+          "definition": "Laço onde a condição é testada após o corpo (do-while, repeat until); o corpo executa pelo menos uma vez."
+        },
+        {
+          "en": "pre-test loop",
+          "pt": "laço com teste antes",
+          "definition": "Laço onde a condição é testada antes do corpo (while, for); o corpo pode não executar nenhuma vez."
         },
         {
           "en": "precedence",
@@ -463,6 +608,11 @@
       "letter": "R",
       "terms": [
         {
+          "en": "repeat until",
+          "pt": "repita até",
+          "definition": "Variante de laço com teste depois (usada em Pascal); repete o bloco enquanto a condição for falsa e para quando se torna verdadeira — o inverso lógico do `do while`."
+        },
+        {
           "en": "reserved word",
           "pt": "palavra reservada",
           "definition": "Palavra que já tem significado na linguagem e não pode ser usada pelo programador como nome de identificador."
@@ -476,6 +626,11 @@
           "en": "return",
           "pt": "retorno",
           "definition": "Comando que encerra a execução de uma função e opcionalmente devolve um valor ao chamador."
+        },
+        {
+          "en": "return statement",
+          "pt": "comando return / instrução return",
+          "definition": "Instrução de ramificação que encerra a função imediatamente, retorna ao ponto de chamada e pode devolver um valor; em muitas linguagens, suporta zero ou um valor de retorno."
         },
         {
           "en": "runtime",
@@ -558,6 +713,11 @@
           "definition": "Valores de entrada fornecidos pelo programador e as saídas previstas, usados para verificar o modelo."
         },
         {
+          "en": "test after loop",
+          "pt": "laço com teste depois",
+          "definition": "Laço onde a condição é verificada após a execução do corpo (ex.: do-while, repeat until); garante que o corpo execute pelo menos uma vez."
+        },
+        {
           "en": "theorem",
           "pt": "teorema",
           "definition": "Afirmação matemática cuja verdade foi demonstrada por meio de uma prova."
@@ -601,6 +761,11 @@
           "en": "while",
           "pt": "enquanto",
           "definition": "Palavra-chave que inicia um laço de repetição condicional (testa antes de executar)."
+        },
+        {
+          "en": "while loop",
+          "pt": "laço while",
+          "definition": "Laço com teste antes (pre-test); a condição é avaliada antes de cada iteração, podendo resultar em zero execuções do corpo."
         }
       ]
     }

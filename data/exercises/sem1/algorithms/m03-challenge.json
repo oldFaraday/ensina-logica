@@ -1,0 +1,171 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-01",
+    "theory_unit_id": "th-sem1-algorithms-m03-structured-programming",
+    "lesson_id": "l07",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Quais são as três categorias principais de estruturas de controle, segundo a programação estruturada?",
+    "options": [
+      "Sequência, seleção, iteração",
+      "Entrada, processamento, saída",
+      "If, while, for",
+      "Variável, constante, literal"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Structured Programming define: 'There are three main categories of control structures: Sequence, Selection, Iteration.'",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-structured-programming#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'There are three main categories of control structures: Sequence, Selection, Iteration.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-02",
+    "theory_unit_id": "th-sem1-algorithms-m03-if-then-else",
+    "lesson_id": "l07",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Na estrutura if then else, as duas ações são mutuamente exclusivas: apenas uma executa, nunca ambas.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "O capítulo If Then Else afirma: 'Because the question... has only two possible answers (true or false) the actions are mutually exclusive... One of the actions is executed; never both of the actions.'",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-if-then-else#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'One of the actions is executed; never both of the actions.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-03",
+    "theory_unit_id": "th-sem1-algorithms-m03-relational-logical-operators",
+    "lesson_id": "l07",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Em muitas linguagens, qual é o resultado da expressão `idade = 18` (atribuição) usada como condição em um if?",
+    "options": [
+      "Sempre verdadeiro (atribui 18, que é não-zero)",
+      "Sempre falso",
+      "Erro de sintaxe",
+      "Compara idade com 18"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Assignment vs Equality alerta: 'The test expression of the control structure will always be true because the expression is an assignment (not the relational operator of ==). It assigns the 18 to the variable... determines that it is not zero; therefore the expression is true.'",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-relational-logical-operators#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'The test expression... will always be true because the expression is an assignment... determines that it is not zero; therefore the expression is true.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-04",
+    "theory_unit_id": "th-sem1-algorithms-m03-iteration-while",
+    "lesson_id": "l08",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete os quatro atributos do laço while em ordem: inicializar flag, ___, ação(ões), atualizar flag.",
+    "code": "___\nwhile (flag < 10) {\n    // ação\n    flag++;\n}",
+    "language": "pseudocode",
+    "blanks": [
+      { "accepted_answers": ["expressão de teste", "test expression", "teste"] }
+    ],
+    "explanation": "O capítulo While Loop lista: 'Initializing the flag, Test expression, Action or actions, Update of the flag'.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-iteration-while#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'Within the while control structure there are four attributes to a properly working loop. They are: Initializing the flag, Test expression, Action or actions, Update of the flag.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-05",
+    "theory_unit_id": "th-sem1-algorithms-m03-do-while",
+    "lesson_id": "l08",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual laço garante que o corpo execute pelo menos uma vez: while ou do-while?",
+    "options": [
+      "do-while",
+      "while",
+      "Ambos garantem",
+      "Nenhum garante"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Do While Loop: 'Notice, because this is a test after loop the action will always happen at least once.' O while é teste antes e pode executar zero vezes.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-do-while#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'Notice, because this is a test after loop the action will always happen at least once.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-06",
+    "theory_unit_id": "th-sem1-algorithms-m03-nested-loops",
+    "lesson_id": "l09",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene as etapas de execução de laços for aninhados (externo: linhas 1-2, interno: colunas 1-3).",
+    "options": [
+      "Exibir linha * coluna",
+      "Iniciar linha = 1",
+      "Incrementar coluna",
+      "Incrementar linha",
+      "Testar coluna <= 3",
+      "Testar linha <= 2"
+    ],
+    "correct": [1, 5, 2, 0, 3, 4],
+    "explanation": "O capítulo Nested For Loops mostra a ordem: iniciar linha → testar linha → iniciar coluna → testar coluna → exibir produto → incrementar coluna → (volta testar coluna) → incrementar linha → (volta testar linha). A fonte afirma: 'The inner loop is repeated for each iteration of the outer loop.'",
+    "difficulty": "hard",
+    "xp_base": 25,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m03-nested-loops#definicao",
+    "answer_check": "Verificado contra lógica do pseudocódigo da fonte: 'For row = 1... For column = 1... Output row * column'."
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-07",
+    "theory_unit_id": "th-sem1-algorithms-m03-branching",
+    "lesson_id": "l09",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Em laços aninhados, um `break` no laço interno afeta qual laço?",
+    "options": [
+      "Apenas o interno",
+      "Todos os laços aninhados",
+      "O laço externo",
+      "Nenhum (erro de sintaxe)"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Branching Statements define break como 'termina a estrutura existente'. Em laços aninhados, o break sai apenas do laço onde está contido.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-branching#definicao",
+    "answer_check": "Verificado contra definição da fonte: 'break – A branching statement that terminates the existing structure.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-challenge-08",
+    "theory_unit_id": "th-sem1-algorithms-m03-params-return-scope",
+    "lesson_id": "l10",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete a função que calcula o fatorial de n (recursiva), demonstrando escopo local e retorno.",
+    "code": "def fatorial(n):\n    if n <= 1:\n        return 1\n    return n * fatorial(___)\n\nprint(fatorial(5))  # Deve imprimir 120",
+    "language": "python",
+    "blanks": [
+      { "accepted_answers": ["n - 1"] }
+    ],
+    "explanation": "O capítulo Parameters and Arguments mostra passagem de argumento posicional; Return Statement mostra retorno de valor; Scope mostra que cada chamada cria novo 'n' local na pilha. A recursão demonstra escopo local independente por chamada.",
+    "difficulty": "hard",
+    "xp_base": 30,
+    "objective_id": "OBJ-5",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m03-params-return-scope#exemplo-resolvido",
+    "answer_check": "Executado em Python 3.12; fatorial(5) retorna 120."
+  }
+]

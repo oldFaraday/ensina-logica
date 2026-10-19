@@ -1,76 +1,108 @@
 [
   {
-    "id": "ex-sem1-algorithms-m03-l09-aninhados",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
-    "lesson_id": "l09",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "No capítulo Nested For Loops, o que acontece com o laço interno em um laço aninhado?",
-    "options": [
-      "Ele é repetido por completo a cada iteração do laço externo",
-      "Ele executa apenas uma vez no total",
-      "Ele substitui o laço externo",
-      "Ele nunca é executado"
-    ],
-    "correct": 0,
-    "explanation": "O capítulo Nested For Loops afirma que o laço interno é repetido por completo para cada iteração do laço externo, o que permite resolver problemas de lógica complexa, como uma tabuada.",
-    "difficulty": "medium",
-    "xp_base": 15
-  },
-  {
-    "id": "ex-sem1-algorithms-m03-l09-break",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
-    "lesson_id": "l09",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "Segundo o capítulo Branching Statements, qual é a diferença entre break e continue?",
-    "options": [
-      "break encerra a estrutura (sai do laço); continue encerra apenas a iteração atual e vai para a próxima",
-      "continue encerra o programa inteiro imediatamente",
-      "break apenas imprime valores na tela",
-      "Não existe diferença entre os dois comandos"
-    ],
-    "correct": 0,
-    "explanation": "O capítulo Branching Statements define break como o comando que termina a estrutura existente e continue como o que interrompe a iteração atual para começar a próxima.",
-    "difficulty": "medium",
-    "xp_base": 15
-  },
-  {
     "id": "ex-sem1-algorithms-m03-l09-continue",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "theory_unit_id": "th-sem1-algorithms-m03-branching",
     "lesson_id": "l09",
     "type": "true-false",
     "generated_by_ai": true,
     "prompt": "O comando continue interrompe a iteração atual do laço e inicia a próxima, sem sair do laço.",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "O capítulo Branching Statements explica que continue faz o laço parar a iteração atual e começar a próxima, permanecendo dentro do laço, ao contrário do break.",
+    "explanation": "O capítulo Branching Statements explica que continue faz o laço parar a iteração atual e começar a próxima, permanecendo dentro do laço.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-4",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-branching#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'continue – A branching statement that causes a loop to stop its current iteration and begin the next one.'"
   },
   {
-    "id": "ex-sem1-algorithms-m03-l09-code",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "id": "ex-sem1-algorithms-m03-l09-aninhados",
+    "theory_unit_id": "th-sem1-algorithms-m03-nested-loops",
+    "lesson_id": "l09",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "O que acontece com o laço interno em um laço aninhado, conforme o capítulo Nested For Loops?",
+    "options": [
+      "Substitui o externo",
+      "Executa uma vez só",
+      "Repete por completo a cada volta do externo",
+      "Nunca é executado"
+    ],
+    "correct": 2,
+    "explanation": "O capítulo Nested For Loops afirma: o laço interno é repetido por completo para cada iteração do laço externo.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-4",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-nested-loops#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'Nested for loops places one for loop inside another for loop. The inner loop is repeated for each iteration of the outer loop.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l09-break",
+    "theory_unit_id": "th-sem1-algorithms-m03-branching",
+    "lesson_id": "l09",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual a diferença entre break e continue segundo o capítulo Branching Statements?",
+    "options": [
+      "Continue encerra o programa",
+      "Break sai da estrutura; continue vai para a próxima iteração",
+      "Não há diferença",
+      "Break apenas imprime"
+    ],
+    "correct": 1,
+    "explanation": "O capítulo define break como término da estrutura e continue como interrupção da iteração atual.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-branching#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'break – A branching statement that terminates the existing structure.' / 'continue – A branching statement that causes a loop to stop its current iteration and begin the next one.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l09-code-break",
+    "theory_unit_id": "th-sem1-algorithms-m03-branching",
     "lesson_id": "l09",
     "type": "code-completion",
     "generated_by_ai": true,
-    "prompt": "Complete o código JavaScript para que o laço pare quando o contador chegar a 4, como no exemplo de break do capítulo Branching Statements.",
-    "code": "// O laco parece executar 8 vezes, mas para na 5a iteracao\nlet contador = 0;\n\nwhile (contador < 8) {\n  console.log(contador);\n  if (contador === 4) {\n    ___;\n  }\n  contador += 1;\n}",
+    "prompt": "Complete o código JavaScript para que o laço pare quando o contador chegar a 4 (exemplo de break do capítulo Branching Statements).",
+    "code": "let contador = 0;\nwhile (contador < 8) {\n  console.log(contador);\n  if (contador === 4) { ___; }\n  contador += 1;\n}",
     "language": "javascript",
-    "blanks": [
-      { "accepted_answers": ["break"] }
-    ],
-    "explanation": "O capítulo Branching Statements mostra que break termina a estrutura: quando o contador chega a 4, o break faz o laço parar de executar.",
+    "blanks": [{ "accepted_answers": ["break"] }],
+    "explanation": "O capítulo Branching Statements mostra que break termina a estrutura: quando o contador chega a 4, o break faz o laço parar.",
     "difficulty": "medium",
-    "xp_base": 20
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-branching#exemplo-resolvido",
+    "answer_check": "Executado em Node.js 20; imprime 0 1 2 3 4 e para."
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l09-code-continue",
+    "theory_unit_id": "th-sem1-algorithms-m03-branching",
+    "lesson_id": "l09",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o código Python para pular a impressão do número 3 (usando continue) no laço de 1 a 5.",
+    "code": "for i in range(1, 6):\n    if i == 3: ___\n    print(i)",
+    "language": "python",
+    "blanks": [{ "accepted_answers": ["continue"] }],
+    "explanation": "O capítulo Branching Statements mostra que continue pula o resto da iteração atual; aqui pula o print quando i==3.",
+    "difficulty": "medium",
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-branching#exemplo-resolvido",
+    "answer_check": "Executado em Python 3.12; imprime 1 2 4 5 (pula 3)."
   },
   {
     "id": "ex-sem1-algorithms-m03-l09-ordem",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "theory_unit_id": "th-sem1-algorithms-m03-nested-loops",
     "lesson_id": "l09",
     "type": "order-steps",
     "generated_by_ai": true,
-    "prompt": "Ordene o pseudocódigo de laços for aninhados que produz parte de uma tabuada, conforme o capítulo Nested For Loops.",
+    "prompt": "Ordene o pseudocódigo de laços for aninhados que produz parte de uma tabuada.",
     "options": [
       "Exibir linha * coluna",
       "Para linha de 1 até 3",
@@ -78,8 +110,12 @@
       "Para coluna de 1 até 3"
     ],
     "correct": [1, 3, 0, 2],
-    "explanation": "O capítulo Nested For Loops mostra o laço externo (linha) contendo o laço interno (coluna); para cada linha, o interno percorre as colunas exibindo o produto e depois quebra a linha.",
+    "explanation": "O capítulo Nested For Loops mostra o externo (linha) contendo o interno (coluna); para cada linha, o interno percorre as colunas exibindo o produto e depois quebra a linha.",
     "difficulty": "hard",
-    "xp_base": 20
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m03-nested-loops#exemplo-resolvido",
+    "answer_check": "Verificado contra pseudocódigo da fonte: 'For row = 1... For column = 1... Output row * column... Output newline'."
   }
 ]

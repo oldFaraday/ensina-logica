@@ -60,7 +60,21 @@
             {
               "id": "m03",
               "title": "Controle de Fluxo",
-              "theory": "th-sem1-algorithms-m03-control-flow",
+              "pipeline_version": 1,
+              "theory": "th-sem1-algorithms-m03-structured-programming",
+              "theories": [
+                "th-sem1-algorithms-m03-structured-programming",
+                "th-sem1-algorithms-m03-if-then-else",
+                "th-sem1-algorithms-m03-relational-logical-operators",
+                "th-sem1-algorithms-m03-nested-if-case",
+                "th-sem1-algorithms-m03-iteration-while",
+                "th-sem1-algorithms-m03-do-while",
+                "th-sem1-algorithms-m03-for-loop",
+                "th-sem1-algorithms-m03-nested-loops",
+                "th-sem1-algorithms-m03-branching",
+                "th-sem1-algorithms-m03-modular-functions",
+                "th-sem1-algorithms-m03-params-return-scope"
+              ],
               "lessons": [
                 "l07",
                 "l08",

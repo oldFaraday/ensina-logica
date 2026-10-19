@@ -30,7 +30,17 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 | `th-sem1-algorithms-m02-expressions-operators` | Programming Fundamentals | II. Data and Operators › Order of Operations |
 | `th-sem1-algorithms-m02-identifier-names` | Programming Fundamentals | II. Data and Operators › Identifier Names |
 | `th-sem1-algorithms-m02-integer-division-modulus` | Programming Fundamentals | II. Data and Operators › Integer Division and Modulus |
-| `th-sem1-algorithms-m03-control-flow` | Programming Fundamentals | IV. Conditions › Structured Programming |
+| `th-sem1-algorithms-m03-branching` | Programming Fundamentals | V. Loops › Branching Statements |
+| `th-sem1-algorithms-m03-do-while` | Programming Fundamentals | V. Loops › Do While Loop |
+| `th-sem1-algorithms-m03-for-loop` | Programming Fundamentals | V. Loops › For Loop |
+| `th-sem1-algorithms-m03-if-then-else` | Programming Fundamentals | IV. Conditions › If Then Else |
+| `th-sem1-algorithms-m03-iteration-while` | Programming Fundamentals | V. Loops › Iteration Control Structures |
+| `th-sem1-algorithms-m03-modular-functions` | Programming Fundamentals | III. Functions › Modular Programming |
+| `th-sem1-algorithms-m03-nested-if-case` | Programming Fundamentals | IV. Conditions › Nested If Then Else |
+| `th-sem1-algorithms-m03-nested-loops` | Programming Fundamentals | V. Loops › Nested For Loops |
+| `th-sem1-algorithms-m03-params-return-scope` | Programming Fundamentals | III. Functions › Parameters and Arguments |
+| `th-sem1-algorithms-m03-relational-logical-operators` | Programming Fundamentals | IV. Conditions › Relational Operators |
+| `th-sem1-algorithms-m03-structured-programming` | Programming Fundamentals | IV. Conditions › Structured Programming |
 | `th-sem1-discrete-math-m01-logic` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
 | `th-sem1-discrete-math-m02-predicate-logic` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
 | `th-sem1-discrete-math-m03-proofs-induction` | Discrete Mathematics: An Open Introduction | 2. Sequences › 2.5 Induction |

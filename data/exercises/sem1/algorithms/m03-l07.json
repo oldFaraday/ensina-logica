@@ -1,80 +1,152 @@
 [
   {
     "id": "ex-sem1-algorithms-m03-l07-if-else",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "theory_unit_id": "th-sem1-algorithms-m03-structured-programming",
     "lesson_id": "l07",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Segundo o capítulo If Then Else, o que é a estrutura 'if then else'?",
+    "prompt": "Segundo o capítulo Structured Programming, quais são as três categorias principais de estruturas de controle?",
     "options": [
-      "Uma seleção de duas vias controlada por uma condição booleana",
-      "Uma repetição que sempre executa cinco vezes",
-      "Um tipo de dado numérico",
-      "Uma função que não recebe parâmetros"
+      "Sequência, seleção, iteração",
+      "Entrada, processamento, saída",
+      "Variável, constante, literal",
+      "Início, meio, fim"
     ],
     "correct": 0,
-    "explanation": "O capítulo If Then Else define a estrutura como uma seleção de duas vias (two-way selection) em que uma pergunta com resposta verdadeiro/falso determina qual ação será executada.",
+    "explanation": "O capítulo Structured Programming define três categorias: Sequence (sequência), Selection (seleção) e Iteration (iteração).",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-structured-programming#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'There are three main categories of control structures: Sequence, Selection, Iteration.'"
   },
   {
-    "id": "ex-sem1-algorithms-m03-l07-mutuamente",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
-    "lesson_id": "l07",
-    "type": "true-false",
-    "generated_by_ai": true,
-    "prompt": "Na estrutura se/senão, as ações são mutuamente exclusivas: apenas uma delas é executada, nunca as duas.",
-    "options": ["Verdadeiro", "Falso"],
-    "correct": 0,
-    "explanation": "O capítulo If Then Else explica que, como a pergunta só tem duas respostas possíveis, as ações são mutuamente exclusivas: uma delas é executada e a outra nunca.",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-algorithms-m03-l07-relacionais",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
-    "lesson_id": "l07",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "No capítulo Relational Operators, qual operador é usado para testar igualdade em muitas linguagens?",
-    "options": ["==", "=", "!=", "<="],
-    "correct": 0,
-    "explanation": "O capítulo Relational Operators mostra que a igualdade é representada por ==, enquanto = costuma significar atribuição e != representa a diferença.",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-algorithms-m03-l07-code",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
-    "lesson_id": "l07",
-    "type": "code-completion",
-    "generated_by_ai": true,
-    "prompt": "Complete a condição do código JavaScript para exibir 'Pode votar' quando a idade for maior ou igual a 18.",
-    "code": "const idade = 20;\n\n// Selecao de duas vias: maior de idade vota\nif (___) {\n  console.log(\"Pode votar\");\n} else {\n  console.log(\"Nao pode votar\");\n}",
-    "language": "javascript",
-    "blanks": [
-      { "accepted_answers": ["idade >= 18", "18 <= idade", "idade > 17"] }
-    ],
-    "explanation": "O capítulo If Then Else usa uma condição booleana para escolher a ação; com o operador relacional >= testamos se a idade é maior ou igual a 18.",
-    "difficulty": "medium",
-    "xp_base": 20
-  },
-  {
-    "id": "ex-sem1-algorithms-m03-l07-ordem",
-    "theory_unit_id": "th-sem1-algorithms-m03-control-flow",
+    "id": "ex-sem1-algorithms-m03-l07-classificar",
+    "theory_unit_id": "th-sem1-algorithms-m03-structured-programming",
     "lesson_id": "l07",
     "type": "order-steps",
     "generated_by_ai": true,
-    "prompt": "Ordene a seleção múltipla (multiway selection) em cascata apresentada no capítulo Nested If Then Else.",
+    "prompt": "Classifique cada linha do pseudocódigo como sequência, seleção ou iteração.",
     "options": [
-      "senão: a idade é considerada sem importância",
-      "se idade == 18: você já pode votar",
-      "senão se idade == 39: você está na meia-idade",
-      "senão se idade == 65: você pode considerar a aposentadoria"
+      "Receber numero → sequência",
+      "Se numero > 0 → seleção",
+      "Enquanto numero > 0 → iteração",
+      "Exibir resultado → sequência"
+    ],
+    "correct": [0, 1, 2, 3],
+    "explanation": "O capítulo Structured Programming, seção exemplo-resolvido, mostra que receber/exibir são sequência, 'se' é seleção e 'enquanto' é iteração.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-1",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-structured-programming#exemplo-resolvido",
+    "answer_check": "Baseado no exemplo do capítulo Structured Programming."
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l07-ifthenelse",
+    "theory_unit_id": "th-sem1-algorithms-m03-if-then-else",
+    "lesson_id": "l07",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "O que define a estrutura 'if then else' segundo o capítulo If Then Else?",
+    "options": [
+      "Seleção de duas vias",
+      "Repetição com voltas fixas",
+      "Tipo de dado numérico",
+      "Função sem parâmetros"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo If Then Else define a estrutura como uma seleção de duas vias (two-way selection) controlada por uma pergunta verdadeiro/falso.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-if-then-else#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'The if–then–else construct... is a two-way selection structure... Asking a question that has a true or false answer controls the if then else structure.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l07-relacionais",
+    "theory_unit_id": "th-sem1-algorithms-m03-relational-logical-operators",
+    "lesson_id": "l07",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual operador testa igualdade em muitas linguagens, conforme o capítulo Relational Operators?",
+    "options": [
+      "Operador ==",
+      "Operador =",
+      "Operador !=",
+      "Operador <="
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Relational Operators lista == como operador de igualdade; = é atribuição e != é diferença.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-relational-logical-operators#definicao",
+    "answer_check": "Verificado contra trecho da fonte: '== equality (equal to)' na tabela de operadores relacionais."
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l07-ordem",
+    "theory_unit_id": "th-sem1-algorithms-m03-nested-if-case",
+    "lesson_id": "l07",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene a seleção múltipla em cascata do capítulo Nested If Then Else.",
+    "options": [
+      "senão: idade sem importância",
+      "se idade == 18: pode votar",
+      "senão se idade == 39: meia-idade",
+      "senão se idade == 65: aposentadoria"
     ],
     "correct": [1, 2, 3, 0],
-    "explanation": "O capítulo Nested If Then Else mostra a cascata de condições testadas em ordem e, por fim, o caso 'senão' (default) para os valores que não correspondem a nenhum teste.",
+    "explanation": "O capítulo mostra a cascata testada em ordem e, por fim, o caso 'senão' (default).",
     "difficulty": "medium",
-    "xp_base": 15
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-nested-if-case#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'if age equal to 18... else if age equal to 39... else if age equal to 65... else your age is unimportant'."
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l07-nested-conceito",
+    "theory_unit_id": "th-sem1-algorithms-m03-nested-if-case",
+    "lesson_id": "l07",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "O que caracteriza a estrutura 'se/ senão se/ senão' (cascata) segundo o capítulo Nested If Then Else?",
+    "options": [
+      "Seleção de múltiplas vias testadas em sequência",
+      "Repetição até condição falsa",
+      "Definição de variável global",
+      "Chamada de função recursiva"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Nested If Then Else descreve a cascata como seleção de múltiplas vias (multiway selection) onde cada condição é testada em ordem até uma ser verdadeira ou chegar ao 'senão' final.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m03-nested-if-case#definicao",
+    "answer_check": "Verificado contra trecho da fonte: 'The if–then–else construct... can be nested... multiway selection... the else if clause allows for multiple conditions to be checked in sequence.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m03-l07-nested-codigo",
+    "theory_unit_id": "th-sem1-algorithms-m03-nested-if-case",
+    "lesson_id": "l07",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o pseudocódigo da cascata de seleção para classificar nota (exemplo do capítulo Nested If Then Else).",
+    "code": "se nota >= 90 então\n    exibir \"A\"\nsenão se nota >= 80 então\n    exibir \"B\"\nsenão se nota >= 70 então\n    exibir \"C\"\n___\n    exibir \"F\"",
+    "language": "pseudocode",
+    "blanks": [{ "accepted_answers": ["senão", "else", "caso contrário"] }],
+    "explanation": "O capítulo mostra o padrão de cascata com 'senão' (else) final como caso padrão quando nenhuma condição anterior é verdadeira.",
+    "difficulty": "medium",
+    "xp_base": 20,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m03-nested-if-case#exemplo-resolvido",
+    "answer_check": "Verificado contra padrão do capítulo: cascata termina com 'else' para o caso default."
   }
 ]
