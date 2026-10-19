@@ -121,14 +121,25 @@
             {
               "id": "m02",
               "title": "Lógica de Predicados",
-              "theory": "th-sem1-discrete-math-m02-predicate-logic",
+              "pipeline_version": 1,
+              "theory": "th-sem1-discrete-math-m02-predicates-variables",
+              "theories": [
+                "th-sem1-discrete-math-m02-predicates-variables",
+                "th-sem1-discrete-math-m02-quantifiers-domain",
+                "th-sem1-discrete-math-m02-quantifier-negation",
+                "th-sem1-discrete-math-m02-order-deduction"
+              ],
               "lessons": [
                 "l14",
-                "l15"
+                "l15",
+                "l21",
+                "l22"
               ],
               "lessonTitles": {
-                "l14": "Quantificadores",
-                "l15": "Variáveis e escopo"
+                "l14": "Predicados e variáveis",
+                "l15": "Quantificadores e domínio",
+                "l21": "Negação e quantificação implícita",
+                "l22": "Ordem, tradução e dedução"
               }
             },
             {

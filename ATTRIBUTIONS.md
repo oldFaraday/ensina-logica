@@ -45,7 +45,10 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 | `th-sem1-discrete-math-m01-logical-equivalence` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
 | `th-sem1-discrete-math-m01-propositions-connectives` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
 | `th-sem1-discrete-math-m01-truth-tables` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
-| `th-sem1-discrete-math-m02-predicate-logic` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
+| `th-sem1-discrete-math-m02-order-deduction` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs; 0. Introduction and Preliminaries › 3.1 Propositional Logic — Beyond Propositions; 0.2 Mathematical Statements |
+| `th-sem1-discrete-math-m02-predicates-variables` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
+| `th-sem1-discrete-math-m02-quantifier-negation` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries; 3. Symbolic Logic and Proofs › 0.2 Mathematical Statements; 3.1 Propositional Logic — Beyond Propositions |
+| `th-sem1-discrete-math-m02-quantifiers-domain` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
 | `th-sem1-discrete-math-m03-proofs-induction` | Discrete Mathematics: An Open Introduction | 2. Sequences › 2.5 Induction |
 <!-- END GENERATED: theory-units -->
 

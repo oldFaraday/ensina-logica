@@ -1,0 +1,123 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m02-l21-negacao-universal",
+    "theory_unit_id": "th-sem1-discrete-math-m02-quantifier-negation",
+    "lesson_id": "l21",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual é a negação correta de ∀x P(x)?",
+    "options": [
+      "∀x ¬P(x)",
+      "∃x ¬P(x)",
+      "¬∃x P(x)",
+      "∃x P(x)"
+    ],
+    "correct": 1,
+    "explanation": "Negar o quantificador universal troca-o pelo existencial e nega o predicado: ¬∀xP(x) é equivalente a ∃x¬P(x). Em palavras, se nem tudo tem a propriedade, algo não a tem (Seção 0.2, Quantifiers and Negation).",
+    "difficulty": "easy",
+    "xp_base": 5,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m02-quantifier-negation#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: ¬∀xP(x) ≡ ∃x¬P(x)."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l21-negacao-existencial",
+    "theory_unit_id": "th-sem1-discrete-math-m02-quantifier-negation",
+    "lesson_id": "l21",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "A negação de ∃x P(x) é logicamente equivalente a ∀x ¬P(x).",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "A fonte apresenta exatamente ¬∃xP(x) equivalente a ∀x¬P(x): se não existe algo com a propriedade, então tudo não tem essa propriedade (Seção 0.2, Quantifiers and Negation).",
+    "difficulty": "easy",
+    "xp_base": 5,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m02-quantifier-negation#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: ¬∃xP(x) ≡ ∀x¬P(x)."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l21-implicita",
+    "theory_unit_id": "th-sem1-discrete-math-m02-quantifier-negation",
+    "lesson_id": "l21",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Quando se escreve apenas S(x) → R(x), com S(x) = “x é um quadrado” e R(x) = “x é um retângulo”, a convenção adotada pela fonte é que:",
+    "options": [
+      "A sentença é falsa porque tem variável livre.",
+      "A variável x está universalmente quantificada de forma implícita.",
+      "A variável x está existencialmente quantificada de forma implícita.",
+      "A sentença só vale para x = 0."
+    ],
+    "correct": 1,
+    "explanation": "A fonte adota a convenção de que sentenças com predicados e variáveis livres são pretendidas como statements com as variáveis universalmente quantificadas. Assim, S(x) → R(x) é lida como ∀x(S(x) → R(x)) (Seção 0.2, Implicit Quantifiers).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m02-quantifier-negation#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: a convenção quantifica universalmente as variáveis livres."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l21-negacao-existe",
+    "theory_unit_id": "th-sem1-discrete-math-m02-quantifier-negation",
+    "lesson_id": "l21",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual é a negação de ∃x (x < 0) com a negação já aplicada ao predicado?",
+    "options": [
+      "∀x (x ≥ 0)",
+      "∀x (x < 0)",
+      "∃x (x ≥ 0)",
+      "¬∀x (x ≥ 0)"
+    ],
+    "correct": 0,
+    "explanation": "Ao negar o quantificador existencial, ele se torna universal e a negação passa para o predicado: ¬∃x(x<0) equivale a ∀x¬(x<0), isto é, ∀x(x≥0). A fonte descreve essa passagem da negação pelo quantificador (Seção 0.2).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m02-quantifier-negation#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 0.2: ¬∃x(x<0) ≡ ∀x(x≥0)."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l21-todo-quadrado",
+    "theory_unit_id": "th-sem1-discrete-math-m02-quantifier-negation",
+    "lesson_id": "l21",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "A negação de “toda forma é um quadrado” é “nenhuma forma é um quadrado”.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 1,
+    "explanation": "Negar “toda forma é um quadrado” produz “existe alguma forma que não é um quadrado”, e não “nenhuma”. A fonte explica que, se nem tudo tem a propriedade, então algo não a tem (Seção 0.2, Quantifiers and Negation).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m02-quantifier-negation#erros-comuns",
+    "answer_check": "Conferido contra a Seção 0.2: a negação de ∀ é ∃¬, não “nenhum”."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m02-l21-passos-negacao",
+    "theory_unit_id": "th-sem1-discrete-math-m02-quantifier-negation",
+    "lesson_id": "l21",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene os passos para negar e reescrever a afirmação ∀x P(x).",
+    "options": [
+      "Ler o resultado como “existe algo que não tem a propriedade P”.",
+      "Escrever a negação ¬∀x P(x).",
+      "Passar a negação pelo quantificador, trocando ∀ por ∃ e negando P(x)."
+    ],
+    "correct": [1, 2, 0],
+    "explanation": "Começa-se pela negação da afirmação original; em seguida a negação atravessa o quantificador e troca seu tipo; por fim se interpreta o resultado. A fonte descreve exatamente essa passagem da negação pelo quantificador (Seção 0.2).",
+    "difficulty": "hard",
+    "xp_base": 20,
+    "objective_id": "OBJ-3",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m02-quantifier-negation#definicao",
+    "answer_check": "Sequência conferida com a Seção 0.2: escrever ¬∀, trocar por ∃ e negar P, então interpretar."
+  }
+]

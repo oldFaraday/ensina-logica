@@ -123,6 +123,11 @@
           "definition": "Complexidade O(1): o tempo de execução não depende do tamanho da entrada."
         },
         {
+          "en": "counterexample",
+          "pt": "contraexemplo",
+          "definition": "Elemento do domínio para o qual um predicado P(x) é falso; um único contraexemplo basta para refutar a afirmação universal ∀x P(x)."
+        },
+        {
           "en": "complex logic",
           "pt": "lógica complexa",
           "definition": "Problema que envolve múltiplas decisões ou dimensões interdependentes, geralmente resolvido com estruturas de controle aninhadas (ex.: laços dentro de laços, condicionais dentro de laços)."
@@ -238,6 +243,11 @@
           "definition": "Equivalência ¬¬P ≡ P: negar duas vezes uma proposição devolve a proposição original."
         },
         {
+          "en": "domain of discourse",
+          "pt": "domínio de discurso",
+          "definition": "Conjunto de elementos sobre os quais os quantificadores atuam; o valor de verdade de uma afirmação quantificada depende dele."
+        },
+        {
           "en": "do while loop",
           "pt": "laço do-while",
           "definition": "Laço com teste depois (post-test); executa o corpo pelo menos uma vez antes de testar a condição."
@@ -271,6 +281,11 @@
           "en": "equivalence",
           "pt": "equivalência",
           "definition": "Relação entre duas expressões que têm o mesmo valor de verdade em todas as atribuições possíveis."
+        },
+        {
+          "en": "existential quantifier",
+          "pt": "quantificador existencial",
+          "definition": "Quantificador ∃, lido “existe” ou “há”; afirma que pelo menos um elemento do domínio satisfaz o predicado."
         },
         {
           "en": "execution",
@@ -311,6 +326,11 @@
           "en": "flowchart",
           "pt": "fluxograma",
           "definition": "Representação gráfica de um algoritmo usando símbolos padronizados (terminal, processo, decisão, entrada/saída)."
+        },
+        {
+          "en": "free variable",
+          "pt": "variável livre",
+          "definition": "Variável de um predicado que não foi especificada nem quantificada; por isso o predicado ainda não tem valor de verdade definido."
         },
         {
           "en": "function",
@@ -383,6 +403,11 @@
           "definition": "Conectivo lógico \"se … então\" (→): falso apenas quando a hipótese é verdadeira e a conclusão é falsa."
         },
         {
+          "en": "implicit quantifier",
+          "pt": "quantificador implícito",
+          "definition": "Quantificador não escrito que é recuperado pela convenção de ler sentenças com predicados e variáveis livres como universalmente quantificadas."
+        },
+        {
           "en": "index",
           "pt": "índice",
           "definition": "Posição de um elemento em um vetor, string ou outra estrutura indexada."
@@ -431,6 +456,11 @@
           "en": "loop variable",
           "pt": "variável de laço / contador",
           "definition": "Variável que controla o número de iterações em um laço de contagem (ex.: contador em for/while)."
+        },
+        {
+          "en": "law of logic",
+          "pt": "lei da lógica",
+          "definition": "Afirmação da lógica de predicados que é necessariamente verdadeira; a fonte reserva o termo “tautologia” para as verdades da lógica proposicional."
         },
         {
           "en": "logic",
@@ -558,6 +588,11 @@
           "definition": "Símbolo que representa uma operação (aritmética, lógica, relacional)."
         },
         {
+          "en": "order of quantifiers",
+          "pt": "ordem dos quantificadores",
+          "definition": "Posição relativa dos quantificadores em uma afirmação; trocar ∀ e ∃ pode alterar o significado, pois ∀x∃yP(x,y) e ∃y∀xP(x,y) não são logicamente equivalentes."
+        },
+        {
           "en": "order of growth",
           "pt": "ordem de crescimento",
           "definition": "Taxa com que o tempo ou espaço de um algoritmo cresce com o tamanho da entrada."
@@ -613,6 +648,11 @@
           "definition": "Expressão que contém variáveis e se torna uma proposição quando as variáveis recebem valores."
         },
         {
+          "en": "predicate logic",
+          "pt": "lógica de predicados",
+          "definition": "Extensão da lógica proposicional que analisa predicados e variáveis e usa quantificadores para expressar generalidade."
+        },
+        {
           "en": "proof",
           "pt": "prova",
           "definition": "Argumento dedutivo que estabelece a verdade de uma afirmação matemática."
@@ -637,6 +677,11 @@
     {
       "letter": "Q",
       "terms": [
+        {
+          "en": "quantifier negation",
+          "pt": "negação de quantificadores",
+          "definition": "Regra que passa a negação por um quantificador trocando seu tipo: ¬∀xP(x) ≡ ∃x¬P(x) e ¬∃xP(x) ≡ ∀x¬P(x)."
+        },
         {
           "en": "quantifier",
           "pt": "quantificador",
@@ -786,6 +831,16 @@
           "en": "truth table",
           "pt": "tabela-verdade",
           "definition": "Tabela que lista todas as combinações possíveis de valores de verdade das variáveis e o resultado de uma proposição molecular."
+        }
+      ]
+    },
+    {
+      "letter": "U",
+      "terms": [
+        {
+          "en": "universal quantifier",
+          "pt": "quantificador universal",
+          "definition": "Quantificador ∀, lido “para todo” ou “todo”; afirma que o predicado vale para todos os elementos do domínio."
         }
       ]
     },

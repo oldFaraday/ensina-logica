@@ -542,7 +542,7 @@ Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constit
 - [x] T165 [content-module] `sem1-algorithms-m02` — executar E0–E7.
 - [ ] T166 [content-module] `sem1-algorithms-m03` — executar E0–E7.
 - [x] T167 [content-module] `sem1-discrete-math-m01` — executar E0–E7. ✅ (2026-10-19)
-- [ ] T168 [content-module] `sem1-discrete-math-m02` — executar E0–E7.
+- [x] T168 [content-module] `sem1-discrete-math-m02` — executar E0–E7. ✅ (2026-10-19)
 - [ ] T169 [content-module] `sem1-discrete-math-m03` — executar E0–E7.
 
 ### Tarefa-modelo por módulo (repetir para cada id acima)
@@ -622,6 +622,27 @@ Para cada módulo, em uma sessão e um commit:
 - **E7:** `"pipeline_version": 1` aplicado **somente a este módulo**; um commit do módulo; pendência registrada apenas para a verificação de fontes do `sem1-algorithms-m03` (não deste módulo).
 
 **Decisão de ID:** a 4ª lição usa `l20` porque `l04`–`l19` já pertencem a outros módulos do semestre; a ordem didática do módulo continua 1ª–4ª.
+
+---
+
+## Conclusão T168 — sem1-discrete-math-m02 (2026-10-19)
+
+**Pipeline E0–E7 concluída** para o módulo sem1-discrete-math-m02 (Lógica de Predicados).
+
+- **E0:** `docs/modules/sem1-discrete-math-m02/PLAN.md` com 5 objetivos (`OBJ-1`–`OBJ-5`), 4 lições (`l14`, `l15`, `l21`, `l22`), 4 unidades teóricas planejadas e escopo fora definido; módulo não piloto, sem pausa de aprovação.
+- **E1:** `SOURCES.md` com as 2 seções abertas em 2026-10-19 — Levin, *Discrete Mathematics: An Open Introduction*, 3ª ed., Seções 0.2 (Mathematical Statements) e 3.1 (Propositional Logic — Beyond Propositions) —, licença CC BY-SA 4.0 confirmada e trechos literais.
+- **E2:** 4 unidades novas em `data/theory/sem1/discrete-math/` (`predicates-variables`, `quantifiers-domain`, `quantifier-negation`, `order-deduction`) com estrutura fixa, 300–900 palavras e ≤3 termos novos; a unidade antiga `th-sem1-discrete-math-m02-predicate-logic` foi removida (regra 5).
+- **E3:** `REVIEW.md` com 37 afirmações sustentadas, 8 aplicações diretas e 0 itens sem suporte.
+- **E4:** 24 exercícios de lição (6 por lição; `l14` com 3 fáceis + 3 médios, sem difícil; `l15`/`l21`/`l22` com 2 fáceis + 3 médios + 1 difícil), 8 no desafio (2 fáceis/4 médios/2 difíceis cobrindo OBJ-1–OBJ-5) e 10 flashcards; todos com `objective_id`, `level`, `source_ref` e `answer_check`.
+- **E5:** 10 termos novos no `data/glossary.json`; `LIBRARY.md` com ordem de leitura, tempos estimados e mapeamento "praticar este trecho".
+- **E6:** os portões:
+  - `npm run check-module -- sem1-discrete-math-m02` ✅ (4 unidades, 24 exercícios de lição, 8 do desafio, 10 flashcards)
+  - `npm run validate` ✅ (sem erros nem avisos)
+  - `npm test` ✅ (todas as suítes verdes; 29 unidades, 22 lições, 131 exercícios)
+  - `npm run verify-sources` — as **4/4 unidades deste módulo conferem**; o comando sai com código 1 por causa de **11 unidades `th-sem1-algorithms-m03-*` que não conferem**, condição pré-existente já registrada em T166 (excerpts daquele módulo justapõem frases não contíguas da fonte). Fora do escopo deste módulo (regra 6).
+- **E7:** `"pipeline_version": 1` aplicado **somente a este módulo**; um commit do módulo; pendência registrada apenas para a verificação de fontes do `sem1-algorithms-m03` (não deste módulo).
+
+**Decisão de ID:** as lições 3 e 4 usam `l21` e `l22` porque `l16`–`l20` já pertencem a outros módulos do semestre; a ordem didática do módulo continua 1ª–4ª.
 
 ---
 
