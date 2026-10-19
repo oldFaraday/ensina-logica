@@ -43,6 +43,7 @@ export function renderLesson(lesson, callbacks = {}) {
     onAnswer = () => {},
     onComplete = () => {},
     onPracticeMore = null,
+    onRetryWrong = null,
     onReadTheory = null
   } = callbacks;
 
@@ -75,7 +76,8 @@ export function renderLesson(lesson, callbacks = {}) {
     total: exercises.length,
     answered: 0,
     correct: 0,
-    xpTotal: 0
+    xpTotal: 0,
+    wrongExerciseIds: []
   };
 
   const progressWrap = document.createElement('div');
@@ -147,7 +149,11 @@ export function renderLesson(lesson, callbacks = {}) {
         : undefined,
       onAnswer: (result) => {
         state.answered += 1;
-        if (result.correct) state.correct += 1;
+        if (result.correct) {
+          state.correct += 1;
+        } else if (!state.wrongExerciseIds.includes(exercise.id)) {
+          state.wrongExerciseIds.push(exercise.id);
+        }
         state.xpTotal += result.xpEarned || 0;
         updateProgress();
         onAnswer({ ...result, exercise, wasAnswered });
@@ -168,19 +174,27 @@ export function renderLesson(lesson, callbacks = {}) {
   completion.innerHTML = `
     <h2>${t('lesson.completedTitle')}</h2>
     <p class="lesson-completion-summary"></p>
+    <p class="lesson-completion-xp"></p>
     <div class="lesson-completion-actions">
+      ${onRetryWrong ? `<button type="button" class="btn btn-secondary retry-wrong-btn" hidden></button>` : ''}
       ${onPracticeMore ? `<button type="button" class="btn btn-secondary practice-more-btn">${t('lesson.practiceMore')}</button>` : ''}
       <button type="button" class="btn btn-primary finish-btn">${t('lesson.finish')}</button>
     </div>
   `;
   section.appendChild(completion);
 
+  const retryWrongBtn = completion.querySelector('.retry-wrong-btn');
+  if (retryWrongBtn && onRetryWrong) {
+    retryWrongBtn.addEventListener('click', () => {
+      onRetryWrong([...state.wrongExerciseIds]);
+    });
+  }
   const practiceBtn = completion.querySelector('.practice-more-btn');
   if (practiceBtn && onPracticeMore) {
     practiceBtn.addEventListener('click', () => onPracticeMore());
   }
   completion.querySelector('.finish-btn').addEventListener('click', () => {
-    onComplete({ ...state });
+    onComplete({ ...state, wrongExerciseIds: [...state.wrongExerciseIds] });
   });
 
   let completedNotified = false;
@@ -189,7 +203,16 @@ export function renderLesson(lesson, callbacks = {}) {
     completedNotified = true;
     completion.hidden = false;
     completion.querySelector('.lesson-completion-summary').textContent =
-      t('lesson.completionSummary', { correct: state.correct, total: state.total, xp: state.xpTotal });
+      t('lesson.resultSummary', { correct: state.correct, total: state.total });
+    completion.querySelector('.lesson-completion-xp').textContent =
+      t('lesson.xpSummary', { xp: state.xpTotal });
+
+    if (retryWrongBtn) {
+      const wrongCount = state.wrongExerciseIds.length;
+      retryWrongBtn.hidden = wrongCount === 0;
+      retryWrongBtn.textContent = t('lesson.retryWrong', { count: wrongCount });
+    }
+
     if (typeof completion.scrollIntoView === 'function') {
       completion.scrollIntoView({ block: 'nearest' });
     }

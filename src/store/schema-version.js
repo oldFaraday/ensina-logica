@@ -3,7 +3,7 @@
  * Handles migration of progress data between schema versions
  */
 
-export const CURRENT_SCHEMA_VERSION = 3;
+export const CURRENT_SCHEMA_VERSION = 4;
 
 /**
  * Migration functions by version
@@ -27,6 +27,70 @@ const migrations = {
     }
     return progress;
   },
+  // Version 4 moves SRS to each exercise record and discards lesson-level reviews.
+  // Old lesson reviews (srs_queue) don't say which exercises were wrong, so they
+  // cannot be converted; exercise-level review_queue entries are merged into the
+  // corresponding exercise records first.
+  4: (progress) => {
+    const sourceExercises = progress.exercises && typeof progress.exercises === 'object'
+      ? progress.exercises
+      : {};
+    const legacyQueue = Array.isArray(progress.review_queue) ? progress.review_queue : [];
+    const queueById = new Map(
+      legacyQueue
+        .filter((entry) => entry && entry.exercise_id)
+        .map((entry) => [entry.exercise_id, entry])
+    );
+
+    const exercises = {};
+    for (const [exerciseId, raw] of Object.entries(sourceExercises)) {
+      if (!raw || typeof raw !== 'object') continue;
+      const queued = queueById.get(exerciseId) || null;
+      const attempts = Number(raw.attempts) || 0;
+      const correct = raw.correct === true;
+      const lastResult = raw.last_result
+        || (correct ? 'correct' : (attempts > 0 || queued ? 'wrong' : undefined));
+      const stage = raw.srs_stage ?? queued?.interval_index;
+
+      exercises[exerciseId] = {
+        ...raw,
+        attempts,
+        correct,
+        xp_earned: Number(raw.xp_earned) || 0,
+        first_try_correct: raw.first_try_correct === true
+          || (raw.first_try_correct === undefined && attempts <= 1 && correct),
+        wrong_count: Number(raw.wrong_count ?? queued?.wrong_count ?? (lastResult === 'wrong' ? 1 : 0)),
+        ...(lastResult ? { last_result: lastResult } : {}),
+        last_answered_at: raw.last_answered_at || raw.last_attempt_date || null,
+        lesson_id: raw.lesson_id || queued?.lesson_id || null,
+        srs_stage: Number(stage) || 0,
+        due_date: raw.due_date || queued?.due_date || null
+      };
+    }
+
+    // Erros da fila antiga que ainda não tinham registro em `exercises`.
+    for (const queued of legacyQueue) {
+      if (!queued?.exercise_id || exercises[queued.exercise_id]) continue;
+      exercises[queued.exercise_id] = {
+        attempts: 0,
+        correct: false,
+        xp_earned: 0,
+        first_try_correct: false,
+        wrong_count: Number(queued.wrong_count) || 1,
+        last_result: 'wrong',
+        last_answered_at: queued.last_wrong_at || null,
+        lesson_id: queued.lesson_id || null,
+        srs_stage: Number(queued.interval_index) || 0,
+        due_date: queued.due_date || null
+      };
+    }
+
+    progress.exercises = exercises;
+    progress.review_queue = [];
+    // Revisões por lição não informam quais exercícios erraram: descartadas.
+    progress.srs_queue = [];
+    return progress;
+  },
 };
 
 /**
@@ -47,8 +111,14 @@ export function migrateProgress(progress) {
     if (progress.preferences.onboarding_completed === undefined) {
       progress.preferences.onboarding_completed = false;
     }
+    progress.exercises = progress.exercises && typeof progress.exercises === 'object'
+      ? progress.exercises
+      : {};
     if (!Array.isArray(progress.review_queue)) {
       progress.review_queue = [];
+    }
+    if (!Array.isArray(progress.srs_queue)) {
+      progress.srs_queue = [];
     }
     return progress;
   }
@@ -151,7 +221,7 @@ export function validateProgress(progress) {
   if (!progress.stats || typeof progress.stats !== 'object') return false;
   if (!progress.completed || typeof progress.completed !== 'object') return false;
   if (!progress.exercises || typeof progress.exercises !== 'object') return false;
-  if (!Array.isArray(progress.srs_queue)) return false;
+  if (progress.srs_queue !== undefined && !Array.isArray(progress.srs_queue)) return false;
   if (progress.review_queue !== undefined && !Array.isArray(progress.review_queue)) return false;
   if (!Array.isArray(progress.achievements)) return false;
   if (!progress.annotations || typeof progress.annotations !== 'object') return false;

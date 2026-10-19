@@ -106,6 +106,33 @@ export async function loadExercisesForLesson(lessonId, discipline, semNum = 1) {
 }
 
 /**
+ * Carrega TODOS os exercícios de lição do currículo (uma vez, com cache).
+ * Usado para resolver ids de exercícios na sessão de revisão e para remover
+ * ids órfãos do progresso após módulos serem refeitos.
+ * @returns {Promise<Array<Object>>}
+ */
+export async function loadAllExercises() {
+  if (exercisesIndexCache) return exercisesIndexCache;
+
+  const curriculum = await loadCurriculum();
+  const collected = [];
+
+  for (const sem of curriculum.semesters || []) {
+    for (const disc of sem.disciplines || []) {
+      for (const mod of disc.modules || []) {
+        for (const lessonId of mod.lessons || []) {
+          const exercises = await loadExercisesForLesson(lessonId, disc.id, sem.number);
+          collected.push(...exercises);
+        }
+      }
+    }
+  }
+
+  exercisesIndexCache = collected;
+  return exercisesIndexCache;
+}
+
+/**
  * Carrega todos os exercícios ligados a uma unidade teórica.
  * Usa `linked_lessons` (mesma convenção de arquivo por lição) e filtra por
  * `linked_exercises` quando presente.

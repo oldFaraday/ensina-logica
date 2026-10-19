@@ -28,6 +28,8 @@
     "days": "dias",
     "freezes_remaining": "Congelamentos restantes",
     "reviews_due": "Revisões pendentes",
+    "reviews_due_count": "{count} exercícios para revisar",
+    "reviews_due_count_one": "1 exercício para revisar",
     "level_progress": "Progresso do nível",
     "todays_reviews": "Revisões de hoje",
     "start_reviews": "Iniciar revisões",
@@ -111,6 +113,10 @@
     "unsupportedType": "Tipo de exercício não suportado: {type}",
     "completedTitle": "Lição concluída!",
     "completionSummary": "Você acertou {correct} de {total} exercícios e ganhou {xp} XP.",
+    "resultSummary": "Você acertou {correct} de {total}.",
+    "xpSummary": "XP ganho nesta lição: {xp}.",
+    "retryWrong": "Refazer só os que errei ({count})",
+    "retryWrongNotice": "Refazendo apenas os exercícios que você errou.",
     "finish": "Concluir lição",
     "practiceMode": "Modo prática: exercícios de reforço da mesma unidade teórica.",
     "noPractice": "Ainda não há exercícios de reforço disponíveis para esta unidade.",
@@ -138,6 +144,23 @@
       "notQuite": "Ainda não está certo. Veja a resposta de referência das lacunas abaixo.",
       "answerReference": "Lacuna {index}: resposta de referência: {answer}"
     }
+  },
+  "review": {
+    "title": "Revisão",
+    "exercise": "Exercício",
+    "progress": "Exercício {current} de {total}",
+    "viewTheory": "Ver a teoria",
+    "next": "Próximo",
+    "finish": "Concluir revisão",
+    "summaryTitle": "Revisão concluída",
+    "summary": "Você acertou {correct} de {total}.",
+    "tomorrowOne": "1 exercício volta amanhã.",
+    "tomorrowMany": "{count} exercícios voltam amanhã.",
+    "todayOne": "1 exercício volta hoje.",
+    "todayMany": "{count} exercícios voltam hoje.",
+    "backToDashboard": "Voltar ao painel",
+    "emptyTitle": "Nenhuma revisão pendente",
+    "emptyBody": "Você está em dia! Os exercícios aparecerão aqui quando vencerem."
   },
   "theory": {
     "title": "Biblioteca",

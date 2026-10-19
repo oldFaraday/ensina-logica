@@ -12,13 +12,14 @@ import { initToasts, showToast } from './ui/toasts.js';
 import { initModals } from './ui/modals.js';
 import { initA11y, announce } from './ui/a11y.js';
 import { celebrate } from './ui/confetti.js';
-import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadExercisesForTheoryUnit, findTheoryUnitIdForLesson } from './curriculum/loader.js';
+import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadAllExercises, findTheoryUnitIdForLesson } from './curriculum/loader.js';
 import { calculateExerciseXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
-import { scheduleReview, getDueReviews, getDueExerciseReviews, getNextReview, recordWrongExercise, processExerciseReview } from './gamification/srs.js';
+import { getDueExerciseReviews, getNextReview, recordExerciseAnswer, pruneOrphanExercises } from './gamification/srs.js';
 import { markLessonComplete, markTheorySectionRead, unmarkTheorySectionRead } from './curriculum/progress.js';
 import { renderLesson } from './lesson/renderer.js';
+import { getExerciseRenderer } from './lesson/renderer.js';
 import { renderTheoryUnit } from './theory/renderer.js';
 import { renderTheorySidebar } from './theory/sidebar.js';
 import { searchTheory } from './theory/search.js';
@@ -66,6 +67,8 @@ export async function initApp() {
 
     // 6. Carrega currículo
     AppState.curriculum = await loadCurriculum();
+    // Remove ids de exercícios que não existem mais no conteúdo (módulos refeitos).
+    await pruneInvalidExerciseProgress();
     updateHeaderXpBar();
 
     // 7. Atualiza streak na inicialização
@@ -109,6 +112,28 @@ function updateStreakOnBoot(progress) {
 
   // Salva progresso atualizado
   progressStore.save();
+}
+
+/**
+ * Remove do progresso exercícios que não existem mais no conteúdo atual.
+ * Silencioso por design: ids antigos não podem quebrar o app.
+ * @returns {Promise<Array<string>>} ids removidos
+ */
+async function pruneInvalidExerciseProgress() {
+  try {
+    const allExercises = await loadAllExercises();
+    if (!allExercises.length) return [];
+    const validIds = new Set(allExercises.map((exercise) => exercise.id).filter(Boolean));
+    const removed = pruneOrphanExercises(AppState.progress, validIds);
+    if (removed.length > 0) {
+      progressStore.save();
+      console.warn(`[Progress] ${removed.length} exercício(s) órfão(s) removido(s) do progresso.`);
+    }
+    return removed;
+  } catch (error) {
+    console.warn('[Progress] Não foi possível verificar exercícios órfãos:', error);
+    return [];
+  }
 }
 
 /**
@@ -201,6 +226,9 @@ function setupRoutes() {
   // Lição
   router.add('/lesson/:lessonId', createViewHandler(renderLessonView));
 
+  // Sessão de revisão espaçada (somente exercícios vencidos)
+  router.add('/review', createViewHandler(renderReviewView));
+
   // Teoria / Biblioteca
   router.add('/theory/:theoryUnitId', createViewHandler(renderTheoryView));
   router.add('/library', createViewHandler(renderLibraryView));
@@ -243,7 +271,7 @@ function getDashboardHTML() {
   const freezes = stats.freezes_remaining || 0;
   const dailyGoal = progress.preferences?.daily_xp_goal || DEFAULT_DAILY_GOAL;
   const todayXP = getTodayXP(progress);
-  const dueReviewItems = getCombinedReviewItems(progress);
+  const dueReviewItems = getDueReviewItems(progress);
   const dueReviews = dueReviewItems.length;
   const nextReview = getNextReview(progress);
   const nextReviewDays = nextReview ? daysUntil(nextReview.due_date) : 0;
@@ -281,7 +309,7 @@ function getDashboardHTML() {
           </div>
           ${freezes > 0 ? `<span class="freeze-badge" aria-label="${t('dashboard.freezes_remaining')}: ${freezes}">❄️ ${freezes}</span>` : ''}
         </div>
-        <div class="stat-card reviews" aria-label="${t('dashboard.reviews_due')}: ${dueReviews}">
+        <div class="stat-card reviews" aria-label="${getReviewCountLabel(dueReviews)}">
           <span class="stat-icon" aria-hidden="true">📚</span>
           <div class="stat-info">
             <span class="stat-value">${dueReviews}</span>
@@ -305,7 +333,7 @@ function getDashboardHTML() {
 
       ${dueReviews > 0 ? `
         <section class="dashboard-reviews" aria-labelledby="reviews-title" aria-live="polite">
-          <h2 id="reviews-title">${t('dashboard.todays_reviews')}</h2>
+          <h2 id="reviews-title">${getReviewCountLabel(dueReviews)}</h2>
           <div class="review-cards" id="review-cards"></div>
           <button class="btn btn-primary" id="start-reviews-btn">${t('dashboard.start_reviews')}</button>
         </section>
@@ -356,16 +384,10 @@ function bindDashboardEvents() {
     });
   });
 
-  // Botão iniciar revisões (lições + exercícios da fila de erros)
+  // Botão iniciar revisões: sessão somente com os exercícios vencidos.
   const startReviewsBtn = document.getElementById('start-reviews-btn');
   if (startReviewsBtn) {
-    startReviewsBtn.addEventListener('click', () => {
-      const items = getCombinedReviewItems(AppState.progress);
-      const first = items.find((item) => item.lesson_id);
-      if (first) {
-        navigate(`/lesson/${first.lesson_id}`);
-      }
-    });
+    startReviewsBtn.addEventListener('click', () => navigate('/review'));
   }
 
   // Carrega cards de revisão
@@ -373,23 +395,22 @@ function bindDashboardEvents() {
 }
 
 /**
- * Lista combinada das revisões vencidas (fila de erros + revisões de lição).
+ * Exercícios vencidos para revisão (um item por exercício, nunca por lição).
  * @param {Object} progress
- * @returns {Array<{kind:string, lesson_id:string|null, exercise_id?:string, interval_index:number}>}
+ * @returns {Array<Object>}
  */
-function getCombinedReviewItems(progress) {
-  const lessons = getDueReviews(progress).map((r) => ({
-    kind: 'lesson',
-    lesson_id: r.lesson_id || null,
-    interval_index: r.interval_index || 0
-  }));
-  const exercises = getDueExerciseReviews(progress).map((r) => ({
-    kind: 'exercise',
-    lesson_id: r.lesson_id || null,
-    exercise_id: r.exercise_id || null,
-    interval_index: r.interval_index || 0
-  }));
-  return [...exercises, ...lessons];
+function getDueReviewItems(progress) {
+  return getDueExerciseReviews(progress);
+}
+
+/**
+ * Texto "N exercício(s) para revisar" com singular/plural correto.
+ * @param {number} count
+ * @returns {string}
+ */
+function getReviewCountLabel(count) {
+  const key = count === 1 ? 'dashboard.reviews_due_count_one' : 'dashboard.reviews_due_count';
+  return t(key, { count });
 }
 
 /**
@@ -402,7 +423,7 @@ function getReviewItemLabel(item) {
     const ctx = findLessonContext(item.lesson_id);
     if (ctx) return getLessonTitle(ctx.mod, item.lesson_id, ctx.index);
   }
-  return t('dashboard.todays_reviews');
+  return t('review.exercise');
 }
 
 /**
@@ -419,19 +440,19 @@ function daysUntil(dateStr) {
 }
 
 /**
- * Renderiza cards de revisão do dia
+ * Renderiza cards de revisão do dia (por exercício).
  */
 function renderReviewCards() {
   const container = document.getElementById('review-cards');
   if (!container) return;
 
-  const items = getCombinedReviewItems(AppState.progress).slice(0, 3);
+  const items = getDueReviewItems(AppState.progress).slice(0, 3);
   container.innerHTML = items.map((item) => {
-    const nav = item.lesson_id ? `/lesson/${item.lesson_id}` : null;
+    const nav = `/review?start=${encodeURIComponent(item.exercise_id)}`;
     return `
-      <div class="review-card" data-lesson="${item.lesson_id || ''}">
+      <div class="review-card" data-lesson="${item.lesson_id || ''}" data-exercise="${escapeHtml(item.exercise_id)}">
         <span class="review-label">${escapeHtml(getReviewItemLabel(item))}</span>
-        ${nav ? `<button class="btn btn-sm" data-nav="${nav}">${t('dashboard.review_now')}</button>` : ''}
+        <button class="btn btn-sm" data-nav="${nav}">${t('dashboard.review_now')}</button>
       </div>
     `;
   }).join('');
@@ -787,7 +808,8 @@ function mountLesson(host, ctx) {
     },
     getStreak: () => AppState.progress.stats?.current_streak || 0,
     onAnswer: (result) => handleExerciseAnswer({ ...result, lessonId }),
-    onComplete: () => handleLessonComplete(lessonId, sem, disc, mod, preparedExercises),
+    onComplete: (stats) => handleLessonComplete(lessonId, sem, disc, mod, preparedExercises, stats),
+    onRetryWrong: (wrongIds) => handleRetryWrong(host, ctx, wrongIds),
     onPracticeMore: () => handlePracticeMore(host, ctx),
     onReadTheory: theoryUnit ? (id) => navigate(`/theory/${id}`) : null
   });
@@ -801,33 +823,33 @@ function mountLesson(host, ctx) {
     notice.textContent = t('lesson.practiceMode');
     host.prepend(notice);
   }
+
+  if (ctx.retryWrongOnly) {
+    const notice = document.createElement('p');
+    notice.className = 'lesson-practice-notice';
+    notice.textContent = t('lesson.retryWrongNotice');
+    host.prepend(notice);
+  }
 }
 
 /**
  * Persiste a resposta de um exercício e atualiza gamificação.
+ *
+ * O SRS vive em `progress.exercises[exercise.id]` (upsert por id). Erros
+ * repetidos atualizam o MESMO registro; nunca criam itens duplicados.
  * @param {Object} result - Resultado vindo do renderizador do exercício
  */
 function handleExerciseAnswer(result) {
   const { exercise, correct, xpEarned = 0, lessonId = null } = result;
   const progress = AppState.progress;
 
-  progress.exercises = progress.exercises || {};
-  const prev = progress.exercises[exercise.id] || { attempts: 0, correct: false, xp_earned: 0 };
-  progress.exercises[exercise.id] = {
-    attempts: (prev.attempts || 0) + 1,
-    correct: Boolean(prev.correct || correct),
-    xp_earned: (prev.xp_earned || 0) + xpEarned,
-    last_attempt_date: new Date().toISOString()
-  };
-
-  // T129: fila de revisões do mesmo dia.
-  // - Errar: upsert (vencendo HOJE, sem duplicar); erro numa revisão reinicia a escada.
-  // - Acertar: se o exercício está na fila (revisão), avança a escada [0,1,3,7,21].
-  if (correct === false) {
-    recordWrongExercise(progress, exercise.id, lessonId);
-  } else {
-    processExerciseReview(progress, exercise.id, true);
-  }
+  // Registro único por exercício: tentativas, SRS e histórico de erro.
+  recordExerciseAnswer(progress, {
+    exerciseId: exercise.id,
+    correct,
+    lessonId,
+    xpEarned
+  });
 
   if (xpEarned > 0) {
     const streakBefore = progress.stats.current_streak || 0;
@@ -852,14 +874,15 @@ function handleExerciseAnswer(result) {
 }
 
 /**
- * Conclui a lição: marca como concluída, agenda SRS e notifica.
+ * Conclui a lição: marca como concluída e notifica.
+ * Não exige acerto total e não agenda mais revisão por lição — o SRS é por
+ * exercício e já foi atualizado a cada resposta.
  */
 function handleLessonComplete(lessonId, sem, disc, mod, exercises) {
   const progress = AppState.progress;
   const allCorrect = exercises.length > 0 && exercises.every((ex) => progress.exercises?.[ex.id]?.correct);
 
   markLessonComplete(progress, lessonId);
-  scheduleReview(progress, lessonId);
   progressStore.save();
 
   checkAndAnnounceAchievements({
@@ -872,6 +895,20 @@ function handleLessonComplete(lessonId, sem, disc, mod, exercises) {
   announce(t('lesson.completedTitle'), 'assertive');
 
   navigate(`/semester/${sem.id}/discipline/${disc.id}/module/${mod.id}`);
+}
+
+/**
+ * "Refazer só os que errei": remonta a lição apenas com os exercícios errados.
+ * @param {HTMLElement} host
+ * @param {Object} ctx - Contexto original da lição
+ * @param {Array<string>} wrongIds
+ */
+function handleRetryWrong(host, ctx, wrongIds) {
+  const ids = new Set(Array.isArray(wrongIds) ? wrongIds : []);
+  const exercises = (ctx.exercises || []).filter((exercise) => ids.has(exercise.id));
+  if (exercises.length === 0) return;
+
+  mountLesson(host, { ...ctx, exercises, retryWrongOnly: true });
 }
 
 /**
@@ -890,6 +927,219 @@ async function handlePracticeMore(host, ctx) {
   }
 
   mountLesson(host, { ...ctx, exercises: extras, isPractice: true });
+}
+
+/**
+ * Resolve o link "ver a teoria" de um exercício a partir do `source_ref`
+ * (`<theoryId>#<seção>`). Âncoras do renderizador teórico: `<unit.id>-<seção>`.
+ * @param {Object} exercise
+ * @returns {string|null} href de hash (abre em nova aba)
+ */
+function getReviewTheoryHref(exercise) {
+  const ref = exercise?.source_ref || exercise?.theory_unit_id;
+  if (!ref) return null;
+  const [theoryId, section] = String(ref).split('#');
+  if (!theoryId) return null;
+  return `#/theory/${encodeURIComponent(theoryId)}${section ? `?section=${encodeURIComponent(section)}` : ''}`;
+}
+
+/**
+ * Sessão de revisão espaçada: somente exercícios vencidos, um por vez.
+ * Rota `#/review` (aceita `?start=<exerciseId>` para começar por um card).
+ */
+async function renderReviewView(params, query, main) {
+  const allExercises = await loadAllExercises();
+  const byId = new Map(allExercises.map((exercise) => [exercise.id, exercise]));
+
+  let dueItems = getDueExerciseReviews(AppState.progress)
+    .map((item) => ({ ...item, exercise: byId.get(item.exercise_id) }))
+    .filter((item) => item.exercise);
+
+  // Deep-link do painel: começa pelo exercício escolhido, sem perder a fila.
+  const startId = query?.get ? query.get('start') : null;
+  if (startId) {
+    const index = dueItems.findIndex((item) => item.exercise_id === startId);
+    if (index > 0) {
+      dueItems = [...dueItems.slice(index), ...dueItems.slice(0, index)];
+    }
+  }
+
+  if (dueItems.length === 0) {
+    main.innerHTML = `
+      <section class="review-view" aria-label="${t('review.title')}">
+        <header class="view-header">
+          <button class="btn btn-back" data-nav="/">${t('common.back')}</button>
+          <h1>${t('review.title')}</h1>
+        </header>
+        <div class="review-empty card">
+          <h2>${t('review.emptyTitle')}</h2>
+          <p>${t('review.emptyBody')}</p>
+          <button class="btn btn-primary" data-nav="/">${t('review.backToDashboard')}</button>
+        </div>
+      </section>
+    `;
+    bindNavigationEvents(main);
+    return;
+  }
+
+  main.innerHTML = `
+    <section class="review-view" aria-label="${t('review.title')}">
+      <header class="view-header">
+        <button class="btn btn-back" data-nav="/">${t('common.back')}</button>
+        <h1>${t('review.title')}</h1>
+      </header>
+      <div class="review-session">
+        <p class="review-progress" role="status"></p>
+        <div class="review-host" aria-live="polite"></div>
+        <div class="review-actions"></div>
+      </div>
+      <section class="review-summary card" hidden aria-live="polite"></section>
+    </section>
+  `;
+  bindNavigationEvents(main);
+
+  const host = main.querySelector('.review-host');
+  const actions = main.querySelector('.review-actions');
+  const progressEl = main.querySelector('.review-progress');
+  const summaryEl = main.querySelector('.review-summary');
+
+  const session = {
+    index: 0,
+    correct: 0,
+    total: dueItems.length,
+    returnsToday: 0,
+    tomorrow: 0
+  };
+
+  const dayStart = (date) => {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  };
+
+  const recordReturn = (exerciseId) => {
+    const dueDate = AppState.progress.exercises?.[exerciseId]?.due_date;
+    if (!dueDate) return;
+    const due = dayStart(dueDate);
+    const today = dayStart(new Date());
+    const tomorrow = dayStart(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (due.getTime() === today.getTime()) session.returnsToday += 1;
+    else if (due.getTime() === tomorrow.getTime()) session.tomorrow += 1;
+  };
+
+  const showNextButton = (isLast) => {
+    actions.innerHTML = '';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn btn-primary review-next-btn';
+    btn.textContent = isLast ? t('review.finish') : t('review.next');
+    btn.addEventListener('click', () => {
+      session.index += 1;
+      if (session.index < dueItems.length) {
+        renderCurrent();
+      } else {
+        showSummary();
+      }
+    });
+    actions.appendChild(btn);
+  };
+
+  const advanceWithoutAnswer = () => {
+    // Tipo desconhecido: não trava a sessão nem conta como acerto/erro.
+    showNextButton(session.index + 1 >= dueItems.length);
+  };
+
+  const renderCurrent = () => {
+    const item = dueItems[session.index];
+    const exercise = item.exercise;
+    host.innerHTML = '';
+    actions.innerHTML = '';
+    progressEl.textContent = t('review.progress', {
+      current: session.index + 1,
+      total: session.total
+    });
+
+    const theoryHref = getReviewTheoryHref(exercise);
+    const meta = document.createElement('div');
+    meta.className = 'review-exercise-meta';
+    meta.innerHTML = `
+      <span class="review-exercise-label">${escapeHtml(getReviewItemLabel(item))}</span>
+      ${theoryHref ? `<a class="review-theory-link" href="${theoryHref}" target="_blank" rel="noopener noreferrer">${t('review.viewTheory')}</a>` : ''}
+    `;
+    host.appendChild(meta);
+
+    const renderer = getExerciseRenderer(exercise.type);
+    if (!renderer) {
+      const unsupported = document.createElement('p');
+      unsupported.className = 'placeholder';
+      unsupported.textContent = t('lesson.unsupportedType', { type: exercise.type });
+      host.appendChild(unsupported);
+      advanceWithoutAnswer();
+      return;
+    }
+
+    let answered = false;
+    const previous = AppState.progress.exercises?.[exercise.id];
+    const exerciseEl = renderer(exercise, {
+      isRetry: false,
+      attempt: (Number(previous?.attempts) || 0) + 1,
+      streak: AppState.progress.stats?.current_streak || 0,
+      calculateXP: (isCorrect) => calculateExerciseXP({
+        exercise,
+        previous,
+        isCorrect,
+        streak: AppState.progress.stats?.current_streak || 0
+      }),
+      onAnswer: (result) => {
+        if (answered) return;
+        answered = true;
+
+        handleExerciseAnswer({
+          ...result,
+          exercise,
+          lessonId: item.lesson_id || exercise.lesson_id || null
+        });
+
+        if (result.correct) session.correct += 1;
+        recordReturn(exercise.id);
+        showNextButton(session.index + 1 >= dueItems.length);
+      }
+    });
+    host.appendChild(exerciseEl);
+  };
+
+  const showSummary = () => {
+    progressEl.textContent = '';
+    host.innerHTML = '';
+    actions.innerHTML = '';
+
+    const parts = [t('review.summary', { correct: session.correct, total: session.total })];
+    if (session.tomorrow > 0) {
+      parts.push(t(session.tomorrow === 1 ? 'review.tomorrowOne' : 'review.tomorrowMany', { count: session.tomorrow }));
+    }
+    if (session.returnsToday > 0) {
+      parts.push(t(session.returnsToday === 1 ? 'review.todayOne' : 'review.todayMany', { count: session.returnsToday }));
+    }
+
+    summaryEl.hidden = false;
+    summaryEl.innerHTML = `
+      <h2>${t('review.summaryTitle')}</h2>
+      <p class="review-summary-text">${parts.join(' ')}</p>
+      <div class="review-summary-actions">
+        <button type="button" class="btn btn-primary" id="review-done-btn">${t('review.backToDashboard')}</button>
+      </div>
+    `;
+    summaryEl.querySelector('#review-done-btn').addEventListener('click', () => navigate('/'));
+
+    announce(parts.join(' '), 'assertive');
+    if (typeof summaryEl.scrollIntoView === 'function') {
+      summaryEl.scrollIntoView({ block: 'nearest' });
+    }
+  };
+
+  renderCurrent();
 }
 
 /**
@@ -989,6 +1239,15 @@ async function renderTheoryView(params, query, main) {
   const [katex, hljs] = await Promise.all([loadKatex(), loadHighlight()]);
   renderMathIn(unitEl, katex);
   highlightIn(unitEl, hljs);
+
+  // Deep-link da revisão: `?section=<slug>` rola até a seção de origem.
+  const section = query?.get ? query.get('section') : null;
+  if (section) {
+    const target = main.querySelector(`#${unit.id}-${section}`);
+    if (target && typeof target.scrollIntoView === 'function') {
+      target.scrollIntoView({ block: 'start' });
+    }
+  }
 }
 
 /**

@@ -1013,6 +1013,75 @@ label {
   font-weight: var(--font-weight-medium);
 }
 
+/* ---- Sessão de revisão (um exercício por vez) ---- */
+.review-session {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.review-progress {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.review-exercise-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.review-exercise-label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-ink);
+}
+
+.review-theory-link {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.review-actions,
+.review-summary-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+.review-summary {
+  max-width: 860px;
+  margin: var(--space-6) auto 0;
+  text-align: center;
+}
+
+.review-summary-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.review-summary-actions {
+  justify-content: center;
+}
+
+.review-empty {
+  max-width: 640px;
+  margin: var(--space-6) auto;
+  text-align: center;
+}
+
+.review-empty h2 {
+  margin-top: 0;
+}
+
+
 .semester-card {
   padding: var(--space-5);
   background: var(--color-surface);

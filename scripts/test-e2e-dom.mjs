@@ -167,25 +167,24 @@ async function main() {
   assert.ok(forcedWrong, 'lição tem um flashcard para forçar erro');
 
   const liveProgress = window.EnsinaLogica.getProgress();
-  assert.ok(
-    Array.isArray(liveProgress.review_queue) && liveProgress.review_queue.length >= 1,
-    'T129: erro entra na fila de revisão'
+  const wrongRecords = Object.values(liveProgress.exercises || {}).filter(
+    (record) => record.last_result === 'wrong'
   );
+  assert.ok(wrongRecords.length >= 1, 'T129: erro fica registrado por exercício (last_result = wrong)');
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
   assert.ok(
-    liveProgress.review_queue.some((r) => r.interval_index === 0),
-    'T129: item da fila vence hoje (índice 0)'
+    wrongRecords.some((record) => record.due_date && new Date(record.due_date) <= new Date(todayStart.getTime() + 86400000)),
+    'T129: exercício errado vence hoje/amanhã'
   );
 
-  // Conclui a lição → agenda revisão de lição para hoje
+  // Conclui a lição → não agenda mais revisão por lição (SRS é por exercício)
   const completionBlock = doc.querySelector('.lesson .lesson-completion');
   assert.ok(completionBlock && !completionBlock.hidden, 'lição completa após responder todos os exercícios');
   click(completionBlock.querySelector('.finish-btn'), 'concluir lição');
   await wait(120);
   assert.ok(/\/module\//.test(hash()), `concluir lição volta ao módulo (${hash()})`);
-  assert.ok(
-    liveProgress.srs_queue.some((r) => r.lesson_id === lessonNav.replace('/lesson/', '')),
-    'T129: concluir lição agenda revisão para hoje'
-  );
+  assert.equal(liveProgress.srs_queue.length, 0, 'T129: concluir lição não cria revisão por lição');
 
   // Painel mostra revisões pendentes no mesmo dia
   window.EnsinaLogica.navigate('/');
@@ -193,7 +192,7 @@ async function main() {
   const reviewsStat = doc.querySelector('.stat-card.reviews .stat-value')?.textContent?.trim();
   assert.ok(Number(reviewsStat) >= 1, `painel mostra revisões pendentes > 0 (${reviewsStat})`);
   assert.ok(doc.getElementById('review-cards'), 'painel lista cards de revisão');
-  ok('T129: revisão no mesmo dia (fila de erros + lição)');
+  ok('T129: revisão por exercício (fila de erros sem duplicar lição)');
 
   // Volta à lição para o restante da jornada
   window.EnsinaLogica.navigate(lessonNav);

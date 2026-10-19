@@ -440,6 +440,7 @@ try {
 
     let answered = 0;
     let completed = null;
+    let retried = null;
     const lesson = {
       id: 'l01',
       title: 'Lição de teste',
@@ -454,13 +455,15 @@ try {
       getStreak: () => 0,
       calculateXP: () => 10,
       onAnswer: () => { answered += 1; },
-      onComplete: (stats) => { completed = stats; }
+      onComplete: (stats) => { completed = stats; },
+      onRetryWrong: (ids) => { retried = ids; }
     });
     mount(el);
     assert.equal(el.querySelectorAll('.exercise-item').length, 2, 'dois itens de exercício');
     assert.ok(el.querySelector('.lesson-completion').hidden, 'conclusão oculta antes de responder');
 
-    el.querySelector('.tf-true').click();
+    // Erra o 1º e acerta o 2º: concluir NÃO exige acerto total.
+    el.querySelector('.tf-false').click();
     const mcItem = el.querySelector('.exercise-multiple-choice');
     const mcCorrectRadio = [...mcItem.querySelectorAll('input[type="radio"]')]
       .find((radio) => Number(radio.value) === 1);
@@ -470,9 +473,23 @@ try {
 
     assert.equal(answered, 2, 'os dois exercícios notificaram resposta');
     assert.equal(el.querySelector('.lesson-completion').hidden, false, 'bloco de conclusão aparece após responder tudo');
+    assert.equal(
+      el.querySelector('.lesson-completion-summary').textContent,
+      'Você acertou 1 de 2.',
+      'resultado mostra "Você acertou X de Y"'
+    );
+    assert.ok(/XP ganho nesta lição/.test(el.querySelector('.lesson-completion-xp').textContent), 'resultado mostra o XP da lição');
+
+    const retryBtn = el.querySelector('.retry-wrong-btn');
+    assert.ok(retryBtn && !retryBtn.hidden, 'botão "Refazer só os que errei" visível');
+    assert.equal(retryBtn.textContent, 'Refazer só os que errei (1)', 'botão mostra a quantidade errada');
+    retryBtn.click();
+    assert.deepEqual(retried, ['ex-sem1-algorithms-m01-l01-a'], 'retry recebe apenas os ids errados');
+
     el.querySelector('.finish-btn').click();
     assert.equal(completed?.total, 2, 'conclusão recebe o total de exercícios');
-    ok('renderLesson monta resumo + lista, progride e conclui');
+    assert.deepEqual(completed?.wrongExerciseIds, ['ex-sem1-algorithms-m01-l01-a'], 'conclusão recebe os ids errados');
+    ok('renderLesson monta resumo + lista, progride e conclui com resultado/retry');
   }
 
   console.log(`\n✅ Todos os testes de lição passaram (${passed}).`);
