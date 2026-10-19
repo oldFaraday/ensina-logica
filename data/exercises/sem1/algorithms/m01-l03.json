@@ -7,12 +7,12 @@
     "generated_by_ai": true,
     "prompt": "No fluxograma, qual símbolo representa uma decisão (uma pergunta de verdadeiro ou falso)?",
     "options": [
-      "O losango",
       "O retângulo arredondado (terminal)",
+      "O losango",
       "O paralelogramo",
       "O retângulo"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Decision afirma que o losango representa a pergunta de verdadeiro/falso testada em uma decisão. Os outros símbolos têm funções diferentes: terminal, entrada/saída e processo.",
     "difficulty": "easy",
     "xp_base": 10,
@@ -28,7 +28,10 @@
     "type": "true-false",
     "generated_by_ai": true,
     "prompt": "No fluxograma, os retângulos arredondados (terminais) indicam os pontos de início e de fim.",
-    "options": ["Verdadeiro", "Falso"],
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 0,
     "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Terminal afirma que os retângulos arredondados, ou pontos terminais, indicam os pontos de início e fim do fluxograma. Por isso a afirmação é verdadeira.",
     "difficulty": "easy",
@@ -46,12 +49,12 @@
     "generated_by_ai": true,
     "prompt": "Qual símbolo do fluxograma representa uma operação de entrada ou de saída?",
     "options": [
-      "O paralelogramo",
       "O losango",
       "O retângulo",
+      "O paralelogramo",
       "O retângulo arredondado"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Input/Output diz que os paralelogramos designam operações de entrada ou saída. O losango é decisão, o retângulo é processo e o retângulo arredondado é terminal.",
     "difficulty": "medium",
     "xp_base": 15,
@@ -74,7 +77,13 @@
       "Ler a temperatura (entrada/saída)",
       "Fim (terminal)"
     ],
-    "correct": [1, 3, 2, 0, 4],
+    "correct": [
+      1,
+      3,
+      2,
+      0,
+      4
+    ],
     "explanation": "O capítulo Flowcharts › Simple Examples › Sequence Control Structures mostra uma instrução após a outra: o fluxo começa no terminal, lê a temperatura, calcula a conversão, exibe o resultado e termina. As opções já estão embaralhadas; a ordem correta segue a estrutura de sequência.",
     "difficulty": "medium",
     "xp_base": 15,
@@ -91,12 +100,12 @@
     "generated_by_ai": true,
     "prompt": "Um fluxograma precisa representar a leitura de uma idade digitada pelo usuário. Qual símbolo deve ser usado?",
     "options": [
-      "Paralelogramo (entrada/saída)",
       "Losango (decisão)",
       "Retângulo (processo)",
-      "Retângulo arredondado (terminal)"
+      "Retângulo arredondado (terminal)",
+      "Paralelogramo (entrada/saída)"
     ],
-    "correct": 0,
+    "correct": 3,
     "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols afirma que os paralelogramos designam operações de entrada ou saída. Ler uma idade digitada é uma entrada; por isso o símbolo correto é o paralelogramo, e não os símbolos de decisão, processo ou terminal.",
     "difficulty": "medium",
     "xp_base": 15,
@@ -119,7 +128,13 @@
       "Decisão: idade > 17?",
       "Fim (terminal)"
     ],
-    "correct": [1, 2, 3, 0, 4],
+    "correct": [
+      1,
+      2,
+      3,
+      0,
+      4
+    ],
     "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Decision mostra que o losango contém a pergunta de verdadeiro/falso. No caminho verdadeiro, o fluxo começa no terminal, lê a idade, passa pela decisão, exibe a mensagem 'pode votar' e chega ao fim. As opções já estão embaralhadas; a ordem correta segue esse caminho.",
     "difficulty": "hard",
     "xp_base": 25,

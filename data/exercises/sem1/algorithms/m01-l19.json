@@ -5,21 +5,21 @@
     "lesson_id": "l19",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Quais sÃ£o as trÃªs categorias principais de estruturas de controle apresentadas no capÃ­tulo Structured Programming?",
+    "prompt": "Quais são as três categorias principais de estruturas de controle apresentadas no capítulo Structured Programming?",
     "options": [
-      "SequÃªncia, seleÃ§Ã£o e iteraÃ§Ã£o",
-      "Entrada, processamento e saÃ­da",
-      "CompilaÃ§Ã£o, ligaÃ§Ã£o e execuÃ§Ã£o",
-      "VariÃ¡vel, constante e literal"
+      "Sequência, seleção e iteração",
+      "Entrada, processamento e saída",
+      "Compilação, ligação e execução",
+      "Variável, constante e literal"
     ],
     "correct": 0,
-    "explanation": "O capÃ­tulo Structured Programming â€º Discussion lista trÃªs categorias principais: sequÃªncia, seleÃ§Ã£o e iteraÃ§Ã£o (repetiÃ§Ã£o). Entrada/processamento/saÃ­da Ã© o modelo IPO, e as outras opÃ§Ãµes nÃ£o sÃ£o categorias de estruturas de controle na fonte.",
+    "explanation": "O capítulo Structured Programming › Discussion lista três categorias principais: sequência, seleção e iteração (repetição). Entrada/processamento/saída é o modelo IPO, e as outras opções não são categorias de estruturas de controle na fonte.",
     "difficulty": "easy",
     "xp_base": 10,
     "objective_id": "OBJ-7",
     "level": "reconhecer",
     "source_ref": "th-sem1-algorithms-m01-structured-programming#definicao",
-    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'There are three main categories of control structures: Sequence ... Selection ... Iteration ...'"
+    "answer_check": "Conferido contra Structured Programming › Discussion: 'There are three main categories of control structures: Sequence ... Selection ... Iteration ...'"
   },
   {
     "id": "ex-sem1-algorithms-m01-l19-ramificacao",
@@ -27,16 +27,19 @@
     "lesson_id": "l19",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "A ramificaÃ§Ã£o Ã© uma quarta categoria de estrutura de controle, descrita como nÃ£o controlada e raramente usada em programaÃ§Ã£o modular estruturada.",
-    "options": ["Verdadeiro", "Falso"],
+    "prompt": "A ramificação é uma quarta categoria de estrutura de controle, descrita como não controlada e raramente usada em programação modular estruturada.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 0,
-    "explanation": "O capÃ­tulo Structured Programming â€º Discussion diz que uma quarta categoria descreve cÃ³digo nÃ£o estruturado: a ramificaÃ§Ã£o, uma estrutura nÃ£o controlada que permite saltar para outra parte do programa e Ã© raramente usada em programaÃ§Ã£o modular estruturada. Por isso a afirmaÃ§Ã£o Ã© verdadeira.",
+    "explanation": "O capítulo Structured Programming › Discussion diz que uma quarta categoria descreve código não estruturado: a ramificação, uma estrutura não controlada que permite saltar para outra parte do programa e é raramente usada em programação modular estruturada. Por isso a afirmação é verdadeira.",
     "difficulty": "easy",
     "xp_base": 10,
     "objective_id": "OBJ-7",
     "level": "reconhecer",
     "source_ref": "th-sem1-algorithms-m01-structured-programming#definicao",
-    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'A fourth category describes unstructured code. Branching â€“ An uncontrolled structure ... This category is rarely used in modular structured programming.'"
+    "answer_check": "Conferido contra Structured Programming › Discussion: 'A fourth category describes unstructured code. Branching – An uncontrolled structure ... This category is rarely used in modular structured programming.'"
   },
   {
     "id": "ex-sem1-algorithms-m01-l19-selecao",
@@ -44,21 +47,21 @@
     "lesson_id": "l19",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Qual categoria de estrutura de controle descreve 'executar uma instruÃ§Ã£o e depois a prÃ³xima, na ordem listada'?",
+    "prompt": "Qual categoria de estrutura de controle descreve 'executar uma instrução e depois a próxima, na ordem listada'?",
     "options": [
-      "SequÃªncia",
-      "SeleÃ§Ã£o",
-      "IteraÃ§Ã£o",
-      "RamificaÃ§Ã£o"
+      "Seleção",
+      "Sequência",
+      "Iteração",
+      "Ramificação"
     ],
-    "correct": 0,
-    "explanation": "O capÃ­tulo Structured Programming â€º Discussion define sequÃªncia como fazer uma instruÃ§Ã£o e depois a prÃ³xima, na ordem listada; a maior parte das linhas de cÃ³digo Ã© assim. SeleÃ§Ã£o escolhe entre fluxos, iteraÃ§Ã£o repete e ramificaÃ§Ã£o salta de forma nÃ£o controlada.",
+    "correct": 1,
+    "explanation": "O capítulo Structured Programming › Discussion define sequência como fazer uma instrução e depois a próxima, na ordem listada; a maior parte das linhas de código é assim. Seleção escolhe entre fluxos, iteração repete e ramificação salta de forma não controlada.",
     "difficulty": "medium",
     "xp_base": 15,
     "objective_id": "OBJ-7",
     "level": "aplicar",
     "source_ref": "th-sem1-algorithms-m01-structured-programming#exemplo-resolvido",
-    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'Sequence â€“ Very boring. Simply do one instruction then the next and the next. Just do them in a given sequence or in the order listed.'"
+    "answer_check": "Conferido contra Structured Programming › Discussion: 'Sequence – Very boring. Simply do one instruction then the next and the next. Just do them in a given sequence or in the order listed.'"
   },
   {
     "id": "ex-sem1-algorithms-m01-l19-zero-vezes",
@@ -66,16 +69,19 @@
     "lesson_id": "l19",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Na iteraÃ§Ã£o, o trecho de cÃ³digo pode nÃ£o ser executado nenhuma vez (zero repetiÃ§Ãµes).",
-    "options": ["Verdadeiro", "Falso"],
+    "prompt": "Na iteração, o trecho de código pode não ser executado nenhuma vez (zero repetições).",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 0,
-    "explanation": "O capÃ­tulo Structured Programming â€º Discussion afirma que a iteraÃ§Ã£o permite que o cÃ³digo seja executado vÃ¡rias vezes, podendo nÃ£o ser executado de forma alguma (repetir zero vezes), um nÃºmero fixo de vezes ou indefinidamente atÃ© uma condiÃ§Ã£o. Por isso a afirmaÃ§Ã£o Ã© verdadeira.",
+    "explanation": "O capítulo Structured Programming › Discussion afirma que a iteração permite que o código seja executado várias vezes, podendo não ser executado de forma alguma (repetir zero vezes), um número fixo de vezes ou indefinidamente até uma condição. Por isso a afirmação é verdadeira.",
     "difficulty": "medium",
     "xp_base": 15,
     "objective_id": "OBJ-7",
     "level": "analisar",
     "source_ref": "th-sem1-algorithms-m01-structured-programming#definicao",
-    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'The code might not be executed at all (repeat it zero times), executed a fixed number of times or executed indefinitely until some condition has been met.'"
+    "answer_check": "Conferido contra Structured Programming › Discussion: 'The code might not be executed at all (repeat it zero times), executed a fixed number of times or executed indefinitely until some condition has been met.'"
   },
   {
     "id": "ex-sem1-algorithms-m01-l19-goto",
@@ -83,21 +89,21 @@
     "lesson_id": "l19",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Por que a ramificaÃ§Ã£o, como o `goto`, Ã© evitada na programaÃ§Ã£o estruturada?",
+    "prompt": "Por que a ramificação, como o `goto`, é evitada na programação estruturada?",
     "options": [
-      "Porque Ã© uma estrutura nÃ£o controlada que pode levar a cÃ³digo difÃ­cil de seguir e manter",
-      "Porque nenhuma linguagem de programaÃ§Ã£o possui o comando goto",
-      "Porque impede o uso de variÃ¡veis e operadores",
-      "Porque sÃ³ funciona com nÃºmeros inteiros"
+      "Porque nenhuma linguagem de programação moderna possui o comando goto em sua sintaxe oficial",
+      "Porque impede o uso de variáveis e operadores",
+      "Porque é uma estrutura não controlada que pode levar a código difícil de seguir e manter",
+      "Porque só funciona com números inteiros"
     ],
-    "correct": 0,
-    "explanation": "O capÃ­tulo Structured Programming â€º Overview e â€º Discussion descrevem a ramificaÃ§Ã£o como uma estrutura nÃ£o controlada, raramente usada, associada a 'spaghetti code' potencialmente difÃ­cil de seguir e manter. A fonte nÃ£o diz que o goto nÃ£o existe; ela o contrasta com as construÃ§Ãµes estruturadas.",
+    "correct": 2,
+    "explanation": "O capítulo Structured Programming › Overview e › Discussion descrevem a ramificação como uma estrutura não controlada, raramente usada, associada a 'spaghetti code' potencialmente difícil de seguir e manter. A fonte não diz que o goto não existe; ela o contrasta com as construções estruturadas.",
     "difficulty": "medium",
     "xp_base": 15,
     "objective_id": "OBJ-8",
     "level": "reconhecer",
     "source_ref": "th-sem1-algorithms-m01-structured-programming#erros-comuns",
-    "answer_check": "Conferido contra Structured Programming â€º Overview: '...in contrast to using simple tests and jumps such as the go to statement, which can lead to â€œspaghetti codeâ€ that is potentially difficult to follow and maintain.'"
+    "answer_check": "Conferido contra Structured Programming › Overview: '...in contrast to using simple tests and jumps such as the go to statement, which can lead to “spaghetti code” that is potentially difficult to follow and maintain.'"
   },
   {
     "id": "ex-sem1-algorithms-m01-l19-historia",
@@ -105,20 +111,25 @@
     "lesson_id": "l19",
     "type": "order-steps",
     "generated_by_ai": true,
-    "prompt": "Ordene os marcos histÃ³ricos da programaÃ§Ã£o estruturada descritos no capÃ­tulo Structured Programming.",
+    "prompt": "Ordene os marcos históricos da programação estruturada descritos no capítulo Structured Programming.",
     "options": [
-      "O tema Ã© debatido por cerca de 20 anos",
-      "Dijkstra publica um artigo no fim da dÃ©cada de 1960",
-      "Dijkstra propÃµe o mÃ©todo 'go to less'",
-      "Ao fim do sÃ©culo XX, quase todos os cientistas da computaÃ§Ã£o estÃ£o convencidos"
+      "O tema é debatido por cerca de 20 anos",
+      "Dijkstra publica um artigo no fim da década de 1960",
+      "Dijkstra propõe o método 'go to less'",
+      "Ao fim do século XX, quase todos os cientistas da computação estão convencidos"
     ],
-    "correct": [1, 2, 0, 3],
-    "explanation": "O capÃ­tulo Structured Programming â€º Discussion registra que o conceito comeÃ§ou no fim da dÃ©cada de 1960 com um artigo de Dijkstra, que propÃ´s o mÃ©todo 'go to less'; o tema foi debatido por cerca de 20 anos e, ao fim do sÃ©culo XX, quase todos os cientistas da computaÃ§Ã£o estavam convencidos. As opÃ§Ãµes jÃ¡ estÃ£o embaralhadas; a ordem correta segue essa sequÃªncia.",
+    "correct": [
+      1,
+      2,
+      0,
+      3
+    ],
+    "explanation": "O capítulo Structured Programming › Discussion registra que o conceito começou no fim da década de 1960 com um artigo de Dijkstra, que propôs o método 'go to less'; o tema foi debatido por cerca de 20 anos e, ao fim do século XX, quase todos os cientistas da computação estavam convencidos. As opções já estão embaralhadas; a ordem correta segue essa sequência.",
     "difficulty": "hard",
     "xp_base": 25,
     "objective_id": "OBJ-8",
     "level": "analisar",
     "source_ref": "th-sem1-algorithms-m01-structured-programming#definicao",
-    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'started in the late 1960â€™s with an article by Edsger Dijkstra', 'go to less', 'debated for about 20 years', 'By the end of the 20th century...'"
+    "answer_check": "Conferido contra Structured Programming › Discussion: 'started in the late 1960’s with an article by Edsger Dijkstra', 'go to less', 'debated for about 20 years', 'By the end of the 20th century...'"
   }
 ]

@@ -21,6 +21,11 @@ import {
   ATTRIBUTIONS_END
 } from './lib/content-rules.mjs';
 import { parseFrontMatter } from './lib/front-matter.mjs';
+import {
+  collectTextFiles,
+  findProjectEncodingIssues,
+  formatEncodingIssue
+} from './lib/text-encoding.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = dirname(__dirname);
@@ -81,6 +86,23 @@ function success(msg) {
 
 function info(msg) {
   console.log(`  ℹ️  ${msg}`);
+}
+
+// ============================================
+// 0. Codificação de todos os arquivos de texto
+// ============================================
+function validateTextEncoding() {
+  console.log('\n🔤 Validando codificação dos arquivos de texto...');
+  const problems = findProjectEncodingIssues(ROOT_DIR);
+
+  for (const { file, issues } of problems) {
+    error(`codificação inválida: ${issues.map(formatEncodingIssue).join('; ')}`, file);
+  }
+
+  if (problems.length === 0) {
+    const total = collectTextFiles(ROOT_DIR).length;
+    success(`${total} arquivo(s) de texto em UTF-8 válido, sem BOM e sem mojibake`);
+  }
 }
 
 // ============================================
@@ -730,6 +752,7 @@ async function main() {
   console.log('🔍 Ensina Lógica - Validação CI');
   console.log('==================================');
 
+  validateTextEncoding();
   validateCurriculum();
   const theoryUnits = validateTheoryUnits();
   const theoryById = new Map(theoryUnits.map((u) => [u.id, u]));

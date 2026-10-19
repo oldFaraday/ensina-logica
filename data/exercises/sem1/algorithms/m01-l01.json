@@ -9,7 +9,7 @@
     "options": [
       "Entende o programa, modela a lógica e prepara dados de teste",
       "Instala o sistema operacional da máquina",
-      "Escreve o manual do usuário final",
+      "Escreve o manual do usuário final e o entrega junto com o programa",
       "Traduz manualmente o código para linguagem de máquina"
     ],
     "correct": 0,
@@ -28,7 +28,10 @@
     "type": "true-false",
     "generated_by_ai": true,
     "prompt": "A fonte organiza o design de programa em três grandes áreas: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste.",
-    "options": ["Verdadeiro", "Falso"],
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 0,
     "explanation": "O capítulo Program Design › Overview lista exatamente essas três áreas de atividade: Understanding the Program, Using Design Tools to Create a Model e Develop Test Data. Por isso a afirmação é verdadeira.",
     "difficulty": "easy",
@@ -46,12 +49,12 @@
     "generated_by_ai": true,
     "prompt": "No modelo IPO apresentado no capítulo Program Design, as letras I, P e O correspondem a:",
     "options": [
-      "Inputs, Processing, Outputs",
       "Interface, Programa, Operação",
+      "Inputs, Processing, Outputs",
       "Instrução, Pilha, Operando",
       "Índice, Ponteiro, Objeto"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "O capítulo Program Design › Understanding the Program afirma que entender o propósito de um programa envolve suas entradas (Inputs), processamento (Processing) e saídas (Outputs). As outras siglas não aparecem na fonte com esse significado.",
     "difficulty": "easy",
     "xp_base": 10,
@@ -72,7 +75,11 @@
       "Entender o programa (entradas, processamento e saídas)",
       "Usar ferramentas de design para criar um modelo"
     ],
-    "correct": [1, 2, 0],
+    "correct": [
+      1,
+      2,
+      0
+    ],
     "explanation": "O capítulo Program Design › Overview apresenta as áreas nesta ordem: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste. As opções já estão embaralhadas; a sequência correta segue a ordem da fonte.",
     "difficulty": "medium",
     "xp_base": 15,
@@ -89,12 +96,12 @@
     "generated_by_ai": true,
     "prompt": "Uma equipe lista o que o usuário digita, o que o computador calcula e o que aparece na tela antes de escrever código. Qual área do design de programa essa atividade representa?",
     "options": [
-      "Entender o programa pelo modelo IPO",
-      "Desenvolver dados de teste",
+      "Desenvolver dados de teste para o modelo",
       "Escolher a sintaxe da linguagem",
+      "Entender o programa pelo modelo IPO",
       "Compilar o pseudocódigo"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "O capítulo Program Design › Understanding the Program recomenda entender o propósito do programa por suas entradas, processamento e saídas (IPO). Listar o que o usuário digita, o que é calculado e o que aparece na tela é exatamente essa decomposição; as demais opções não descrevem essa etapa.",
     "difficulty": "medium",
     "xp_base": 15,

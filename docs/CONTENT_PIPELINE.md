@@ -10,6 +10,7 @@ Objetivo: produzir, para UM módulo por vez, teoria, exercícios, flashcards e b
 4. Você nunca marca human_reviewed. Esse valor é do usuário.
 5. Antes de gerar, remova o conteúdo antigo DESTE módulo (o histórico do git guarda). Não reaproveite texto antigo sem passar pelos mesmos controles.
 6. Não altere outros módulos.
+7. Todo arquivo é UTF-8 sem BOM. Escreva arquivos só com a ferramenta de edição ou com Node (fs em 'utf8'); nunca com redirecionamento, Set-Content ou Out-File do PowerShell.
 
 ## Etapas
 

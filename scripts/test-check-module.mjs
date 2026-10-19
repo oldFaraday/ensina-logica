@@ -94,6 +94,16 @@ const flashcards = Array.from({ length: 8 }, (_, index) =>
   })
 );
 
+// O módulo de controle também precisa respeitar a distribuição das respostas
+// de múltipla escolha: espalha o índice correto em vez de deixar tudo em 0.
+let mcCursor = 0;
+for (const item of [...lesson1, ...lesson2, ...challenge]) {
+  if (item.type === 'multiple-choice') {
+    item.correct = mcCursor % 4;
+    mcCursor += 1;
+  }
+}
+
 const goodModule = {
   module: { id: 'm01', title: 'Introdução', lessons: ['l01', 'l02'] },
   moduleLabel: 'sem1/algorithms/m01',
@@ -229,6 +239,40 @@ check(
     }),
     'lição 1 não pode ter exercício difícil'
   )
+);
+
+console.log('\n🎲 Distribuição da múltipla escolha');
+check(
+  'rejeita resposta correta concentrada em um único índice',
+  has(
+    errorsFor((value) => {
+      for (const collection of [value.exercises, value.challenge]) {
+        collection.forEach((item) => {
+          if (item.type === 'multiple-choice') item.correct = 0;
+        });
+      }
+    }),
+    'posição da resposta correta concentrada'
+  )
+);
+check(
+  'rejeita opção correta sistematicamente mais longa',
+  has(
+    errorsFor((value) => {
+      for (const collection of [value.exercises, value.challenge]) {
+        collection.forEach((item) => {
+          if (item.type === 'multiple-choice') {
+            item.options[item.correct] = `${item.options[item.correct]} (alternativa correta e muito mais detalhada)`;
+          }
+        });
+      }
+    }),
+    'opção correta é a mais longa'
+  )
+);
+check(
+  'aceita distribuição equilibrada de respostas e tamanhos',
+  checkModuleContent(clone()).length === 0
 );
 
 console.log('\n🏁 Desafio e flashcards');

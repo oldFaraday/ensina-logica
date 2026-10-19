@@ -6,7 +6,10 @@
     "type": "true-false",
     "generated_by_ai": true,
     "prompt": "Pseudocódigo é código real que um compilador converte automaticamente para linguagem de máquina.",
-    "options": ["Verdadeiro", "Falso"],
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 1,
     "explanation": "O capítulo Pseudocode › Discussion afirma que pseudocódigo imita código, mas NÃO é código real, porque não existe compilador que o traduza para linguagem de máquina. Por isso a afirmação é falsa.",
     "difficulty": "easy",
@@ -24,12 +27,12 @@
     "generated_by_ai": true,
     "prompt": "Na palavra pseudocódigo, o que o termo pseudo significa, segundo o capítulo Pseudocode?",
     "options": [
-      "Falso, incluindo as ideias de falso ou imitação",
-      "Verdadeiro e executável",
+      "Verdadeiro, executável e traduzido para máquina",
       "Compilado para linguagem de máquina",
-      "Otimizado para o processador"
+      "Otimizado para o processador",
+      "Falso, incluindo as ideias de falso ou imitação"
     ],
-    "correct": 0,
+    "correct": 3,
     "explanation": "O capítulo Pseudocode › Discussion explica que pseudo significa falso e que uma tradução melhor seria falso ou imitação. As demais opções contradizem a definição da fonte.",
     "difficulty": "easy",
     "xp_base": 10,
@@ -50,7 +53,11 @@
       "Saída: exibir a resposta e pausar para o usuário ver",
       "Entrada: pedir e ler as duas idades do teclado"
     ],
-    "correct": [2, 0, 1],
+    "correct": [
+      2,
+      0,
+      1
+    ],
     "explanation": "O capítulo Pseudocode › Discussion apresenta o esboço na ordem Entrada, Processamento e Saída: primeiro lê as duas idades, depois calcula a média e por fim exibe a resposta. As opções já estão embaralhadas; a ordem correta segue essa sequência.",
     "difficulty": "medium",
     "xp_base": 15,
@@ -93,7 +100,7 @@
     "prompt": "Por que o pseudocódigo NÃO pode ser executado diretamente por um computador?",
     "options": [
       "Porque não existe compilador que o traduza para linguagem de máquina",
-      "Porque usa palavras em inglês",
+      "Porque usa palavras em inglês que o processador não entende diretamente",
       "Porque não permite representar cálculos",
       "Porque precisa ser escrito em uma linguagem de programação"
     ],
@@ -117,10 +124,18 @@
     "language": "pseudocode",
     "blanks": [
       {
-        "accepted_answers": ["soma / 2", "soma/2"]
+        "accepted_answers": [
+          "soma / 2",
+          "soma/2"
+        ]
       },
       {
-        "accepted_answers": ["media", "a media", "média", "a média"]
+        "accepted_answers": [
+          "media",
+          "a media",
+          "média",
+          "a média"
+        ]
       }
     ],
     "explanation": "O capítulo Pseudocode › Discussion descreve o processamento como somar as duas idades e dividir por dois e a saída como exibir a resposta. Como a soma já foi guardada, a média é soma / 2; o valor exibido é a variável media.",

@@ -24,6 +24,7 @@ import {
   ALLOWED_LICENSES,
   MIN_EXCERPT_WORDS
 } from './lib/content-rules.mjs';
+import { encodingIssues } from './lib/text-encoding.mjs';
 
 let passed = 0;
 let failed = 0;
@@ -197,6 +198,58 @@ check('extract retorna null sem marcadores', extractAttributionsBlock('sem bloco
 check('extract detecta bloco divergente', extractAttributionsBlock(doc) !== generateAttributionsBlock([
   { id: 'th-sem1-z', source: { title: 'Outra' } }
 ]));
+
+// ---------------------------------------------------------------------------
+console.log('\n🔤 Codificação dos arquivos de texto');
+
+const issueTypes = (buffer) => encodingIssues(buffer).map((issue) => issue.type);
+const utf8 = (text) => Buffer.from(text, 'utf8');
+const corrupted = (...codePoints) => String.fromCodePoint(...codePoints);
+
+check(
+  'aceita acentos, travessão e "›" em UTF-8 válido',
+  encodingIssues(utf8('capítulo › são três: lógica, ramificação e iteração')).length === 0
+);
+
+check(
+  'rejeita BOM UTF-8',
+  issueTypes(Buffer.concat([Buffer.from([0xEF, 0xBB, 0xBF]), utf8('texto')])).includes('bom')
+);
+
+check(
+  'rejeita caractere de substituição U+FFFD',
+  issueTypes(utf8(`texto com ${corrupted(0xFFFD)} no meio`)).includes('mojibake')
+);
+
+check(
+  'rejeita bytes inválidos para UTF-8',
+  issueTypes(Buffer.from([0x63, 0x61, 0x70, 0xC3, 0x28])).includes('invalid-utf8')
+);
+
+check(
+  'rejeita A-til seguido de caractere não ASCII (ex.: i acentuado corrompido)',
+  issueTypes(utf8(`cap${corrupted(0x00C3, 0x00AD)}tulo`)).includes('mojibake')
+);
+
+check(
+  'rejeita maiúscula acentuada corrompida (C cedilha: U+00C3 U+2021)',
+  issueTypes(utf8(corrupted(0x00C3, 0x2021))).includes('mojibake')
+);
+
+check(
+  'rejeita maiúscula acentuada corrompida (E agudo: U+00C3 U+2030)',
+  issueTypes(utf8(corrupted(0x00C3, 0x2030))).includes('mojibake')
+);
+
+check(
+  'rejeita sequência corrompida de três caracteres no lugar de "›"',
+  issueTypes(utf8(corrupted(0x00E2, 0x20AC, 0x00BA))).includes('mojibake')
+);
+
+check(
+  'rejeita "Â" seguido de espaço não separável',
+  issueTypes(utf8(corrupted(0x00C2, 0x00A0))).includes('mojibake')
+);
 
 // ---------------------------------------------------------------------------
 console.log('\n📊 Resultado dos testes de validação:');

@@ -299,6 +299,20 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - **E6:** `check-module` ✅ · `validate` ✅ (sem erros nem avisos) · `npm test` ✅ (18 suítes; 13 unidades, 19 lições, 99 exercícios de lição) · `verify-sources` ✅ (13/13).
 - **E7:** `"pipeline_version": 1` aplicado **somente a este módulo** após os portões; commit único do módulo; sem pendências de conteúdo.
 
+### Fase 22: Correção de mojibake + portão de encoding + qualidade de múltipla escolha — ✅ COMPLETO (2026-10-19)
+**Causa raiz:** a sessão anterior usou `Get-Content -Raw | Set-Content -Encoding utf8` no **Windows PowerShell 5.1**. O `Get-Content` decodificou os arquivos UTF-8 como ANSI/CP1252 e o `Set-Content` regravou o texto já corrompido em UTF-8 — dupla codificação (cada letra acentuada e cada travessão passaram a aparecer como duas ou três sequências de caracteres estranhos). O comando foi aplicado em `m01-l04.json` (depois renomeado para `m01-l19.json`) e em `m01-challenge.json`/`m01-flashcards.json` durante a troca `l04`→`l19`. `ReadAllText`/`WriteAllText` posteriores não repararam porque o texto já estava corrompido.
+- **Arquivos corrigidos** (reversão determinística CP1252 → UTF-8, somente quando o resultado é UTF-8 válido e reduz os marcadores; regravação UTF-8 sem BOM):
+  - `data/exercises/sem1/algorithms/m01-challenge.json` — 152 marcadores (129 de letra acentuada duplicada, 23 de pontuação duplicada).
+  - `data/exercises/sem1/algorithms/m01-flashcards.json` — 153 marcadores (125 + 28).
+  - `data/exercises/sem1/algorithms/m01-l19.json` — 158 marcadores (140 + 18).
+  - Nenhum BOM, U+FFFD ou UTF-8 inválido nos três; JSON e contagens de itens preservados. Palavras conferidas contra os trechos das fontes: "são", "três", "capítulo", "lógica", "ramificação", "iteração" e o separador "›".
+- **Portão de encoding:** novo `scripts/lib/text-encoding.mjs` (`encodingIssues`, `findProjectEncodingIssues`, `collectTextFiles`, `countMojibake`), chamado por `scripts/validate.mjs` e `scripts/check-module.mjs`. Varre `.json`, `.md`, `.js`, `.mjs`, `.html`, `.css`, `.yml` (ignora `node_modules`, `lib/`, `.git`) e **falha** com BOM, U+FFFD, UTF-8 inválido ou mojibake (incluindo maiúsculas acentuadas e o separador `›` corrompidos). `npm run validate` valida 400 arquivos de texto.
+- **Regra inviolável** em `docs/CONTENT_PIPELINE.md`: todo arquivo é UTF-8 sem BOM; escrever apenas com a ferramenta de edição ou Node (`fs` em `'utf8'`); nunca com redirecionamento, `Set-Content` ou `Out-File` do PowerShell. `index.html` já declara `<meta charset="UTF-8">` e `.editorconfig` já tem `charset = utf-8`.
+- **Qualidade de múltipla escolha** (`scripts/lib/module-rules.mjs` + `scripts/check-module.mjs`): falha se o índice da resposta correta se concentrar em **>40%** das questões ou se a opção correta for a **mais longa em >50%** delas. O m01 falhava nos dois critérios; as 15 questões foram rebalanceadas (distribuição final `{0:4, 1:4, 2:4, 3:3}`, máximo 26,7%; correta mais longa em **0/15**), preservando o texto das respostas corretas e reescrevendo apenas distratores quando necessário.
+- **Desafio e flashcards:** `ex-sem1-algorithms-m01-challenge-design` aparece só em `m01-challenge.json` (`lesson_id: l01` é metadado de validação); não é rota do app. Conforme `docs/CONTENT_MODEL.md`, desafio e flashcards são coleções validadas pelo `check-module`, não lições — nenhuma ligação nova foi criada. Texto conferido renderizando as coleções com `src/lesson/renderer.js` em jsdom: todos os acentos esperados presentes e zero U+FFFD.
+- **Verificação no app:** `#/lesson/l19` aberta no navegador real (`npx serve`), onboarding dispensado; enunciado e explicação exibem "três", "capítulo", "ramificação", "iteração" e "›" corretamente.
+- **Portões:** `npm test` ✅ (18 suítes; 49 asserções de validação e 38 de `check-module`) · `npm run validate` ✅ · `npm run check-module -- sem1-algorithms-m01` ✅ (4 unidades, 24 exercícios de lição, 8 do desafio, 10 flashcards).
+
 ---
 
 ## 🎯 Próxima Etapa

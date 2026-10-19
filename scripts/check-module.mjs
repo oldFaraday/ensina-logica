@@ -15,6 +15,7 @@ import { join, extname, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { checkModuleContent, extractSectionIds } from './lib/module-rules.mjs';
 import { splitFrontMatter } from './lib/front-matter.mjs';
+import { findProjectEncodingIssues, formatEncodingIssue } from './lib/text-encoding.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = dirname(__dirname);
@@ -177,7 +178,20 @@ function loadGlossaryTerms() {
   }
 }
 
+function checkProjectEncoding() {
+  const problems = findProjectEncodingIssues(ROOT_DIR);
+  if (problems.length === 0) return;
+
+  console.error(`\n❌ check-module FALHOU (${problems.length} arquivo(s) com codificação inválida):`);
+  for (const { file, issues } of problems) {
+    console.error(`  - ${file}: ${issues.map(formatEncodingIssue).join('; ')}`);
+  }
+  process.exit(1);
+}
+
 function main() {
+  checkProjectEncoding();
+
   const args = process.argv.slice(2).filter((arg) => arg !== '--');
   const curriculumPath = join(ROOT_DIR, 'data', 'curriculum.json');
   if (!existsSync(curriculumPath)) fail('data/curriculum.json não encontrado');

@@ -18,6 +18,10 @@ export const CHALLENGE_QUESTIONS = 8;
 export const FLASHCARDS_MIN = 8;
 export const FLASHCARDS_MAX = 12;
 
+/** Distribuição das respostas de múltipla escolha. */
+export const MC_MAX_CORRECT_POSITION_SHARE = 0.4;
+export const MC_MAX_LONGEST_OPTION_SHARE = 0.5;
+
 /** Padrões genéricos de placeholder rejeitados em qualquer texto do módulo. */
 export const PLACEHOLDER_PATTERNS = [
   { re: /\bplaceholder\b/i, label: 'placeholder' },
@@ -123,6 +127,28 @@ function placeholderErrors(label, fields) {
   return errors;
 }
 
+function multipleChoiceExercises(exercises) {
+  return asArray(exercises).filter(
+    (exercise) =>
+      text(exercise.type) === 'multiple-choice' &&
+      Array.isArray(exercise.options) &&
+      exercise.options.length > 0 &&
+      Number.isInteger(exercise.correct) &&
+      exercise.correct >= 0 &&
+      exercise.correct < exercise.options.length
+  );
+}
+
+function isCorrectOptionStrictlyLongest(exercise) {
+  const correct = exercise.options[exercise.correct];
+  if (typeof correct !== 'string') return false;
+  const otherLengths = exercise.options
+    .filter((_, index) => index !== exercise.correct)
+    .map((option) => String(option ?? '').length);
+  if (otherLengths.length === 0) return false;
+  return correct.length > Math.max(...otherLengths);
+}
+
 /**
  * Verifica um módulo inteiro. Todos os arrays devem vir na ordem em que
  * aparecem nos arquivos (a ordem importa para a rampa e a variedade).
@@ -156,6 +182,37 @@ export function checkModuleContent({
   const challengeExercises = asArray(challenge);
   const flashcardExercises = asArray(flashcards);
   const allExercises = [...lessonExercises, ...challengeExercises, ...flashcardExercises];
+
+  // ------------------------------------------ qualidade da múltipla escolha
+  const multipleChoice = multipleChoiceExercises(allExercises);
+  if (multipleChoice.length > 0) {
+    const byPosition = new Map();
+    for (const exercise of multipleChoice) {
+      byPosition.set(exercise.correct, (byPosition.get(exercise.correct) || 0) + 1);
+    }
+
+    const maxPerPosition = Math.floor(multipleChoice.length * MC_MAX_CORRECT_POSITION_SHARE);
+    for (const [position, count] of byPosition) {
+      if (count > maxPerPosition) {
+        const percent = Math.round((count / multipleChoice.length) * 100);
+        errors.push(
+          `${label}: posição da resposta correta concentrada: ${count} de ${multipleChoice.length} ` +
+            `exercícios de múltipla escolha (${percent}%) usam o índice ${position}; ` +
+            `máximo ${Math.round(MC_MAX_CORRECT_POSITION_SHARE * 100)}% no mesmo índice`
+        );
+      }
+    }
+
+    const longestCount = multipleChoice.filter(isCorrectOptionStrictlyLongest).length;
+    const maxLongest = Math.floor(multipleChoice.length * MC_MAX_LONGEST_OPTION_SHARE);
+    if (longestCount > maxLongest) {
+      const percent = Math.round((longestCount / multipleChoice.length) * 100);
+      errors.push(
+        `${label}: a opção correta é a mais longa em ${longestCount} de ${multipleChoice.length} ` +
+          `exercícios de múltipla escolha (${percent}%); máximo ${Math.round(MC_MAX_LONGEST_OPTION_SHARE * 100)}%`
+      );
+    }
+  }
 
   // ------------------------------------------------------------------ plano
   const objectives = extractPlanObjectives(planText);
