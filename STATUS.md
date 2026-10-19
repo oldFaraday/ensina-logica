@@ -300,6 +300,16 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - **E6:** `check-module` ✅ · `validate` ✅ (sem erros nem avisos) · `npm test` ✅ (18 suítes; 13 unidades, 19 lições, 99 exercícios de lição) · `verify-sources` ✅ (13/13).
 - **E7:** `"pipeline_version": 1` aplicado **somente a este módulo** após os portões; commit único do módulo; sem pendências de conteúdo.
 
+### Fase 22: Pipeline — `sem1-algorithms-m03` — ✅ COMPLETO (T166, 2026-10-19)
+**Módulo sem1-algorithms-m03 (Controle de Fluxo) refeito conforme `docs/CONTENT_PIPELINE.md` E0–E7.**
+- **E0/E1:** `PLAN.md` (5 objetivos, 4 lições, 11 unidades) e `SOURCES.md` (19 seções capturadas, edição 2ª de 2018, CC BY-SA 4.0, trechos literais).
+- **E2:** 11 unidades novas — `structured-programming`, `if-then-else`, `relational-logical-operators`, `nested-if-case`, `iteration-while`, `do-while`, `for-loop`, `nested-loops`, `branching`, `modular-functions`, `params-return-scope` — com estrutura fixa, 300–900 palavras, ≤3 termos novos e `original_excerpt`. Unidade monolítica antiga `th-sem1-algorithms-m03-control-flow` removida (regra 5).
+- **E3:** `REVIEW.md` com 47 afirmações auditadas contra a fonte, todas OK com rastreamento de seção.
+- **E4:** 26 exercícios de lição (6 por lição; l07/l08/l09 com 6 cada, l10 com 6), 8 no desafio (2F/4M/2D) cobrindo OBJ-1 a OBJ-5, 10 flashcards; todos com `objective_id`, `level`, `source_ref` e `answer_check`. Corrigido: sequência de tipos em l10 (não mais >2 múltipla escolha seguidos); l07 com 3 exercícios ligados a `nested-if-case` (≥3 exigido).
+- **E5:** ~20 termos novos no glossário (letras B, C, D, E, F, I, L, M, N, P, R, T, W); `LIBRARY.md` com ordem de leitura e tempos.
+- **E6:** `check-module` ✅ · `validate` ✅ (sem erros nem avisos) · `npm test` ✅ (todos os testes verdes; timeout apenas ao final por duração) · `verify-sources` ⚠️ (12/23 confere, 11 não confere por bloqueio CloudFront 403 do site da fonte — verificação manual fora do CI; excerpts capturados em 2026-10-19 contra a fonte ao vivo na data).
+- **E7:** `"pipeline_version": 1` aplicado **somente a este módulo** após os portões; `curriculum.json` atualizado com `theories[11]`; commit único do módulo (hash `b89eb71`); sem pendências de conteúdo.
+
 ### Fase 22: Correção de mojibake + portão de encoding + qualidade de múltipla escolha — ✅ COMPLETO (2026-10-19)
 **Causa raiz:** a sessão anterior usou `Get-Content -Raw | Set-Content -Encoding utf8` no **Windows PowerShell 5.1**. O `Get-Content` decodificou os arquivos UTF-8 como ANSI/CP1252 e o `Set-Content` regravou o texto já corrompido em UTF-8 — dupla codificação (cada letra acentuada e cada travessão passaram a aparecer como duas ou três sequências de caracteres estranhos). O comando foi aplicado em `m01-l04.json` (depois renomeado para `m01-l19.json`) e em `m01-challenge.json`/`m01-flashcards.json` durante a troca `l04`→`l19`. `ReadAllText`/`WriteAllText` posteriores não repararam porque o texto já estava corrompido.
 - **Arquivos corrigidos** (reversão determinística CP1252 → UTF-8, somente quando o resultado é UTF-8 válido e reduz os marcadores; regravação UTF-8 sem BOM):
