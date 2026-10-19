@@ -94,8 +94,8 @@ const flashcards = Array.from({ length: 8 }, (_, index) =>
   })
 );
 
-// O módulo de controle também precisa respeitar a distribuição das respostas
-// de múltipla escolha: espalha o índice correto em vez de deixar tudo em 0.
+// O módulo de controle espalha o índice correto pelos dados (a posição de
+// exibição é embaralhada em runtime, mas o exemplo continua realista).
 let mcCursor = 0;
 for (const item of [...lesson1, ...lesson2, ...challenge]) {
   if (item.type === 'multiple-choice') {
@@ -241,19 +241,16 @@ check(
   )
 );
 
-console.log('\n🎲 Distribuição da múltipla escolha');
+console.log('\n🎲 Qualidade da múltipla escolha');
 check(
-  'rejeita resposta correta concentrada em um único índice',
-  has(
-    errorsFor((value) => {
-      for (const collection of [value.exercises, value.challenge]) {
-        collection.forEach((item) => {
-          if (item.type === 'multiple-choice') item.correct = 0;
-        });
-      }
-    }),
-    'posição da resposta correta concentrada'
-  )
+  'não rejeita concentração de posição (a exibição é embaralhada)',
+  errorsFor((value) => {
+    for (const collection of [value.exercises, value.challenge]) {
+      collection.forEach((item) => {
+        if (item.type === 'multiple-choice') item.correct = 0;
+      });
+    }
+  }).length === 0
 );
 check(
   'rejeita opção correta sistematicamente mais longa',

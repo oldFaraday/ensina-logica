@@ -1,10 +1,15 @@
 /**
  * Multiple Choice Exercise Type
  * Radio options, single correct answer, explanation
+ *
+ * A ordem de exibição é embaralhada de forma determinística por
+ * (id do exercício, tentativa), mas a correção usa sempre o índice original da
+ * opção (`originalIndex`). Alternativas que dependem de posição ficam no fim.
  */
 
 import { t } from '../../i18n.js';
 import { showFeedback, FeedbackType } from '../feedback.js';
+import { getDisplayOptions } from '../option-shuffle.js';
 
 /**
  * Render a multiple choice exercise
@@ -20,6 +25,13 @@ export function renderMultipleChoice(exercise, options = {}) {
 
   const isRetry = options.isRetry || false;
   const onAnswer = options.onAnswer || (() => {});
+  const attempt = Number.isFinite(Number(options.attempt)) ? Number(options.attempt) : 1;
+  const displayOptions = getDisplayOptions(exercise.options, {
+    exerciseId: exercise.id,
+    attempt,
+    shuffle: exercise.shuffle !== false
+  });
+  const correctIndex = Number(exercise.correct);
 
   container.innerHTML = `
     <div class="exercise-header">
@@ -28,12 +40,12 @@ export function renderMultipleChoice(exercise, options = {}) {
     </div>
     <p class="exercise-prompt">${exercise.prompt}</p>
     <fieldset class="exercise-options" role="radiogroup" aria-label="${t('lesson.exerciseTypes.multipleChoice')}">
-      ${exercise.options.map((option, index) => `
-        <label class="option-option">
-          <input type="radio" name="exercise-${exercise.id}" value="${index}" ${isRetry ? 'disabled' : ''}>
+      ${displayOptions.map((option, displayIndex) => `
+        <label class="option-option" data-original-index="${option.originalIndex}" data-display-index="${displayIndex}">
+          <input type="radio" name="exercise-${exercise.id}" value="${option.originalIndex}" ${isRetry ? 'disabled' : ''}>
           <span class="option-content">
-            <span class="option-letter">${String.fromCharCode(65 + index)}</span>
-            <span class="option-text">${option}</span>
+            <span class="option-letter">${String.fromCharCode(65 + displayIndex)}</span>
+            <span class="option-text">${option.text}</span>
           </span>
           <span class="option-feedback" aria-hidden="true"></span>
         </label>
@@ -58,16 +70,18 @@ export function renderMultipleChoice(exercise, options = {}) {
   const optionLabels = container.querySelectorAll('.option-option');
 
   let answered = isRetry;
+  // Identidade da opção escolhida (índice nos dados), nunca a posição exibida.
   let selectedIndex = null;
 
-  // Handle radio selection
-  radioInputs.forEach((input, index) => {
+  // Handle radio selection (DOM follows the displayed order; value = original index)
+  radioInputs.forEach((input) => {
     input.addEventListener('change', () => {
-      selectedIndex = index;
+      selectedIndex = Number(input.value);
       if (submitBtn) submitBtn.disabled = false;
       // Clear previous feedback styling
       optionLabels.forEach(l => l.classList.remove('selected', 'correct', 'incorrect'));
-      optionLabels[index].classList.add('selected');
+      const selectedLabel = input.closest('.option-option');
+      if (selectedLabel) selectedLabel.classList.add('selected');
     });
   });
 
@@ -90,20 +104,21 @@ export function renderMultipleChoice(exercise, options = {}) {
     if (answered) return;
     answered = true;
 
-    const isCorrect = selectedIdx === exercise.correct;
+    const isCorrect = selectedIdx === correctIndex;
     const xpEarned = options.calculateXP ? options.calculateXP(isCorrect, isRetry) : 0;
 
     // Disable inputs
     radioInputs.forEach(input => input.disabled = true);
     if (submitBtn) submitBtn.hidden = true;
 
-    // Show feedback on options
-    optionLabels.forEach((label, idx) => {
+    // Show feedback on options (by original identity, not by displayed position)
+    optionLabels.forEach((label) => {
+      const originalIndex = Number(label.dataset.originalIndex);
       label.classList.remove('selected');
-      if (idx === exercise.correct) {
+      if (originalIndex === correctIndex) {
         label.classList.add('correct');
         label.querySelector('.option-feedback').textContent = '✅';
-      } else if (idx === selectedIdx && !isCorrect) {
+      } else if (originalIndex === selectedIdx && !isCorrect) {
         label.classList.add('incorrect');
         label.querySelector('.option-feedback').textContent = '❌';
       }
@@ -151,7 +166,7 @@ export function renderMultipleChoice(exercise, options = {}) {
     explanationEl.hidden = true;
   }
 
-  // Keyboard support
+  // Keyboard support: 1..9 selects the option at that DISPLAY position.
   container.addEventListener('keydown', (e) => {
     if (answered) return;
     if (e.key >= '1' && e.key <= '9') {

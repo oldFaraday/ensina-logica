@@ -58,6 +58,11 @@
       ],
       "description": "Index for multiple-choice/true-false, array of indices for order-steps, mirror string for flashcards. Not used by code-completion (use blanks[].accepted_answers)."
     },
+    "shuffle": {
+      "type": "boolean",
+      "default": true,
+      "description": "Multiple-choice only. false keeps the authored order (use when the options or the prompt depend on position/letters)."
+    },
     "explanation": {
       "type": "string",
       "minLength": 20,

@@ -751,7 +751,9 @@ function mountLesson(host, ctx) {
 
   const preparedExercises = exercises.map((ex) => ({
     ...ex,
-    _previouslyAnswered: Boolean(AppState.progress.exercises?.[ex.id])
+    _previouslyAnswered: Boolean(AppState.progress.exercises?.[ex.id]),
+    // Semente do embaralhamento: cada resposta persistida é uma nova tentativa.
+    _attempt: (AppState.progress.exercises?.[ex.id]?.attempts || 0) + 1
   }));
 
   const theoryMeta = theoryUnit ? {

@@ -435,6 +435,16 @@ function validateExerciseObject(exercise, relPath, theoryById = new Map(), lesso
     }
   }
 
+  // `shuffle` é opcional e só vale para múltipla escolha.
+  if ('shuffle' in exercise) {
+    if (typeof exercise.shuffle !== 'boolean') {
+      error(`shuffle deve ser booleano (encontrado: ${typeof exercise.shuffle})`, relPath);
+    }
+    if (exercise.type !== 'multiple-choice') {
+      error('shuffle só é permitido em exercícios de múltipla escolha', relPath);
+    }
+  }
+
   // code-completion: uma lacuna `___` no código para cada entrada de `blanks`,
   // e nenhuma lacuna sem resposta aceita.
   if (exercise.type === 'code-completion') {

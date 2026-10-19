@@ -601,3 +601,14 @@ Para cada módulo, em uma sessão e um commit:
 - **E7:** módulo marcado com `"pipeline_version": 1` **somente após** os portões; um commit do módulo; nenhuma pendência de conteúdo.
 
 **Decisão de escopo:** o módulo usa apenas pseudocódigo neutro e mantém fora de escopo sintaxe de linguagens, conversão de tipos, operadores relacionais/lógicos e escopo de variáveis.
+
+---
+
+## Phase 23: Embaralhamento determinístico das alternativas (2026-10-19)
+
+**Purpose**: embaralhar a ordem das alternativas apenas na exibição, mantendo a identidade da resposta e a ordem dos arquivos de dados.
+
+- [x] T170 [feat][lesson] `src/lesson/option-shuffle.js` + `src/lesson/exercise-types/multiple-choice.js`: permutação determinística por (id do exercício, tentativa); `data-original-index`/`value` guardam o índice original; a correção compara a identidade; letras, DOM, teclado (1–9/Enter) e ARIA seguem a ordem exibida. `src/app.js` passa `_attempt = attempts + 1`.
+- [x] T171 [feat][schema] Opções dependentes de posição ("Todas as anteriores", "Nenhuma das anteriores", "Ambas", "A e B", "I, II e III") fixadas no fim; campo opcional `shuffle: false` em `data/exercises/_schema.json`, `scripts/validate.mjs` e `docs/CONTENT_MODEL.md`.
+- [x] T172 [fix][tooling] `scripts/lib/module-rules.mjs`: removida a checagem de concentração da posição da resposta correta; mantida a checagem de "correta sistematicamente mais longa". `scripts/test-check-module.mjs` atualizado.
+- [x] T173 [test][audit] Auditoria dos 68 exercícios de múltipla escolha (0 dependentes de posição, 0 referências a letras/posições em enunciados/explicações). Novo `scripts/test-multiple-choice-dom.mjs` cobre todos os exercícios × tentativas, estabilidade, opções fixas, `shuffle:false`, teclado/ARIA e 1000 tentativas com cada posição entre 15% e 35%. `npm test` (19 suítes) e `npm run validate` verdes no patch isolado.

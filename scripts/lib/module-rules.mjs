@@ -18,8 +18,14 @@ export const CHALLENGE_QUESTIONS = 8;
 export const FLASHCARDS_MIN = 8;
 export const FLASHCARDS_MAX = 12;
 
-/** Distribuição das respostas de múltipla escolha. */
-export const MC_MAX_CORRECT_POSITION_SHARE = 0.4;
+/**
+ * Qualidade das opções de múltipla escolha.
+ *
+ * A posição da resposta correta NÃO é verificada: a exibição é embaralhada de
+ * forma determinística por (exercício, tentativa), então a posição no arquivo
+ * não influencia o aluno. O tamanho continua importando (a correta não pode ser
+ * sistematicamente a mais longa).
+ */
 export const MC_MAX_LONGEST_OPTION_SHARE = 0.5;
 
 /** Padrões genéricos de placeholder rejeitados em qualquer texto do módulo. */
@@ -186,23 +192,6 @@ export function checkModuleContent({
   // ------------------------------------------ qualidade da múltipla escolha
   const multipleChoice = multipleChoiceExercises(allExercises);
   if (multipleChoice.length > 0) {
-    const byPosition = new Map();
-    for (const exercise of multipleChoice) {
-      byPosition.set(exercise.correct, (byPosition.get(exercise.correct) || 0) + 1);
-    }
-
-    const maxPerPosition = Math.floor(multipleChoice.length * MC_MAX_CORRECT_POSITION_SHARE);
-    for (const [position, count] of byPosition) {
-      if (count > maxPerPosition) {
-        const percent = Math.round((count / multipleChoice.length) * 100);
-        errors.push(
-          `${label}: posição da resposta correta concentrada: ${count} de ${multipleChoice.length} ` +
-            `exercícios de múltipla escolha (${percent}%) usam o índice ${position}; ` +
-            `máximo ${Math.round(MC_MAX_CORRECT_POSITION_SHARE * 100)}% no mesmo índice`
-        );
-      }
-    }
-
     const longestCount = multipleChoice.filter(isCorrectOptionStrictlyLongest).length;
     const maxLongest = Math.floor(multipleChoice.length * MC_MAX_LONGEST_OPTION_SHARE);
     if (longestCount > maxLongest) {

@@ -126,6 +126,16 @@ Tipos e campos específicos:
 | `code-completion` | `code`, `blanks`, `language` | `blanks[].accepted_answers` (ver abaixo) |
 | `flashcards` | `starter_code` (verso) | `correct`: string (mesmo valor do verso) |
 
+> **Múltipla escolha — ordem de exibição:** as opções são embaralhadas na
+> exibição com semente determinística por `(id do exercício, tentativa)`. Os
+> arquivos **não** mudam de ordem e a correção usa o **índice original**
+> (`correct`), nunca a posição exibida. Não escreva distratores nem explicações
+> que citem letras ou posições ("alternativa A", "a primeira opção"). Opções que
+> dependem da posição ("Todas as anteriores", "Nenhuma das anteriores", "Ambas",
+> "A e B") são automaticamente fixadas no fim; se o enunciado ou as próprias
+> opções dependerem da ordem de um jeito que o detector não cubra, use
+> `"shuffle": false` no exercício para preservar a ordem autoral.
+
 > `code-completion`: o `code` é **fixo** (não editável). Cada lacuna é marcada
 > por `___` e vira um campo de entrada inline. É preciso ter **exatamente uma
 > entrada em `blanks` para cada `___`**, na mesma ordem, e **toda lacuna precisa

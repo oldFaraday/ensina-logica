@@ -109,30 +109,36 @@ try {
   {
     const ex = makeExercise({ type: 'multiple-choice', options: ['A', 'B', 'C'], correct: 1 });
 
-    // Acerto: escolher a opção correta (índice 1) => correto
+    // Acerto: escolher a opção correta pela identidade (value = índice original)
     let answer = null;
-    const el = renderMultipleChoice(ex, { streak: 0, calculateXP: () => 15, onAnswer: (r) => { answer = r; } });
+    const el = renderMultipleChoice(ex, { attempt: 1, streak: 0, calculateXP: () => 15, onAnswer: (r) => { answer = r; } });
     mount(el);
     const radios = el.querySelectorAll('input[type="radio"]');
-    radios[1].checked = true;
-    radios[1].dispatchEvent(new window.Event('change'));
+    const correctRadio = [...radios].find((radio) => Number(radio.value) === ex.correct);
+    correctRadio.checked = true;
+    correctRadio.dispatchEvent(new window.Event('change'));
     el.querySelector('.submit-btn').click();
     assert.equal(answer?.correct, true, 'múltipla escolha: opção correta marca correto');
     assert.equal(answer?.xpEarned, 15, 'XP deveria vir do calculateXP');
     assert.ok(/feedback-correct/.test(el.querySelector('.exercise-feedback').className), 'feedback correto visível');
     assert.equal(el.querySelector('.exercise-explanation').hidden, false, 'explicação visível');
-    assert.ok(el.querySelectorAll('.option-option')[1].classList.contains('correct'), 'opção correta destacada');
+    assert.ok(
+      el.querySelector('.option-option[data-original-index="1"]').classList.contains('correct'),
+      'opção correta destacada pela identidade'
+    );
 
     // Erro: escolher outra opção => incorreto (a tela não premia "qualquer clique")
     let wrong = null;
-    const el2 = renderMultipleChoice(ex, { streak: 0, calculateXP: () => 15, onAnswer: (r) => { wrong = r; } });
+    const el2 = renderMultipleChoice(ex, { attempt: 2, streak: 0, calculateXP: () => 15, onAnswer: (r) => { wrong = r; } });
     mount(el2);
     const radios2 = el2.querySelectorAll('input[type="radio"]');
-    radios2[2].checked = true;
-    radios2[2].dispatchEvent(new window.Event('change'));
+    const wrongRadio = [...radios2].find((radio) => Number(radio.value) !== ex.correct);
+    const wrongOriginalIndex = Number(wrongRadio.value);
+    wrongRadio.checked = true;
+    wrongRadio.dispatchEvent(new window.Event('change'));
     el2.querySelector('.submit-btn').click();
     assert.equal(wrong?.correct, false, 'múltipla escolha: opção errada marca incorreto');
-    assert.equal(wrong?.selectedIndex, 2, 'a verificação usa o índice efetivamente escolhido');
+    assert.equal(wrong?.selectedIndex, wrongOriginalIndex, 'a verificação usa o índice original escolhido');
 
     // Submeter sem escolher nada não deve registrar resposta
     let noAnswer = null;
@@ -455,9 +461,12 @@ try {
     assert.ok(el.querySelector('.lesson-completion').hidden, 'conclusão oculta antes de responder');
 
     el.querySelector('.tf-true').click();
-    el.querySelectorAll('input[type="radio"]')[1].checked = true;
-    el.querySelectorAll('input[type="radio"]')[1].dispatchEvent(new window.Event('change'));
-    el.querySelectorAll('.submit-btn')[el.querySelectorAll('.submit-btn').length - 1].click();
+    const mcItem = el.querySelector('.exercise-multiple-choice');
+    const mcCorrectRadio = [...mcItem.querySelectorAll('input[type="radio"]')]
+      .find((radio) => Number(radio.value) === 1);
+    mcCorrectRadio.checked = true;
+    mcCorrectRadio.dispatchEvent(new window.Event('change'));
+    mcItem.querySelector('.submit-btn').click();
 
     assert.equal(answered, 2, 'os dois exercícios notificaram resposta');
     assert.equal(el.querySelector('.lesson-completion').hidden, false, 'bloco de conclusão aparece após responder tudo');

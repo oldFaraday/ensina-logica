@@ -139,6 +139,7 @@ export function renderLesson(lesson, callbacks = {}) {
     const wasAnswered = Boolean(exercise._previouslyAnswered);
     const exerciseEl = renderer(exercise, {
       isRetry: false,
+      attempt: Number(exercise._attempt) || 1,
       streak: getStreak(),
       // Passa o exercício para o chamador decidir XP (base, first-time, retry)
       calculateXP: callbacks.calculateXP
