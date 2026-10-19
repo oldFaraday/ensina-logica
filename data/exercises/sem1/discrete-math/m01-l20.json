@@ -1,0 +1,132 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m01-l20-validade",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo a Seção 3.1, quando um argumento é válido?",
+    "options": [
+      "Quando a conclusão é verdadeira sempre que as premissas são verdadeiras.",
+      "Quando todas as premissas do argumento são verdadeiras, sem olhar a conclusão.",
+      "Quando a conclusão é verdadeira em alguma linha da tabela-verdade.",
+      "Quando a conclusão é, ela mesma, uma tautologia da lógica proposicional."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 define argumento válido como aquele em que 'the conclusion must be true given that the premises are true'. Não basta que as premissas sejam verdadeiras nem que a conclusão seja verdadeira em algumas linhas.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-6",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: 'an argument is valid provided the conclusion must be true given that the premises are true'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l20-modus-ponens",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual é a forma da regra de dedução chamada modus ponens?",
+    "options": [
+      "P → Q; P; portanto Q.",
+      "P → Q; ¬P; portanto ¬Q.",
+      "P → Q; Q; portanto P.",
+      "P ∨ Q; ¬P; portanto Q."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 apresenta o modus ponens como a forma em que, das premissas P → Q e P, conclui-se Q. A tabela-verdade mostra que, na única linha em que ambas as premissas são verdadeiras, Q também é verdadeira.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-6",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: modus ponens tem premissas P → Q e P, e conclusão Q."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l20-premissas",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Um argumento com todas as premissas verdadeiras e a conclusão falsa pode ser válido.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
+    "correct": 1,
+    "explanation": "A afirmação é falsa. Se todas as premissas são verdadeiras e a conclusão é falsa, justamente o caso proibido ocorreu; pela definição da Seção 3.1, o argumento não é válido.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: a validade exige que a conclusão seja verdadeira sempre que as premissas forem verdadeiras."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l20-passos",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene os passos para verificar a validade de uma regra de dedução com uma tabela-verdade.",
+    "options": [
+      "Verificar se, nessas linhas, a conclusão também é verdadeira.",
+      "Montar uma coluna para cada premissa e uma para a conclusão.",
+      "Localizar as linhas em que todas as premissas são verdadeiras.",
+      "Concluir que a regra é válida se não houver linha com premissas verdadeiras e conclusão falsa."
+    ],
+    "correct": [1, 2, 0, 3],
+    "explanation": "A Seção 3.1 verifica a validade assim: coloca cada premissa e a conclusão em colunas da tabela, procura as linhas em que todas as premissas são verdadeiras e confere se a conclusão também é verdadeira nessas linhas.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: a verificação procura as linhas com todas as premissas verdadeiras e confere a conclusão."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l20-regra-exemplo",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Das premissas P → Q e ¬P → Q, qual conclusão é válida?",
+    "options": [
+      "Q",
+      "P",
+      "¬Q",
+      "P ∧ Q"
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 mostra que as duas premissas são verdadeiras ao mesmo tempo apenas em duas linhas, e em ambas Q é verdadeira. Por isso a regra com conclusão Q é válida.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: 'In those rows Q is true as well, so the argument form is valid.'"
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l20-contraexemplo",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Considere a regra: P → R; Q → R; R; portanto P ∨ Q. Qual atribuição mostra que ela NÃO é válida?",
+    "options": [
+      "P = F, Q = F, R = V",
+      "P = V, Q = V, R = V",
+      "P = V, Q = F, R = F",
+      "P = F, Q = V, R = F"
+    ],
+    "correct": 0,
+    "explanation": "Na linha P = F, Q = F, R = V, as três premissas são verdadeiras: P → R e Q → R são verdadeiras porque R é verdadeira, e R é verdadeira. Mas a conclusão P ∨ Q é falsa. Uma única linha assim invalida a regra, como mostra a Seção 3.1.",
+    "difficulty": "hard",
+    "xp_base": 20,
+    "objective_id": "OBJ-6",
+    "level": "transferir",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: 'Here all three premises of the argument are true, but the conclusion is false.'"
+  }
+]

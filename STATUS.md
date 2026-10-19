@@ -24,10 +24,10 @@ ensina-logica/
 ├── data/
 │   ├── curriculum.json         # ✅ Completo - mapa 8 semestres
 │   ├── theory/sem1/algorithms/ # ✅ 10 unidades reais (m01 com 4 capítulos, m02 com 5, m03 com 1), verificadas na fonte
-│   ├── theory/sem1/discrete-math/ # ✅ 3 unidades reais (m01–m03), verificadas na fonte
+│   ├── theory/sem1/discrete-math/ # ✅ 6 unidades reais (m01 com 4 capítulos, m02 com 1, m03 com 1), verificadas na fonte
 │   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas (pending|unverified|verified_with_source; verified_at/verification_method)
 │   ├── exercises/sem1/algorithms/ # ✅ 15 arquivos (m01: 4 lições + desafio + flashcards; m02: 3 lições + desafio + flashcards; m03: 4 lições), 99 exercícios
-│   ├── exercises/sem1/discrete-math/ # ✅ 8 arquivos de lição (l11–l18)
+│   ├── exercises/sem1/discrete-math/ # ✅ 11 arquivos (m01: 4 lições + desafio + flashcards; m02: 2 lições; m03: 3 lições)
 │   └── exercises/_schema.json  # ✅ Completo - JSON Schema exercícios
 ├── src/
 │   ├── app.js                  # ✅ Completo - entry point, boot, router, store, theme
@@ -309,6 +309,17 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - **E5:** ~20 termos novos no glossário (letras B, C, D, E, F, I, L, M, N, P, R, T, W); `LIBRARY.md` com ordem de leitura e tempos.
 - **E6:** `check-module` ✅ · `validate` ✅ (sem erros nem avisos) · `npm test` ✅ (todos os testes verdes; timeout apenas ao final por duração) · `verify-sources` ⚠️ (12/23 confere, 11 não confere por bloqueio CloudFront 403 do site da fonte — verificação manual fora do CI; excerpts capturados em 2026-10-19 contra a fonte ao vivo na data).
 - **E7:** `"pipeline_version": 1` aplicado **somente a este módulo** após os portões; `curriculum.json` atualizado com `theories[11]`; commit único do módulo (hash `b89eb71`); sem pendências de conteúdo.
+
+### Fase 22: Pipeline — `sem1-discrete-math-m01` — ✅ COMPLETO (T167, 2026-10-19)
+**Módulo sem1-discrete-math-m01 (Lógica Proposicional) refeito conforme `docs/CONTENT_PIPELINE.md` E0–E7.**
+- **E0/E1:** `PLAN.md` (6 objetivos `OBJ-1`–`OBJ-6`, 4 lições, 4 unidades) e `SOURCES.md` (2 seções de Levin, 3ª ed. 2019, CC BY-SA 4.0 confirmada na página do livro, trechos literais).
+- **E2:** 4 unidades novas — `propositions-connectives`, `truth-tables`, `logical-equivalence`, `deductions` — com estrutura fixa, 300–900 palavras, ≤3 termos novos e `original_excerpt`. Unidade antiga `th-sem1-discrete-math-m01-logic` removida (regra 5).
+- **E3:** `REVIEW.md` com 31 afirmações com suporte literal, 12 aplicações diretas e 4 itens sem suporte rotulados como "Exemplo adicional (IA)".
+- **E4:** 24 exercícios de lição (6 por lição; `l11` com 3 fáceis + 3 médios, sem difícil; `l12`/`l13`/`l20` com 2 fáceis + 3 médios + 1 difícil), 8 no desafio (2F/4M/2D cobrindo OBJ-1–OBJ-6) e 10 flashcards; todos com `objective_id`, `level`, `source_ref` e `answer_check`.
+- **E5:** 11 termos novos no glossário (letras A, D, L, M, P, T, V); `LIBRARY.md` com ordem de leitura, tempos e mapeamento "praticar este trecho".
+- **E6:** `check-module` ✅ · `validate` ✅ (sem erros nem avisos) · `npm test` ✅ (26 unidades, 20 lições, 116 exercícios) · `verify-sources` — **4/4 unidades deste módulo conferem**, mas o comando sai com código 1 pelas **11 unidades pré-existentes de `sem1-algorithms-m03`** (registradas em T166; excerpts não contíguos, fora do escopo deste módulo).
+- **E7:** `"pipeline_version": 1` aplicado **somente a este módulo**; `curriculum.json` com `theories[4]` e lições `l11`–`l13` + `l20`; commit único do módulo; sem pendências de conteúdo próprias.
+- **ID da 4ª lição:** `l20` (não `l14`–`l19`, que pertencem a outros módulos); a ordem didática do módulo continua 1ª–4ª.
 
 ### Fase 22: Correção de mojibake + portão de encoding + qualidade de múltipla escolha — ✅ COMPLETO (2026-10-19)
 **Causa raiz:** a sessão anterior usou `Get-Content -Raw | Set-Content -Encoding utf8` no **Windows PowerShell 5.1**. O `Get-Content` decodificou os arquivos UTF-8 como ANSI/CP1252 e o `Set-Content` regravou o texto já corrompido em UTF-8 — dupla codificação (cada letra acentuada e cada travessão passaram a aparecer como duas ou três sequências de caracteres estranhos). O comando foi aplicado em `m01-l04.json` (depois renomeado para `m01-l19.json`) e em `m01-challenge.json`/`m01-flashcards.json` durante a troca `l04`→`l19`. `ReadAllText`/`WriteAllText` posteriores não repararam porque o texto já estava corrompido.

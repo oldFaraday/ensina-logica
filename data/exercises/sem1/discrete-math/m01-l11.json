@@ -1,64 +1,130 @@
 [
   {
     "id": "ex-sem1-discrete-math-m01-l11-proposicao",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
     "lesson_id": "l11",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Qual das frases a seguir é uma proposição, ou seja, uma sentença declarativa que é verdadeira ou falsa?",
+    "prompt": "Qual das frases a seguir é uma proposição, isto é, uma sentença declarativa que é verdadeira ou falsa?",
     "options": [
-      "Que dia é hoje?",
-      "3 + 7 = 12.",
-      "Some dois números.",
-      "x + 3 = 12, sem especificar o valor de x."
+      "Que horas são?",
+      "Feche a porta, por favor.",
+      "7 + 5 = 12.",
+      "x + 2 = 9, sem especificar o valor de x."
     ],
-    "correct": 1,
-    "explanation": "Uma proposição é qualquer sentença declarativa que é verdadeira ou falsa. '3 + 7 = 12' é declarativa e tem valor de verdade (falsa). Perguntas, ordens e sentenças com variável livre, como 'x + 3 = 12', não são proposições (Seção 0.2).",
+    "correct": 2,
+    "explanation": "Segundo a Seção 0.2, uma sentença é uma frase declarativa que é verdadeira ou falsa. A frase '7 + 5 = 12' é declarativa e tem valor de verdade (falsa). Perguntas, ordens e sentenças com variável livre não são proposições.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: 'A statement is any declarative sentence which is either true or false.'"
   },
   {
-    "id": "ex-sem1-discrete-math-m01-l11-conjuncao",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "id": "ex-sem1-discrete-math-m01-l11-variavel-livre",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
     "lesson_id": "l11",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "A conjunção P ∧ Q, lida como 'P e Q', é verdadeira somente quando ambas P e Q são verdadeiras.",
-    "options": ["Verdadeiro", "Falso"],
-    "correct": 0,
-    "explanation": "Segundo as condições de verdade dos conectivos, P ∧ Q é verdadeira quando P e Q são ambas verdadeiras e falsa em qualquer outro caso (Seção 0.2, Conectivos lógicos).",
+    "prompt": "A frase 'x + 3 = 12', sem especificar o valor de x, é uma proposição.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
+    "correct": 1,
+    "explanation": "A afirmação é falsa. A Seção 0.2 explica que a sentença contém uma variável: dependendo do valor de x ela é verdadeira ou falsa, mas, enquanto x não recebe valor, ela não é nem uma coisa nem outra.",
     "difficulty": "easy",
-    "xp_base": 5
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: a sentença 'is not a statement' porque 'it contains a variable'."
   },
   {
-    "id": "ex-sem1-discrete-math-m01-l11-implicacao-falsa",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "id": "ex-sem1-discrete-math-m01-l11-molecular",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
     "lesson_id": "l11",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Em qual situação a implicação P → Q é FALSA?",
+    "prompt": "Como se classifica a frase 'Os números de telefone nos EUA têm 10 dígitos e 42 é um quadrado perfeito'?",
     "options": [
-      "Quando P é falsa e Q é verdadeira.",
+      "Proposição atômica, pois afirma um único fato simples.",
+      "Pergunta, pois não declara nada.",
+      "Proposição molecular com conjunção.",
+      "Proposição molecular com disjunção."
+    ],
+    "correct": 2,
+    "explanation": "A frase é declarativa e pode ser dividida em duas sentenças menores ligadas por 'e'. A Seção 0.2 chama de molecular a sentença construída a partir de sentenças menores usando conectivos; o conectivo 'e' é a conjunção.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 0.2: a sentença é molecular e usa conjunção, como no exemplo 'Telephone numbers in the USA have 10 digits and 42 is a perfect square.'"
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l11-implicacao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
+    "lesson_id": "l11",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Em qual caso a implicação P → Q é FALSA?",
+    "options": [
       "Quando P é verdadeira e Q é falsa.",
+      "Quando P é falsa e Q é verdadeira.",
       "Quando P e Q são ambas falsas.",
-      "Nunca, pois uma implicação é sempre verdadeira."
+      "Quando P e Q são ambas verdadeiras."
     ],
-    "correct": 1,
-    "explanation": "A única maneira de P → Q ser falsa é a hipótese P ser verdadeira e a conclusão Q ser falsa. Nos demais casos a implicação é verdadeira (Seção 0.2, Implicações).",
+    "correct": 0,
+    "explanation": "A Seção 0.2 afirma que a implicação é verdadeira quando P é falsa ou Q é verdadeira, e falsa caso contrário. Logo, o único caso de falsidade é P verdadeira e Q falsa.",
     "difficulty": "medium",
-    "xp_base": 10
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: 'the only way for P → Q to be false is for P to be true and Q to be false'."
   },
   {
-    "id": "ex-sem1-discrete-math-m01-l11-disjuncao-inclusiva",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "id": "ex-sem1-discrete-math-m01-l11-disjuncao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
     "lesson_id": "l11",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Na lógica que estudamos, o 'ou' é inclusivo: P ∨ Q é verdadeira também quando P e Q são ambas verdadeiras.",
-    "options": ["Verdadeiro", "Falso"],
+    "prompt": "Na lógica proposicional da fonte, P ∨ Q é verdadeira também quando P e Q são ambas verdadeiras.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 0,
-    "explanation": "O 'ou' usado é o inclusivo e não o exclusivo: P ∨ Q é verdadeira quando P é verdadeira, ou Q é verdadeira, ou ambas (Seção 0.2).",
-    "difficulty": "easy",
-    "xp_base": 5
+    "explanation": "A afirmação é verdadeira. A Seção 0.2 esclarece que o 'ou' é inclusivo, e não exclusivo: P ∨ Q é verdadeira quando P é verdadeira, quando Q é verdadeira ou quando ambas são verdadeiras.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: 'or is the inclusive or ... meaning that P ∨ Q is in fact true when both P and Q are true'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l11-bicondicional",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
+    "lesson_id": "l11",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo as condições de verdade da Seção 0.2, quando o bicondicional P ↔ Q é verdadeiro?",
+    "options": [
+      "Quando P e Q têm o mesmo valor de verdade.",
+      "Somente quando P e Q são ambas verdadeiras.",
+      "Somente quando P é verdadeira e Q é falsa.",
+      "Quando pelo menos uma das duas é verdadeira."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 0.2 define P ↔ Q como verdadeiro quando P e Q são ambas verdadeiras, ou ambas falsas — ou seja, quando compartilham o mesmo valor de verdade. Também registra que P ↔ Q equivale a (P → Q) ∧ (Q → P).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: 'P ↔ Q is true when P and Q are both true, or both false'."
   }
 ]

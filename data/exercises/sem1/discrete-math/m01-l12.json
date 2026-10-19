@@ -1,59 +1,132 @@
 [
   {
-    "id": "ex-sem1-discrete-math-m01-l12-tabela-verdade",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "id": "ex-sem1-discrete-math-m01-l12-linhas",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
     "lesson_id": "l12",
-    "type": "multiple-choice",
+    "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Quantas linhas (sem contar o cabeçalho) tem a tabela-verdade da proposição composta (P ∧ Q) → (P ∨ Q), que usa duas variáveis P e Q?",
-    "options": ["2", "4", "6", "8"],
-    "correct": 1,
-    "explanation": "Uma tabela-verdade lista todas as combinações de valores de verdade. Com 2 variáveis há 2^2 = 4 combinações, logo 4 linhas (Seção 3.1, Tabelas-verdade).",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-discrete-math-m01-l12-passos-tabela",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
-    "lesson_id": "l12",
-    "type": "order-steps",
-    "generated_by_ai": true,
-    "prompt": "Ordene os passos para construir a tabela-verdade de uma proposição composta, conforme a Seção 3.1.",
+    "prompt": "Em cada linha de uma tabela-verdade, listamos uma combinação possível de valores verdadeiro/falso para as variáveis sentenciais.",
     "options": [
-      "Preencher as colunas das partes intermediárias da proposição.",
-      "Listar todas as combinações possíveis de V e F para as variáveis.",
-      "Registrar o valor final da proposição em cada linha.",
-      "Identificar as subfórmulas a partir dos conectivos."
+      "Verdadeiro",
+      "Falso"
     ],
-    "correct": [1, 3, 0, 2],
-    "explanation": "Primeiro listamos as combinações de V/F das variáveis (linha 1), identificamos as subfórmulas pelos conectivos (linha 3), preenchemos as partes intermediárias (linha 0) e, por fim, marcamos o valor final (linha 2). Para afirmações complicadas dividimos a tarefa preenchendo as partes primeiro (Seção 3.1).",
-    "difficulty": "medium",
-    "xp_base": 15
+    "correct": 0,
+    "explanation": "A afirmação é verdadeira. A Seção 3.1 descreve a ideia da tabela-verdade exatamente assim: em cada linha entra uma combinação possível de verdadeiro e falso para cada variável, e marca-se se a sentença em questão é verdadeira ou falsa naquele caso.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: 'on each row, we list a possible combination of T's and F's ... for each of the sentential variables'."
   },
   {
     "id": "ex-sem1-discrete-math-m01-l12-tres-variaveis",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
     "lesson_id": "l12",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Uma proposição composta usa três variáveis: P, Q e R. Quantas linhas terá sua tabela-verdade?",
-    "options": ["3", "6", "8", "9"],
+    "prompt": "Quantas linhas tem a tabela-verdade completa de uma sentença com 3 variáveis?",
+    "options": [
+      "4",
+      "6",
+      "8",
+      "9"
+    ],
     "correct": 2,
-    "explanation": "Cada variável dobra o número de combinações, de modo que n variáveis geram 2^n linhas. Para n = 3, temos 2^3 = 8 linhas (Seção 3.1).",
+    "explanation": "Com 3 variáveis há 8 combinações possíveis de verdadeiro e falso, portanto 8 linhas. A Seção 3.1 diz que a tabela da sentença com P, Q e R 'needs to contain 8 rows' para cobrir todas as combinações.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: 'The truth table needs to contain 8 rows'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l12-negacao-disjuncao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
+    "lesson_id": "l12",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Na tabela-verdade de ¬P ∨ Q, qual é o valor da sentença na linha em que P é verdadeira e Q é falsa?",
+    "options": [
+      "Falso",
+      "Verdadeiro",
+      "Depende do significado de P e Q.",
+      "Não é possível determinar sem mais dados."
+    ],
+    "correct": 0,
+    "explanation": "Se P é verdadeira, então ¬P é falsa. Como Q também é falsa na linha considerada, a disjunção F ∨ F resulta falsa. A Seção 3.1 mostra essa linha na tabela do exemplo ¬P ∨ Q.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#exemplo-resolvido",
+    "answer_check": "Conferido contra a tabela da Seção 3.1 para ¬P ∨ Q: com P = T e Q = F, o resultado é F."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l12-passos",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
+    "lesson_id": "l12",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene os passos para construir a tabela-verdade de (P → Q) ∨ (Q → R).",
+    "options": [
+      "Combinar as colunas de P → Q e Q → R com ∨, formando a coluna final.",
+      "Listar as 8 combinações de verdadeiro/falso para P, Q e R.",
+      "Calcular a coluna de Q → R.",
+      "Calcular a coluna de P → Q."
+    ],
+    "correct": [1, 3, 2, 0],
+    "explanation": "A Seção 3.1 descreve a construção nessa ordem: primeiro listar todas as combinações das variáveis, depois preencher as partes intermediárias (P → Q e Q → R) e, por fim, combinar as duas colunas com ∨ para obter a coluna final.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: a tabela tem 8 linhas, colunas intermediárias para P → Q e Q → R, e a coluna final (P → Q) ∨ (Q → R)."
   },
   {
     "id": "ex-sem1-discrete-math-m01-l12-tautologia",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
     "lesson_id": "l12",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Uma proposição cuja coluna final na tabela-verdade contém apenas V, sendo verdadeira em todas as linhas, é chamada de:",
-    "options": ["Contradição", "Tautologia", "Contingência", "Equivalência"],
-    "correct": 1,
-    "explanation": "Uma tautologia é uma afirmação verdadeira com base apenas em sua forma lógica: sua coluna final tem somente V e nenhum conhecimento sobre o mundo é necessário para verificá-la (Seção 3.1).",
+    "prompt": "O que caracteriza uma tautologia na tabela-verdade?",
+    "options": [
+      "Sua coluna final contém somente V.",
+      "Ela é verdadeira em pelo menos uma linha.",
+      "Ela tem mais linhas verdadeiras do que falsas.",
+      "Ela usa apenas os conectivos ∧ e ∨."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 define tautologia como a sentença verdadeira apenas com base em sua forma lógica, e o exemplo mostra a coluna final com V em todas as 8 linhas. Ser verdadeira em algumas linhas ou ter maioria de V não basta.",
     "difficulty": "medium",
-    "xp_base": 10
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: tautologia é 'a statement which is true on the basis of its logical form alone'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l12-monopoly",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
+    "lesson_id": "l12",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Considere S = (P → Q) ∨ (Q → R). O que a tabela-verdade mostra sobre S?",
+    "options": [
+      "É uma tautologia: verdadeira nas 8 linhas.",
+      "É falsa quando P = V, Q = V e R = F.",
+      "É falsa quando P = F, Q = F e R = V.",
+      "É falsa quando P = V, Q = F e R = V."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 monta a tabela de (P → Q) ∨ (Q → R) e observa que, nas 8 linhas, a sentença é verdadeira. Por isso ela é uma tautologia. As outras alternativas indicam linhas em que a coluna final é V, não F.",
+    "difficulty": "hard",
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "transferir",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: 'in each of the eight possible cases, the statement in question is true'."
   }
 ]

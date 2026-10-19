@@ -1,0 +1,179 @@
+[
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-nao-proposicao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
+    "lesson_id": "l11",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo a Seção 0.2, qual das frases a seguir NÃO é uma proposição?",
+    "options": [
+      "Feche a porta, por favor.",
+      "42 é um número par.",
+      "7 + 5 = 12.",
+      "Se chover, então a rua fica molhada."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 0.2 define sentença como frase declarativa que é verdadeira ou falsa. 'Feche a porta, por favor' é uma ordem, e não uma declaração; por isso não tem valor de verdade. As demais frases são declarativas e, portanto, são proposições.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: a fonte lista 'Go to your room!' entre as frases que não são sentenças por serem ordens."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-oito-linhas",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
+    "lesson_id": "l12",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Uma sentença com três variáveis sentenciais precisa de uma tabela-verdade com 8 linhas.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
+    "correct": 0,
+    "explanation": "A afirmação é verdadeira. A Seção 3.1 explica que são necessárias 2^n linhas para n variáveis; com três variáveis, 2^3 = 8 linhas cobrem todas as combinações de V e F.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: a tabela-verdade precisa de uma linha para cada combinação, num total de 2^n para n variáveis."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-implicacao-falsa",
+    "theory_unit_id": "th-sem1-discrete-math-m01-propositions-connectives",
+    "lesson_id": "l11",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Considere a afirmação 'Se um número é divisível por 4, então ele é par'. Em qual caso essa afirmação é FALSA?",
+    "options": [
+      "Quando o número é divisível por 4 e é ímpar.",
+      "Quando o número não é divisível por 4 e é par.",
+      "Quando o número é divisível por 4 e é par.",
+      "Quando o número não é divisível por 4 e é ímpar."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 0.2 afirma que a implicação só é falsa quando a hipótese é verdadeira e a conclusão é falsa. Aqui isso significa: o número é divisível por 4 (hipótese verdadeira) e não é par, isto é, é ímpar (conclusão falsa).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-propositions-connectives#definicao",
+    "answer_check": "Conferido contra a Seção 0.2: 'the only way for P → Q to be false is for P to be true and Q to be false'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-tautologia-conjuncao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-truth-tables",
+    "lesson_id": "l12",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "A sentença (P ∧ Q) → (P ∨ Q) é uma tautologia?",
+    "options": [
+      "Sim: a coluna final tem apenas V, pois a conclusão é verdadeira sempre que a hipótese é verdadeira.",
+      "Não: ela é falsa quando P é verdadeira e Q é falsa.",
+      "Não: ela é falsa quando P e Q são ambas falsas.",
+      "Não: ela é verdadeira apenas quando P e Q são ambas verdadeiras."
+    ],
+    "correct": 0,
+    "explanation": "Pela Seção 3.1, uma tautologia é verdadeira com base apenas na forma lógica. Sempre que P ∧ Q é verdadeira, P e Q são ambas verdadeiras, logo P ∨ Q também é verdadeira; assim a implicação nunca é falsa e a coluna final contém apenas V.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m01-truth-tables#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: tautologia é 'true based only on the logical form'; verificação linha a linha do condicional feita manualmente, sem executar código."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-de-morgan-passos",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
+    "lesson_id": "l13",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene os passos da simplificação de ¬(P ∨ ¬Q) até a forma final.",
+    "options": [
+      "¬P ∧ ¬¬Q",
+      "¬P ∧ Q",
+      "¬(P ∨ ¬Q)"
+    ],
+    "correct": [
+      2,
+      0,
+      1
+    ],
+    "explanation": "A Seção 3.1 apresenta as leis de De Morgan: ¬(A ∨ B) ≡ ¬A ∧ ¬B. Aplicando a Lei de De Morgan, ¬(P ∨ ¬Q) vira ¬P ∧ ¬¬Q; em seguida, a dupla negação ¬¬Q ≡ Q produz ¬P ∧ Q.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: De Morgan e a dupla negação são aplicados passo a passo, com o resultado ¬P ∧ Q."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-modo-ponens",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Premissas: 'Se estudo, então passo na prova' e 'Estudei'. Qual conclusão torna o argumento válido pelo modus ponens?",
+    "options": [
+      "Passei na prova.",
+      "Não passei na prova.",
+      "Não estudei.",
+      "Estudei ou passei na prova."
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 apresenta o modus ponens como a regra em que, de P → Q e P, conclui-se Q. Aqui P = 'estudo' e Q = 'passo na prova'; como ambas as premissas são verdadeiras, a conclusão Q precisa ser verdadeira.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: modus ponens tem premissas P → Q e P, com conclusão Q."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-simplificar-negacao-conjuncao",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
+    "lesson_id": "l13",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Usando as equivalências da Seção 3.1, a que é equivalente a sentença ¬(P ∧ ¬Q)?",
+    "options": [
+      "¬P ∨ Q",
+      "¬P ∧ Q",
+      "P ∨ ¬Q",
+      "P ∧ ¬Q"
+    ],
+    "correct": 0,
+    "explanation": "Pela Lei de De Morgan, ¬(P ∧ ¬Q) ≡ ¬P ∨ ¬¬Q; pela dupla negação, ¬¬Q ≡ Q, o que dá ¬P ∨ Q. Note que esse resultado também é a forma da implicação P → Q, que pela Seção 3.1 equivale a ¬P ∨ Q.",
+    "difficulty": "hard",
+    "xp_base": 20,
+    "objective_id": "OBJ-5",
+    "level": "transferir",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: De Morgan dá ¬P ∨ ¬¬Q e a dupla negação dá ¬P ∨ Q; equivalência alternativa P → Q ≡ ¬P ∨ Q também consta da fonte."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-challenge-conclusao-valida",
+    "theory_unit_id": "th-sem1-discrete-math-m01-deductions",
+    "lesson_id": "l20",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Premissas: P → R; Q → R; P ∨ Q. Qual conclusão torna o argumento válido?",
+    "options": [
+      "R",
+      "P",
+      "Q",
+      "P ∧ Q"
+    ],
+    "correct": 0,
+    "explanation": "A Seção 3.1 mostra que, se P → R, Q → R e P ∨ Q são verdadeiras, então R é verdadeira: como ao menos uma das duas hipóteses (P ou Q) vale, e qualquer uma delas implica R, a conclusão R é obrigatória em todas as linhas com as três premissas verdadeiras.",
+    "difficulty": "hard",
+    "xp_base": 20,
+    "objective_id": "OBJ-6",
+    "level": "transferir",
+    "source_ref": "th-sem1-discrete-math-m01-deductions#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: com P → R, Q → R e P ∨ Q verdadeiras, verifica-se linha a linha que R também é verdadeira."
+  }
+]

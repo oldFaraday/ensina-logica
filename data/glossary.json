@@ -41,6 +41,11 @@
           "en": "asymptotic notation",
           "pt": "notação assintótica",
           "definition": "Família de notações (Big-O, Big-Ω, Big-Θ) que descreve o crescimento de funções, usado para analisar complexidade de algoritmos."
+        },
+        {
+          "en": "atomic statement",
+          "pt": "sentença atômica",
+          "definition": "Sentença que não pode ser dividida em sentenças menores; o oposto de sentença molecular."
         }
       ]
     },
@@ -216,6 +221,21 @@
           "en": "decision symbol",
           "pt": "símbolo de decisão",
           "definition": "Losango usado em fluxogramas para representar a pergunta de verdadeiro/falso testada em uma decisão."
+        },
+        {
+          "en": "De Morgan's laws",
+          "pt": "leis de De Morgan",
+          "definition": "Equivalências ¬(P ∧ Q) ≡ ¬P ∨ ¬Q e ¬(P ∨ Q) ≡ ¬P ∧ ¬Q: a negação de uma conjunção/disjunção troca o conectivo e distribui a negação para cada parte."
+        },
+        {
+          "en": "deduction rule",
+          "pt": "regra de dedução",
+          "definition": "Forma de argumento que é sempre válida, isto é, cuja conclusão é verdadeira sempre que as premissas forem verdadeiras."
+        },
+        {
+          "en": "double negation",
+          "pt": "dupla negação",
+          "definition": "Equivalência ¬¬P ≡ P: negar duas vezes uma proposição devolve a proposição original."
         },
         {
           "en": "do while loop",
@@ -416,6 +436,16 @@
           "en": "logic",
           "pt": "lógica",
           "definition": "Estudo sistemático do raciocínio válido, incluindo proposições, conectivos e quantificadores."
+        },
+        {
+          "en": "logical equivalence",
+          "pt": "equivalência lógica",
+          "definition": "Relação entre duas proposições que têm o mesmo valor de verdade em toda atribuição de valores às partes atômicas."
+        },
+        {
+          "en": "logical form",
+          "pt": "forma lógica",
+          "definition": "Estrutura de uma sentença que considera apenas os conectivos e as variáveis sentenciais, ignorando o significado das partes."
         }
       ]
     },
@@ -451,6 +481,16 @@
           "en": "parameter passing",
           "pt": "passagem de parâmetros",
           "definition": "Mecanismo de comunicação de dados entre funções: parâmetros (definição) recebem argumentos (chamada); pode ser por posição ou por nome."
+        },
+        {
+          "en": "molecular statement",
+          "pt": "sentença molecular",
+          "definition": "Sentença construída a partir de sentenças menores por meio de conectivos lógicos."
+        },
+        {
+          "en": "modus ponens",
+          "pt": "modus ponens",
+          "definition": "Regra de dedução em que, das premissas P → Q e P, conclui-se Q."
         }
       ]
     },
@@ -586,6 +626,11 @@
           "en": "pseudocode",
           "pt": "pseudocódigo",
           "definition": "Descrição de um algoritmo em linguagem próxima ao português/inglês, imitando código, mas sem sintaxe rígida de linguagem de programação."
+        },
+        {
+          "en": "proposition",
+          "pt": "proposição",
+          "definition": "Sentença declarativa que é verdadeira ou falsa; perguntas, ordens e frases com variável livre não são proposições."
         }
       ]
     },
@@ -718,6 +763,11 @@
           "definition": "Laço onde a condição é verificada após a execução do corpo (ex.: do-while, repeat until); garante que o corpo execute pelo menos uma vez."
         },
         {
+          "en": "tautology",
+          "pt": "tautologia",
+          "definition": "Sentença verdadeira apenas por sua forma lógica: a coluna final da tabela-verdade contém somente V."
+        },
+        {
           "en": "theorem",
           "pt": "teorema",
           "definition": "Afirmação matemática cuja verdade foi demonstrada por meio de uma prova."
@@ -742,6 +792,11 @@
     {
       "letter": "V",
       "terms": [
+        {
+          "en": "valid argument",
+          "pt": "argumento válido",
+          "definition": "Argumento cuja conclusão precisa ser verdadeira sempre que todas as premissas forem verdadeiras."
+        },
         {
           "en": "variable",
           "pt": "variável",

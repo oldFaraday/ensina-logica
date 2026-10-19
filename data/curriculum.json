@@ -97,16 +97,25 @@
             {
               "id": "m01",
               "title": "Lógica Proposicional",
-              "theory": "th-sem1-discrete-math-m01-logic",
+              "pipeline_version": 1,
+              "theory": "th-sem1-discrete-math-m01-propositions-connectives",
+              "theories": [
+                "th-sem1-discrete-math-m01-propositions-connectives",
+                "th-sem1-discrete-math-m01-truth-tables",
+                "th-sem1-discrete-math-m01-logical-equivalence",
+                "th-sem1-discrete-math-m01-deductions"
+              ],
               "lessons": [
                 "l11",
                 "l12",
-                "l13"
+                "l13",
+                "l20"
               ],
               "lessonTitles": {
                 "l11": "Proposições e conectivos",
                 "l12": "Tabelas-verdade",
-                "l13": "Equivalências lógicas"
+                "l13": "Equivalências lógicas",
+                "l20": "Deduções válidas"
               }
             },
             {

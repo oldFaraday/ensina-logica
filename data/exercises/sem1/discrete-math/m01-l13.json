@@ -1,72 +1,130 @@
 [
   {
-    "id": "ex-sem1-discrete-math-m01-l13-de-morgan",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
-    "lesson_id": "l13",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "Pela Lei de De Morgan, a negação ¬(P ∧ Q) é logicamente equivalente a:",
-    "options": ["¬P ∧ ¬Q", "¬P ∨ ¬Q", "P ∨ Q", "P → Q"],
-    "correct": 1,
-    "explanation": "De Morgan diz que ¬(P ∧ Q) é logicamente equivalente a ¬P ∨ ¬Q: ao distribuir a negação sobre a conjunção, trocamos o 'e' pelo 'ou' e negamos cada parte (Seção 3.1).",
-    "difficulty": "medium",
-    "xp_base": 15
-  },
-  {
     "id": "ex-sem1-discrete-math-m01-l13-implicacao-disjuncao",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
     "lesson_id": "l13",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "A implicação P → Q é logicamente equivalente à disjunção ¬P ∨ Q.",
-    "options": ["Verdadeiro", "Falso"],
+    "prompt": "Segundo a fonte, toda implicação P → Q é logicamente equivalente à disjunção ¬P ∨ Q.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
     "correct": 0,
-    "explanation": "Toda implicação pode ser escrita como disjunção: P → Q é equivalente a ¬P ∨ Q, como mostra a igualdade das colunas finais das duas tabelas-verdade (Seção 3.1).",
+    "explanation": "A afirmação é verdadeira. A Seção 3.1 mostra as colunas idênticas de P → Q e ¬P ∨ Q e registra que 'every implication can be written as a disjunction'.",
     "difficulty": "easy",
-    "xp_base": 5
+    "xp_base": 10,
+    "objective_id": "OBJ-5",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: 'P → Q is logically equivalent to ¬P ∨ Q'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-de-morgan",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
+    "lesson_id": "l13",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo as Leis de De Morgan, ¬(P ∧ Q) é logicamente equivalente a qual proposição?",
+    "options": [
+      "¬P ∨ ¬Q",
+      "¬P ∧ ¬Q",
+      "P ∨ Q",
+      "P → Q"
+    ],
+    "correct": 0,
+    "explanation": "As Leis de De Morgan, apresentadas na Seção 3.1, dizem que a negação de uma conjunção se distribui como disjunção das negações: ¬(P ∧ Q) ≡ ¬P ∨ ¬Q.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-5",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: '¬(P ∧ Q) is logically equivalent to ¬P ∨ ¬Q'."
   },
   {
     "id": "ex-sem1-discrete-math-m01-l13-negacao-implicacao",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
     "lesson_id": "l13",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "A negação de uma implicação, ¬(P → Q), é logicamente equivalente a:",
-    "options": ["¬P → ¬Q", "P ∧ ¬Q", "¬P ∨ ¬Q", "Q → P"],
-    "correct": 1,
-    "explanation": "A negação de uma implicação é uma conjunção: ¬(P → Q) é equivalente a P ∧ ¬Q. A implicação só é falsa quando a hipótese é verdadeira e a conclusão é falsa (Seção 3.1).",
-    "difficulty": "medium",
-    "xp_base": 15
-  },
-  {
-    "id": "ex-sem1-discrete-math-m01-l13-dupla-negacao",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
-    "lesson_id": "l13",
-    "type": "flashcards",
-    "generated_by_ai": true,
-    "prompt": "A qual proposição é logicamente equivalente a dupla negação ¬¬P?",
-    "starter_code": "P",
-    "correct": "P",
-    "explanation": "Pela regra da dupla negação, ¬¬P é logicamente equivalente a P (Seção 3.1, Double Negation).",
-    "difficulty": "easy",
-    "xp_base": 5
-  },
-  {
-    "id": "ex-sem1-discrete-math-m01-l13-definicao-equivalencia",
-    "theory_unit_id": "th-sem1-discrete-math-m01-logic",
-    "lesson_id": "l13",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "Duas proposições moleculares P e Q são logicamente equivalentes quando:",
+    "prompt": "A negação da implicação P → Q é logicamente equivalente a qual proposição?",
     "options": [
-      "Têm o mesmo valor de verdade em toda atribuição de valores às partes atômicas.",
-      "São ambas verdadeiras em pelo menos uma linha da tabela.",
-      "Aparecem na mesma tabela-verdade.",
-      "Têm o mesmo número de conectivos."
+      "P ∧ ¬Q",
+      "¬P ∧ Q",
+      "¬P → ¬Q",
+      "P → ¬Q"
     ],
     "correct": 0,
-    "explanation": "P e Q são logicamente equivalentes quando P é verdadeira exatamente quando Q é verdadeira. Isso se verifica comparando as colunas finais das duas tabelas-verdade: se forem idênticas, são equivalentes (Seção 3.1).",
+    "explanation": "A Seção 3.1 destaca que a negação de uma implicação é uma conjunção: ¬(P → Q) ≡ P ∧ ¬Q. Ela é verdadeira quando a hipótese é verdadeira e a conclusão é falsa, e não quando se nega a implicação inteira como outra implicação.",
     "difficulty": "medium",
-    "xp_base": 10
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#definicao",
+    "answer_check": "Conferido contra a Seção 3.1: '¬(P → Q) is logically equivalent to P ∧ ¬Q'."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-passos",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
+    "lesson_id": "l13",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene as etapas da prova de que ¬(P → Q) ≡ P ∧ ¬Q sem usar tabela-verdade.",
+    "options": [
+      "Aplicar a dupla negação para obter P ∧ ¬Q.",
+      "Começar com ¬(P → Q).",
+      "Aplicar De Morgan para obter ¬¬P ∧ ¬Q.",
+      "Reescrever a implicação como disjunção: ¬(¬P ∨ Q)."
+    ],
+    "correct": [1, 3, 2, 0],
+    "explanation": "A Seção 3.1 prova a equivalência transformando a primeira proposição em uma sequência de proposições equivalentes: começa com ¬(P → Q), troca a implicação por ¬(¬P ∨ Q), aplica De Morgan e finaliza com a dupla negação, chegando a P ∧ ¬Q.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: a prova passa por ¬(¬P ∨ Q) e ¬¬P ∧ ¬Q até P ∧ ¬Q."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-nao-equivalentes",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
+    "lesson_id": "l13",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "As proposições (P ∨ Q) → R e (P → R) ∨ (Q → R) são logicamente equivalentes.",
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
+    "correct": 1,
+    "explanation": "A afirmação é falsa. A Seção 3.1 compara as colunas finais e encontra uma linha em que os valores diferem: com P = V, Q = F e R = F, (P ∨ Q) → R é falsa, enquanto (P → R) ∨ (Q → R) é verdadeira. Basta uma linha diferente para não haver equivalência.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#exemplo-resolvido",
+    "answer_check": "Conferido contra a Seção 3.1: na linha P = T, Q = F, R = F, (P∨Q)→R é F e (P→R)∨(Q→R) é T."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m01-l13-simplificar",
+    "theory_unit_id": "th-sem1-discrete-math-m01-logical-equivalence",
+    "lesson_id": "l13",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Usando as equivalências da fonte, a que proposição ¬(P → ¬Q) é logicamente equivalente?",
+    "options": [
+      "P ∧ Q",
+      "P ∧ ¬Q",
+      "¬P ∨ ¬Q",
+      "P ∨ Q"
+    ],
+    "correct": 0,
+    "explanation": "Primeiro trocamos a implicação pela disjunção: ¬(¬P ∨ ¬Q). Aplicando De Morgan, obtemos ¬¬P ∧ ¬¬Q, que pela dupla negação chega a P ∧ Q. Todas as substituições usadas vêm da Seção 3.1.",
+    "difficulty": "hard",
+    "xp_base": 20,
+    "objective_id": "OBJ-5",
+    "level": "transferir",
+    "source_ref": "th-sem1-discrete-math-m01-logical-equivalence#exemplo-resolvido",
+    "answer_check": "Derivado das equivalências da Seção 3.1: ¬(P→¬Q) ≡ ¬(¬P∨¬Q) ≡ P ∧ Q (a solução do Exercício 8 da fonte também chega a P ∧ Q)."
   }
 ]

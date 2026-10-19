@@ -41,7 +41,10 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 | `th-sem1-algorithms-m03-params-return-scope` | Programming Fundamentals | III. Functions › Parameters and Arguments |
 | `th-sem1-algorithms-m03-relational-logical-operators` | Programming Fundamentals | IV. Conditions › Relational Operators |
 | `th-sem1-algorithms-m03-structured-programming` | Programming Fundamentals | IV. Conditions › Structured Programming |
-| `th-sem1-discrete-math-m01-logic` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
+| `th-sem1-discrete-math-m01-deductions` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
+| `th-sem1-discrete-math-m01-logical-equivalence` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
+| `th-sem1-discrete-math-m01-propositions-connectives` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
+| `th-sem1-discrete-math-m01-truth-tables` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
 | `th-sem1-discrete-math-m02-predicate-logic` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |
 | `th-sem1-discrete-math-m03-proofs-induction` | Discrete Mathematics: An Open Introduction | 2. Sequences › 2.5 Induction |
 <!-- END GENERATED: theory-units -->
