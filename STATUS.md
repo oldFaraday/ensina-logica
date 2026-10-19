@@ -1,6 +1,6 @@
 # Status do Projeto — Ensina Lógica
 
-**Última atualização**: 2026-10-18
+**Última atualização**: 2026-10-19
 
 ---
 
@@ -266,11 +266,23 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - **"+27" explicado**: `ex-sem1-algorithms-m01-l02-code` tem `xp_base: 20`; na 1ª resposta correta o app somou **+5** (bônus de 1ª vez) e **+2** (bônus de streak: 1 dia × 2 XP) → **27**. Com a correção, re-responder esse exercício passa a valer **0**.
 - Verificação: `npm test` verde (**17 suítes**; 72 asserções no core) e `npm run validate` sem erros.
 
+### Fase 21: Pipeline de conteúdo — ✅ INFRAESTRUTURA COMPLETA (T158–T163, 2026-10-19)
+**Sem gerar conteúdo de módulo.** Cria o fluxo repetível para refazer um módulo por vez, com portões automáticos.
+- `docs/CONTENT_PIPELINE.md` — regras invioláveis, etapas E0–E7 e regras de exercícios (texto aprovado, sem alterações).
+- `data/exercises/_schema.json` — novos campos `objective_id`, `level` (`reconhecer`/`aplicar`/`analisar`/`transferir`), `source_ref` (`<theory_unit_id>#<seção>`) e `answer_check`. `data/theory/_schema.json` — `sections` e `new_terms` (máx. 3).
+- `scripts/validate.mjs` — exige os quatro campos de exercício **somente** em módulos com `"pipeline_version": 1`; módulos antigos continuam válidos. `pipeline_version` só aceita `1`.
+- `scripts/check-module.mjs` + `npm run check-module -- <id>` — falha em: objetivo sem 2 exercícios em níveis diferentes; lição fora de 5–7, >1 difícil, 1º não fácil ou >2 tipos seguidos; difícil na lição 1; desafio ≠ 8 questões; flashcards fora de 8–12; unidade fora de 300–900 palavras, >3 termos novos ou <3 exercícios ligados; `source_ref` inexistente; `answer_check` ausente; termo novo sem glossário; placeholder. Aceita id canônico (`sem1-algorithms-m01`), `sem1/algorithms/m01`, `algorithms/m01` e `--list`; id ambíguo falha com candidatos.
+- Convenção de coleções: `{módulo}-challenge.json` (8 questões) e `{módulo}-flashcards.json` (8–12) ao lado dos arquivos de lição; documentada em `docs/CONTENT_MODEL.md`.
+- `scripts/test-check-module.mjs` — 35 asserções, incluindo um módulo de controle válido e um exemplo ruim para **cada** rejeição; incluído em `npm test` (**18 suítes**).
+- `.opencode/commands/content-module.md` — comando com `$ARGUMENTS` que lê `docs/CONTENT_PIPELINE.md`, resolve o id e executa E0–E7; lista os ids do `curriculum.json`.
+- `.specify/spec.md` — **AC-16**: `pipeline_version: 1` só depois de `check-module`, `validate`, `test` e `verify-sources` passarem. `tasks.md` — T158–T163 (infra) + T164–T169 (tarefas-modelo por módulo do MVP).
+- Verificação: `npm test` verde (**18 suítes**) e `npm run validate` sem erros. Nenhum módulo foi marcado com `pipeline_version: 1` e nenhum conteúdo novo foi gerado.
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" + XP corrigidos (2026-10-18).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–21 concluídas.
+**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" + XP corrigidos (2026-10-18), pipeline de conteúdo criada (2026-10-19).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). Fases 1–21 concluídas; a **Fase 21 de conteúdo** entregou só a infraestrutura — os 6 módulos do MVP serão refeitos um por um (T164–T169).
 
 **Converge — 2ª rodada:** avaliados os 15 critérios de aceitação (AC-01…AC-15) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 

@@ -34,8 +34,18 @@ data/
 │   └── sem{N}/{discipline}/{theory-unit-id}.md  # 1 arquivo por unidade; nome = id
 └── exercises/
     ├── _schema.json                             # contrato do exercício
-    └── sem{N}/{discipline}/{module-id}-{lesson-id}.json  # 1 arquivo por lição (array)
+    └── sem{N}/{discipline}/
+        ├── {module-id}-{lesson-id}.json         # 1 arquivo por lição (array)
+        ├── {module-id}-challenge.json           # desafio do módulo (8 questões)
+        └── {module-id}-flashcards.json          # flashcards do módulo (8 a 12)
 ```
+
+> Módulos em refatoração pela **pipeline de conteúdo v1** marcam
+> `"pipeline_version": 1` no `data/curriculum.json`. Nesses módulos, **todo**
+> exercício (lição, desafio e flashcards) precisa também de `objective_id`,
+> `level`, `source_ref` e `answer_check` (ver §3, Passo 3). Módulos antigos sem
+> o campo continuam válidos; a regra só se torna geral quando todos os módulos
+> do MVP forem refeitos. O fluxo completo está em `docs/CONTENT_PIPELINE.md`.
 
 Convenções de ID (validadas no CI):
 
@@ -88,6 +98,24 @@ Campos comuns (obrigatórios): `id`, `theory_unit_id`, `lesson_id`, `type`,
 `difficulty` (`easy`\|`medium`\|`hard`), `xp_base` (5–50). O campo `correct` é
 obrigatório para todos os tipos, **exceto `code-completion`**.
 
+Campos adicionais **obrigatórios quando o módulo tem `pipeline_version: 1`**:
+
+| Campo | Formato | Observação |
+|-------|---------|------------|
+| `objective_id` | `OBJ-1`, `OBJ-2`… | objetivo declarado no `PLAN.md` do módulo |
+| `level` | `reconhecer` \| `aplicar` \| `analisar` \| `transferir` | nível cognitivo |
+| `source_ref` | `<theory_unit_id>#<section_id>` | aponta para uma seção real da unidade (heading com `{#id}`, slug do heading ou item de `sections` no front-matter) |
+| `answer_check` | uma linha | como a resposta foi conferida (ex.: `Executado em Python 3.12; saída 42`) |
+
+O **desafio do módulo** fica em `{module-id}-challenge.json` (array de exatamente
+8 exercícios, 2 fáceis / 4 médios / 2 difíceis, cobrindo todos os objetivos) e
+os **flashcards do módulo** em `{module-id}-flashcards.json` (array de 8 a 12
+cards `type: flashcards`). Esses arquivos não são carregados como lições pelo
+loader; são validados pela pipeline e pelo `check-module`. Para continuarem
+válidos no `validate.mjs`, os itens dessas coleções também mantêm `lesson_id`
+(uma lição existente do módulo) e `theory_unit_id` (a unidade do módulo), além
+dos quatro campos da pipeline v1.
+
 Tipos e campos específicos:
 
 | `type` | Campos específicos | Resposta (`correct` ou `blanks`) |
@@ -136,8 +164,10 @@ se for uma unidade nova).
 ### Passo 5 — Verificar (obrigatório)
 
 ```bash
+npm run check-module -- sem1/algorithms/m01   # pipeline do módulo (objetivos, rampa, desafio, flashcards, unidades)
 npm run validate     # curriculo, front-matter, licenca, links internos, ATTRIBUTIONS, schema
 npm test             # suites de DOM/conteudo/teoria/e2e
+npm run verify-sources  # cada original_excerpt contra a fonte viva (manual)
 ```
 
 Com internet, para conferir se as URLs das fontes estão acessíveis:

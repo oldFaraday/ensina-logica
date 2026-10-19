@@ -20,6 +20,7 @@ import {
   ATTRIBUTIONS_BEGIN,
   ATTRIBUTIONS_END
 } from './lib/content-rules.mjs';
+import { parseFrontMatter } from './lib/front-matter.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = dirname(__dirname);
@@ -36,6 +37,11 @@ const REQUIRED_EXERCISE_FIELDS = [
   'generated_by_ai', 'prompt', 'explanation',
   'difficulty', 'xp_base'
 ];
+
+// Campos da pipeline v1: só obrigatórios quando o módulo da lição tem
+// "pipeline_version": 1 em data/curriculum.json.
+const PIPELINE_EXERCISE_FIELDS = ['objective_id', 'level', 'source_ref', 'answer_check'];
+const PIPELINE_LEVELS = ['reconhecer', 'aplicar', 'analisar', 'transferir'];
 
 // Campos obrigatórios adicionais por tipo de exercício.
 const TYPE_REQUIRED_FIELDS = {
@@ -120,6 +126,11 @@ function validateCurriculum() {
         for (const mod of disc.modules) {
           if (!mod.id || !mod.title || !mod.lessons) {
             error(`Módulo inválido em ${sem.id}/${disc.id}: ${JSON.stringify(mod)}`);
+          }
+          if (mod.pipeline_version !== undefined && mod.pipeline_version !== 1) {
+            error(
+              `Módulo ${sem.id}/${disc.id}/${mod.id}: pipeline_version inválido (${mod.pipeline_version}); valor permitido: 1`
+            );
           }
         }
       }
@@ -253,101 +264,24 @@ function validateTheoryFile(filePath) {
   };
 }
 
-/**
- * Parser de front-matter (one-level nesting), consistente com o loader.
- * Suporta escalares, listas inline `[a, b]`, strings multilinha (`|`/`>`) e UM
- * nível de objeto aninhado (ex.: `source:`).
- */
-function parseFrontMatter(yaml) {
-  const result = {};
-  let parentKey = null;
-  let currentArray = null;
-  let inMultiline = false;
-  let multilineKey = null;
-
-  const stripQuotes = (v) => String(v).trim().replace(/^["']|["']$/g, '');
-  const parseInlineArray = (v) =>
-    v.slice(1, -1).split(',').map(stripQuotes).filter((s) => s !== '');
-
-  for (const rawLine of String(yaml).split('\n')) {
-    const raw = rawLine.replace(/\s+$/, '');
-    const indent = raw.length - raw.trimStart().length;
-    const trimmed = raw.trim();
-
-    if (inMultiline) {
-      if (trimmed === '' || indent >= 2) {
-        result[multilineKey] = (result[multilineKey] || '') + (result[multilineKey] ? '\n' : '') + trimmed;
-        continue;
-      }
-      inMultiline = false;
-      multilineKey = null;
-    }
-
-    if (!trimmed || trimmed.startsWith('#')) continue;
-
-    const arrayMatch = trimmed.match(/^-\s+(.*)$/);
-    if (arrayMatch && currentArray) {
-      currentArray.push(stripQuotes(arrayMatch[1]));
-      continue;
-    }
-
-    const kvMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$/);
-    if (!kvMatch) {
-      parentKey = null;
-      currentArray = null;
-      continue;
-    }
-
-    const [, key, rawValue] = kvMatch;
-    const value = rawValue.trim();
-
-    if (indent === 0) {
-      currentArray = null;
-
-      if (value === '') {
-        result[key] = {};
-        parentKey = key;
-        continue;
-      }
-
-      if (value === '|' || value === '>') {
-        inMultiline = true;
-        multilineKey = key;
-        result[key] = '';
-        parentKey = null;
-        continue;
-      }
-
-      if (value.startsWith('[') && value.endsWith(']')) {
-        result[key] = parseInlineArray(value);
-        parentKey = null;
-        continue;
-      }
-
-      result[key] = stripQuotes(value);
-      parentKey = null;
-      continue;
-    }
-
-    if (parentKey && result[parentKey] && typeof result[parentKey] === 'object') {
-      if (value === '') {
-        result[parentKey][key] = {};
-      } else if (value.startsWith('[') && value.endsWith(']')) {
-        result[parentKey][key] = parseInlineArray(value);
-      } else {
-        result[parentKey][key] = stripQuotes(value);
-      }
-      currentArray = null;
-    }
-  }
-
-  return result;
-}
-
 // ============================================
 // 3. Valida exercícios
 // ============================================
-function validateExercises(theoryById = new Map()) {
+function buildLessonPipelineMap(curriculum) {
+  const map = new Map();
+  for (const sem of curriculum?.semesters || []) {
+    for (const disc of sem.disciplines || []) {
+      for (const mod of disc.modules || []) {
+        for (const lessonId of mod.lessons || []) {
+          map.set(lessonId, { pipelineVersion: mod.pipeline_version, module: `${sem.id}/${disc.id}/${mod.id}` });
+        }
+      }
+    }
+  }
+  return map;
+}
+
+function validateExercises(theoryById = new Map(), lessonPipelineMap = new Map()) {
   console.log('\n🏋️ Validando exercícios...');
   const exercisesDir = join(ROOT_DIR, 'data/exercises');
 
@@ -364,7 +298,7 @@ function validateExercises(theoryById = new Map()) {
 
   const collected = [];
   for (const file of files) {
-    collected.push(...validateExerciseFile(file, theoryById));
+    collected.push(...validateExerciseFile(file, theoryById, lessonPipelineMap));
   }
 
   success(`${files.length} arquivo(s) de exercício validado(s) (${collected.length} exercício(s))`);
@@ -387,7 +321,7 @@ function findJsonFiles(dir) {
   return files;
 }
 
-function validateExerciseFile(filePath, theoryById = new Map()) {
+function validateExerciseFile(filePath, theoryById = new Map(), lessonPipelineMap = new Map()) {
   const relPath = filePath.replace(ROOT_DIR + '/', '');
   const collected = [];
 
@@ -407,7 +341,7 @@ function validateExerciseFile(filePath, theoryById = new Map()) {
 
     exercises.forEach((exercise, idx) => {
       const label = `${relPath}#${idx}`;
-      validateExerciseObject(exercise, label, theoryById);
+      validateExerciseObject(exercise, label, theoryById, lessonPipelineMap);
 
       if (exercise.id) {
         if (seen.has(exercise.id)) {
@@ -431,10 +365,31 @@ function validateExerciseFile(filePath, theoryById = new Map()) {
   return collected;
 }
 
-function validateExerciseObject(exercise, relPath, theoryById = new Map()) {
+function validateExerciseObject(exercise, relPath, theoryById = new Map(), lessonPipelineMap = new Map()) {
   for (const field of REQUIRED_EXERCISE_FIELDS) {
     if (!(field in exercise)) {
       error(`Campo obrigatório ausente: ${field}`, relPath);
+    }
+  }
+
+  const pipelineInfo = exercise.lesson_id ? lessonPipelineMap.get(exercise.lesson_id) : null;
+  if (pipelineInfo && pipelineInfo.pipelineVersion === 1) {
+    for (const field of PIPELINE_EXERCISE_FIELDS) {
+      if (!(field in exercise) || String(exercise[field] ?? '').trim() === '') {
+        error(`Campo obrigatório da pipeline v1 ausente: ${field}`, relPath);
+      }
+    }
+    if (exercise.level && !PIPELINE_LEVELS.includes(exercise.level)) {
+      error(`level inválido na pipeline v1: ${exercise.level}`, relPath);
+    }
+    if (exercise.objective_id && !/^OBJ-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(exercise.objective_id)) {
+      error(`objective_id inválido: ${exercise.objective_id}`, relPath);
+    }
+    if (
+      exercise.source_ref &&
+      !/^th-sem[1-8]-[a-z-]+-[a-z0-9-]+#[A-Za-z0-9_-]+$/.test(exercise.source_ref)
+    ) {
+      error(`source_ref inválido: ${exercise.source_ref}`, relPath);
     }
   }
 
@@ -763,7 +718,8 @@ async function main() {
   validateCurriculum();
   const theoryUnits = validateTheoryUnits();
   const theoryById = new Map(theoryUnits.map((u) => [u.id, u]));
-  const exercises = validateExercises(theoryById);
+  const lessonPipelineMap = buildLessonPipelineMap(loadCurriculumData());
+  const exercises = validateExercises(theoryById, lessonPipelineMap);
   validateInternalLinks(theoryUnits, exercises);
   validateAttributions();
   if (process.argv.includes('--update-attributions')) {

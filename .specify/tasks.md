@@ -525,3 +525,37 @@ Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constit
 - **Regra da spec**: o XP do exercício é concedido **uma única vez**; a repetição vale menos ou zero (`spec.md`: "ao acertar: XP"; "ao errar: sem vidas, pode tentar de novo com XP reduzido"; SRS com XP reduzido). **Divergiam** → corrigido: a repetição de um exercício já creditado agora vale **0**.
 - **"+27"**: `ex-sem1-algorithms-m01-l02-code` tem `xp_base: 20`; na 1ª resposta correta o app somou **+5** (bônus de 1ª vez) e **+2** (bônus de streak: 1 dia × 2 XP) → **27**. Com a correção, re-responder esse exercício passa a valer **0**.
 - Verificação: `npm test` verde (**17 suítes**; 72 asserções no core) e `npm run validate` sem erros.
+
+---
+
+## Phase 21: Pipeline de conteúdo (2026-10-19)
+
+**Purpose**: criar a pipeline repetível de conteúdo **por módulo** (teoria, exercícios, desafio, flashcards e biblioteca), sem gerar conteúdo de módulo nesta fase. A Fase 21 histórica (normalização/XP) permanece registrada acima; os IDs abaixo continuam a numeração em **T158** para não colidir. Referência: `docs/CONTENT_PIPELINE.md`.
+
+- [x] T158 [docs][pipeline] Criar `docs/CONTENT_PIPELINE.md` com as regras invioláveis, etapas E0–E7 e regras dos exercícios (texto aprovado, sem alterações).
+- [x] T159 [feat][schema] Adicionar `objective_id`, `level`, `source_ref` e `answer_check` ao `data/exercises/_schema.json` e `new_terms`/`sections` ao `data/theory/_schema.json`; `scripts/validate.mjs` exige os quatro campos de exercício **somente** em módulos com `"pipeline_version": 1` (módulos antigos seguem válidos).
+- [x] T160 [feat][tooling] Criar `scripts/check-module.mjs` + `npm run check-module -- <id>`: falha em objetivo sem 2 exercícios em níveis diferentes, lição fora de 5–7 / >1 difícil / 1º não fácil / >2 tipos seguidos, difícil na lição 1, desafio ≠ 8, flashcards fora de 8–12, unidade fora de 300–900 palavras / >3 termos novos / <3 exercícios ligados, `source_ref` inexistente, `answer_check` ausente, termo novo sem glossário e padrões de placeholder.
+- [x] T161 [test][pipeline] Criar `scripts/test-check-module.mjs` (em `npm test`) com módulo de controle válido e exemplos ruins que confirmam **cada** rejeição do check-module.
+- [x] T162 [docs][command] Criar `.opencode/commands/content-module.md` (formato de comando do opencode com `$ARGUMENTS`) que lê `docs/CONTENT_PIPELINE.md`, resolve o id e executa E0–E7; lista os ids de módulo do `data/curriculum.json`.
+- [x] T163 [spec][acceptance] Acrescentar à `.specify/spec.md` o critério **AC-16**: um módulo só recebe `pipeline_version: 1` depois que `check-module`, `validate`, `test` e `verify-sources` passam.
+- [ ] T164 [content-module] `sem1-algorithms-m01` — executar E0–E7 (PLAN → SOURCES → teoria → REVIEW → exercícios/desafio/flashcards → biblioteca/glossário → portões → fechamento).
+- [ ] T165 [content-module] `sem1-algorithms-m02` — executar E0–E7.
+- [ ] T166 [content-module] `sem1-algorithms-m03` — executar E0–E7.
+- [ ] T167 [content-module] `sem1-discrete-math-m01` — executar E0–E7.
+- [ ] T168 [content-module] `sem1-discrete-math-m02` — executar E0–E7.
+- [ ] T169 [content-module] `sem1-discrete-math-m03` — executar E0–E7.
+
+### Tarefa-modelo por módulo (repetir para cada id acima)
+
+Para cada módulo, em uma sessão e um commit:
+
+1. [ ] **E0** `docs/modules/<id>/PLAN.md` com 4–6 objetivos `OBJ-n`, pré-requisitos, mapa objetivo → seção/edição/licença, 3–4 lições e fora de escopo. No piloto, parar e pedir aprovação.
+2. [ ] **E1** `docs/modules/<id>/SOURCES.md` com URL, edição, data de acesso, licença confirmada e trechos literais.
+3. [ ] **E2** unidades em `data/theory/` (300–700 palavras, até 900; estrutura fixa; ≤3 termos novos; `original_excerpt` literal).
+4. [ ] **E3** `docs/modules/<id>/REVIEW.md` (afirmação | seção | trecho de apoio | ok/sem suporte).
+5. [ ] **E4** exercícios de lição (5–7), `{módulo}-challenge.json` (8) e `{módulo}-flashcards.json` (8–12), todos com `objective_id`, `level`, `source_ref` e `answer_check`.
+6. [ ] **E5** ordem de leitura/tempo, "praticar este trecho" e termos novos no `data/glossary.json`.
+7. [ ] **E6** `npm run check-module -- <id>`, `npm run validate`, `npm test`, `npm run verify-sources` — todos verdes.
+8. [ ] **E7** atualizar `tasks.md`/`STATUS.md`, marcar `"pipeline_version": 1` **só neste módulo**, commit do módulo, hash e pendências.
+
+**Regra de promoção**: nenhum módulo recebe `pipeline_version: 1` antes dos quatro portões do E6 passarem. Quando os 6 módulos do MVP estiverem refeitos, a exigência dos novos campos passa a valer para todo módulo.

@@ -68,6 +68,26 @@
       "type": "string",
       "enum": ["easy", "medium", "hard"]
     },
+    "objective_id": {
+      "type": "string",
+      "pattern": "^OBJ-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+      "description": "Objetivo do PLAN.md do módulo (ex.: OBJ-1). Obrigatório quando o módulo tem pipeline_version: 1."
+    },
+    "level": {
+      "type": "string",
+      "enum": ["reconhecer", "aplicar", "analisar", "transferir"],
+      "description": "Nível cognitivo do exercício. Obrigatório quando o módulo tem pipeline_version: 1."
+    },
+    "source_ref": {
+      "type": "string",
+      "pattern": "^th-sem[1-8]-[a-z-]+-[a-z0-9-]+#[A-Za-z0-9_-]+$",
+      "description": "Seção real da unidade teórica no formato '<theory_unit_id>#<section_id>'. Obrigatório quando o módulo tem pipeline_version: 1."
+    },
+    "answer_check": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Uma linha dizendo como a resposta foi conferida (ex.: 'Executado em Python 3.12; saída 42'). Obrigatório quando o módulo tem pipeline_version: 1."
+    },
     "xp_base": {
       "type": "integer",
       "minimum": 5,

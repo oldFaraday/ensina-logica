@@ -100,6 +100,17 @@
       "type": "array",
       "items": { "type": "string", "pattern": "^ex-sem[1-8]-[a-z-]+-[a-z0-9-]+$" }
     },
+    "sections": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+      "description": "Ids das seções da unidade usados em source_ref (ex.: ideia-central, definicao). Se ausente, o check-module deriva os ids dos headings."
+    },
+    "new_terms": {
+      "type": "array",
+      "maxItems": 3,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Termos novos apresentados na unidade (máximo 3); cada um precisa de entrada no data/glossary.json."
+    },
     "original_excerpt": {
       "type": "string",
       "minLength": 60,
