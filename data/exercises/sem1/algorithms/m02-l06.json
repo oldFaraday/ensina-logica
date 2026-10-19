@@ -1,75 +1,125 @@
 [
   {
-    "id": "ex-sem1-algorithms-m02-l06-precedencia",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l06-atribuicao",
+    "theory_unit_id": "th-sem1-algorithms-m02-expressions-operators",
     "lesson_id": "l06",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "De acordo com o capítulo Order of Operations, qual é o valor da expressão 2 + 3 * 4 + 5?",
-    "options": ["19", "45", "25", "14"],
-    "correct": 0,
-    "explanation": "O capítulo Order of Operations mostra que a multiplicação tem precedência maior que a adição: primeiro 3 * 4 = 12, depois 2 + 12 + 5 = 19.",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-algorithms-m02-l06-mod",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
-    "lesson_id": "l06",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "No capítulo Integer Division and Modulus, quais são os resultados de 11 / 4 (divisão inteira) e 11 % 4 (módulo)?",
+    "prompt": "Em `idade = 21`, o que o símbolo `=` representa?",
     "options": [
-      "Quociente 2 e resto 3",
-      "Quociente 3 e resto 2",
-      "2,75 e 3",
-      "Resto 1 e quociente 2"
+      "Atribuição: o valor 21 é copiado para a variável idade",
+      "Igualdade matemática: idade já valia 21 antes da instrução",
+      "Comparação: o programa pergunta se idade é igual a 21",
+      "Multiplicação: idade é multiplicada por 21"
     ],
     "correct": 0,
-    "explanation": "O capítulo Integer Division and Modulus explica que 11 / 4 com inteiros resulta em 2 (a parte fracionária é descartada) e 11 % 4 resulta em 3, que é o resto.",
-    "difficulty": "medium",
-    "xp_base": 15
+    "explanation": "O capítulo Assignment explica que o símbolo = significa atribuição, não igualdade. A instrução copia o valor 21 para o local de memória da variável idade.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-4",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-expressions-operators#definicao",
+    "answer_check": "Conferido contra Assignment › Discussion: 'when you see the = symbol you need to start thinking: assignment' e 'age is assigned the value 21'."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l06-atribuicao",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l06-precedencia",
+    "theory_unit_id": "th-sem1-algorithms-m02-expressions-operators",
     "lesson_id": "l06",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Em muitas linguagens de programação, o símbolo = significa atribuição (guardar um valor em uma variável), e não igualdade.",
+    "prompt": "Na expressão 2 + 3 * 4, a multiplicação é avaliada antes da adição.",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "O capítulo Assignment explica que o operador de atribuição normalmente é o símbolo =, que copia um valor para a variável; para igualdade usa-se outro operador, como ==.",
+    "explanation": "O capítulo Order of Operations afirma que a multiplicação tem precedência maior que a adição. Por isso 3 * 4 é calculado primeiro, e só depois a soma.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-5",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-expressions-operators#definicao",
+    "answer_check": "Conferido contra Order of Operations › Discussion: 'precedence says that multiplication is higher than addition'."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l06-code",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l06-expressao",
+    "theory_unit_id": "th-sem1-algorithms-m02-expressions-operators",
+    "lesson_id": "l06",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual é o valor da expressão 2 + 3 * 4 + 5, seguindo a ordem das operações?",
+    "options": ["19", "25", "14", "45"],
+    "correct": 0,
+    "explanation": "O capítulo Order of Operations resolve 3 * 4 = 12, depois 2 + 12 = 14 e, por fim, 14 + 5 = 19. O valor 25 apareceria com parênteses em (2 + 3) * 4 + 5; 45 apareceria em (2 + 3) * (4 + 5).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-expressions-operators#exemplo-resolvido",
+    "answer_check": "Conferido contra Order of Operations › An Expression Example with Evaluation; verificado em Python 3.15.0: 2+3*4+5 = 19."
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l06-soma-variaveis",
+    "theory_unit_id": "th-sem1-algorithms-m02-expressions-operators",
     "lesson_id": "l06",
     "type": "code-completion",
     "generated_by_ai": true,
-    "prompt": "Complete o código Python para calcular o quociente da divisão inteira de a por b, conforme o capítulo Integer Division and Modulus.",
-    "code": "a = 3\nb = 2\n\n# soma, divisao inteira e resto\nsoma = a + b\nquociente = ___\nresto = a % b\n\nprint(soma, quociente, resto)",
-    "language": "python",
+    "prompt": "Complete a atribuição que soma os alunos dos dois períodos, conforme o exemplo do capítulo Assignment.",
+    "code": "students_period_1 = 25\nstudents_period_2 = 19\ntotal_students = ___",
+    "language": "pseudocode",
     "blanks": [
-      { "accepted_answers": ["a // b"] }
+      {
+        "accepted_answers": [
+          "students_period_1 + students_period_2",
+          "students_period_2 + students_period_1"
+        ]
+      }
     ],
-    "explanation": "O capítulo Integer Division and Modulus mostra que a divisão inteira descarta a parte fracionária; em Python, o operador a // b realiza essa divisão inteira.",
+    "explanation": "O capítulo Assignment mostra que a expressão à direita busca os valores das variáveis, soma 25 + 19 e atribui 44 a total_students. A soma é comutativa, então a ordem dos dois nomes é equivalente.",
     "difficulty": "medium",
-    "xp_base": 20
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-expressions-operators#exemplo-resolvido",
+    "answer_check": "Conferido contra Assignment › Discussion: 'add them together and get a value of 44; then assign the 44 to the total_students variable'; verificado em Python 3.15.0: 25+19 = 44."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l06-flash",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l06-divisao-inteira",
+    "theory_unit_id": "th-sem1-algorithms-m02-integer-division-modulus",
     "lesson_id": "l06",
-    "type": "flashcards",
+    "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "O que é o operador de módulo (%) e o que ele devolve?",
-    "starter_code": "É o operador que devolve o resto da divisão inteira. Por exemplo, 11 % 4 é 3, porque 11 dividido por 4 dá quociente 2 e sobram 3. Ele normalmente exige operandos inteiros.",
-    "correct": "É o operador que devolve o resto da divisão inteira. Por exemplo, 11 % 4 é 3, porque 11 dividido por 4 dá quociente 2 e sobram 3. Ele normalmente exige operandos inteiros.",
-    "explanation": "O capítulo Integer Division and Modulus define o módulo como a outra parte da divisão inteira: o resto (11 % 4 = 3), exigindo operandos inteiros.",
-    "difficulty": "easy",
-    "xp_base": 5
+    "prompt": "Quando ambos os operandos são inteiros, qual é o resultado de 11 / 4 na divisão inteira?",
+    "options": ["2", "3", "2.75", "4"],
+    "correct": 0,
+    "explanation": "O capítulo Integer Division and Modulus afirma que, com dois operandos inteiros, a parte fracionária é descartada. Por isso 11 / 4 resulta em 2; o 3 é o resto, obtido com 11 % 4.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-integer-division-modulus#exemplo-resolvido",
+    "answer_check": "Conferido contra Integer Division and Modulus › Discussion: 'the evaluation of the expression (or answer) would be 2 with no fractional part'; verificado em Python 3.15.0: 11 // 4 = 2."
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l06-quociente-resto",
+    "theory_unit_id": "th-sem1-algorithms-m02-integer-division-modulus",
+    "lesson_id": "l06",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o pseudocódigo para calcular o quociente e o resto da divisão de 14 por 4, conforme o capítulo Integer Division and Modulus.",
+    "code": "dividendo = 14\ndivisor = 4\nquociente = ___\nresto = ___",
+    "language": "pseudocode",
+    "blanks": [
+      {
+        "accepted_answers": ["dividendo / divisor", "14 / 4"]
+      },
+      {
+        "accepted_answers": ["dividendo % divisor", "14 % 4"]
+      }
+    ],
+    "explanation": "O capítulo Integer Division and Modulus usa a divisão inteira para obter o quociente e o operador % para obter o resto. Com 14 e 4, o quociente é 3 e o resto é 2.",
+    "difficulty": "hard",
+    "xp_base": 25,
+    "objective_id": "OBJ-6",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m02-integer-division-modulus#exemplo-resolvido",
+    "answer_check": "Conferido contra Integer Division and Modulus › Discussion (divisão inteira e operador %); verificado em Python 3.15.0: 14 // 4 = 3 e 14 % 4 = 2."
   }
 ]

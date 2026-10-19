@@ -25,7 +25,11 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 | `th-sem1-algorithms-m01-program-design` | Programming Fundamentals | I. Introduction to Programming › Program Design |
 | `th-sem1-algorithms-m01-pseudocode` | Programming Fundamentals | I. Introduction to Programming › Pseudocode |
 | `th-sem1-algorithms-m01-structured-programming` | Programming Fundamentals | IV. Conditions › Structured Programming |
-| `th-sem1-algorithms-m02-variables` | Programming Fundamentals | II. Data and Operators › Data Types |
+| `th-sem1-algorithms-m02-constants-variables` | Programming Fundamentals | II. Data and Operators › Constants and Variables |
+| `th-sem1-algorithms-m02-data-types` | Programming Fundamentals | II. Data and Operators › Data Types |
+| `th-sem1-algorithms-m02-expressions-operators` | Programming Fundamentals | II. Data and Operators › Order of Operations |
+| `th-sem1-algorithms-m02-identifier-names` | Programming Fundamentals | II. Data and Operators › Identifier Names |
+| `th-sem1-algorithms-m02-integer-division-modulus` | Programming Fundamentals | II. Data and Operators › Integer Division and Modulus |
 | `th-sem1-algorithms-m03-control-flow` | Programming Fundamentals | IV. Conditions › Structured Programming |
 | `th-sem1-discrete-math-m01-logic` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |
 | `th-sem1-discrete-math-m02-predicate-logic` | Discrete Mathematics: An Open Introduction | 0. Introduction and Preliminaries › 0.2 Mathematical Statements |

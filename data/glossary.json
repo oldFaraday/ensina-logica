@@ -73,6 +73,11 @@
       "letter": "C",
       "terms": [
         {
+          "en": "camel case",
+          "pt": "camelCase",
+          "definition": "Estilo de escrita em que cada palavra, exceto a primeira, começa com maiúscula, sem espaços entre as palavras."
+        },
+        {
           "en": "constant",
           "pt": "constante",
           "definition": "Identificador cujo valor não muda durante a execução do programa."
@@ -178,6 +183,11 @@
       "letter": "E",
       "terms": [
         {
+          "en": "expression",
+          "pt": "expressão",
+          "definition": "Sequência válida de operandos e operadores que se reduz a um único valor."
+        },
+        {
           "en": "false",
           "pt": "falso",
           "definition": "Valor booleano que indica a negação de verdade."
@@ -208,6 +218,11 @@
       "letter": "F",
       "terms": [
         {
+          "en": "floating point",
+          "pt": "ponto flutuante",
+          "definition": "Tipo de dado que representa números com parte fracionária, armazenado como mantissa e expoente, com um compromisso entre alcance e precisão."
+        },
+        {
           "en": "graph",
           "pt": "grafo",
           "definition": "Estrutura composta por vértices (nós) e arestas que conectam pares de vértices."
@@ -222,6 +237,16 @@
     {
       "letter": "I",
       "terms": [
+        {
+          "en": "identifier name",
+          "pt": "nome de identificador",
+          "definition": "Nome descritivo dado a constantes, variáveis, tipos, funções e outros itens do programa."
+        },
+        {
+          "en": "integer division",
+          "pt": "divisão inteira",
+          "definition": "Divisão em que ambos os operandos são inteiros e a parte fracionária do resultado é descartada, deixando o quociente inteiro."
+        },
         {
           "en": "IPO",
           "pt": "IPO",
@@ -268,6 +293,11 @@
       "letter": "L",
       "terms": [
         {
+          "en": "literal constant",
+          "pt": "constante literal",
+          "definition": "Valor digitado diretamente no programa onde ele é necessário, como 21, 12.34 ou \"Hello world!\"."
+        },
+        {
           "en": "loop",
           "pt": "laço",
           "definition": "Estrutura de repetição que executa um bloco de código enquanto uma condição for verdadeira (ex.: while, for)."
@@ -283,6 +313,11 @@
       "letter": "M",
       "terms": [
         {
+          "en": "modulus",
+          "pt": "módulo (resto)",
+          "definition": "Resto da divisão inteira; em muitas linguagens, o operador é o sinal de porcentagem (%)."
+        },
+        {
           "en": "matching",
           "pt": "emparelhamento",
           "definition": "Conjunto de arestas em um grafo tal que nenhum vértice é tocado por mais de uma aresta escolhida. Usado em algoritmos de alocação e pareamento."
@@ -297,6 +332,16 @@
     {
       "letter": "N",
       "terms": [
+        {
+          "en": "named constant",
+          "pt": "constante nomeada",
+          "definition": "Constante representada por um nome, muitas vezes escrita em maiúsculas, que precisa receber valor quando é definida."
+        },
+        {
+          "en": "nothing data type",
+          "pt": "tipo nada",
+          "definition": "Tipo que indica um valor ausente ou não inicializado, em vez de usar o valor zero."
+        },
         {
           "en": "negation",
           "pt": "negação",
@@ -353,6 +398,16 @@
       "letter": "P",
       "terms": [
         {
+          "en": "Pascal case",
+          "pt": "PascalCase",
+          "definition": "Estilo de escrita em que cada palavra, inclusive a primeira, começa com maiúscula, sem espaços entre as palavras."
+        },
+        {
+          "en": "precedence",
+          "pt": "precedência",
+          "definition": "Regra que determina a ordem em que os operadores atuam sobre os operandos em uma expressão."
+        },
+        {
           "en": "program design",
           "pt": "design de programa",
           "definition": "Etapas que o programador realiza antes de codificar o programa em uma linguagem específica: entender o programa, modelar a lógica e preparar dados de teste."
@@ -408,6 +463,11 @@
       "letter": "R",
       "terms": [
         {
+          "en": "reserved word",
+          "pt": "palavra reservada",
+          "definition": "Palavra que já tem significado na linguagem e não pode ser usada pelo programador como nome de identificador."
+        },
+        {
           "en": "recursion",
           "pt": "recursão",
           "definition": "Técnica em que uma função chama a si mesma para resolver instâncias menores do mesmo problema."
@@ -427,6 +487,11 @@
     {
       "letter": "S",
       "terms": [
+        {
+          "en": "snake case",
+          "pt": "snake_case",
+          "definition": "Estilo de escrita em que as palavras ficam em minúsculas e são separadas por sublinhado."
+        },
         {
           "en": "scope",
           "pt": "escopo",

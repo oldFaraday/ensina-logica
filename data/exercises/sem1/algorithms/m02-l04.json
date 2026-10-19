@@ -1,80 +1,114 @@
 [
   {
-    "id": "ex-sem1-algorithms-m02-l04-var-const",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
-    "lesson_id": "l04",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "Segundo o capítulo Constants and Variables, qual é a diferença entre constante e variável?",
-    "options": [
-      "A constante tem valor que não muda durante a execução; a variável pode ter seu valor alterado",
-      "A variável nunca pode ser lida pelo programa",
-      "A constante só existe na linguagem Python",
-      "As duas mudam de valor a cada linha executada"
-    ],
-    "correct": 0,
-    "explanation": "O capítulo Constants and Variables define constante como um item de dado cujo valor não pode mudar durante a execução, em contraste com a variável, cujo valor pode variar.",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-algorithms-m02-l04-literal",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l04-const-var",
+    "theory_unit_id": "th-sem1-algorithms-m02-constants-variables",
     "lesson_id": "l04",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Um valor digitado diretamente no código, como 21, 12.34 ou \"Hello world!\", é chamado de constante literal.",
+    "prompt": "Uma constante é um item de dado cujo valor pode mudar durante a execução do programa.",
     "options": ["Verdadeiro", "Falso"],
-    "correct": 0,
-    "explanation": "O capítulo Constants and Variables explica que a constante literal é um valor digitado no programa onde ele é necessário, como 21, 12.34, 'A', \"Hello world!\", false ou null.",
+    "correct": 1,
+    "explanation": "O capítulo Constants and Variables define constante como um item de dado cujo valor NÃO pode mudar durante a execução. Quem pode mudar é a variável; por isso a afirmação é falsa.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-constants-variables#definicao",
+    "answer_check": "Conferido contra Constants and Variables › Understanding Constants: 'A constant is a data item whose value cannot change during the program’s execution.'"
   },
   {
-    "id": "ex-sem1-algorithms-m02-l04-identificador",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l04-literal",
+    "theory_unit_id": "th-sem1-algorithms-m02-constants-variables",
     "lesson_id": "l04",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Qual boa prática sobre nomes de identificadores é recomendada no capítulo Identifier Names?",
-    "options": [
-      "Usar nomes significativos e ser consistente com maiúsculas e minúsculas",
-      "Usar nomes curtos e crípticos, como 'p'",
-      "Reutilizar palavras reservadas, como 'if', como nome de variável",
-      "Começar todo identificador com um dígito"
-    ],
+    "prompt": "Qual destes valores é uma constante literal, segundo o capítulo Constants and Variables?",
+    "options": ["21", "PI", "idade", "valor"],
     "correct": 0,
-    "explanation": "O capítulo Identifier Names recomenda nomes significativos (que expliquem o que o dado representa) e consistência de maiúsculas/minúsculas, evitando palavras reservadas.",
+    "explanation": "O capítulo Constants and Variables chama de constante literal um valor digitado diretamente no programa, e cita 21 entre os exemplos. PI é um nome de constante nomeada, enquanto idade e valor são nomes de variáveis.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-constants-variables#definicao",
+    "answer_check": "Conferido contra Constants and Variables › Understanding Constants: 'A literal constant is a value you type into your program wherever it is needed', com 21 na lista de exemplos."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l04-code",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l04-ident-significativo",
+    "theory_unit_id": "th-sem1-algorithms-m02-identifier-names",
+    "lesson_id": "l04",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Por que o capítulo Identifier Names recomenda usar nomes significativos para variáveis e constantes?",
+    "options": [
+      "Porque nomes significativos tornam o código mais fácil de entender por outra pessoa",
+      "Porque nomes curtos e crípticos deixam o programa mais rápido",
+      "Porque a linguagem só aceita nomes com uma letra",
+      "Porque palavras reservadas podem ser usadas como nomes"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Identifier Names afirma que nomes significativos tornam o código mais fácil de entender e pergunta o que um nome como p significa (pi, preço, centavos). Nomes crípticos e palavras reservadas não são recomendados.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-identifier-names#definicao",
+    "answer_check": "Conferido contra Identifier Names › Good Programming Techniques: 'Meaningful identifier names make your code easier for another to understand.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-definicao",
+    "theory_unit_id": "th-sem1-algorithms-m02-constants-variables",
+    "lesson_id": "l04",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "Constantes nomeadas precisam receber um valor quando são definidas, enquanto variáveis podem ser definidas sem valor inicial.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 0,
+    "explanation": "O capítulo Constants and Variables afirma que constantes nomeadas devem receber valor na definição, mas variáveis não precisam de valor inicial e podem receber valor depois, dentro das instruções do programa.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-1",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-constants-variables#definicao",
+    "answer_check": "Conferido contra Constants and Variables › Defining Constants and Variables: 'Named constants must be assigned a value when they are defined. Variables do not have to be assigned initial values.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-reservada",
+    "theory_unit_id": "th-sem1-algorithms-m02-identifier-names",
+    "lesson_id": "l04",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual nome de identificador segue as boas práticas citadas no capítulo Identifier Names?",
+    "options": ["total_alunos", "2total", "while", "p"],
+    "correct": 0,
+    "explanation": "O capítulo Identifier Names recomenda nomes significativos, com caracteres permitidos e sem palavras reservadas. total_alunos é significativo e usa snake_case; 2total começa com dígito, while é palavra reservada e p é críptico.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m02-identifier-names#definicao",
+    "answer_check": "Conferido contra Identifier Names › Technical to Language e › Good Programming Techniques: primeiro caractere alfabético ou sublinhado, sem palavras reservadas e com nomes significativos."
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l04-constante-nomeada",
+    "theory_unit_id": "th-sem1-algorithms-m02-constants-variables",
     "lesson_id": "l04",
     "type": "code-completion",
     "generated_by_ai": true,
-    "prompt": "Complete o código Python para calcular a área de um círculo, usando a constante nomeada PI e a variável raio definidas acima.",
-    "code": "# Constante nomeada (por convencao, em MAIUSCULAS)\nPI = 3.14159\n\nraio = 2.0\n\n# Processamento: area do circulo\narea = ___\n\nprint(area)",
-    "language": "python",
+    "prompt": "Complete o pseudocódigo com o valor da constante nomeada PI usada como exemplo no capítulo Constants and Variables.",
+    "code": "# Constante nomeada: recebe valor na definição\nPI = ___\n# Variável: pode receber outro valor depois\nvalor = 3\nvalor = 7",
+    "language": "pseudocode",
     "blanks": [
-      { "accepted_answers": ["PI * raio ** 2", "raio ** 2 * PI", "PI * (raio ** 2)", "PI * raio * raio"] }
+      {
+        "accepted_answers": ["3.14159"]
+      }
     ],
-    "explanation": "O capítulo Constants and Variables mostra uma constante nomeada (PI = 3.14159) e uma variável (raio); a área do círculo é a constante PI multiplicada pelo raio ao quadrado.",
+    "explanation": "O capítulo Constants and Variables usa PI = 3.14159 como exemplo de constante nomeada e afirma que constantes nomeadas recebem valor no momento da definição. Por isso a lacuna recebe 3.14159.",
     "difficulty": "medium",
-    "xp_base": 20
-  },
-  {
-    "id": "ex-sem1-algorithms-m02-l04-flash",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
-    "lesson_id": "l04",
-    "type": "flashcards",
-    "generated_by_ai": true,
-    "prompt": "O que é uma constante nomeada e como ela se diferencia de uma constante literal?",
-    "starter_code": "A constante nomeada é um valor representado por um nome (frequentemente em MAIÚSCULAS, como PI) cujo valor não muda durante a execução. A constante literal é um valor digitado diretamente no código, como 21 ou \"Hello world!\".",
-    "correct": "A constante nomeada é um valor representado por um nome (frequentemente em MAIÚSCULAS, como PI) cujo valor não muda durante a execução. A constante literal é um valor digitado diretamente no código, como 21 ou \"Hello world!\".",
-    "explanation": "O capítulo Constants and Variables distingue a constante literal (valor digitado no código) da constante nomeada/simbólica (valor associado a um nome, normalmente em letras maiúsculas).",
-    "difficulty": "medium",
-    "xp_base": 5
+    "xp_base": 15,
+    "objective_id": "OBJ-1",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-constants-variables#exemplo-resolvido",
+    "answer_check": "Conferido contra Constants and Variables › Defining Constants and Variables: exemplo 'PI = 3.14159'; a constante nomeada recebe valor na definição."
   }
 ]

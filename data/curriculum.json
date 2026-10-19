@@ -37,7 +37,15 @@
             {
               "id": "m02",
               "title": "Variáveis e Tipos",
-              "theory": "th-sem1-algorithms-m02-variables",
+              "pipeline_version": 1,
+              "theory": "th-sem1-algorithms-m02-constants-variables",
+              "theories": [
+                "th-sem1-algorithms-m02-constants-variables",
+                "th-sem1-algorithms-m02-identifier-names",
+                "th-sem1-algorithms-m02-data-types",
+                "th-sem1-algorithms-m02-expressions-operators",
+                "th-sem1-algorithms-m02-integer-division-modulus"
+              ],
               "lessons": [
                 "l04",
                 "l05",

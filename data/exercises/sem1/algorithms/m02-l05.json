@@ -1,80 +1,123 @@
 [
   {
-    "id": "ex-sem1-algorithms-m02-l05-tipos",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l05-inteiro",
+    "theory_unit_id": "th-sem1-algorithms-m02-data-types",
     "lesson_id": "l05",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Quais são exemplos de tipos de dados comuns citados no capítulo Data Types?",
-    "options": [
-      "Inteiro, ponto flutuante, string e booleano",
-      "Compilador, ligador e depurador",
-      "Disco, memória e processador",
-      "While, for e if"
-    ],
+    "prompt": "Qual tipo de dado representa números inteiros, sem parte fracionária?",
+    "options": ["Inteiro", "Ponto flutuante", "String", "Booleano"],
     "correct": 0,
-    "explanation": "O capítulo Data Types lista os tipos comuns: inteiro (números inteiros), ponto flutuante (números fracionários), string (sequência de caracteres) e booleano (verdadeiro ou falso).",
+    "explanation": "O capítulo Data Types apresenta o inteiro como o tipo que representa números inteiros, como -5, 0 e 123. Ponto flutuante representa números fracionários, string é sequência de caracteres e booleano representa verdadeiro ou falso.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-data-types#definicao",
+    "answer_check": "Conferido contra Data Types › Discussion: 'integer | whole numbers | -5, 0, 123'."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l05-inteiro",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l05-string",
+    "theory_unit_id": "th-sem1-algorithms-m02-data-types",
     "lesson_id": "l05",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "O tipo inteiro representa números inteiros, sem parte fracionária: os valores 'saltam' de um para outro, pois nada existe entre 6 e 7.",
+    "prompt": "Uma string é uma sequência de caracteres.",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "O capítulo Integer Data Type afirma que o inteiro representa números inteiros e que os valores saltam de um para outro, sem nada entre 6 e 7.",
-    "difficulty": "medium",
-    "xp_base": 10
+    "explanation": "O capítulo Data Types define string como uma sequência de caracteres, com o exemplo \"Hello world!\". Por isso a afirmação é verdadeira.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m02-data-types#definicao",
+    "answer_check": "Conferido contra Data Types › Discussion: 'string | A sequence of characters | \"Hello world!\"'."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l05-string-bool",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l05-real",
+    "theory_unit_id": "th-sem1-algorithms-m02-data-types",
     "lesson_id": "l05",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "No capítulo String Data Type, o que o tipo string representa?",
-    "options": [
-      "Uma sequência de caracteres",
-      "Um número com parte fracionária",
-      "Apenas os valores verdadeiro e falso",
-      "A ausência completa de dado"
-    ],
+    "prompt": "O valor -87.5 deve ser classificado como qual tipo de dado?",
+    "options": ["Ponto flutuante (real)", "Inteiro", "String", "Booleano"],
     "correct": 0,
-    "explanation": "O capítulo String Data Type define string como uma sequência de caracteres, tratada como um único dado (por exemplo, \"Hello world!\").",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-algorithms-m02-l05-flash",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
-    "lesson_id": "l05",
-    "type": "flashcards",
-    "generated_by_ai": true,
-    "prompt": "Explique a diferença entre o tipo inteiro e o tipo ponto flutuante.",
-    "starter_code": "O inteiro representa números inteiros, sem parte fracionária (ex.: -5, 0, 123). O ponto flutuante representa números com parte fracionária (ex.: -87.5, 3.14159), usando mantissa e expoente e trocando alcance por precisão.",
-    "correct": "O inteiro representa números inteiros, sem parte fracionária (ex.: -5, 0, 123). O ponto flutuante representa números com parte fracionária (ex.: -87.5, 3.14159), usando mantissa e expoente e trocando alcance por precisão.",
-    "explanation": "Os capítulos Integer Data Type e Floating-Point Data Type distinguem inteiro (sem parte fracionária) de ponto flutuante (com parte fracionária, com mantissa e expoente).",
+    "explanation": "O capítulo Data Types lista -87.5 como exemplo de ponto flutuante (real), que representa números com parte fracionária. O inteiro não tem parte fracionária, e string e booleano representam, respectivamente, caracteres e valores lógicos.",
     "difficulty": "medium",
-    "xp_base": 5
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-data-types#definicao",
+    "answer_check": "Conferido contra Data Types › Discussion: 'floating point (real) | fractional numbers | -87.5, 0.0, 3.14159'."
   },
   {
-    "id": "ex-sem1-algorithms-m02-l05-code",
-    "theory_unit_id": "th-sem1-algorithms-m02-variables",
+    "id": "ex-sem1-algorithms-m02-l05-booleano",
+    "theory_unit_id": "th-sem1-algorithms-m02-data-types",
+    "lesson_id": "l05",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual tipo de dado é mais adequado para representar a resposta true ou false?",
+    "options": ["Booleano", "Inteiro", "String", "Nada"],
+    "correct": 0,
+    "explanation": "O capítulo Boolean Data Type define o booleano como o tipo que representa os conceitos de verdadeiro e falso. Os demais tipos não têm essa finalidade: inteiro representa números inteiros, string representa caracteres e nada representa ausência de dado.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m02-data-types#definicao",
+    "answer_check": "Conferido contra Boolean Data Type › Discussion: 'represents the concepts of true and false'."
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l05-declaracoes",
+    "theory_unit_id": "th-sem1-algorithms-m02-data-types",
     "lesson_id": "l05",
     "type": "code-completion",
     "generated_by_ai": true,
-    "prompt": "Complete o código JavaScript para que a variável aprovado seja um valor booleano: verdadeiro quando a nota for maior ou igual a 7.",
-    "code": "// Tipo booleano resultante de uma comparacao\nconst nota = 8;\n\nlet aprovado = ___;\n\nconsole.log(aprovado);",
-    "language": "javascript",
+    "prompt": "Complete as declarações do pseudocódigo do capítulo Data Types para os valores inteiro, real, string e booleano.",
+    "code": "Declare ___ i\nDeclare ___ r\nDeclare ___ s\nDeclare ___ b\n\nAssign i = 1234567890\nAssign r = 1.23456789012345\nAssign s = \"string\"\nAssign b = true",
+    "language": "pseudocode",
     "blanks": [
-      { "accepted_answers": ["nota >= 7", "7 <= nota"] }
+      {
+        "accepted_answers": ["Integer", "Inteiro"]
+      },
+      {
+        "accepted_answers": ["Real"]
+      },
+      {
+        "accepted_answers": ["String"]
+      },
+      {
+        "accepted_answers": ["Boolean", "Booleano"]
+      }
     ],
-    "explanation": "O capítulo Boolean Data Type explica que o booleano representa verdadeiro ou falso; comparando a nota com o operador relacional >=, obtemos um valor booleano (true ou false).",
+    "explanation": "O capítulo Data Types apresenta o pseudocódigo com Declare Integer i, Declare Real r, Declare String s e Declare Boolean b. Cada declaração escolhe o tipo adequado ao valor que será atribuído depois.",
     "difficulty": "medium",
-    "xp_base": 20
+    "xp_base": 20,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m02-data-types#exemplo-resolvido",
+    "answer_check": "Conferido contra Data Types › Pseudocode: 'Declare Integer i / Declare Real r / Declare String s / Declare Boolean b'."
+  },
+  {
+    "id": "ex-sem1-algorithms-m02-l05-inteiro-real",
+    "theory_unit_id": "th-sem1-algorithms-m02-data-types",
+    "lesson_id": "l05",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Qual afirmação sobre inteiro e ponto flutuante é sustentada pela fonte?",
+    "options": [
+      "Os valores inteiros saltam de um para o outro; não há nada entre 6 e 7",
+      "O ponto flutuante representa números inteiros sem parte fracionária",
+      "O inteiro sempre ocupa 64 bits em qualquer linguagem",
+      "O ponto flutuante tem precisão ilimitada"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Integer Data Type afirma que o inteiro representa números inteiros e que os valores saltam de um para o outro, sem nada entre 6 e 7. As demais opções contradizem a fonte: ponto flutuante tem parte fracionária e precisão limitada, e o tamanho do inteiro varia entre linguagens.",
+    "difficulty": "hard",
+    "xp_base": 25,
+    "objective_id": "OBJ-3",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m02-data-types#definicao",
+    "answer_check": "Conferido contra Integer Data Type › Discussion: 'The integer values jump from one value to another. There is nothing between 6 and 7.'"
   }
 ]

@@ -10,7 +10,7 @@
 - Constitution (`.specify/constitution.md`) — princípios fundamentais definidos
 - Spec (`.specify/spec.md`) — especificação completa do produto (MVP, user journeys, critérios de aceitação)
 - Plan (`.specify/plan.md`) — plano técnico detalhado (stack, estrutura, schemas, algoritmos, CI/CD, fontes aprovadas)
-- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)** + **T148–T153 (Fase 20: correção do exercício "completar código" — lacunas inline — e auditoria dos 5 tipos de exercício)** + **T154–T157 (Fase 21: normalização conservadora da resposta + XP concedido uma única vez por exercício)** + **T158–T163 (Fase 21: infraestrutura da pipeline de conteúdo)** + **T164 (Fase 22: piloto `sem1-algorithms-m01` refeito com E0–E7)**; inclui **snapshot do progresso real** (2026-10-16)
+- Tasks (`.specify/tasks.md`) — 100 tarefas originais (11 fases, 8 user stories) + T101–T112 (correções fora do fluxo e verificação de conteúdo) + T113–T114 (Fundamentos visuais, Fase 4.5) + T115–T118 (correções do teste manual: modal/cliques, layout do topo, rota inicial, teste de interação) + T119 (tema escuro Opção B «Ameixa») + T120 (persistência e botões de tema) + T121–T126 (Convergence) + T127–T129 (Fase 16 pós-QA: responsividade móvel, metas de XP 100/300/600/1000 e revisões no mesmo dia) + **T137–T141 (Fase 18: limpeza do conteúdo placeholder apontado pelo `CONTENT_AUDIT.md`)** + **T142–T147 (Fase 19: endurecimento da validação de conteúdo — anti-placeholder)** + **T148–T153 (Fase 20: correção do exercício "completar código" — lacunas inline — e auditoria dos 5 tipos de exercício)** + **T154–T157 (Fase 21: normalização conservadora da resposta + XP concedido uma única vez por exercício)** + **T158–T163 (Fase 21: infraestrutura da pipeline de conteúdo)** + **T164 (Fase 22: piloto `sem1-algorithms-m01` refeito com E0–E7)** + **T165 (Fase 22: `sem1-algorithms-m02` refeito com E0–E7)**; inclui **snapshot do progresso real** (2026-10-16)
 - Design (`DESIGN.md`) — **identidade visual neo-brutalista** + catálogo de design tokens (fonte da verdade do CSS)
 
 ### Estrutura de Pastas Criada
@@ -23,10 +23,10 @@ ensina-logica/
 ├── locales/pt-BR.json          # ✅ Completo - todas as strings da interface
 ├── data/
 │   ├── curriculum.json         # ✅ Completo - mapa 8 semestres
-│   ├── theory/sem1/algorithms/ # ✅ 6 unidades reais (m01 com 4 capítulos, m02 e m03), verificadas na fonte
+│   ├── theory/sem1/algorithms/ # ✅ 10 unidades reais (m01 com 4 capítulos, m02 com 5, m03 com 1), verificadas na fonte
 │   ├── theory/sem1/discrete-math/ # ✅ 3 unidades reais (m01–m03), verificadas na fonte
 │   ├── theory/_schema.json     # ✅ Completo - JSON Schema unidades teóricas (pending|unverified|verified_with_source; verified_at/verification_method)
-│   ├── exercises/sem1/algorithms/ # ✅ 13 arquivos (m01: 4 lições + desafio + flashcards; m02/m03: 7 lições), 77 exercícios
+│   ├── exercises/sem1/algorithms/ # ✅ 15 arquivos (m01: 4 lições + desafio + flashcards; m02: 3 lições + desafio + flashcards; m03: 4 lições), 99 exercícios
 │   ├── exercises/sem1/discrete-math/ # ✅ 8 arquivos de lição (l11–l18)
 │   └── exercises/_schema.json  # ✅ Completo - JSON Schema exercícios
 ├── src/
@@ -289,11 +289,21 @@ Impede que o problema do `CONTENT_AUDIT.md` volte (unidade `verified_with_source
 - **E7:** `"pipeline_version": 1` aplicado **somente a este módulo**; commit único do módulo; sem pendências de conteúdo.
 - **ID da 4ª lição:** `l19` (não `l04`, que já pertence ao m02); a ordem didática do módulo continua 1ª–4ª.
 
+### Fase 22: Pipeline — `sem1-algorithms-m02` — ✅ COMPLETO (T165, 2026-10-19)
+**Módulo sem1-algorithms-m02 (Variáveis e Tipos) refeito conforme `docs/CONTENT_PIPELINE.md` E0–E7.**
+- **E0/E1:** `PLAN.md` (6 objetivos, 3 lições, 5 unidades) e `SOURCES.md` (6 capítulos abertos, edição 2ª de 2018, CC BY-SA 4.0, trechos literais).
+- **E2:** 5 unidades novas — `constants-variables`, `identifier-names`, `data-types`, `expressions-operators`, `integer-division-modulus` — com estrutura fixa, 300–900 palavras, ≤3 termos novos e `original_excerpt`. Unidade antiga `th-sem1-algorithms-m02-variables` removida (regra 5).
+- **E3:** `REVIEW.md` com a auditoria das afirmações contra os trechos das fontes; aplicações adicionais rotuladas como exemplo de IA.
+- **E4:** 18 exercícios de lição (6 por lição; lição 1 sem difícil), 8 no desafio (2F/4M/2D) e 12 flashcards; apenas pseudocódigo neutro, sem sintaxe de linguagem; todos com `objective_id`, `level`, `source_ref` e `answer_check`.
+- **E5:** 13 termos novos no glossário; `LIBRARY.md` com ordem de leitura, tempos e mapeamento "praticar este trecho".
+- **E6:** `check-module` ✅ · `validate` ✅ (sem erros nem avisos) · `npm test` ✅ (18 suítes; 13 unidades, 19 lições, 99 exercícios de lição) · `verify-sources` ✅ (13/13).
+- **E7:** `"pipeline_version": 1` aplicado **somente a este módulo** após os portões; commit único do módulo; sem pendências de conteúdo.
+
 ---
 
 ## 🎯 Próxima Etapa
 
-**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" + XP corrigidos (2026-10-18), pipeline de conteúdo criada (2026-10-19), módulo piloto m01 refeito (2026-10-19).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). T164 concluída; restam os módulos T165–T169.
+**✅ Converged (2026-10-16), conteúdo limpo (2026-10-17), "completar código" + XP corrigidos (2026-10-18), pipeline de conteúdo criada (2026-10-19), piloto m01 e módulo m02 refeitos (2026-10-19).** A implementação satisfaz `spec.md`, `plan.md`, `tasks.md` e a constitution (`.specify/constitution.md`). T164 e T165 concluídas; restam os módulos T166–T169.
 
 **Converge — 2ª rodada:** avaliados os 15 critérios de aceitação (AC-01…AC-15) e as seções 3–10 da spec, decisões do plan e princípios da constitution. **0 findings actionable** — nenhuma tarefa nova anexada (a Fase 15 já havia coberto o único item: T126, acesso à biblioteca pelo menu). AC-10 (deploy publicado) e T100 (QA manual em navegador) não são lacunas de código.
 
