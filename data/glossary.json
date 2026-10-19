@@ -123,6 +123,11 @@
           "definition": "Complexidade O(1): o tempo de execução não depende do tamanho da entrada."
         },
         {
+          "en": "conjecture",
+          "pt": "conjectura",
+          "definition": "Afirmação matemática que se acredita verdadeira, mas ainda não foi provada; a fonte a apresenta antes de tentar demonstrá-la."
+        },
+        {
           "en": "counterexample",
           "pt": "contraexemplo",
           "definition": "Elemento do domínio para o qual um predicado P(x) é falso; um único contraexemplo basta para refutar a afirmação universal ∀x P(x)."
@@ -236,6 +241,11 @@
           "en": "deduction rule",
           "pt": "regra de dedução",
           "definition": "Forma de argumento que é sempre válida, isto é, cuja conclusão é verdadeira sempre que as premissas forem verdadeiras."
+        },
+        {
+          "en": "direct proof",
+          "pt": "prova direta",
+          "definition": "Prova de uma implicação P → Q que assume P e explica, passo a passo, por que Q deve ser verdadeira; para afirmações universais, fixa um elemento arbitrário do domínio."
         },
         {
           "en": "double negation",
@@ -403,6 +413,11 @@
           "definition": "Conectivo lógico \"se … então\" (→): falso apenas quando a hipótese é verdadeira e a conclusão é falsa."
         },
         {
+          "en": "inductive hypothesis",
+          "pt": "hipótese indutiva",
+          "definition": "Suposição de que P(k) é verdadeira, feita no passo indutivo para demonstrar P(k+1)."
+        },
+        {
           "en": "implicit quantifier",
           "pt": "quantificador implícito",
           "definition": "Quantificador não escrito que é recuperado pela convenção de ler sentenças com predicados e variáveis livres como universalmente quantificadas."
@@ -482,6 +497,11 @@
     {
       "letter": "M",
       "terms": [
+        {
+          "en": "mathematical induction",
+          "pt": "indução matemática",
+          "definition": "Técnica de prova que estabelece um caso base P(0) e mostra que P(k) implica P(k+1) para todo k ≥ 0, concluindo que P(n) vale para todos os naturais a partir do caso base."
+        },
         {
           "en": "modular programming",
           "pt": "programação modular",
@@ -643,6 +663,21 @@
           "definition": "Variável que armazena o endereço de memória de outro valor."
         },
         {
+          "en": "proof by cases",
+          "pt": "prova por casos",
+          "definition": "Prova de P que considera casos Q1, Q2, …, Qn, mostra que cada Qi implica P e garante que pelo menos um dos casos ocorre necessariamente."
+        },
+        {
+          "en": "proof by contradiction",
+          "pt": "prova por contradição",
+          "definition": "Prova de P que assume ¬P e mostra que essa suposição leva a uma contradição; como ¬P é impossível, P é verdadeira."
+        },
+        {
+          "en": "proof by contrapositive",
+          "pt": "prova por contrapositiva",
+          "definition": "Prova de P → Q que, usando a equivalência com ¬Q → ¬P, assume ¬Q e conclui ¬P."
+        },
+        {
           "en": "predicate",
           "pt": "predicado",
           "definition": "Expressão que contém variáveis e se torna uma proposição quando as variáveis recebem valores."
@@ -761,6 +796,11 @@
           "en": "spaghetti code",
           "pt": "código espaguete",
           "definition": "Expressão pejorativa para código não estruturado e difícil de manter."
+        },
+        {
+          "en": "strong induction",
+          "pt": "indução forte",
+          "definition": "Variante da indução em que o passo indutivo assume P(k) para todo k < n, e não apenas para o caso imediatamente anterior, para provar P(n)."
         },
         {
           "en": "statement",

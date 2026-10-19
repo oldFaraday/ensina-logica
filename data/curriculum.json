@@ -145,7 +145,14 @@
             {
               "id": "m03",
               "title": "Provas e Indução",
-              "theory": "th-sem1-discrete-math-m03-proofs-induction",
+              "pipeline_version": 1,
+              "theory": "th-sem1-discrete-math-m03-direct-contrapositive-contradiction",
+              "theories": [
+                "th-sem1-discrete-math-m03-direct-contrapositive-contradiction",
+                "th-sem1-discrete-math-m03-counterexample-cases",
+                "th-sem1-discrete-math-m03-induction-principle",
+                "th-sem1-discrete-math-m03-strong-induction-recursion"
+              ],
               "lessons": [
                 "l16",
                 "l17",

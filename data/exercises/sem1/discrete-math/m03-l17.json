@@ -1,87 +1,128 @@
 [
   {
-    "id": "ex-sem1-discrete-math-m03-l17-estrutura",
-    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "id": "ex-sem1-discrete-math-m03-l17-caso-base",
+    "theory_unit_id": "th-sem1-discrete-math-m03-induction-principle",
     "lesson_id": "l17",
-    "type": "order-steps",
+    "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Ordene as partes de uma prova por indução matemática, conforme a estrutura apresentada na Seção 2.5.",
+    "prompt": "Em uma prova por indução, qual é a função do caso base?",
     "options": [
-      "Concluir, pelo princípio da indução, que P(n) vale para todo n.",
-      "Provar o caso base P(0) (ou o primeiro valor relevante) diretamente.",
-      "Provar o passo indutivo P(k) → P(k+1) para todo k, usando a hipótese indutiva P(k).",
-      "Declarar a afirmação P(n) que se quer provar."
+      "Iniciar a cadeia no primeiro valor.",
+      "Assumir que a afirmação vale para todo k.",
+      "Provar a afirmação para um n arbitrário do domínio.",
+      "Refutar a afirmação com um contraexemplo."
     ],
-    "correct": [3, 1, 2, 0],
-    "explanation": "A estrutura começa declarando P(n) (linha 3), depois prova o caso base diretamente (linha 1), em seguida o passo indutivo assumindo a hipótese indutiva P(k) (linha 2) e, por fim, conclui pelo princípio da indução (linha 0) (Seção 2.5).",
-    "difficulty": "medium",
-    "xp_base": 15
+    "correct": 0,
+    "explanation": "O caso base prova P(0) — ou o primeiro valor aplicável — diretamente. Sem ele, o passo indutivo não tem um ponto de partida (Seção 2.5, Formalizing Proofs).",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m03-induction-principle#definicao",
+    "answer_check": "Conferido na Seção 2.5: o caso base prova P(0) diretamente."
   },
   {
-    "id": "ex-sem1-discrete-math-m03-l17-caso-base",
-    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "id": "ex-sem1-discrete-math-m03-l17-hipotese",
+    "theory_unit_id": "th-sem1-discrete-math-m03-induction-principle",
     "lesson_id": "l17",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Em uma prova por indução, o caso base prova diretamente que a afirmação vale para o primeiro valor, sem usar a hipótese indutiva.",
+    "prompt": "No passo indutivo, a hipótese indutiva é a suposição de que P(k) é verdadeira para provar P(k+1).",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "O caso base, como P(0), é provado diretamente. Na analogia dos dominós, ele é empurrar a primeira peça; sem isso a reação em cadeia não começa (Seção 2.5).",
+    "explanation": "A fonte define P(k) como a hipótese indutiva e esclarece que ela é assumida apenas para demonstrar P(k+1) (Seção 2.5, Formalizing Proofs).",
     "difficulty": "easy",
-    "xp_base": 5
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-discrete-math-m03-induction-principle#definicao",
+    "answer_check": "Conferido na Seção 2.5: P(k) é a hipótese indutiva."
   },
   {
-    "id": "ex-sem1-discrete-math-m03-l17-hipotese-indutiva",
-    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "id": "ex-sem1-discrete-math-m03-l17-estrutura",
+    "theory_unit_id": "th-sem1-discrete-math-m03-induction-principle",
+    "lesson_id": "l17",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene a estrutura de uma prova por indução de que P(n) vale para todo n ≥ 0.",
+    "options": [
+      "Provar o passo indutivo P(k) → P(k+1) para k ≥ 0.",
+      "Declarar a afirmação P(n).",
+      "Concluir pelo princípio da indução matemática.",
+      "Provar o caso base P(0)."
+    ],
+    "correct": [1, 3, 0, 2],
+    "explanation": "A prova começa declarando P(n), prova P(0), assume P(k) e prova P(k+1), e só então conclui pela indução. Essa é a ordem apresentada em Formalizing Proofs (Seção 2.5).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m03-induction-principle#definicao",
+    "answer_check": "Conferido na Seção 2.5: declarar P(n), caso base, passo indutivo e conclusão."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l17-soma-base",
+    "theory_unit_id": "th-sem1-discrete-math-m03-induction-principle",
     "lesson_id": "l17",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "No passo indutivo de uma prova por indução comum, o que se pode assumir?",
+    "prompt": "Para provar por indução que 1 + 2 + ⋯ + n = n(n+1)/2 vale para n ≥ 1, qual é o caso base?",
     "options": [
-      "Que P(k) é verdadeira para o k considerado, a fim de provar P(k+1).",
-      "Que P(k+1) já é verdadeira.",
-      "Que todos os P(i) com i < k são verdadeiros.",
-      "Nada; o passo indutivo deve ser uma prova direta sem suposições."
+      "n = 1, pois 1 = 1·2/2.",
+      "n = 0, pois a soma até 0 é 0.",
+      "n = 2, pois 1 + 2 = 3.",
+      "n = 5, pois a fórmula vale para valores maiores."
     ],
     "correct": 0,
-    "explanation": "No passo indutivo assume-se P(k) — a hipótese indutiva — e mostra-se que P(k+1) também é verdadeira. Supor todos os casos anteriores (i < k) é a hipótese da indução forte (Seção 2.5).",
+    "explanation": "A afirmação começa em n ≥ 1, então o caso base é P(1): o lado esquerdo é 1 e o direito é 1·2/2 = 1. A fonte usa esse exemplo para mostrar como o caso inicial depende do domínio da afirmação (Seção 2.5, Examples).",
     "difficulty": "medium",
-    "xp_base": 15
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-discrete-math-m03-induction-principle#exemplo-resolvido",
+    "answer_check": "Verificado por cálculo: 1·(1+1)/2 = 1, igual à soma até 1."
   },
   {
-    "id": "ex-sem1-discrete-math-m03-l17-soma",
-    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
+    "id": "ex-sem1-discrete-math-m03-l17-soma-passo",
+    "theory_unit_id": "th-sem1-discrete-math-m03-induction-principle",
+    "lesson_id": "l17",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "No passo indutivo da soma 1 + 2 + ⋯ + n = n(n+1)/2, ordene as etapas após assumir a hipótese para k.",
+    "options": [
+      "Fatorar (k+1) e obter (k+1)(k+2)/2.",
+      "Somar k+1 aos dois lados da hipótese.",
+      "Reconhecer que a expressão obtida é P(k+1)."
+    ],
+    "correct": [1, 0, 2],
+    "explanation": "Soma-se k+1 à hipótese 1 + ⋯ + k = k(k+1)/2; depois se fatora (k+1) para obter (k+1)(k+2)/2, que é exatamente P(k+1). A fonte usa a hipótese indutiva nesse ponto (Seção 2.5, Examples).",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m03-induction-principle#exemplo-resolvido",
+    "answer_check": "Verificado algebricamente: k(k+1)/2 + (k+1) = (k+1)(k+2)/2."
+  },
+  {
+    "id": "ex-sem1-discrete-math-m03-l17-divisibilidade",
+    "theory_unit_id": "th-sem1-discrete-math-m03-induction-principle",
     "lesson_id": "l17",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Na prova por indução de 1 + 2 + ⋯ + n = n(n+1)/2, como se usa a hipótese indutiva P(k) no passo indutivo?",
+    "prompt": "Na prova de que 6ⁿ − 1 é múltiplo de 5, qual reescrita permite usar a hipótese indutiva no passo de k para k+1?",
     "options": [
-      "Substitui-se a soma de 1 até k pela fórmula k(k+1)/2 e soma-se (k+1).",
-      "Soma-se apenas 1 aos dois lados da igualdade.",
-      "Assume-se que a fórmula já vale para k+1.",
-      "Multiplicam-se ambos os lados por k."
+      "6(6ᵏ − 1) + 5",
+      "6(6ᵏ − 1) − 5",
+      "6ᵏ(6 − 1) + 1",
+      "6(6ᵏ + 1) − 5"
     ],
     "correct": 0,
-    "explanation": "Escrevemos 1+2+⋯+(k+1) = (1+2+⋯+k) + (k+1); pela hipótese indutiva a primeira parte é k(k+1)/2, e a álgebra leva a (k+1)(k+2)/2, que é P(k+1) (Seção 2.5, Exemplo 2.5.1).",
-    "difficulty": "medium",
-    "xp_base": 15
-  },
-  {
-    "id": "ex-sem1-discrete-math-m03-l17-erro-inducao",
-    "theory_unit_id": "th-sem1-discrete-math-m03-proofs-induction",
-    "lesson_id": "l17",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "No argumento (incorreto) de que qualquer grupo de n pessoas tem a mesma cor de olhos, onde está o erro?",
-    "options": [
-      "No caso base, pois P(1) é falso.",
-      "No passo indutivo, que só funciona para k ≥ 2, mas apenas se provou o caso base n = 1.",
-      "No uso de uma variável livre.",
-      "No uso da contrapositiva."
-    ],
-    "correct": 1,
-    "explanation": "O passo indutivo pressupõe k ≥ 2 para que os grupos 'primeiros k' e 'últimos k' se sobreponham. Como só se provou P(1), a cadeia nunca se conecta; de fato P(2) é falso (Seção 2.5, Warning).",
+    "explanation": "A reescrita 6·6ᵏ − 1 = 6(6ᵏ − 1) + 5 isola o múltiplo de 5 da hipótese e deixa 5 como parcela também múltipla de 5. A fonte observa que é preciso usar álgebra para localizar 6ᵏ − 1 dentro de 6ᵏ⁺¹ − 1 (Seção 2.5, Examples).",
     "difficulty": "hard",
-    "xp_base": 20
+    "xp_base": 25,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-discrete-math-m03-induction-principle#exemplo-resolvido",
+    "answer_check": "Verificado algebricamente: 6(6ᵏ − 1) + 5 = 6ᵏ⁺¹ − 6 + 5 = 6ᵏ⁺¹ − 1."
   }
 ]
