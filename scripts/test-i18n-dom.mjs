@@ -79,7 +79,7 @@ const ROUTES = [
   '/settings',
   '/achievements',
   '/library',
-  '/theory/th-sem1-algorithms-m01-intro',
+  '/theory/th-sem1-algorithms-m01-program-design',
 ];
 
 const ATTRS = ['aria-label', 'title', 'placeholder', 'alt'];

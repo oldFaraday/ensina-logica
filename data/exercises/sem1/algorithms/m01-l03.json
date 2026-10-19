@@ -1,69 +1,131 @@
 [
   {
-    "id": "ex-sem1-algorithms-m01-l03-tres",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l03-decisao",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
     "lesson_id": "l03",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Quais são as três categorias principais de estruturas de controle apresentadas no capítulo Structured Programming?",
+    "prompt": "No fluxograma, qual símbolo representa uma decisão (uma pergunta de verdadeiro ou falso)?",
     "options": [
-      "Sequência, seleção e iteração",
-      "Entrada, processamento e saída",
-      "Compilação, ligação e execução",
-      "Variável, constante e literal"
+      "O losango",
+      "O retângulo arredondado (terminal)",
+      "O paralelogramo",
+      "O retângulo"
     ],
     "correct": 0,
-    "explanation": "O capítulo Structured Programming lista três categorias: sequência (fazer uma instrução após a outra), seleção (escolher entre caminhos) e iteração (repetição).",
+    "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Decision afirma que o losango representa a pergunta de verdadeiro/falso testada em uma decisão. Os outros símbolos têm funções diferentes: terminal, entrada/saída e processo.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-5",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#definicao",
+    "answer_check": "Conferido contra Flowcharts › Simple Flowcharting Symbols › Decision: 'The diamond is used to represent the true/false statement being tested in a decision symbol.'"
   },
   {
-    "id": "ex-sem1-algorithms-m01-l03-selecao",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l03-terminal",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
     "lesson_id": "l03",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Na seleção o programa escolhe entre dois ou mais fluxos; na iteração (repetição) um trecho de código pode ser executado várias vezes.",
+    "prompt": "No fluxograma, os retângulos arredondados (terminais) indicam os pontos de início e de fim.",
     "options": ["Verdadeiro", "Falso"],
     "correct": 0,
-    "explanation": "Segundo o capítulo Structured Programming, a seleção escolhe entre dois ou mais caminhos e a iteração permite repetir um trecho de código várias vezes (inclusive zero vezes).",
+    "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Terminal afirma que os retângulos arredondados, ou pontos terminais, indicam os pontos de início e fim do fluxograma. Por isso a afirmação é verdadeira.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-5",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#definicao",
+    "answer_check": "Conferido contra Flowcharts › Simple Flowcharting Symbols › Terminal: 'The rounded rectangles, or terminal points, indicate the flowchart’s starting and ending points.'"
   },
   {
-    "id": "ex-sem1-algorithms-m01-l03-fluxo-if",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l03-entrada-saida",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
     "lesson_id": "l03",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "No pseudocódigo 'Se idade > 17 ... Senão ... Fim', a qual categoria de estrutura de controle esse trecho pertence?",
+    "prompt": "Qual símbolo do fluxograma representa uma operação de entrada ou de saída?",
     "options": [
-      "Seleção de duas vias",
-      "Sequência",
-      "Iteração",
-      "Ramificação descontrolada"
+      "O paralelogramo",
+      "O losango",
+      "O retângulo",
+      "O retângulo arredondado"
     ],
     "correct": 0,
-    "explanation": "Tanto o capítulo Selection Control Structures quanto os fluxogramas mostram que o 'if then else' é uma seleção de duas vias: apenas um dos caminhos é executado.",
+    "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Input/Output diz que os paralelogramos designam operações de entrada ou saída. O losango é decisão, o retângulo é processo e o retângulo arredondado é terminal.",
     "difficulty": "medium",
-    "xp_base": 10
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#definicao",
+    "answer_check": "Conferido contra Flowcharts › Simple Flowcharting Symbols › Input/Output: 'The parallelograms designate input or output operations.'"
   },
   {
-    "id": "ex-sem1-algorithms-m01-l03-ordem",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l03-ordem-fluxo",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
     "lesson_id": "l03",
     "type": "order-steps",
     "generated_by_ai": true,
-    "prompt": "Ordene o pseudocódigo de um laço while que exibe uma mensagem cinco vezes (exemplo do capítulo Flowcharts).",
+    "prompt": "Ordene os passos de um fluxograma de sequência que lê uma temperatura, converte e exibe o resultado.",
     "options": [
-      "Incrementar count",
-      "count recebe 0 (inicialização da flag)",
-      "Fim enquanto",
-      "Enquanto count < 5: exibir a mensagem"
+      "Exibir o resultado",
+      "Início (terminal)",
+      "Calcular a conversão",
+      "Ler a temperatura (entrada/saída)",
+      "Fim (terminal)"
     ],
-    "correct": [1, 3, 0, 2],
-    "explanation": "O capítulo Flowcharts mostra o laço while começando pela inicialização da flag (count = 0), seguida do teste (Enquanto count < 5), da ação e da atualização da flag, até o fim.",
+    "correct": [1, 3, 2, 0, 4],
+    "explanation": "O capítulo Flowcharts › Simple Examples › Sequence Control Structures mostra uma instrução após a outra: o fluxo começa no terminal, lê a temperatura, calcula a conversão, exibe o resultado e termina. As opções já estão embaralhadas; a ordem correta segue a estrutura de sequência.",
     "difficulty": "medium",
-    "xp_base": 15
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#exemplo-resolvido",
+    "answer_check": "Conferido contra Flowcharts › Simple Examples › Sequence Control Structures: 'Just do one instruction after another in the sequence listed.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l03-simbolo-certo",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
+    "lesson_id": "l03",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Um fluxograma precisa representar a leitura de uma idade digitada pelo usuário. Qual símbolo deve ser usado?",
+    "options": [
+      "Paralelogramo (entrada/saída)",
+      "Losango (decisão)",
+      "Retângulo (processo)",
+      "Retângulo arredondado (terminal)"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols afirma que os paralelogramos designam operações de entrada ou saída. Ler uma idade digitada é uma entrada; por isso o símbolo correto é o paralelogramo, e não os símbolos de decisão, processo ou terminal.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#definicao",
+    "answer_check": "Conferido contra Flowcharts › Simple Flowcharting Symbols › Input/Output: 'The parallelograms designate input or output operations.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l03-decisao-ordem",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
+    "lesson_id": "l03",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Considere o fluxograma que pergunta 'idade > 17?'. Ordene os passos do caminho VERDADEIRO, do início até o fim.",
+    "options": [
+      "Exibir 'pode votar'",
+      "Início (terminal)",
+      "Ler a idade (entrada/saída)",
+      "Decisão: idade > 17?",
+      "Fim (terminal)"
+    ],
+    "correct": [1, 2, 3, 0, 4],
+    "explanation": "O capítulo Flowcharts › Simple Flowcharting Symbols › Decision mostra que o losango contém a pergunta de verdadeiro/falso. No caminho verdadeiro, o fluxo começa no terminal, lê a idade, passa pela decisão, exibe a mensagem 'pode votar' e chega ao fim. As opções já estão embaralhadas; a ordem correta segue esse caminho.",
+    "difficulty": "hard",
+    "xp_base": 25,
+    "objective_id": "OBJ-6",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#exemplo-resolvido",
+    "answer_check": "Conferido contra Flowcharts › Simple Flowcharting Symbols › Decision: o losango representa a pergunta de verdadeiro/falso; a ordenação segue o caminho verdadeiro até o terminal de fim."
   }
 ]

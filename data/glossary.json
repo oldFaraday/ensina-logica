@@ -103,6 +103,11 @@
           "definition": "Ordem em que as instruções de um programa são executadas, incluindo sequências, condicionais e laços."
         },
         {
+          "en": "control structures",
+          "pt": "estruturas de controle",
+          "definition": "Mecanismos que permitem controlar o fluxo de execução de um programa; a fonte lista sequência, seleção, iteração e ramificação."
+        },
+        {
           "en": "data type",
           "pt": "tipo de dado",
           "definition": "Categoria de valores que determina quais operações podem ser feitas e como os valores são armazenados."
@@ -127,6 +132,11 @@
     {
       "letter": "D",
       "terms": [
+        {
+          "en": "decision symbol",
+          "pt": "símbolo de decisão",
+          "definition": "Losango usado em fluxogramas para representar a pergunta de verdadeiro/falso testada em uma decisão."
+        },
         {
           "en": "edge",
           "pt": "aresta",
@@ -212,6 +222,11 @@
     {
       "letter": "I",
       "terms": [
+        {
+          "en": "IPO",
+          "pt": "IPO",
+          "definition": "Modelo de entendimento de um programa por suas entradas (Inputs), processamento (Processing) e saídas (Outputs)."
+        },
         {
           "en": "if",
           "pt": "se / se então",
@@ -338,6 +353,11 @@
       "letter": "P",
       "terms": [
         {
+          "en": "program design",
+          "pt": "design de programa",
+          "definition": "Etapas que o programador realiza antes de codificar o programa em uma linguagem específica: entender o programa, modelar a lógica e preparar dados de teste."
+        },
+        {
           "en": "parameter",
           "pt": "parâmetro",
           "definition": "Variável nomeada na definição de uma função que recebe um valor quando a função é chamada."
@@ -356,6 +376,11 @@
           "en": "proof",
           "pt": "prova",
           "definition": "Argumento dedutivo que estabelece a verdade de uma afirmação matemática."
+        },
+        {
+          "en": "pseudo",
+          "pt": "pseudo",
+          "definition": "Prefixo que significa falso, incluindo as ideias de falso ou imitação."
         },
         {
           "en": "pseudocode",
@@ -423,6 +448,11 @@
           "definition": "Coleção de elementos distintos, sem ordem definida."
         },
         {
+          "en": "spaghetti code",
+          "pt": "código espaguete",
+          "definition": "Expressão pejorativa para código não estruturado e difícil de manter."
+        },
+        {
           "en": "statement",
           "pt": "sentença / declaração",
           "definition": "Unidade mínima de ação em um programa; pode ser uma proposição (na lógica) ou uma instrução (na programação)."
@@ -438,6 +468,11 @@
           "definition": "Tipo de dado composto que agrupa campos de tipos possivelmente diferentes."
         },
         {
+          "en": "structured programming",
+          "pt": "programação estruturada",
+          "definition": "Paradigma que busca melhorar clareza, qualidade e tempo de desenvolvimento usando seleção, repetição, blocos e sub-rotinas, em vez de saltos como o go to."
+        },
+        {
           "en": "syntax",
           "pt": "sintaxe",
           "definition": "Conjunto de regras que define como escrever programas válidos em uma linguagem."
@@ -447,6 +482,16 @@
     {
       "letter": "T",
       "terms": [
+        {
+          "en": "terminal",
+          "pt": "terminal",
+          "definition": "Retângulo arredondado de um fluxograma que indica os pontos de início e fim."
+        },
+        {
+          "en": "test data",
+          "pt": "dados de teste",
+          "definition": "Valores de entrada fornecidos pelo programador e as saídas previstas, usados para verificar o modelo."
+        },
         {
           "en": "theorem",
           "pt": "teorema",

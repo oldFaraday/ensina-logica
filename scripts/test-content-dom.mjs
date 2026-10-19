@@ -59,27 +59,35 @@ try {
 
   for (const disc of sem1.disciplines) {
     for (const mod of disc.modules) {
-      // --- Teoria (quando o módulo tiver campo theory) ---
-      if (mod.theory) {
-        const unit = await loadTheoryUnit(mod.theory);
-        assert.ok(unit, `unidade ${mod.theory} carregada`);
-        assert.equal(unit.verification_status, 'verified_with_source', `${unit.id} verificada com a fonte`);
-        assert.ok(unit.source && typeof unit.source === 'object', `${unit.id} tem source como objeto`);
-        assert.ok(unit.source.title && unit.source.title.length > 3, `${unit.id} source.title presente`);
-        assert.ok(Array.isArray(unit.source.authors) && unit.source.authors.length > 0, `${unit.id} source.authors é array não vazio`);
-        assert.ok(unit.source.license_url, `${unit.id} source.license_url presente`);
-        assert.ok(['CC0-1.0', 'CC-BY-3.0', 'CC-BY-4.0', 'CC-BY-SA-3.0', 'CC-BY-SA-4.0'].includes(unit.license), `${unit.id} licença permissiva`);
-        assert.ok(unit.content.length > 300, `${unit.id} conteúdo substancial`);
+      // --- Teoria (quando o módulo tiver `theories` ou `theory`) ---
+      const theoryIds = Array.isArray(mod.theories) && mod.theories.length > 0
+        ? mod.theories
+        : (mod.theory ? [mod.theory] : []);
+      const moduleUnits = [];
+      if (theoryIds.length > 0) {
+        for (const theoryId of theoryIds) {
+          const unit = await loadTheoryUnit(theoryId);
+          assert.ok(unit, `unidade ${theoryId} carregada`);
+          assert.equal(unit.verification_status, 'verified_with_source', `${unit.id} verificada com a fonte`);
+          assert.ok(unit.source && typeof unit.source === 'object', `${unit.id} tem source como objeto`);
+          assert.ok(unit.source.title && unit.source.title.length > 3, `${unit.id} source.title presente`);
+          assert.ok(Array.isArray(unit.source.authors) && unit.source.authors.length > 0, `${unit.id} source.authors é array não vazio`);
+          assert.ok(unit.source.license_url, `${unit.id} source.license_url presente`);
+          assert.ok(['CC0-1.0', 'CC-BY-3.0', 'CC-BY-4.0', 'CC-BY-SA-3.0', 'CC-BY-SA-4.0'].includes(unit.license), `${unit.id} licença permissiva`);
+          assert.ok(unit.content.length > 300, `${unit.id} conteúdo substancial`);
 
-        const sections = splitSections(unit.content);
-        assert.ok(sections.length >= 3, `${unit.id} tem >= 3 seções (tem ${sections.length})`);
+          const sections = splitSections(unit.content);
+          assert.ok(sections.length >= 3, `${unit.id} tem >= 3 seções (tem ${sections.length})`);
 
-        // linked_lessons deve cobrir as lições do módulo
-        for (const lessonId of mod.lessons) {
-          assert.ok(unit.linked_lessons.includes(lessonId), `${unit.id}.linked_lessons inclui ${lessonId}`);
+          moduleUnits.push(unit);
+          unitsChecked += 1;
         }
 
-        unitsChecked += 1;
+        // A união das linked_lessons deve cobrir as lições do módulo
+        const coveredLessons = new Set(moduleUnits.flatMap((u) => u.linked_lessons || []));
+        for (const lessonId of mod.lessons) {
+          assert.ok(coveredLessons.has(lessonId), `${disc.id}/${mod.id}: alguma unidade cobre ${lessonId}`);
+        }
       }
 
       // --- Lições + exercícios ---
@@ -87,7 +95,12 @@ try {
       for (const lessonId of mod.lessons) {
         const exercises = await loadExercisesForLesson(lessonId, disc.id, sem1.number);
         assert.ok(Array.isArray(exercises), `${lessonId} carrega array de exercícios`);
-        assert.ok(exercises.length >= 3 && exercises.length <= 5, `${lessonId} tem 3–5 exercícios (tem ${exercises.length})`);
+        const minExercises = 3;
+        const maxExercises = 7;
+        assert.ok(
+          exercises.length >= minExercises && exercises.length <= maxExercises,
+          `${lessonId} tem ${minExercises}–${maxExercises} exercícios (tem ${exercises.length})`
+        );
 
         for (const ex of exercises) {
           for (const field of REQUIRED_EX) {

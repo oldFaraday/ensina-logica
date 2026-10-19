@@ -263,7 +263,7 @@ function parseYaml(yaml) {
 
 /**
  * Pré-carrega índice de teorias para busca rápida.
- * Usa o campo `theory` de cada módulo do currículo (link explícito módulo → unidade).
+ * Usa `theories` (lista) ou `theory` (link único) de cada módulo do currículo.
  * @returns {Promise<Array>} Lista de metadados de todas as teorias publicadas
  */
 export async function loadTheoryIndex() {
@@ -271,25 +271,32 @@ export async function loadTheoryIndex() {
 
   const curriculum = await loadCurriculum();
   const index = [];
+  const seen = new Set();
 
   for (const sem of curriculum.semesters) {
     for (const disc of sem.disciplines) {
       for (const mod of disc.modules) {
-        if (!mod.theory) continue;
-        const theory = await loadTheoryUnit(mod.theory);
-        // Constitution §2 / T112: só entra no índice o que foi conferido com a fonte
-        if (theory && theory.verification_status === 'verified_with_source') {
-          index.push({
-            id: theory.id,
-            title: theory.title,
-            discipline: theory.discipline,
-            disciplineTitle: disc.title,
-            module: theory.module,
-            moduleTitle: mod.title,
-            semester: sem.id,
-            semesterTitle: sem.title,
-            content: theory.content
-          });
+        const ids = Array.isArray(mod.theories) && mod.theories.length > 0
+          ? mod.theories
+          : (mod.theory ? [mod.theory] : []);
+        for (const id of ids) {
+          if (seen.has(id)) continue;
+          const theory = await loadTheoryUnit(id);
+          // Constitution §2 / T112: só entra no índice o que foi conferido com a fonte
+          if (theory && theory.verification_status === 'verified_with_source') {
+            seen.add(id);
+            index.push({
+              id: theory.id,
+              title: theory.title,
+              discipline: theory.discipline,
+              disciplineTitle: disc.title,
+              module: theory.module,
+              moduleTitle: mod.title,
+              semester: sem.id,
+              semesterTitle: sem.title,
+              content: theory.content
+            });
+          }
         }
       }
     }
@@ -297,6 +304,27 @@ export async function loadTheoryIndex() {
 
   theoryIndexCache = index;
   return index;
+}
+
+/**
+ * Resolve qual unidade teórica uma lição deve exibir.
+ * Usa `linked_lessons` das unidades listadas em `theories` (ou no `theory` único).
+ * @param {Object} mod - Módulo do currículo
+ * @param {string} lessonId - ID da lição
+ * @returns {Promise<string|null>} ID da unidade teórica
+ */
+export async function findTheoryUnitIdForLesson(mod, lessonId) {
+  const ids = Array.isArray(mod?.theories) && mod.theories.length > 0
+    ? mod.theories
+    : (mod?.theory ? [mod.theory] : []);
+
+  for (const id of ids) {
+    const unit = await loadTheoryUnit(id);
+    if (unit && Array.isArray(unit.linked_lessons) && unit.linked_lessons.includes(lessonId)) {
+      return id;
+    }
+  }
+  return mod?.theory || ids[0] || null;
 }
 
 /**

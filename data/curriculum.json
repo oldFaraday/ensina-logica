@@ -13,16 +13,25 @@
             {
               "id": "m01",
               "title": "Introdução a Algoritmos",
-              "theory": "th-sem1-algorithms-m01-intro",
+              "pipeline_version": 1,
+              "theory": "th-sem1-algorithms-m01-program-design",
+              "theories": [
+                "th-sem1-algorithms-m01-program-design",
+                "th-sem1-algorithms-m01-pseudocode",
+                "th-sem1-algorithms-m01-flowcharts",
+                "th-sem1-algorithms-m01-structured-programming"
+              ],
               "lessons": [
                 "l01",
                 "l02",
-                "l03"
+                "l03",
+                "l19"
               ],
               "lessonTitles": {
-                "l01": "O que é um algoritmo",
-                "l02": "Pseudocódigo e fluxogramas",
-                "l03": "Estruturas de controle básicas"
+                "l01": "Design de programa e modelo IPO",
+                "l02": "Pseudocódigo",
+                "l03": "Fluxogramas",
+                "l19": "Estruturas de controle básicas"
               }
             },
             {

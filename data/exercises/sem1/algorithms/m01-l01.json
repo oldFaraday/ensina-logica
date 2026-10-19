@@ -1,81 +1,123 @@
 [
   {
-    "id": "ex-sem1-algorithms-m01-l01-algoritmo",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l01-design",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
     "lesson_id": "l01",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "Segundo o capítulo Program Design, o que deve acontecer ANTES de começar a codificar um programa em uma linguagem específica?",
+    "prompt": "Segundo o capítulo Program Design, o que o programador faz na etapa de design, antes de codificar?",
     "options": [
-      "Elaborar o design do programa: entender o problema, modelar a lógica e preparar dados de teste",
-      "Instalar o sistema operacional da máquina",
-      "Escrever o manual do usuário final",
-      "Traduzir manualmente o código para linguagem de máquina"
+      "Entende o programa, modela a lógica e prepara dados de teste",
+      "Instala o sistema operacional da máquina",
+      "Escreve o manual do usuário final",
+      "Traduz manualmente o código para linguagem de máquina"
     ],
     "correct": 0,
-    "explanation": "O capítulo Program Design explica que o design do programa reúne os passos que o programador faz antes de codificar; documentar esse design torna o programa mais fácil de manter depois.",
+    "explanation": "O capítulo Program Design › Overview define o design como as etapas feitas antes de codificar em uma linguagem específica: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste. As demais opções descrevem tarefas que não pertencem a essa etapa.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-program-design#definicao",
+    "answer_check": "Conferido contra Program Design › Overview: 'Program design consists of the steps a programmer should do before they start coding the program in a specific language.'"
   },
   {
-    "id": "ex-sem1-algorithms-m01-l01-pseudo",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l01-tres-areas",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
     "lesson_id": "l01",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "Pseudocódigo é código real que um compilador converte automaticamente para linguagem de máquina.",
+    "prompt": "A fonte organiza o design de programa em três grandes áreas: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste.",
     "options": ["Verdadeiro", "Falso"],
-    "correct": 1,
-    "explanation": "O capítulo Pseudocode lembra que 'pseudo' significa falso: o pseudocódigo imita código, mas não é código real, e não existe compilador que o traduza para linguagem de máquina.",
+    "correct": 0,
+    "explanation": "O capítulo Program Design › Overview lista exatamente essas três áreas de atividade: Understanding the Program, Using Design Tools to Create a Model e Develop Test Data. Por isso a afirmação é verdadeira.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-program-design#definicao",
+    "answer_check": "Conferido contra Program Design › Overview: 'There are three broad areas of activity: Understanding the Program, Using Design Tools to Create a Model, Develop Test Data.'"
   },
   {
     "id": "ex-sem1-algorithms-m01-l01-ipo",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
     "lesson_id": "l01",
     "type": "multiple-choice",
     "generated_by_ai": true,
-    "prompt": "A sigla IPO, usada no capítulo Program Design para entender a finalidade de um programa, corresponde a:",
+    "prompt": "No modelo IPO apresentado no capítulo Program Design, as letras I, P e O correspondem a:",
     "options": [
-      "Entrada, Processamento e Saída (Inputs, Processing, Outputs)",
-      "Interface, Programa e Operação",
-      "Instrução, Pilha e Operando",
-      "Índice, Ponteiro e Objeto"
+      "Inputs, Processing, Outputs",
+      "Interface, Programa, Operação",
+      "Instrução, Pilha, Operando",
+      "Índice, Ponteiro, Objeto"
     ],
     "correct": 0,
-    "explanation": "O capítulo Program Design afirma que entender o propósito de um programa geralmente envolve compreender suas entradas, o processamento realizado e as saídas produzidas (IPO).",
+    "explanation": "O capítulo Program Design › Understanding the Program afirma que entender o propósito de um programa envolve suas entradas (Inputs), processamento (Processing) e saídas (Outputs). As outras siglas não aparecem na fonte com esse significado.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-program-design#definicao",
+    "answer_check": "Conferido contra Program Design › Understanding the Program: 'Inputs, Processing, Outputs' e 'This IPO approach works very well for beginning programmers.'"
   },
   {
-    "id": "ex-sem1-algorithms-m01-l01-ordem",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l01-ordem-areas",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
     "lesson_id": "l01",
     "type": "order-steps",
     "generated_by_ai": true,
-    "prompt": "Ordene as três grandes áreas de atividade do design de um programa descritas no capítulo Program Design.",
+    "prompt": "Ordene as três áreas de atividade do design de programa, na ordem em que a fonte as apresenta.",
     "options": [
-      "Desenvolver dados de teste (prever as saídas)",
+      "Desenvolver dados de teste",
       "Entender o programa (entradas, processamento e saídas)",
-      "Usar ferramentas de design para criar um modelo (pseudocódigo, fluxograma)"
+      "Usar ferramentas de design para criar um modelo"
     ],
     "correct": [1, 2, 0],
-    "explanation": "O capítulo Program Design lista três áreas: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste para verificar esse modelo.",
+    "explanation": "O capítulo Program Design › Overview apresenta as áreas nesta ordem: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste. As opções já estão embaralhadas; a sequência correta segue a ordem da fonte.",
     "difficulty": "medium",
-    "xp_base": 15
+    "xp_base": 15,
+    "objective_id": "OBJ-2",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-program-design#definicao",
+    "answer_check": "Conferido contra Program Design › Overview: a lista aparece como Understanding the Program, Using Design Tools to Create a Model, Develop Test Data."
   },
   {
-    "id": "ex-sem1-algorithms-m01-l01-flash",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l01-identificar-ipo",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
+    "lesson_id": "l01",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Uma equipe lista o que o usuário digita, o que o computador calcula e o que aparece na tela antes de escrever código. Qual área do design de programa essa atividade representa?",
+    "options": [
+      "Entender o programa pelo modelo IPO",
+      "Desenvolver dados de teste",
+      "Escolher a sintaxe da linguagem",
+      "Compilar o pseudocódigo"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Program Design › Understanding the Program recomenda entender o propósito do programa por suas entradas, processamento e saídas (IPO). Listar o que o usuário digita, o que é calculado e o que aparece na tela é exatamente essa decomposição; as demais opções não descrevem essa etapa.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-1",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-program-design#exemplo-resolvido",
+    "answer_check": "Conferido contra Program Design › Understanding the Program: 'Understanding the purpose of a program usually involves understanding its: Inputs, Processing, Outputs.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l01-flash-design",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
     "lesson_id": "l01",
     "type": "flashcards",
     "generated_by_ai": true,
-    "prompt": "O que é um algoritmo e como ele é documentado no design de um programa?",
-    "starter_code": "É uma sequência finita e ordenada de passos que descreve como resolver um problema ou realizar uma tarefa. No design de um programa, ele é documentado com ferramentas como o pseudocódigo e o fluxograma, antes de ser escrito em uma linguagem.",
-    "correct": "É uma sequência finita e ordenada de passos que descreve como resolver um problema ou realizar uma tarefa. No design de um programa, ele é documentado com ferramentas como o pseudocódigo e o fluxograma, antes de ser escrito em uma linguagem.",
-    "explanation": "A unidade de Introdução a Algoritmos (capítulo Program Design) define o algoritmo como uma sequência ordenada de passos e mostra que o design (pseudocódigo e fluxograma) planeja a lógica antes de codificar.",
-    "difficulty": "easy",
-    "xp_base": 5
+    "prompt": "Explique por que a fonte considera importante planejar a lógica antes de codificar.",
+    "starter_code": "Porque o design documenta as etapas anteriores à codificação e torna o programa mais fácil de manter; a fonte afirma que pular essa etapa é um mau hábito comum entre estudantes.",
+    "correct": "Porque o design documenta as etapas anteriores à codificação e torna o programa mais fácil de manter; a fonte afirma que pular essa etapa é um mau hábito comum entre estudantes.",
+    "explanation": "O capítulo Program Design › Using Design Tools to Create a Model afirma que entender a lógica e planejar o algoritmo no papel antes de codificar é muito importante, e que pular essa etapa é um dos maus hábitos que muitos estudantes desenvolvem.",
+    "difficulty": "medium",
+    "xp_base": 10,
+    "objective_id": "OBJ-2",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-program-design#erros-comuns",
+    "answer_check": "Conferido contra Program Design › Using Design Tools to Create a Model: 'Understanding the logic and planning the algorithm on paper before you start to code is a very important concept. Many students develop poor habits and skipping this step is one of them.'"
   }
 ]

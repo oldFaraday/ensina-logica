@@ -21,7 +21,10 @@ A interface usa **pilhas de fontes do sistema** (`--font-sans`, `--font-mono`, d
 <!-- BEGIN GENERATED: theory-units -->
 | Unidade | Fonte | Capítulo › Seção |
 | --- | --- | --- |
-| `th-sem1-algorithms-m01-intro` | Programming Fundamentals | I. Introduction to Programming › Program Design |
+| `th-sem1-algorithms-m01-flowcharts` | Programming Fundamentals | I. Introduction to Programming › Flowcharts |
+| `th-sem1-algorithms-m01-program-design` | Programming Fundamentals | I. Introduction to Programming › Program Design |
+| `th-sem1-algorithms-m01-pseudocode` | Programming Fundamentals | I. Introduction to Programming › Pseudocode |
+| `th-sem1-algorithms-m01-structured-programming` | Programming Fundamentals | IV. Conditions › Structured Programming |
 | `th-sem1-algorithms-m02-variables` | Programming Fundamentals | II. Data and Operators › Data Types |
 | `th-sem1-algorithms-m03-control-flow` | Programming Fundamentals | IV. Conditions › Structured Programming |
 | `th-sem1-discrete-math-m01-logic` | Discrete Mathematics: An Open Introduction | 3. Symbolic Logic and Proofs › 3.1 Propositional Logic |

@@ -12,7 +12,7 @@ import { initToasts, showToast } from './ui/toasts.js';
 import { initModals } from './ui/modals.js';
 import { initA11y, announce } from './ui/a11y.js';
 import { celebrate } from './ui/confetti.js';
-import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadExercisesForTheoryUnit } from './curriculum/loader.js';
+import { loadCurriculum, loadTheoryUnit, loadTheoryIndex, loadExercisesForLesson, loadExercisesForTheoryUnit, findTheoryUnitIdForLesson } from './curriculum/loader.js';
 import { calculateExerciseXP, levelFromXP, xpForLevel } from './gamification/xp.js';
 import { updateStreak, getStreakInfo } from './gamification/streak.js';
 import { checkAchievements, ACHIEVEMENTS } from './gamification/achievements.js';
@@ -706,7 +706,7 @@ async function renderLessonView(params, query, main) {
 
   const { sem, disc, mod, index } = lessonCtx;
   const lessonTitle = getLessonTitle(mod, lessonId, index);
-  const theoryUnitId = mod.theory || null;
+  const theoryUnitId = await findTheoryUnitIdForLesson(mod, lessonId);
 
   const [theoryUnit, rawExercises] = await Promise.all([
     theoryUnitId ? loadTheoryUnit(theoryUnitId) : Promise.resolve(null),

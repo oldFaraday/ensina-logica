@@ -1,66 +1,134 @@
 [
   {
-    "id": "ex-sem1-algorithms-m01-l02-simbolos",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
-    "lesson_id": "l02",
-    "type": "multiple-choice",
-    "generated_by_ai": true,
-    "prompt": "No capítulo Flowcharts, qual símbolo do fluxograma representa uma decisão (uma pergunta de verdadeiro ou falso)?",
-    "options": [
-      "O losango",
-      "O retângulo arredondado (terminal)",
-      "O paralelogramo",
-      "O retângulo"
-    ],
-    "correct": 0,
-    "explanation": "O capítulo Flowcharts define o losango (decision symbol) como o símbolo usado para representar a pergunta de verdadeiro/falso testada em uma decisão.",
-    "difficulty": "easy",
-    "xp_base": 10
-  },
-  {
-    "id": "ex-sem1-algorithms-m01-l02-terminal",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l02-pseudo-real",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
     "lesson_id": "l02",
     "type": "true-false",
     "generated_by_ai": true,
-    "prompt": "No fluxograma, os retângulos arredondados (terminais) indicam os pontos de início e de fim.",
+    "prompt": "Pseudocódigo é código real que um compilador converte automaticamente para linguagem de máquina.",
     "options": ["Verdadeiro", "Falso"],
-    "correct": 0,
-    "explanation": "Segundo o capítulo Flowcharts, os retângulos arredondados, chamados de terminais, indicam os pontos de início e de fim do fluxograma.",
+    "correct": 1,
+    "explanation": "O capítulo Pseudocode › Discussion afirma que pseudocódigo imita código, mas NÃO é código real, porque não existe compilador que o traduza para linguagem de máquina. Por isso a afirmação é falsa.",
     "difficulty": "easy",
-    "xp_base": 10
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#definicao",
+    "answer_check": "Conferido contra Pseudocode › Discussion: 'It looks like (imitates) real code but it is NOT real code' e 'no compiler exists that will translate the pseudocode to any machine language.'"
   },
   {
-    "id": "ex-sem1-algorithms-m01-l02-ordem-pseudo",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l02-significado",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
+    "lesson_id": "l02",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Na palavra pseudocódigo, o que o termo pseudo significa, segundo o capítulo Pseudocode?",
+    "options": [
+      "Falso, incluindo as ideias de falso ou imitação",
+      "Verdadeiro e executável",
+      "Compilado para linguagem de máquina",
+      "Otimizado para o processador"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Pseudocode › Discussion explica que pseudo significa falso e que uma tradução melhor seria falso ou imitação. As demais opções contradizem a definição da fonte.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#definicao",
+    "answer_check": "Conferido contra Pseudocode › Discussion e Key Terms: 'Pseudo means false, thus pseudocode means false code. A better translation would be the word fake or imitation.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l02-ordem-ipo",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
     "lesson_id": "l02",
     "type": "order-steps",
     "generated_by_ai": true,
-    "prompt": "Ordene as partes do esboço em pseudocódigo que calcula a média de duas idades, conforme o capítulo Pseudocode.",
+    "prompt": "Ordene os blocos do esboço em pseudocódigo que calcula a média de duas idades, conforme o capítulo Pseudocode.",
     "options": [
-      "Processamento: calcular a resposta somando as duas idades e dividindo por dois",
-      "Entrada: exibir mensagens e ler as duas idades do teclado",
-      "Saída: exibir a resposta na tela e pausar para o usuário ver"
+      "Processamento: somar as duas idades e dividir por dois",
+      "Saída: exibir a resposta e pausar para o usuário ver",
+      "Entrada: pedir e ler as duas idades do teclado"
     ],
-    "correct": [1, 0, 2],
-    "explanation": "O capítulo Pseudocode apresenta o esboço na ordem Entrada, Processamento e Saída, seguindo o modelo IPO para documentar a lógica do programa.",
+    "correct": [2, 0, 1],
+    "explanation": "O capítulo Pseudocode › Discussion apresenta o esboço na ordem Entrada, Processamento e Saída: primeiro lê as duas idades, depois calcula a média e por fim exibe a resposta. As opções já estão embaralhadas; a ordem correta segue essa sequência.",
     "difficulty": "medium",
-    "xp_base": 15
+    "xp_base": 15,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#exemplo-resolvido",
+    "answer_check": "Conferido contra Pseudocode › Discussion: o esboço lista Input, Processing e Output, nesta ordem."
   },
   {
-    "id": "ex-sem1-algorithms-m01-l02-code",
-    "theory_unit_id": "th-sem1-algorithms-m01-intro",
+    "id": "ex-sem1-algorithms-m01-l02-media",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
     "lesson_id": "l02",
     "type": "code-completion",
     "generated_by_ai": true,
-    "prompt": "Complete o código Python que implementa a média de duas idades descrita no esboço em pseudocódigo (entrada, processamento e saída).",
-    "code": "# Entrada: ler as duas idades\nidade1 = int(input(\"Primeira idade: \"))\nidade2 = int(input(\"Segunda idade: \"))\n\n# Processamento: calcular a media\nmedia = ___\n\n# Saida: exibir o resultado\nprint(\"Media:\", media)",
-    "language": "python",
+    "prompt": "Complete o pseudocódigo que implementa a média de duas idades descrita no capítulo Pseudocode.",
+    "code": "Entrada\n    ler idade1\n    ler idade2\nProcessamento\n    media = ___\nSaída\n    exibir media",
+    "language": "pseudocode",
     "blanks": [
-      { "accepted_answers": ["(idade1 + idade2) / 2", "(idade2 + idade1) / 2"] }
+      {
+        "accepted_answers": [
+          "(idade1 + idade2) / 2",
+          "(idade2 + idade1) / 2"
+        ]
+      }
     ],
-    "explanation": "No capítulo Pseudocode, o processamento calcula a resposta somando as duas idades e dividindo por dois; por isso a expressão (idade1 + idade2) / 2.",
+    "explanation": "No capítulo Pseudocode › Discussion, o processamento calcula a resposta somando as duas idades e dividindo por dois. Por isso a lacuna recebe (idade1 + idade2) / 2; a soma é comutativa, então (idade2 + idade1) / 2 também é equivalente.",
     "difficulty": "medium",
-    "xp_base": 20
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#exemplo-resolvido",
+    "answer_check": "Conferido contra Pseudocode › Discussion: 'calculate the answer by adding the two ages together and dividing by two'; as duas ordens da soma são aceitas por equivalência, sem executar código."
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l02-compilador",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
+    "lesson_id": "l02",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Por que o pseudocódigo NÃO pode ser executado diretamente por um computador?",
+    "options": [
+      "Porque não existe compilador que o traduza para linguagem de máquina",
+      "Porque usa palavras em inglês",
+      "Porque não permite representar cálculos",
+      "Porque precisa ser escrito em uma linguagem de programação"
+    ],
+    "correct": 0,
+    "explanation": "O capítulo Pseudocode › Discussion diz que o pseudocódigo é falso justamente porque nenhum compilador existe para traduzi-lo para linguagem de máquina. As outras opções não são a razão dada pela fonte.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-3",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#definicao",
+    "answer_check": "Conferido contra Pseudocode › Discussion: 'It is fake because no compiler exists that will translate the pseudocode to any machine language.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-l02-completo",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
+    "lesson_id": "l02",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o pseudocódigo com as duas lacunas: o cálculo da média e o valor a exibir.",
+    "code": "Entrada\n    ler idade1\n    ler idade2\nProcessamento\n    soma = idade1 + idade2\n    media = ___\nSaída\n    exibir ___",
+    "language": "pseudocode",
+    "blanks": [
+      {
+        "accepted_answers": ["soma / 2", "soma/2"]
+      },
+      {
+        "accepted_answers": ["media", "a media", "média", "a média"]
+      }
+    ],
+    "explanation": "O capítulo Pseudocode › Discussion descreve o processamento como somar as duas idades e dividir por dois e a saída como exibir a resposta. Como a soma já foi guardada, a média é soma / 2; o valor exibido é a variável media.",
+    "difficulty": "hard",
+    "xp_base": 25,
+    "objective_id": "OBJ-4",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#exemplo-resolvido",
+    "answer_check": "Conferido contra Pseudocode › Discussion: 'adding the two ages together and dividing by two' e 'display the answer on the screen'; respostas equivalentes listadas manualmente, sem executar código."
   }
 ]

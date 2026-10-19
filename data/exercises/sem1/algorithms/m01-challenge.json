@@ -1,0 +1,176 @@
+[
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-design",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
+    "lesson_id": "l01",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "O que acontece na etapa de design de programa, segundo o capÃ­tulo Program Design?",
+    "options": [
+      "O programador entende o programa, modela a lÃ³gica e prepara dados de teste antes de codificar",
+      "O programador compila o programa pela primeira vez",
+      "O programador instala a linguagem de programaÃ§Ã£o no computador",
+      "O programador traduz o cÃ³digo para linguagem de mÃ¡quina"
+    ],
+    "correct": 0,
+    "explanation": "O capÃ­tulo Program Design â€º Overview define o design como as etapas anteriores Ã  codificaÃ§Ã£o em uma linguagem especÃ­fica, com trÃªs Ã¡reas: entender, modelar e preparar dados de teste. Compilar, instalar e traduzir para linguagem de mÃ¡quina nÃ£o fazem parte dessa etapa.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-1",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-program-design#definicao",
+    "answer_check": "Conferido contra Program Design â€º Overview: 'Program design consists of the steps a programmer should do before they start coding the program in a specific language.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-pseudo",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
+    "lesson_id": "l02",
+    "type": "true-false",
+    "generated_by_ai": true,
+    "prompt": "PseudocÃ³digo Ã© cÃ³digo real e pode ser compilado diretamente para linguagem de mÃ¡quina.",
+    "options": ["Verdadeiro", "Falso"],
+    "correct": 1,
+    "explanation": "O capÃ­tulo Pseudocode â€º Discussion afirma que pseudocÃ³digo imita cÃ³digo, mas nÃ£o Ã© cÃ³digo real, e que nÃ£o existe compilador que o traduza para linguagem de mÃ¡quina. Por isso a afirmaÃ§Ã£o Ã© falsa.",
+    "difficulty": "easy",
+    "xp_base": 10,
+    "objective_id": "OBJ-3",
+    "level": "reconhecer",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#definicao",
+    "answer_check": "Conferido contra Pseudocode â€º Discussion: 'It looks like (imitates) real code but it is NOT real code' e 'no compiler exists...'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-simbolo",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
+    "lesson_id": "l03",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "No fluxograma, qual sÃ­mbolo deve ser usado para representar a leitura de um dado digitado pelo usuÃ¡rio?",
+    "options": [
+      "Paralelogramo",
+      "Losango",
+      "RetÃ¢ngulo",
+      "RetÃ¢ngulo arredondado"
+    ],
+    "correct": 0,
+    "explanation": "O capÃ­tulo Flowcharts â€º Simple Flowcharting Symbols â€º Input/Output diz que os paralelogramos designam operaÃ§Ãµes de entrada ou saÃ­da. Ler um dado digitado Ã© uma entrada; o losango Ã© decisÃ£o, o retÃ¢ngulo Ã© processo e o retÃ¢ngulo arredondado Ã© terminal.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-5",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#definicao",
+    "answer_check": "Conferido contra Flowcharts â€º Simple Flowcharting Symbols â€º Input/Output: 'The parallelograms designate input or output operations.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-sequencia",
+    "theory_unit_id": "th-sem1-algorithms-m01-flowcharts",
+    "lesson_id": "l03",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene os passos de um fluxograma de sequÃªncia que recebe um valor, processa e mostra o resultado.",
+    "options": [
+      "Processar o valor",
+      "InÃ­cio (terminal)",
+      "Mostrar o resultado",
+      "Receber o valor (entrada/saÃ­da)",
+      "Fim (terminal)"
+    ],
+    "correct": [1, 3, 0, 2, 4],
+    "explanation": "O capÃ­tulo Flowcharts â€º Simple Examples â€º Sequence Control Structures descreve a sequÃªncia como uma instruÃ§Ã£o apÃ³s a outra, na ordem listada. O fluxo comeÃ§a no terminal, recebe o valor, processa, mostra o resultado e termina.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-6",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-flowcharts#exemplo-resolvido",
+    "answer_check": "Conferido contra Flowcharts â€º Simple Examples â€º Sequence Control Structures: 'Just do one instruction after another in the sequence listed.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-iteracao",
+    "theory_unit_id": "th-sem1-algorithms-m01-structured-programming",
+    "lesson_id": "l19",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Repetir um bloco de cÃ³digo enquanto uma condiÃ§Ã£o nÃ£o for satisfeita pertence a qual categoria de estrutura de controle?",
+    "options": [
+      "IteraÃ§Ã£o (repetiÃ§Ã£o)",
+      "SequÃªncia",
+      "SeleÃ§Ã£o",
+      "RamificaÃ§Ã£o"
+    ],
+    "correct": 0,
+    "explanation": "O capÃ­tulo Structured Programming â€º Discussion define iteraÃ§Ã£o, tambÃ©m chamada de repetiÃ§Ã£o, como a categoria que permite executar um trecho vÃ¡rias vezes, inclusive indefinidamente atÃ© uma condiÃ§Ã£o ser satisfeita. SequÃªncia apenas ordena instruÃ§Ãµes; seleÃ§Ã£o escolhe caminhos; ramificaÃ§Ã£o Ã© um salto nÃ£o controlado.",
+    "difficulty": "medium",
+    "xp_base": 15,
+    "objective_id": "OBJ-7",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-structured-programming#exemplo-resolvido",
+    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'Iteration â€“ Also known as repetition, it allows some code ... to be executed (or repeated) several times ... or executed indefinitely until some condition has been met.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-media",
+    "theory_unit_id": "th-sem1-algorithms-m01-pseudocode",
+    "lesson_id": "l02",
+    "type": "code-completion",
+    "generated_by_ai": true,
+    "prompt": "Complete o pseudocÃ³digo do cÃ¡lculo da mÃ©dia de duas idades.",
+    "code": "Entrada\n    ler idade1\n    ler idade2\nProcessamento\n    media = ___\nSaÃ­da\n    exibir media",
+    "language": "pseudocode",
+    "blanks": [
+      {
+        "accepted_answers": [
+          "(idade1 + idade2) / 2",
+          "(idade2 + idade1) / 2"
+        ]
+      }
+    ],
+    "explanation": "No capÃ­tulo Pseudocode â€º Discussion, o processamento soma as duas idades e divide o resultado por dois. Por isso a lacuna recebe (idade1 + idade2) / 2; a ordem inversa da soma tambÃ©m Ã© aceita por ser equivalente.",
+    "difficulty": "medium",
+    "xp_base": 20,
+    "objective_id": "OBJ-4",
+    "level": "aplicar",
+    "source_ref": "th-sem1-algorithms-m01-pseudocode#exemplo-resolvido",
+    "answer_check": "Conferido contra Pseudocode â€º Discussion: 'calculate the answer by adding the two ages together and dividing by two'; equivalÃªncia da soma verificada manualmente, sem executar cÃ³digo."
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-dijkstra",
+    "theory_unit_id": "th-sem1-algorithms-m01-structured-programming",
+    "lesson_id": "l19",
+    "type": "multiple-choice",
+    "generated_by_ai": true,
+    "prompt": "Segundo o capÃ­tulo Structured Programming, qual foi a contribuiÃ§Ã£o de Edsger Dijkstra para a programaÃ§Ã£o estruturada?",
+    "options": [
+      "PropÃ´s o mÃ©todo 'go to less', que eliminava a necessidade da categoria de ramificaÃ§Ã£o",
+      "Criou a primeira linguagem de programaÃ§Ã£o com o comando goto",
+      "Definiu o modelo IPO de entradas, processamento e saÃ­das",
+      "Inventou o pseudocÃ³digo e o fluxograma"
+    ],
+    "correct": 0,
+    "explanation": "O capÃ­tulo Structured Programming â€º Discussion registra que Dijkstra publicou um artigo no fim da dÃ©cada de 1960 propondo o mÃ©todo 'go to less', que eliminava a necessidade da ramificaÃ§Ã£o. O modelo IPO Ã© do capÃ­tulo Program Design, e pseudocÃ³digo/fluxograma sÃ£o capÃ­tulos separados.",
+    "difficulty": "hard",
+    "xp_base": 30,
+    "objective_id": "OBJ-8",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-structured-programming#definicao",
+    "answer_check": "Conferido contra Structured Programming â€º Discussion: 'He proposed a â€œgo to lessâ€ method of planning programming logic that eliminated the need for the branching category of control structures.'"
+  },
+  {
+    "id": "ex-sem1-algorithms-m01-challenge-areas",
+    "theory_unit_id": "th-sem1-algorithms-m01-program-design",
+    "lesson_id": "l01",
+    "type": "order-steps",
+    "generated_by_ai": true,
+    "prompt": "Ordene as trÃªs Ã¡reas de atividade do design de programa conforme a sequÃªncia apresentada no capÃ­tulo Program Design.",
+    "options": [
+      "Desenvolver dados de teste",
+      "Usar ferramentas de design para criar um modelo",
+      "Entender o programa"
+    ],
+    "correct": [2, 1, 0],
+    "explanation": "O capÃ­tulo Program Design â€º Overview lista as Ã¡reas nesta ordem: entender o programa, usar ferramentas de design para criar um modelo e desenvolver dados de teste. As opÃ§Ãµes jÃ¡ estÃ£o embaralhadas; a ordem correta Ã© a da fonte.",
+    "difficulty": "hard",
+    "xp_base": 30,
+    "objective_id": "OBJ-2",
+    "level": "analisar",
+    "source_ref": "th-sem1-algorithms-m01-program-design#definicao",
+    "answer_check": "Conferido contra Program Design â€º Overview: 'Understanding the Program, Using Design Tools to Create a Model, Develop Test Data.'"
+  }
+]

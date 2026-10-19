@@ -545,11 +545,16 @@ function validateInternalLinks(theoryUnits, exercises) {
 
   const lessonIndex = new Map(); // lessonId -> { discipline, module }
   const moduleTheory = new Map(); // `${discipline}/${module}` -> theory id
+  const moduleTheories = new Map(); // `${discipline}/${module}` -> [theory ids]
 
   for (const sem of curriculum.semesters || []) {
     for (const disc of sem.disciplines || []) {
       for (const mod of disc.modules || []) {
-        if (mod.theory) moduleTheory.set(`${disc.id}/${mod.id}`, mod.theory);
+        const key = `${disc.id}/${mod.id}`;
+        if (mod.theory) moduleTheory.set(key, mod.theory);
+        if (Array.isArray(mod.theories) && mod.theories.length > 0) {
+          moduleTheories.set(key, mod.theories);
+        }
         for (const lessonId of mod.lessons || []) {
           if (lessonIndex.has(lessonId)) {
             error(`ID de lição duplicado no currículo: ${lessonId} (${disc.id}/${mod.id})`);
@@ -563,11 +568,21 @@ function validateInternalLinks(theoryUnits, exercises) {
   const theoryIds = new Set(theoryUnits.map((u) => u.id));
   const theoryById = new Map(theoryUnits.map((u) => [u.id, u]));
 
+  // Módulos que declaram múltiplas unidades devem apontar para ids existentes
+  for (const [key, ids] of moduleTheories) {
+    for (const id of ids) {
+      if (!theoryIds.has(id)) {
+        error(`Módulo ${key} referencia unidade teórica inexistente: ${id}`);
+      }
+    }
+  }
+
   // Unidades → lições ligadas
   for (const unit of theoryUnits) {
     const key = `${unit.discipline}/${unit.module}`;
     const expected = moduleTheory.get(key);
-    if (expected && expected !== unit.id) {
+    const expectedList = moduleTheories.get(key) || (expected ? [expected] : []);
+    if (expected && expected !== unit.id && !expectedList.includes(unit.id)) {
       warn(`Módulo ${key} aponta para '${expected}', mas a unidade '${unit.id}' define module=${unit.module}`);
     }
     for (const lessonId of unit.linkedLessons) {

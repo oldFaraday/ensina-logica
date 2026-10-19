@@ -538,7 +538,7 @@ Avaliação do código atual contra `spec.md`, `plan.md`, `tasks.md` e a Constit
 - [x] T161 [test][pipeline] Criar `scripts/test-check-module.mjs` (em `npm test`) com módulo de controle válido e exemplos ruins que confirmam **cada** rejeição do check-module.
 - [x] T162 [docs][command] Criar `.opencode/commands/content-module.md` (formato de comando do opencode com `$ARGUMENTS`) que lê `docs/CONTENT_PIPELINE.md`, resolve o id e executa E0–E7; lista os ids de módulo do `data/curriculum.json`.
 - [x] T163 [spec][acceptance] Acrescentar à `.specify/spec.md` o critério **AC-16**: um módulo só recebe `pipeline_version: 1` depois que `check-module`, `validate`, `test` e `verify-sources` passam.
-- [ ] T164 [content-module] `sem1-algorithms-m01` — executar E0–E7 (PLAN → SOURCES → teoria → REVIEW → exercícios/desafio/flashcards → biblioteca/glossário → portões → fechamento).
+- [x] T164 [content-module] `sem1-algorithms-m01` — executar E0–E7 (PLAN → SOURCES → teoria → REVIEW → exercícios/desafio/flashcards → biblioteca/glossário → portões → fechamento).
 - [ ] T165 [content-module] `sem1-algorithms-m02` — executar E0–E7.
 - [ ] T166 [content-module] `sem1-algorithms-m03` — executar E0–E7.
 - [ ] T167 [content-module] `sem1-discrete-math-m01` — executar E0–E7.
@@ -559,3 +559,24 @@ Para cada módulo, em uma sessão e um commit:
 8. [ ] **E7** atualizar `tasks.md`/`STATUS.md`, marcar `"pipeline_version": 1` **só neste módulo**, commit do módulo, hash e pendências.
 
 **Regra de promoção**: nenhum módulo recebe `pipeline_version: 1` antes dos quatro portões do E6 passarem. Quando os 6 módulos do MVP estiverem refeitos, a exigência dos novos campos passa a valer para todo módulo.
+
+---
+
+## Conclusão T164 — sem1-algorithms-m01 (2026-10-19)
+
+**Pipeline E0–E7 concluída** para o módulo piloto sem1-algorithms-m01 (Introdução a Algoritmos).
+
+- **E0:** `docs/modules/sem1-algorithms-m01/PLAN.md` aprovado com 8 objetivos, 4 lições e 4 unidades teóricas planejadas.
+- **E1:** `SOURCES.md` com as 4 URLs de capítulo abertas em 2026-10-19, edição 2ª (2018), licença CC BY-SA 4.0 declarada na página do livro (com "exceto onde indicado") e trechos literais.
+- **E2:** 4 unidades novas em `data/theory/sem1/algorithms/` (program-design, pseudocode, flowcharts, structured-programming); a unidade antiga `th-sem1-algorithms-m01-intro` e os 3 arquivos antigos de exercício foram removidos.
+- **E3:** `REVIEW.md` com 47 afirmações sustentadas, 3 aplicações diretas e 2 itens sem suporte rotulados como "Exemplo adicional (IA)".
+- **E4:** 24 exercícios de lição (6 por lição), 8 no desafio e 10 flashcards; somente pseudocódigo/fluxograma, sem linguagem de programação; todos com `objective_id`, `level`, `source_ref` e `answer_check`.
+- **E5:** 9 termos novos no `data/glossary.json`; `LIBRARY.md` com ordem de leitura, tempos estimados e mapeamento "praticar este trecho". O loader passou a aceitar `theories` (múltiplas unidades por módulo) e a escolher a unidade pela lição.
+- **E6:** os quatro portões passaram:
+  - `npm run check-module -- sem1-algorithms-m01` ✅
+  - `npm run validate` ✅ (sem erros nem avisos)
+  - `npm test` ✅ (18 suítes; 9 unidades, 19 lições, 96 exercícios de lição)
+  - `npm run verify-sources` ✅ (9/9 unidades conferem)
+- **E7:** módulo marcado com `"pipeline_version": 1` **somente após** os portões; um commit do módulo; nenhuma pendência de conteúdo.
+
+**Decisão de ID:** a 4ª lição usa `l19` porque `l04`–`l18` já pertencem a outros módulos do semestre; a ordem didática do módulo continua 1ª–4ª.
